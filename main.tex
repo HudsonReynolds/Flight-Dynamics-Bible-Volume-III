@@ -153,7 +153,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Book's title and subtitle
-\title{\Huge \textbf{Flight Dynamics Bible}  \\ \huge Volume III: \\Energy Mechanics}
+\title{\Huge \textbf{Flight Dynamics Bible}  \\ \huge Volume III: \\Energy Mechanics and Controls}
 
 % Author
 \author{\textsc{Hudson Reynolds} \\ \textit{Author}
@@ -231,14 +231,29 @@
     see={Lagrangian}
 }
 
-\chapter*{Preface}\label{sec:preface}
-I begin working on this document after the release of Volume I of the Flight Dynamics Bible. In that edition, we present a brief overview of energy mechanics. In that exploration of energy mechanics, I gained a great appreciation of the subject and began work on this text thereafter. As in the first volume, I hope this document can provide all of the basic concepts of energy mechanics in their application to aerospace engineering in a single place.
+\newglossaryentry{laplace transform}
+{
+    name=Laplace transform,
+    first=\textit{Laplace transform},
+    description={An integral transform which transforms a function from the time domain to the so-called $s$-domain. $s$ is a complex valued domain where $s=a+i\omega$}
+}
 
-Furthermore, I hope that this edition can provide a bridge between the realms of Newtonian dynamics and energy methods.
+\newglossaryentry{eigenfunction}
+{
+    name=eigenfunction,
+    first=\textit{eigenfunction},
+    description={A function $f$ that, when acted upon by an operator (which we may denote $D$), simply produces a scalar multiple of itself as the output. As an equation, we see this as $Df=\lambda f$}
+}
+
+
+\chapter*{Preface}\label{sec:preface}
+I begin working on this document after the release of Volume I of the Flight Dynamics Bible. In that edition, we present a brief overview of energy mechanics. In that exploration of energy mechanics, I gained a great appreciation of the subject and began work on this text shortly thereafter. As in the first volume, I hope this document can provide all of the basic concepts of energy mechanics and basic control theory in their application to aerospace engineering in a single place.
+
+Furthermore, I hope that this edition can provide a bridge between the realms of Newtonian dynamics and energy methods in greater detail than in the 1st volume.
 
 As with the first edition, we will be using excerpts of MATLAB script in some examples (code less than a page is included inline, and longer code is in the appendix) but our hope is that our explanations are thorough enough to facilitate the creation of code in any coding language. MATLAB is the language of choice for this document.
 
-As a note, while our work on flight dynamics has mainly focused on modeling rockets, we hope that this document can be used more widely in a variety of applications pertaining to energy mechanics. As such, we have attempted to include content that is useful for other systems, such as orbital dynamics and physics systems, insofar as we have experience in these areas. 
+As a note, while our work on flight dynamics has mainly focused on modeling rockets, we hope that this document can be used more widely in a variety of applications pertaining to energy mechanics and controls. As such, we have attempted to include content that is useful for other systems, such as orbital dynamics and physics systems, insofar as I have experience in these areas. 
 
 Because most of my experience lies in rocket modeling, I explore some of these concepts in the context of rocket modeling and 6-\gls{dof} creation.
 
@@ -301,11 +316,13 @@ $$\begin{array}{ll}
 In much the same way, I must construct all of the mathematical background required to make a 6-\gls{dof} from the ground up. This chapter details the general requirements and an outline of the process I will be following.
 
 \section{Document Outline}
-This volume will primarily focus on energy methods of mechanics.
+This volume will primarily focus on energy methods of mechanics. 
 
 I start this volume by briefly discussing the history of energy methods. I find this is especially useful in priming the reader on \textit{why} methods of energy mechanics exist and intuitively understanding what types of problems are best suited for energy mechanics. 
 
-The mathematical treatment starts by considering the Calculus of Variations, which will then naturally lead to the discussion of Lagrangian mechanics. The discussion of Lagrangian mechanics will then lead to our discussion of Hamiltonian mechanics.
+The mathematical treatment starts by considering the calculus of variations, which will then naturally lead to the discussion of Lagrangian mechanics. The discussion of Lagrangian mechanics will then lead to our discussion of Hamiltonian mechanics.
+
+The calculus of variations has many uses, including extensive uses in the subject of control theory. So, therefore, the second half of this volume will cover some control theory and optimal control. I will include the study of Lie Groups and Lie Algebras in their application to aerospace controls.
 
 My pedagogical approach is strongly reliant on examples and trying problems. I find that this is the best method for readers to learn the content. As such, I try to include many examples, especially those that are historically significant to the study of energy mechanics.
 
@@ -318,23 +335,36 @@ The end of some sections also provides several practice problems to ensure the k
 For readers new to this content, it is expected that some problem may take some consultation with other sources to complete. However, I have attempted to make these problems challenging while not being out of reach. These problems are designed to make the reader apply the knowledge and truly learn. Generally, each subsequent problem in a section is more challenging than the last.
 
 \section{Necessary Background}
-In this 3rd volume, I will cover Energy mechanics. This topic is largely a grad-level subject. At Purdue, this is covered in AAE 507 and AAE 508. It is thus a large undertaking to cover the scope of two grad level courses in this text. However, I think that motivated undergrad students can grasp energy methods and may find them more satisfying than the Newtonian mechanics that are presented in typical undergrad classes.
+In this 3rd volume, I will cover energy mechanics and some brief topics in control theory. This topic is largely a grad-level subject. At Purdue, this is covered in AAE 507 and AAE 508. It is thus a large undertaking to cover the scope of two grad level courses in this text. However, I think that motivated undergrad students can grasp energy methods and may find them more satisfying than the Newtonian mechanics that are presented in typical undergrad classes.
 
-This volume attempts to derive most of these equations in a way that is intuitive for an undergraduate reader. As such, some of the derivations do not include the exacting mathematical precision found in other texts. In these instances, I try to either include footnotes noting what has been glossed over or linking to other texts.
+This book will require a functional understanding of the topics covered in Volume I and Volume II, so I highly recommend reading those first and having an understanding of the material there. This book will also utilize calculus and linear algebra extensively, so it is expected that the reader have a good background in those subjects. This book will be more math heavy than Volume I, and includes heavy mathematics similar to that presented in Volume II. 
+
+This volume attempts to derive most equations in a way that is intuitive for an undergraduate reader. As such, some of the derivations do not include the exacting mathematical precision found in other texts. In these instances, I try to either include footnotes noting what has been glossed over or linking to other texts with more in depth explanations.
+
+\part{Energy Mechanics}
 
 \chapter{Historical Background }
 
-In this chapter we will mostly cover the five main figures who are instrumental to our study of energy mechanics. These five are Isaac Newton, Johann Bernoulli, Leonhard Euler,  Joseph Louis-Lagrange, and William Hamilton.
+In this chapter we cover a brief history of the early years of energy mechanics. I will mostly cover the five main figures who are instrumental to our study of energy mechanics. These five are Isaac Newton, Johann Bernoulli, Leonhard Euler,  Joseph Louis-Lagrange, and William Hamilton.
 
-The story of these figures is greatly intertwined. It is impossible to discuss one figure without discussing the others as well. This section will thus take on a more chronological approach, but background information about many of the important characters is also included here.
+The story of these figures is greatly intertwined. It is impossible to discuss one figure without discussing the others as well. This section will thus take on a more chronological approach, but background information about some of the important characters is also included. Notably, I include some information about Isaac Newton and Euler for their far-reaching impacts in the many aspects of mechanics.
 
 The story of these first four will converge together and culminate in the energy mechanics, possibly the most important implication of the studies of these four historic figures. The foundations set by these scientists persist in the landscape of modern engineering and physics.
 
 Hamilton's and others later editions to the subjects in the form of Hamiltonian mechanics will also be discussed at the end of this chapter.
 
-The book by Goldstine \cite{goldstine_history_1980} has been especially useful in the development of this chapter.
+While the contributions of Weierstrass, Hilbert, and others is important to the mathematical solidification of the calculus of variations, I have chosen not to cover this here because I feel that it does not greatly aid readers in understanding the core of the subject.
+
+The book by Goldstine \cite{goldstine_history_1980} has been especially useful in the development of this chapter. I highly recommend reading chapters 1-3 for readers who are interested in learning more about the history of this subject.
 
 \section{Isaac Newton (1643-1727)} 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images/Portrait_of_Sir_Isaac_Newton,_1689_(brightened).jpg}
+    \caption{Portrait of Sir Isaac Newton}
+    \label{fig:Newton}
+\end{figure}
 
 The history of any kind of mechanics must start with a study of Isaac Newton. Newton is very famous for his description of mechanics based on forces and vectors. However, Newton is also instrumental character in our study of energy mechanics. 
 
@@ -345,12 +375,11 @@ Before we explore his contributions in this field, though, an understanding of h
 \subsection{Newton's Beginnings (1643-1661)}
 In a story likely familiar to many people who find their interests in the realm of physics and engineering, Newton was born as an unwanted child to both his mother and father.
 
-Born on Christmas Day in 1643, Newton was born into an England in the midst of a civil war and full of strife. His father had died 3 months prior to his birth, and he was born prematurely. Newton was unwanted by his own mother, so he was raised by his maternal grandmother, Margery Ayscough.
+Born on Christmas Day in 1642 (Early January, 1643 in the modern calendar), Newton was born into an England in the midst of a civil war and full of strife. His father had died 3 months prior to his birth, and he was born prematurely. Newton was unwanted by his own mother, so he was raised by his maternal grandmother, Margery Ayscough.
 
 Needless to say, Isaac Newton's early years were dominated by a lack of control and great turmoil. It is thus that Newton took great solace in the isolation and fundamental truth of mathematics. 
 
 Newton, in his years of study before college, had a great fascination for mechanical devices and an understanding of the world around him. It was in 1661 that he gained admittance to the Trinity College in Cambridge, right as the English Civil War was coming to a close.
-
 
 \subsection{The Newtonian Calculus (1661-1679)}
 
@@ -380,6 +409,12 @@ Newton continued his work on this subject, graduating in 1665. When Trinity Univ
 It was also during this period of great mathematical bounty that Newton began his studies of calculus. As early as 1665, Newton had methods to compute the derivative and find integral areas of curves. Using the generalized binomial theorem, Newton began to develop the concepts of integration and their applications to physics.
 
 While the Newtonian methods of calculus are largely forgotten today in favor of the notation of Leibniz, it is without a doubt that Newton's contributions to the subject were extraordinary significant. Newton's contributions during this time will play a direct part in our later studies of energy mechanics.
+
+\section{Fermat's Principle}
+It is in the midst of Newton's most fruitful years that we must talk about Fermat's contributions to the subject of energy mechanics, which predate Newton's earliest contributions by nearly a score.
+
+
+
 \subsection{Principia Mathematica (1687)}
 
 It is in \textit{Principia} that we find the first evidences of Newton's contributions to the field of energy mechanics. It is Newton's work in the \textit{Principia} that I will focus most of my efforts on in this history section.
@@ -538,7 +573,7 @@ A brief overview of the differences between the two schemes of \gls{eom} derivat
 \begin{figure}[ht]
     \centering
     
-\includegraphics[width=\linewidth]{diagram-20250322.png}
+\includegraphics[width=\linewidth]{Images/diagram-20250322.png}
 
     \caption{Newtonian vs. Lagrangian Mechanics Approach}
     \label{fig:newt v lang}
@@ -1178,6 +1213,27 @@ Although MATLAB does not have built-in functions for these integrators, scripts 
 
 The best use case for these algorithms is for systems with a Hamiltonian or Lagrangian description that need to be integrated over a long time span. Because these integrators conserve energy, they will better preserve the characteristics of these systems over long times as compared to RK integrators.
 
+\part{Controls}
+Controls is a vast subject which is to vast to cover in its entirety in one book. Similar to Volume I, then, I will cover this subject mostly in it's applicability to our application with rocket modeling and a few select aerospace applications.
+
+\chapter{The Laplace Domain}
+
+We start our exploration of control theory by exploring the \gls{laplace transform}
+\textit{}
+The \gls{laplace transform} is an integral transform, much like the \textit{Fourier Transform}. We find the laplace transform of special use for its applications in solving differential equations.
+
+Here, I want to present an alternative impetus for the \gls{laplace transform} that is often not taught in differential equations, by analyzing the \glspl{eigenfunction} of the derivative operator.
+
+I find this explanation especially enlightening on this topic, although others may prefer the more conventional approach to this topic. As such, I have included some resources that cover the \gls{laplace transform} in the more conventional manner.
+
+\section{Eigenfunction of Derivatives}
+\Glspl{eigenfunction} are in essense, the building blocks of the solutions for equations. When we have a linear operator, such as an integral or derivative, there must exist a function that when acted upon by this operator, is unchanged by the operator aside from being scaled.
+
+In the context of differential equations, were the derivative operator is especially prevalent, we may find such a function especially useful.
+
+It is with this context that we investigate the exponential function, $e^x$, which we find useful for exactly this property.
+
+
 \chapter{Appendix}
 
 \section{Proofs}
@@ -1210,7 +1266,7 @@ So, we have $F=m\ddot{x}_i$.
 
 \section{Code}
 This section contains lengthier segments of example code from either the 6-\gls{dof} itself or a proof/example relating to it. Refer to the section numbers to find the appropriate implementation of each code segment.
-\subsection{Lorenz Attractor RK4 Example}\label{sec:Lorenz Attractor RK4 Example}
+
 %\lstinputlisting[style=Matlab-editor, caption = Lorenz Attractor]{6DoF Explanation Scripts/Lorenz Attractor/LorenzAttractor.m}\label{code:Lorenz}
 
 \setglossarystyle{altlist}
