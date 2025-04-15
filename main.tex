@@ -186,6 +186,21 @@
   {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
 \makeatother
 
+\usepackage{titlesec}
+
+\titleclass{\part}{top} % make part like a chapter
+\titleformat{\part}
+[display]
+{\centering\normalfont\Huge\bfseries}
+{\MakeUppercase{\partname} \thepart}
+{0pt}
+{\titlerule[2pt]\vspace{1pc}\huge\MakeUppercase}
+%
+\titlespacing*{\part}{0pt}{100pt}{20pt}
+%
+
+
+\titlespacing*{\chapter}{0pt}{0pt}{40pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % First page of book which contains 'stuff' like: %
@@ -222,8 +237,7 @@
 \pagestyle{empty}
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{}
-    \caption{Caption}
+    \includegraphics[width=\linewidth]{Images/FlightDynamics}
     \label{fig:enter-label}
 \end{figure}
 
@@ -308,7 +322,7 @@ Because most of my experience lies in rocket modeling, I explore some of these c
 
 \section*{Acknowledgments}
 \begin{itemize}
-\item I would like to thank ----
+\item I would like to thank Prof. Cunningham for his support with each of the volumes of the Flight Dynamics Bible.
 \end{itemize}
 
 
