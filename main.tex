@@ -15,6 +15,7 @@
 \usetikzlibrary{shadows.blur}
 \usetikzlibrary{shapes}
 \usepackage{indentfirst}
+\usepackage[Conny]{fncychap}
 \usepackage{mathdots}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -29,6 +30,7 @@
 \usepackage{csquotes}
 \usepackage{biblatex}
 \addbibresource{references.bib}
+\usepackage{endnotes}
 
 % If you want to break on URL numbers
 \setcounter{biburlnumpenalty}{9500}
@@ -40,6 +42,44 @@
 \usepackage{float}
 \usepackage{gensymb}
 \usepackage{amsfonts}
+
+\def\exampletext{Example} % If English
+
+\NewDocumentEnvironment{testexample}{ O{} }
+{
+\colorlet{colexam}{red!55!black} % Global example color
+\newtcolorbox[use counter=testexample]{testexamplebox}{%
+    % Example Frame Start
+    empty,% Empty previously set parameters
+    title={\exampletext: #1},% use \thetcbcounter to access the testexample counter text
+    % Attaching a box requires an overlay
+    attach boxed title to top left,
+       % Ensures proper line breaking in longer titles
+       minipage boxed title,
+    % (boxed title style requires an overlay)
+    boxed title style={empty,size=minimal,toprule=0pt,top=4pt,left=3mm,overlay={}},
+    coltitle=colexam,fonttitle=\bfseries,
+    before=\par\medskip\noindent,parbox=false,boxsep=0pt,left=3mm,right=0mm,top=2pt,breakable,pad at break=0mm,
+       before upper=\csname @totalleftmargin\endcsname0pt, % Use instead of parbox=true. This ensures parskip is inherited by box.
+    % Handles box when it exists on one page only
+    overlay unbroken={\draw[colexam,line width=.5pt] ([xshift=-0pt]title.north west) -- ([xshift=-0pt]frame.south west); },
+    % Handles multipage box: first page
+    overlay first={\draw[colexam,line width=.5pt] ([xshift=-0pt]title.north west) -- ([xshift=-0pt]frame.south west); },
+    % Handles multipage box: middle page
+    overlay middle={\draw[colexam,line width=.5pt] ([xshift=-0pt]frame.north west) -- ([xshift=-0pt]frame.south west); },
+    % Handles multipage box: last page
+    overlay last={\draw[colexam,line width=.5pt] ([xshift=-0pt]frame.north west) -- ([xshift=-0pt]frame.south west); },%
+    }
+}
+
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{\vspace*{-20\p@}}{}{}
+\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{\vspace*{-20\p@}}{}{}
+\patchcmd{\DOTI}{\vskip 80\p@}{\vskip 40\p@}{}{}
+\patchcmd{\DOTIS}{\vskip 40\p@}{\vskip 0\p@}{}{}
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Source: http://en.wikibooks.org/wiki/LaTeX/Hyperlinks %
@@ -131,6 +171,7 @@
 
 \setlength{\headheight}{15pt}
 
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Chapter quote at the start of chapter        %
 % Source: http://tex.stackexchange.com/a/53380 %
@@ -177,6 +218,14 @@
 
 %
 \pagenumbering{roman}
+
+\pagestyle{empty}
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{}
+    \caption{Caption}
+    \label{fig:enter-label}
+\end{figure}
 
 \begin{dedication}
     This document is dedicated to Purdue Space Program Liquids. PSP Liquids has given us a vast amount of experience and means to explore the realm of Flight Dynamics. We hope that we can contribute to the wealth of information provided by PSP with this document.
@@ -309,16 +358,9 @@ $$\begin{array}{ll}
 
 \pagenumbering{arabic}
 
-\begin{chapquote}{Carl Sagan}
-''If you wish to make an apple pie from scratch, you must first invent the universe.''
-\end{chapquote}
-
-In much the same way, I must construct all of the mathematical background required to make a 6-\gls{dof} from the ground up. This chapter details the general requirements and an outline of the process I will be following.
 
 \section{Document Outline}
-This volume will primarily focus on energy methods of mechanics. 
-
-I start this volume by briefly discussing the history of energy methods. I find this is especially useful in priming the reader on \textit{why} methods of energy mechanics exist and intuitively understanding what types of problems are best suited for energy mechanics. 
+This volume will primarily focus on energy methods of mechanics. I start this volume by briefly discussing the history of energy methods. I find this is especially useful in priming the reader on \textit{why} methods of energy mechanics exist and intuitively understanding what types of problems are best suited for energy mechanics. 
 
 The mathematical treatment starts by considering the calculus of variations, which will then naturally lead to the discussion of Lagrangian mechanics. The discussion of Lagrangian mechanics will then lead to our discussion of Hamiltonian mechanics.
 
@@ -339,13 +381,15 @@ In this 3rd volume, I will cover energy mechanics and some brief topics in contr
 
 This book will require a functional understanding of the topics covered in Volume I and Volume II, so I highly recommend reading those first and having an understanding of the material there. This book will also utilize calculus and linear algebra extensively, so it is expected that the reader have a good background in those subjects. This book will be more math heavy than Volume I, and includes heavy mathematics similar to that presented in Volume II. 
 
+The mathematical foundations of control theory are very dense and unlikely to be very useful to most readers. So, for this section of the book, I have mostly opted for practical examples of control theory and only included theory where I feel that it is enlightening or especially useful to the understanding for the reader. One exception to this is the use of the calculus of variations in optimal control, which I have used because it ties into our discussion with energy methods.
+
 This volume attempts to derive most equations in a way that is intuitive for an undergraduate reader. As such, some of the derivations do not include the exacting mathematical precision found in other texts. In these instances, I try to either include footnotes noting what has been glossed over or linking to other texts with more in depth explanations.
 
 \part{Energy Mechanics}
 
 \chapter{Historical Background }
 
-In this chapter we cover a brief history of the early years of energy mechanics. I will mostly cover the five main figures who are instrumental to our study of energy mechanics. These five are Isaac Newton, Johann Bernoulli, Leonhard Euler,  Joseph Louis-Lagrange, and William Hamilton.
+In this chapter we cover a brief history of the early years of energy mechanics. I will mostly cover the main figures who are instrumental to our study of energy mechanics. These main figures are Isaac Newton, Pierre de Fermat, Johann Bernoulli, Leonhard Euler,  Joseph Louis-Lagrange, and William Hamilton.
 
 The story of these figures is greatly intertwined. It is impossible to discuss one figure without discussing the others as well. This section will thus take on a more chronological approach, but background information about some of the important characters is also included. Notably, I include some information about Isaac Newton and Euler for their far-reaching impacts in the many aspects of mechanics.
 
@@ -383,11 +427,11 @@ Newton, in his years of study before college, had a great fascination for mechan
 
 \subsection{The Newtonian Calculus (1661-1679)}
 
-During his time in college, Newton began his real exploration of mathematics. Newton's first great contribution to mathematics was in his studies of the Binomial theorem, which can give an expansion for a binomial raised to an arbitrary degree.
+During his time in college, Newton began his real exploration of mathematics. Newton's first great contribution to mathematics was in his studies of the Binomial theorem, which can give an expansion for a binomial raised to an arbitrary degree. Before Newton, there existed a theorem for the binomial theorem for the integers, $\mathbb{Z}$, which is presented below in Theorem \ref{thm: binomial}.
 
-\begin{theorem}[Binomial theorem]
+\begin{theorem}[Binomial theorem]\label{thm: binomial}
     A binomial of form $x+y$ to a power n, where $n\in\mathbb{Z}$, the expansion can be written as:
-    $$(x+y)^n=\sum_{k-0}^{n}\binom{n} {k}x^ky^{n-k}$$
+    $$(x+y)^n=\sum_{k=0}^{n}\binom{n} {k}x^ky^{n-k}$$
     where $\binom{r}{k}$ is defined as:
     $$\binom{n}{k}=\frac{n!}{k!(n-k)!}$$
 \end{theorem}
@@ -410,16 +454,61 @@ It was also during this period of great mathematical bounty that Newton began hi
 
 While the Newtonian methods of calculus are largely forgotten today in favor of the notation of Leibniz, it is without a doubt that Newton's contributions to the subject were extraordinary significant. Newton's contributions during this time will play a direct part in our later studies of energy mechanics.
 
-\section{Fermat's Principle}
+\section{Fermat's Least Time Principle (1662)}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Images/Fermat.jpg}
+    \caption{A portrait of Pierre de Fermat}
+    \label{fig:fermat}
+\end{figure}
 It is in the midst of Newton's most fruitful years that we must talk about Fermat's contributions to the subject of energy mechanics, which predate Newton's earliest contributions by nearly a score.
 
+Fermat is famous in mathematics for \textit{Fermat's Last Theorem}, which remained unsolved for 358 years. A solution involving elliptic curves, which you can find an in depth discussion in \cite{hellegouarch_invitation_2001} (this is entirely irrelevant to our work here). His contributions here, however, relate to the so-called \textit{Fermat's Principle of Least Time}. Fermat's biggest insight was the understanding that 'nature operates by means and ways that are easiest and fastest'. Although this way seem a simple statement, it will underlie the physical principle at the root of the calculus of variations.
+
+Fermat's Principle of Least Time involves finding a light path such that the time is minimized. \footnote{It can be shown that this is not exactly true, as the only condition required for sufficiency in this problem is that the changes to the variation are of the second-order. Fermat's condition is simply one such case of this.}Fermat's set up is as shown in \ref{fig:least time ray}.
+
+\begin{figure}[ht]
+    \centering
+    
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Rectangle [id:dp6708114455602667] 
+\draw  [color={rgb, 255:red, 126; green, 219; blue, 222 }  ,draw opacity=0.51 ][fill={rgb, 255:red, 126; green, 219; blue, 222 }  ,fill opacity=0.51 ] (110,160) -- (550,160) -- (550,280) -- (110,280) -- cycle ;
+%Straight Lines [id:da6428685375335336] 
+\draw    (130,90) -- (350,160) ;
+\draw [shift={(130,90)}, rotate = 17.65] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+%Straight Lines [id:da7310900658578104] 
+\draw    (350,160) -- (410,240) ;
+\draw [shift={(410,240)}, rotate = 53.13] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+%Shape: Arc [id:dp45852649988194416] 
+\draw  [draw opacity=0] (236.39,123.09) .. controls (252.29,76.98) and (297.15,43.75) .. (350,43.75) -- (350,160) -- cycle ; \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (237.64,119.65) .. controls (254.54,75.34) and (298.47,43.75) .. (350,43.75) ; \draw [shift={(350,43.75)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.03) -- (0,-5.03)   ; \draw [shift={(236.39,123.09)}, rotate = 289.02] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ;
+%Shape: Arc [id:dp21512964060589046] 
+\draw  [draw opacity=0] (382.69,203.39) .. controls (373.53,209.9) and (362.23,213.75) .. (350,213.75) -- (350,160) -- cycle ; \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (380.17,205.08) .. controls (371.49,210.56) and (361.13,213.75) .. (350,213.75) ; \draw [shift={(350,213.75)}, rotate = 360] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.03) -- (0,-5.03)   ; \draw [shift={(382.69,203.39)}, rotate = 144.58] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ;
+%Straight Lines [id:da11658348664865648] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (350,40) -- (350,280) ;
+
+% Text Node
+\draw (251,52.4) node [anchor=north west][inner sep=0.75pt]    {$\theta _{i}$};
+% Text Node
+\draw (361,220.4) node [anchor=north west][inner sep=0.75pt]    {$\theta _{r}$};
+
+\end{tikzpicture}
 
 
-\subsection{Principia Mathematica (1687)}
+    \caption{Fermat's Set-up for the Least Time Problem for a Light Ray}
+    \label{fig:least time ray}
+\end{figure}
 
-It is in \textit{Principia} that we find the first evidences of Newton's contributions to the field of energy mechanics. It is Newton's work in the \textit{Principia} that I will focus most of my efforts on in this history section.
+I do not delve into the proof by Fermat, but it involves a geometric proof using the Law of Cosines and finding the minimization by setting the derivative of the function of the length equal to zero $f'(0)=0$. This is a similar methodology we will see more rigorously defined in the calculus of variations. Fermat's result, in the modern language, is often referred to as \textit{Snell's Law}, which gives $n_i\sin\theta_i=n_r\sin\theta_r$. We will keep this result in mind, as we will see it again when we solve the problem of the \textit{Brachistichrone}.
 
-In 1685, Newton formulated the \textit{minimal resistance problem}. In essense, this problem involves finding a solid of revolution for which the object produces a minimal drag. In Newton's time, no solidified theories of fluid dynamics had been formulated, 
+\section{Principia (1687)}
+
+It is in \textit{Principia} that we find the first evidences of Newton's contributions to the field of energy mechanics. It is Newton's work in the \textit{Principia} that most agree the first real works of the the calculus of variations are found.
+
+In 1685, Newton formulated the \textit{minimal resistance problem}. In essense, this problem involves finding a solid of revolution for which the object produces a minimal drag. In Newton's time, no solidified theories of fluid dynamics had been formulated, so Newton suggested a fluid that is iso
 
 The major
 
@@ -1081,6 +1170,15 @@ With some rearrangement:
 $$\ddot{\theta}+\frac{g}{L}\sin\theta=0$$
 We notice that with the \gls{Lagrangian} approach, we did not need to have an understanding of the vector directions, frame translations, or \gls{bke} to find our \gls{eom}. This, in addition to the flexibility of the generalized coordinates, is the real power of this approach.
 
+ \section{An Intuitive Approach to Hamilton's Principle}
+
+ We have so far seen that Hamilton's principle is useful for solving these problems. Now, with our background for generalized coordinates built up, we can explore a derivation of the action which will explain the presence of the $T-U$ term and the $T+U$ term in the Hamiltonian.
+
+The approach described here comes mostly from the work in \cite{carcassi_geometric_2023}. I have simplified some of the details of this approach to make this section more simple for the reader, but I recommend reading this paper for a deeper understanding of the subject.
+ 
+
+ 
+
 %\section{Generalized Forces}
 
 \section{Hamiltonian Mechanics}\label{sec:hamiltonian}
@@ -1220,18 +1318,53 @@ Controls is a vast subject which is to vast to cover in its entirety in one book
 
 We start our exploration of control theory by exploring the \gls{laplace transform}
 \textit{}
-The \gls{laplace transform} is an integral transform, much like the \textit{Fourier Transform}. We find the laplace transform of special use for its applications in solving differential equations.
+The \gls{laplace transform} is an integral transform, much like the \textit{Fourier Transform}. We find the Laplace transform of special use for its applications in solving differential equations.
 
 Here, I want to present an alternative impetus for the \gls{laplace transform} that is often not taught in differential equations, by analyzing the \glspl{eigenfunction} of the derivative operator.
 
 I find this explanation especially enlightening on this topic, although others may prefer the more conventional approach to this topic. As such, I have included some resources that cover the \gls{laplace transform} in the more conventional manner.
 
 \section{Eigenfunction of Derivatives}
-\Glspl{eigenfunction} are in essense, the building blocks of the solutions for equations. When we have a linear operator, such as an integral or derivative, there must exist a function that when acted upon by this operator, is unchanged by the operator aside from being scaled.
+\Glspl{eigenfunction} are in essense, the building blocks of the solutions for equations. When we have a linear operator, such as an integral or derivative, there must exist a function that when acted upon by this operator, is unchanged by the operator aside from being scaled. This is precisely what we mean when we define something as an \gls{eigenfunction}. I find the etyomology of this word especially useful in this case. Eigen, in German, is a word meaning 'self' or 'own'. So, any time we see something, such as an eigenvalue or \gls{eigenfunction}, it is a quantity for which it in some way produces itself.
 
-In the context of differential equations, were the derivative operator is especially prevalent, we may find such a function especially useful.
+In the context of differential equations, where the derivative operator is especially prevalent, we find such a function especially useful.
 
-It is with this context that we investigate the exponential function, $e^x$, which we find useful for exactly this property.
+It is with this context that we investigate the exponential function, $e^{ax}$, which we find useful for exactly this property.
+
+More precisely, we want to solve the eigenvalue system $Dy=\lambda y$, where we denote the differentiation operator $\frac{d}{dx}\equiv D$. We can see that, plugging in $e^{ax}$ for this system, we have this exact property:
+$$De^{ax}=ae^{ax}$$
+So we have our eigenfunction, $e^{ax}$, which produces an eigenvalue $a$. Now, we want to use this useful property on equations that are not exponentials. We can do so by \textit{projection} of these functions onto the exponential functions.
+
+\section{Inner Product Spaces}
+To perform this projection, we must first define some new terminology and mathematical understanding. In mathematics, we generally have a simple case which we want to generally extent. The same is true here, which will motivate our discussion of inner products.
+
+We start with the standard definition of projection in a finite-dimensional vector space. We consider two vectors, both existing in $\mathbb{R}^2$ space.
+
+%add tikZ image here
+
+If we want to find the component of one vector in the direction of the other vector, we use the linear operation of the dot product. This quantity tells us the 'similarity' of the two vectors.
+
+We can define the dot product of two vectors in a finite $n$-dimensional space generally as:
+$$\vec{a}\cdot \vec{b}=\sum_{k=0}^{n}{a_kb_k}$$
+To continue further, we will extend this definition to the complex numbers.
+
+\subsection{Complex Numbers}
+
+\subsection{Generalized Inner Product Spaces}
+Now, we can make a generalization. Say we have a continuous function, $f(x)$. We can encode $f(x)$ as a vector by taking a measurement of the value of $f(x)$ at each input $x$. However, we run into a problem, because there are an infinite number of values of $x$! So, to do this, we would need a vector of infinite length.
+
+So, we might try to do this by extending our sum out to infinity. Now our $a$ and $b$ are functions of $t$ since they are continuous in time:
+$$a(t)\cdot b(t)=\sum_{k=0}^{\infty}{a_kb_k}$$
+In doing so, we must change this infinite sum to an integral to evaluate over the time domain:
+$$a(t)\cdot b(t)=\int_0^\infty{a(t)b(t)}$$
+Now, we have made this a function which can be properly evaluated.
+
+We can now return to the example of the exponential functions, $e^{at}$. If we suppose that $a$ can be a complex-valued number, which we call $s$ by convention, we have $e^{st}$. So, we can project our function onto the basis vectors defined by $e^{st}$. Doing so, we have the Laplace Transform:
+\begin{gather}
+    \color{blue}\boxed{\color{black}f(t)\cdot e^{st}=\int_0^\infty{f(t)e^{-st}}}\\
+    \color{blue}\mathrm{Laplace \ Transform}
+\end{gather}
+
 
 
 \chapter{Appendix}
