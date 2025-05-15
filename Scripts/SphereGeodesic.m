@@ -14,7 +14,7 @@
 
 clear;
 clc;
-close all;
+close all
 
 %% initial and final angles (Purdue to Moscow by default):
 %theta, polar angle
@@ -62,7 +62,14 @@ hold on
 plot3(x,y,z, '-', 'color','red','LineWidth',1.5)
 plot3(x(1),y(1),z(1),'.', 'MarkerSize',20)
 plot3(x(end),y(end),z(end),'rd')
-xlabel('x')
-ylabel('y')
-zlabel('z')
 axis equal
+view(45,30)
+
+set(gca,'XColor', 'none','YColor','none', 'ZColor', 'none')
+set(gca, 'color', 'k');
+axis equal
+g = gcf;
+%g.WindowState = 'maximized';
+set(gcf,'Color','k');
+print(gcf,'Geodesic','-dpng','-r600')
+
