@@ -1,0 +1,75 @@
+% PSP FLIGHT DYNAMICS:
+%
+% Title: SphereGeodesic
+% Author: Hudson Reynolds - Created: 5/14/2025
+% Last Modified: 5-14-2025
+%
+% Description: This is a script that takes in coordinates on a sphere and
+% outputs the geodesic (great circle) between them
+%
+% Inputs: N/A
+%
+% Outputs:
+% Graph outputs
+
+clear;
+clc;
+close all;
+
+%% initial and final angles (Purdue to Moscow by default):
+%theta, polar angle
+theta_1 = 90-40.409363;
+theta_2 = 90-55.7558;
+
+%phi, azimuthal 
+phi_1 = -86.949781;
+phi_2 = 37.6173;
+
+%convert to rad:
+phi_1 = deg2rad(phi_1);
+phi_2 = deg2rad(phi_2);
+theta_1 = deg2rad(theta_1);
+theta_2 = deg2rad(theta_2);
+
+%create a unit sphere which the geodesic lies on that looks like earth
+
+sp.npanels = 100; % Increase this if you want a smoother surface on the earth
+
+[xSphere,ySphere,zSphere] = sphere(100);
+sp.imgFile = "earth.jpg";
+sp.globe = surf(xSphere, ySphere, -zSphere, 'FaceColor', 'none', 'EdgeColor', 'none','HandleVisibility','off'); 
+sp.surfaceData = imread(sp.imgFile);
+set(sp.globe, 'FaceColor', 'texturemap', 'CData', sp.surfaceData, 'FaceAlpha', 1, 'EdgeColor', 'none');
+
+% sovle for phi0 and a numerically (transendental equations):
+syms phi_0
+eqn = cot(theta_1)/cot(theta_2)==cos(phi_1-phi_0)/cos(phi_2-phi_0);
+phi_0 = vpasolve(eqn,phi_0);
+phi_0 = double(phi_0(1));
+
+a = cot(theta_1)/cos(phi_1-phi_0);
+
+%find the phi and theta matrices
+%theta = linspace(theta_1,theta_2,200);
+%phi = phi_0 - acos(cot(theta)/a);
+
+phi = linspace(phi_1,phi_2,200);
+theta = acot(a*cos(phi - phi_0));
+
+rho = 1;
+
+% convert the spherical coordinate system to cartesian for plotting
+x = rho*sin(theta).*cos(phi);
+y = rho*sin(theta).*sin(phi);
+z = rho*cos(theta);
+
+figure(1)
+%surf(xSphere,ySphere,zSphere, 'FaceColor','blue', 'LineStyle','none', 'FaceAlpha','0.2
+hold on
+plot3(x,y,z, '-', 'color','red','LineWidth',1.5)
+plot3(x(1),y(1),z(1),'.', 'MarkerSize',20)
+plot3(x(end),y(end),z(end),'rd')
+xlabel('x')
+ylabel('y')
+zlabel('z')
+axis equal
