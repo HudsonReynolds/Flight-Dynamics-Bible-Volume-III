@@ -1148,13 +1148,13 @@ $$\phi=\int{\phi'}=\int{\frac{c}{\sin\theta\left(\sin^2\theta-c^2\right)}}$$
 After looking at the problem for a long time, it becomes apparent that we should perform u-substitution with $u=\cot\theta$. Evaluation of this integral can easily be done with MATLAB or Mathematica (there is no useful information gleaned from doing this integral). Doing so yields: $$\cot{\theta}=a\cos{(\phi-\phi_0)}$$
 Where $\phi_0$ comes from the integration constant. This is our final answer. We can solve for $a$ and $\phi_0$ using numerical methods since the equation is transcendental.
 
-A MATLAB Script which shows such \glspl{geodesic} is included in the Appendix in \autoref{script:Geodesic}. The output of the script is shown in \autoref{}
+A MATLAB Script which shows such \glspl{geodesic} is included in the Appendix in \autoref{script:Geodesic}. The output of the script is shown in \autoref{fig:Geodesic}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
-    \includesvg[width=\columnwidth]{Geodesic.svg}
-    \caption{Caption}
-    \label{fig:enter-label}
+    \includesvg[width=\columnwidth]{Scripts/Geodesic.svg}
+    \caption{Geodesic shown on the Earth}
+    \label{fig:Geodesic}
 \end{figure}
 
 For a short path length where the distance is much smaller than the sphere radius $r$, we expect that this will return the standard straight line as the shortest distance.
