@@ -43,6 +43,7 @@
 \usepackage{etoolbox}
 \usepackage{hyperref}
 
+\usepackage[inkscapelatex=false]{svg}
 
 % examples creation:
 
@@ -1083,7 +1084,7 @@ This gives us the fundamental equation of the calculus of variations, called \gl
 \end{gather}
 \subsection{Delta Notation}
 In later sections, it is useful to have a shorthand for these partial derivative quantities. For a quantity $\chi$, the variation, $\delta$ is given as:
-$$\delta\equiv\frac{\partial\chi}{\partial \varepsilon}d\varepsilon$$Using this notation, we can rewrite \eqautoref{eq:diff functional final} after some algebraic manipulation as:
+$$\delta\chi\equiv\frac{\partial\chi}{\partial \varepsilon}d\varepsilon$$Using this notation, we can rewrite \eqautoref{eq:diff functional final} after some algebraic manipulation as:
 \begin{equation}
     \delta J= \int_{x_1}^{x_2}\left(\frac{\partial f}{\partial y}-\frac{d}{dx}\frac{\partial f}{\partial y'}\right)\delta y{dx}
 \end{equation}
@@ -1091,7 +1092,9 @@ And thus, \eqautoref{eq: Euler's Diff eq} can be written concisely as:
 \begin{equation}
     {\color{black}\delta J=0}
 \end{equation}
-This is a very general and far reaching conclusion that can be applied to many systems. For our use cases in dynamics, we have more useful forms of this equation which will be explored in the following section.
+This is a very general and far reaching conclusion that can be applied to many systems. For our use cases in dynamics, we have more useful forms of this equation which will be explored in the following sections.
+
+We will explore a short example of its usefulness here as it relates to problems in geometry - namely of the \glspl{geodesic} of spherical geometries.
 
 \begin{example}[Geodesics of a Sphere]\label{ex:geodesic}
 To show an example of the use of variational calculus, we will consider finding the shortest path of a spherical surface. We know from intuition that this path is a great circle. Let us prove this mathematically with variational calculus:
@@ -1105,7 +1108,7 @@ To start, we need to define what an arc length on a spherical surface looks like
 
 Some long and arduous mathematics gives the following for the arc length:
 $$ds=\sqrt{r^2d\theta^2+r^2\sin^2\theta d\phi^2}$$
-At this point, we want to make two assumptions to get this into a form that we can easily evaluate. Since we are only looking for a geodesic, we can assume that $r=1$ without losing any information. Next, we want to put our solution in terms of just one variable - either $d\theta$ or $d\phi$. In this case, I choose $d\theta$. This means that we parameterize our path with $\phi=\phi(\theta)$. Taking this derivative, we have:
+At this point, we want to make two assumptions to get this into a form that we can easily evaluate. Since we are only looking for a \gls{geodesic}, we can assume that $r=1$ without losing any information. Next, we want to put our solution in terms of just one variable - either $d\theta$ or $d\phi$. In this case, I choose $d\theta$. This means that we parameterize our path with $\phi=\phi(\theta)$. Taking this derivative, we have:
 $$\phi'=\frac{d\phi}{d\theta}$$
 This gives ${\phi'}^2=\frac{d\phi^2}{d\theta^2}$. Rewriting with these new terms, we have an expression for $ds$:
 $$ds=\sqrt{1+\sin^2\theta{\phi'}^2}d\theta$$
@@ -1121,7 +1124,6 @@ Note that $\phi$ has replaced $y$ in the form presented in \eqautoref{eq: Euler'
 
 Now, we simply perform the calculus to find our answer:
 $$\frac{\partial f}{\partial \phi}=\frac{\partial}{\partial\phi}\left(\sqrt{1+\sin^2\theta{\phi'}^2}\right)=0$$
-
 We find that this first expression is 0 since there are no terms containing $\phi$ explicitly. This means that the derivative of $\frac{\partial f}{\partial \phi'}$, $\frac{d}{d\theta}\frac{\partial f}{\partial \phi'}$, must be constant with respect to $\theta$ so that its derivative is 0. We will use this fact below. We establish the whole term as:
 
 $$\frac{d}{d\theta}\frac{\partial f}{\partial \phi'}=\frac{d}{d\theta}\left[\frac{\partial}{\partial \phi'}\left(\sqrt{1+\sin^2\theta{\phi'}^2}\right)\right]=0$$
@@ -1130,7 +1132,6 @@ Computing the partial derivative, we have:
 \begin{equation}
 \frac{\partial}{\partial \phi'}\left(\sqrt{1+\sin^2\theta{\phi'}^2}\right)=\frac{\sin^2\theta\phi'}{\sqrt{1+\sin^2\theta\phi'}}=const.
 \end{equation}
-
 We can rearrange the statement to solve for the constant (which I will now call $c$) in terms of $\phi'$, which is simply algebraic manipulation.
 \begin{equation}
     \begin{split}
@@ -1141,18 +1142,20 @@ c^2 &= {\phi'}^2\sin^2\theta\left(\sin^2{\theta}-c^2\right)\\
 {\phi'}&=\frac{c}{\sin\theta\left(\sin^2\theta-c^2\right)}
     \end{split}
 \end{equation}
-
-We have been using the implicit assumption that $\phi$ is a function of $\theta$, so we finally integrate this with respect to $\theta$ to attain the final geodesic curve in terms of $\phi$ and $\theta$.
+We have been using the implicit assumption that $\phi$ is a function of $\theta$, so we finally integrate this with respect to $\theta$ to attain the final \gls{geodesic} curve in terms of $\phi$ and $\theta$.
 
 $$\phi=\int{\phi'}=\int{\frac{c}{\sin\theta\left(\sin^2\theta-c^2\right)}}$$
 After looking at the problem for a long time, it becomes apparent that we should perform u-substitution with $u=\cot\theta$. Evaluation of this integral can easily be done with MATLAB or Mathematica (there is no useful information gleaned from doing this integral). Doing so yields: $$\cot{\theta}=a\cos{(\phi-\phi_0)}$$
-
 Where $\phi_0$ comes from the integration constant. This is our final answer. We can solve for $a$ and $\phi_0$ using numerical methods since the equation is transcendental.
 
-A MATLAB Script which shows such geodesics is 
+A MATLAB Script which shows such \glspl{geodesic} is included in the Appendix in \autoref{script:Geodesic}. The output of the script is shown in \autoref{}
 
-\lstinputlisting[language=Matlab, caption=1 DoF]{6DoF Explanation Scripts/OneDofEuler.m}\label{Script 1}
-
+\begin{figure}
+    \centering
+    \includesvg[width=\columnwidth]{Geodesic.svg}
+    \caption{Caption}
+    \label{fig:enter-label}
+\end{figure}
 
 For a short path length where the distance is much smaller than the sphere radius $r$, we expect that this will return the standard straight line as the shortest distance.
 
@@ -2101,6 +2104,10 @@ We can now return to the example of the exponential functions, $e^{at}$. If we s
 \chapter{Flight Dynamics and Control}
 
 \chapter{Appendix}
+
+\section{Code}
+\subsection{Geodesics of a Sphere}
+\lstinputlisting[style=Matlab-editor, caption=Sphere Geodesic]{Scripts/SphereGeodesic.m}\label{script:Geodesic}
 
 \section{Brachistrochrone Extras (Delete maybe)}
 From Brachistochrone section:
