@@ -65,11 +65,13 @@ plot3(x(end),y(end),z(end),'rd')
 axis equal
 view(45,30)
 
-set(gca,'XColor', 'none','YColor','none', 'ZColor', 'none')
-set(gca, 'color', 'k');
+set(gca,'XColor', 'w','YColor','w', 'ZColor', 'w')
+set(gca, 'color', 'w');
 axis equal
 g = gcf;
 %g.WindowState = 'maximized';
-set(gcf,'Color','k');
+set(gcf,'Color','w');
 print(gcf,'Geodesic','-dpng','-r600')
+print(gcf,'Geodesic','-svg')
+
 
