@@ -1,7 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% LaTeX book template                           %%
-%% Author:  Amber Jain (http://amberj.devio.us/) %%
-%% License: ISC license                          %%
+%% PSP Liquids Book Template                     %%
+%% Author:  Hudson Reynolds                      %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[12pt]{report}
@@ -15,7 +14,6 @@
 \usetikzlibrary{shadows.blur}
 \usetikzlibrary{shapes}
 \usepackage{indentfirst}
-\usepackage[Conny]{fncychap}
 \usepackage{mathdots}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -28,9 +26,9 @@
 \usepackage{setspace}
 \usepackage{matlab-prettifier}
 \usepackage{csquotes}
-\usepackage{biblatex}
+\usepackage[style=numeric]{biblatex}
 \addbibresource{references.bib}
-\usepackage{endnotes}
+\usepackage{braket}
 
 % If you want to break on URL numbers
 \setcounter{biburlnumpenalty}{9500}
@@ -42,55 +40,79 @@
 \usepackage{float}
 \usepackage{gensymb}
 \usepackage{amsfonts}
-
-\def\exampletext{Example} % If English
-
-\NewDocumentEnvironment{testexample}{ O{} }
-{
-\colorlet{colexam}{red!55!black} % Global example color
-\newtcolorbox[use counter=testexample]{testexamplebox}{%
-    % Example Frame Start
-    empty,% Empty previously set parameters
-    title={\exampletext: #1},% use \thetcbcounter to access the testexample counter text
-    % Attaching a box requires an overlay
-    attach boxed title to top left,
-       % Ensures proper line breaking in longer titles
-       minipage boxed title,
-    % (boxed title style requires an overlay)
-    boxed title style={empty,size=minimal,toprule=0pt,top=4pt,left=3mm,overlay={}},
-    coltitle=colexam,fonttitle=\bfseries,
-    before=\par\medskip\noindent,parbox=false,boxsep=0pt,left=3mm,right=0mm,top=2pt,breakable,pad at break=0mm,
-       before upper=\csname @totalleftmargin\endcsname0pt, % Use instead of parbox=true. This ensures parskip is inherited by box.
-    % Handles box when it exists on one page only
-    overlay unbroken={\draw[colexam,line width=.5pt] ([xshift=-0pt]title.north west) -- ([xshift=-0pt]frame.south west); },
-    % Handles multipage box: first page
-    overlay first={\draw[colexam,line width=.5pt] ([xshift=-0pt]title.north west) -- ([xshift=-0pt]frame.south west); },
-    % Handles multipage box: middle page
-    overlay middle={\draw[colexam,line width=.5pt] ([xshift=-0pt]frame.north west) -- ([xshift=-0pt]frame.south west); },
-    % Handles multipage box: last page
-    overlay last={\draw[colexam,line width=.5pt] ([xshift=-0pt]frame.north west) -- ([xshift=-0pt]frame.south west); },%
-    }
-}
-
 \usepackage{etoolbox}
-
-\makeatletter
-\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{\vspace*{-20\p@}}{}{}
-\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{\vspace*{-20\p@}}{}{}
-\patchcmd{\DOTI}{\vskip 80\p@}{\vskip 40\p@}{}{}
-\patchcmd{\DOTIS}{\vskip 40\p@}{\vskip 0\p@}{}{}
-\makeatother
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Source: http://en.wikibooks.org/wiki/LaTeX/Hyperlinks %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \usepackage{hyperref}
+
+
+% examples creation:
+
+%OLD:
+
+
+\usepackage[framemethod=TikZ]{mdframed}
+
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+
+% Define example counter that resets with each chapter
+
+\newcounter{example}[chapter]
+\renewcommand{\theexample}{\thechapter.\arabic{example}}
+
+% Define the example environment
+\newenvironment{example}[1][]{%
+  \refstepcounter{example}%
+  \ifstrempty{#1}%
+    {\mdfsetup{
+      frametitle={\strut \color{cyan}Example \theexample}}}%
+    {\mdfsetup{
+      frametitle={\strut \color{cyan}Example \theexample:~#1}}}%
+  \mdfsetup{
+    innertopmargin=10pt,
+    linecolor=cyan!20,
+    linewidth=2pt,
+    topline=false,
+    rightline=false,
+    bottomline=true,
+    frametitleaboveskip=\dimexpr-\ht\strutbox\relax,
+  }%
+  \begin{mdframed}[]\relax%
+}{\end{mdframed}}
+
+% autoref names
+\newcommand{\lstnumberautorefname}{Script}
+\renewcommand{\chapterautorefname}{Chapter}
+\renewcommand{\sectionautorefname}{Section}
+\newcommand{\corollaryautorefname}{Corollary}
+\renewcommand{\subsectionautorefname}
+{subsection}
+\newcommand{\exampleautorefname}{Example}
+
+\usepackage[bf,small,hypcap=true]{caption}
+
+\usepackage{xcolor}
+
+\definecolor{linkgreen}{rgb}{0.117,0.67,0.24}
+\definecolor{refRed}{rgb}{0.443,0.0588,0.0392}
+
 \usepackage{graphicx}
 \usepackage[english]{babel}
 \usepackage{fancyhdr}
 \usepackage{mathtools}
 \mathtoolsset{showonlyrefs} 
+
+\newcommand{\eqautoref}[1]{\hyperref[#1]{Equation~\eqref{#1}}}
+
+
+
+\usepackage{enotez}
+\setenotez{backref=true,totoc=section}
+
+\hypersetup{ % Make links different colors
+    colorlinks = true,
+    urlcolor = blue,
+    linkcolor = refRed,
+    citecolor = linkgreen
+}
 
 %% GLOSSARY:
 \usepackage[toc]{glossaries}
@@ -132,9 +154,9 @@
    \clearpage
 }
 
-%% CODE STUFF
+
+%% Code Listings
 \usepackage{listings}
-\usepackage{xcolor}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -199,13 +221,27 @@
 \titlespacing*{\part}{0pt}{100pt}{20pt}
 %
 
+\titleclass{\chapter}{top}
+\titleformat{\chapter}[display]{\normalfont\Huge\bfseries}{\MakeUppercase{\chaptername} \thechapter}{0pt}{\titlerule[2pt]\vspace{1pc}\huge}
 
 \titlespacing*{\chapter}{0pt}{0pt}{40pt}
 
+\titleclass{\part}{top} % make part like a chapter
+\titleformat{\part}
+[display]
+{\centering\normalfont\Huge\bfseries}
+{\MakeUppercase{\partname} \thepart}
+{0pt}
+{\titlerule[2pt]\vspace{1pc}\huge\MakeUppercase}
+%
+\titlespacing*{\part}{0pt}{100pt}{20pt}
+%
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% First page of book which contains 'stuff' like: %
-%  - Book title, subtitle                         %
-%  - Book author name                             %
+% First page of book
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Book's title and subtitle
@@ -215,21 +251,14 @@
 \author{\textsc{Hudson Reynolds} \\ \textit{Author}
 }
 
-
 \begin{document}
 
 \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}
 \fancyhead[R]{\thesection}
 \fancyhead[L]{\thechapter\ --\ \leftmark}
-
 %\frontmatter
 \maketitle
-%% Things to do:
-% more figures would be nice
-% add more proofs for relevant sections
-% finish the 6-DoF Section, add code and attach code in google drive as well
-% clean up some of the figs, especially the body frame.png
 
 %
 \pagenumbering{roman}
@@ -237,7 +266,7 @@
 \pagestyle{empty}
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{Images/FlightDynamics}
+    \includegraphics[width=\linewidth]{Images/FlightDynamicsBookTransparent.png}
     \label{fig:enter-label}
 \end{figure}
 
@@ -246,6 +275,8 @@
 \end{dedication}
 
 %table of contents, list of figures and list of tables
+
+\setcounter{tocdepth}{1}
 
 \begin{spacing}{.5}
     \tableofcontents
@@ -308,21 +339,54 @@
     description={A function $f$ that, when acted upon by an operator (which we may denote $D$), simply produces a scalar multiple of itself as the output. As an equation, we see this as $Df=\lambda f$}
 }
 
+\newglossaryentry{geodesic}
+{
+    name=geodesic,
+    first = {\textit{geodesic}},
+    description={The shortest path between two points in an arbitrarily curved space}
+}
+
+\newglossaryentry{brachistochrone}
+{
+    name=brachistochrone,
+    first = {\textit{brachistochrone}},
+    description={A curve for which a paricle descending under the influence of gravity takes the least amount of time.}
+}
+
+\newglossaryentry{Lagrangian}
+{
+    name=Lagrangian,
+    first = {\textit{Lagrangian}},
+    description={A description of the energy of the system given by $T-U$. The Lagrangian, $L$, is used to derive the EOM of the system by minimizing $L$ through variational methods}
+}
+
+\newglossaryentry{Hamiltonian}
+{
+    name=Hamiltonian,
+    first = {\textit{Hamiltonian}},
+    description={A description of the energy of the system given by $T+U$. The \gls{Hamiltonian}, $\mathcal{H}$, is used similarly to the Lagrangian to derive the EOM of a system}
+}
 
 \chapter*{Preface}\label{sec:preface}
-I begin working on this document after the release of Volume I of the Flight Dynamics Bible. In that edition, we present a brief overview of energy mechanics. In that exploration of energy mechanics, I gained a great appreciation of the subject and began work on this text shortly thereafter. As in the first volume, I hope this document can provide all of the basic concepts of energy mechanics and basic control theory in their application to aerospace engineering in a single place.
+I begin working on this document after the release of Volume I of the Flight Dynamics Bible. In that edition, we present a brief overview of energy mechanics. In that exploration of energy mechanics, I gained a great appreciation of the subject and began work on this text shortly thereafter. As in the first volume, I hope this document can provide all of the basic concepts of energy mechanics and basic control theory in their application to aerospace engineering in a single place. My goal with this book is to provide a feel for concepts and practical ways of solving them, rather than intense theory. Theory, and complete understanding of the mathematics, will come as readers further their educations. My hope here is to present these ideas and ways of solving them with only the minimal background needd.
 
-Furthermore, I hope that this edition can provide a bridge between the realms of Newtonian dynamics and energy methods in greater detail than in the 1st volume.
+Furthermore, I hope that this edition can provide a bridge between the realms of Newtonian dynamics and energy methods in greater detail than in the first volume.
 
-As with the first edition, we will be using excerpts of MATLAB script in some examples (code less than a page is included inline, and longer code is in the appendix) but our hope is that our explanations are thorough enough to facilitate the creation of code in any coding language. MATLAB is the language of choice for this document.
+As with the first volume, we will be using excerpts of MATLAB script in some examples (code less than a page is included inline, and longer code is in the appendix) but our hope is that our explanations are thorough enough to facilitate the creation of code in any coding language. MATLAB is the language of choice for this document.
 
 As a note, while our work on flight dynamics has mainly focused on modeling rockets, we hope that this document can be used more widely in a variety of applications pertaining to energy mechanics and controls. As such, we have attempted to include content that is useful for other systems, such as orbital dynamics and physics systems, insofar as I have experience in these areas. 
 
 Because most of my experience lies in rocket modeling, I explore some of these concepts in the context of rocket modeling and 6-\gls{dof} creation.
 
+New to this volume, I include a separate notational overview and outline for each section. While the two subjects are closely related, notational differences arise that are large enough that a secondary notation guide and overview for controls is necessitated. Additionally, aside from the application of variational calculus to optimal control, I have tried to keep the two halves separated enough that a reader interested in only one half will not feel lost. Of course, reading both sections will provide the most insight and benefit to the reader.
+
+This book weaves through a course of lots of - sometimes seemingly unrelated - material. However, my hope is that I have tied together some apparently unrelated concepts in a way that helps to display the beautiful and deep mathematical connections shared between these subjects.
+
+
+
 \section*{Acknowledgments}
 \begin{itemize}
-\item I would like to thank Prof. Cunningham for his support with each of the volumes of the Flight Dynamics Bible.
+\item I would like to give my deepest appreciation and thanks to Professor Cunningham for his support with each of the volumes of the Flight Dynamics Bible and his support in helping Preston and I. 
 \end{itemize}
 
 
@@ -338,8 +402,9 @@ For vectors, any vector with a hat like $\hat{x}$ refers to a vector with a magn
 %Maybe?
 %A special exception is quaternions, which are always boldfaced as $\textbf{q}$ to distinguish them from generalized coordinates, $q$.
 
+\section*{Energy Mechanics Notation}
 \subsection*{Vectors and Matrices}
-The whole of the vector quantities used in this document are too great to enumerate in full, but I include the most important here. Notably, I stray from the typical notation of $\vec{r}_{P/O}$ in favor of $\vec{r}^{\ op}$ because of its usage in Purdue AAE.
+The whole of the vector quantities used in this part are too great to enumerate in full, but I include the most important here. Notably, I stray from the typical notation of $\vec{r}_{P/O}$ in favor of $\vec{r}^{\ op}$ because of its usage in Purdue AAE.
 
 Common usages are documented here:
 $$\begin{array}{ll}
@@ -368,15 +433,72 @@ $$\begin{array}{ll}
     \mathcal{H}& \mathrm{Hamiltonian}\\
         \Delta t& \mathrm{timestep}\\
 \end{array}$$
-\chapter{Overview}
+
+\section*{Modern Physics Notation}
+\subsection*{Vectors and Matrices}
+$$\begin{array}{ll}
+     \vec{F}&  \mathrm{force}\\
+     \vec{v}& \mathrm{velocity}\\
+      \vec{X}& \mathrm{state\ vector}\\
+\end{array}$$
+\subsection*{Symbols}
+$$\begin{array}{ll}
+    J&  \mathrm{functional}\\
+    \delta&\mathrm{variation}\\
+    S& \mathrm{action}\\
+    L & \mathrm{Lagrangian}\\
+    q& \mathrm{generalized \ coordinate}\\
+    \dot{q}& \mathrm{generalized \ position}\\
+    T& \mathrm{kinetic \ energy}\\
+    U& \mathrm{potential \ energy}\\
+    \mathcal{\hat{H}}& \mathrm{Hamiltonian \ operator}\\
+    \gamma& \mathrm{Lorentz \ Factor}\\
+    \Psi & \mathrm{wavefunction}
+\end{array}$$
+\subsection*{Constants}
+
+$$\begin{array}{lll}
+        c&2.998{\times}10^8 \ \mathrm{m/s}&\mathrm{speed \ of \ light}\\
+        \hbar&1.055{\times}10^{-34} \ \mathrm{J\cdot s}&\mathrm{reduced \ planck \ constant}\\
+        e&1.602{\times}10^{-19} \ \mathrm{C} & \mathrm{elementary \ charge}\\
+        m_e & 9.109{\times}10^{-31} \mathrm{kg} & \mathrm{electron \ mass}
+\end{array}$$
+
+\newpage
+
+\section*{Controls Notation}
+\subsection*{Vectors and Matrices}
+$$\begin{array}{ll}
+      \vec{X}& \mathrm{state\ vector}\\
+\end{array}$$
+
+\subsection*{Scalar Quantities and Symbols}
+$$\begin{array}{ll}
+    J&  \mathrm{functional}\\
+    \delta&\mathrm{variation}\\
+    S& \mathrm{action}\\
+    \mathcal{L} & \mathrm{Laplace \ transform}\\
+    q& \mathrm{generalized \ coordinate}\\
+    \dot{q}& \mathrm{generalized \ position}\\
+    k& \mathrm{spring \ constant}\\
+    \mathcal{M}& \mathrm{number\ of\ degrees\ of\ freedom}\\
+     T& \mathrm{kinetic \ energy}\\
+      U& \mathrm{potential \ energy}\\
+    \mathcal{H}& \mathrm{Hamiltonian}\\
+        \Delta t& \mathrm{timestep}\\
+        c&\mathrm{speed \ of \ light}
+\end{array}$$
 
 \pagenumbering{arabic}
 
+\newpage
+\section*{Outline}
 
-\section{Document Outline}
 This volume will primarily focus on energy methods of mechanics. I start this volume by briefly discussing the history of energy methods. I find this is especially useful in priming the reader on \textit{why} methods of energy mechanics exist and intuitively understanding what types of problems are best suited for energy mechanics. 
 
-The mathematical treatment starts by considering the calculus of variations, which will then naturally lead to the discussion of Lagrangian mechanics. The discussion of Lagrangian mechanics will then lead to our discussion of Hamiltonian mechanics.
+The mathematical treatment starts by considering the calculus of variations, which will then naturally lead to the discussion of \gls{Lagrangian} mechanics. The discussion of \gls{Lagrangian} mechanics will then lead to our discussion of \gls{Hamiltonian} mechanics.
+
+I feel that any discussion on energy mechanics is incomplete without noting their significance in modern physics. As such, I include a part of this book which is related to the study of modern physics, particularly as it related to \gls{Lagrangian} and \gls{Hamiltonian} mechanics.
 
 The calculus of variations has many uses, including extensive uses in the subject of control theory. So, therefore, the second half of this volume will cover some control theory and optimal control. I will include the study of Lie Groups and Lie Algebras in their application to aerospace controls.
 
@@ -390,30 +512,47 @@ The end of some sections also provides several practice problems to ensure the k
 
 For readers new to this content, it is expected that some problem may take some consultation with other sources to complete. However, I have attempted to make these problems challenging while not being out of reach. These problems are designed to make the reader apply the knowledge and truly learn. Generally, each subsequent problem in a section is more challenging than the last.
 
-\section{Necessary Background}
-In this 3rd volume, I will cover energy mechanics and some brief topics in control theory. This topic is largely a grad-level subject. At Purdue, this is covered in AAE 507 and AAE 508. It is thus a large undertaking to cover the scope of two grad level courses in this text. However, I think that motivated undergrad students can grasp energy methods and may find them more satisfying than the Newtonian mechanics that are presented in typical undergrad classes.
+\section*{Necessary Background}
+In this 3rd volume, I will cover energy mechanics and some  topics in control theory. This topic is largely a grad-level subject. At Purdue, this is covered in AAE 507 and AAE 508. It is thus a large undertaking to cover the scope of two grad level courses in this text. However, I think that motivated undergrad students can grasp energy methods and may find them more satisfying than the Newtonian mechanics that are presented in typical undergrad classes.
 
 This book will require a functional understanding of the topics covered in Volume I and Volume II, so I highly recommend reading those first and having an understanding of the material there. This book will also utilize calculus and linear algebra extensively, so it is expected that the reader have a good background in those subjects. This book will be more math heavy than Volume I, and includes heavy mathematics similar to that presented in Volume II. 
 
 The mathematical foundations of control theory are very dense and unlikely to be very useful to most readers. So, for this section of the book, I have mostly opted for practical examples of control theory and only included theory where I feel that it is enlightening or especially useful to the understanding for the reader. One exception to this is the use of the calculus of variations in optimal control, which I have used because it ties into our discussion with energy methods.
 
-This volume attempts to derive most equations in a way that is intuitive for an undergraduate reader. As such, some of the derivations do not include the exacting mathematical precision found in other texts. In these instances, I try to either include footnotes noting what has been glossed over or linking to other texts with more in depth explanations.
+This volume attempts to derive most equations in a way that is intuitive to the undergraduate reader. As such, some of the derivations do not include the exacting mathematical precision found in other texts. In these instances, I try to either include footnotes noting what has been glossed over or linking to other texts with more in depth explanations.
+
+I assume some base knowledge of physics as well, but not much is covered outside the scope of standard undergraduate engineering coursework.
 
 \part{Energy Mechanics}
 
+\chapter{Energy Mechanics Overview}
+
+We may motivate our study of energy mechanics by asking a simple, yet profound question:
+What is the fundamental nature of the universe?
+
+If you lived in the time of Isaac Newton, the answer might be fairly simple - if we know the positions, velocities, and accelerations of objects, you can determine the future of that object with exacting certainty. 
+
+Later, physicists would derive a different way of looking at mechanics - using the methods of energy. This is what we explore in our study of variational calculus and energy mechanics. At the time, many physicists believed that this reframing was simply another expression of Newtonian physics. In some way, this is true. However, the energy method allows us to peer more deeply into the beating heart of physics to examine the fundamental qualities of nature. 
+
+Examining the proceedings of physics in the 20th century, we see this become increasingly apparent. Mass - Einstein had shown - was fundamentally tied to the energy of particles in perhaps the most famous equation of all time, $E^2=m^2c^4+p^2c^2$. Later, as physicists began to develop quantum mechanics, energy, not forces, became the fundamental quantity to measure.
+
+It is with this background that we motivate the study of energy mechanics. This subject gives us the key understanding needed to examine subjects from the smallest to the largest scales of the universe.
+
 \chapter{Historical Background }
 
-In this chapter we cover a brief history of the early years of energy mechanics. I will mostly cover the main figures who are instrumental to our study of energy mechanics. These main figures are Isaac Newton, Pierre de Fermat, Johann Bernoulli, Leonhard Euler,  Joseph Louis-Lagrange, and William Hamilton.
+In this chapter,, we cover a brief history of the early years of energy mechanics. I will mostly cover the main figures and ideas that are instrumental to our study of energy mechanics. These main figures include Isaac Newton, Pierre de Fermat, and Johann Bernoulli.
 
-The story of these figures is greatly intertwined. It is impossible to discuss one figure without discussing the others as well. This section will thus take on a more chronological approach, but background information about some of the important characters is also included. Notably, I include some information about Isaac Newton and Euler for their far-reaching impacts in the many aspects of mechanics.
+The story of these figures is closely intertwined. It is impossible to discuss one figure without discussing the others as well. This section will thus take on a more chronological approach, but background information about some of the important characters is also included. Notably, I include some information about Isaac Newton for his far-reaching impacts in many aspects of mechanics.
 
-The story of these first four will converge together and culminate in the energy mechanics, possibly the most important implication of the studies of these four historic figures. The foundations set by these scientists persist in the landscape of modern engineering and physics.
+The story of these figures will converge  and culminate in energy mechanics, possibly the most important implication of the studies of these historic figures. The foundations set by these scientists persist in the landscape of modern engineering and physics.
 
-Hamilton's and others later editions to the subjects in the form of Hamiltonian mechanics will also be discussed at the end of this chapter.
+Euler, Lagrange, Hamilton, and others later contributions to the subjects will not be discussed here, but rather in \autoref{chap:calculus of variations}, \autoref{chap:lagrangian}, and \autoref{chap:hamiltonian}.
 
-While the contributions of Weierstrass, Hilbert, and others is important to the mathematical solidification of the calculus of variations, I have chosen not to cover this here because I feel that it does not greatly aid readers in understanding the core of the subject.
+While the contributions of Weierstrass, Hilbert, and others is important to the mathematical solidification of the calculus of variations, I have chosen not to cover them in this text because I feel that it does not greatly aid readers in understanding the core of the subject.
 
 The book by Goldstine \cite{goldstine_history_1980} has been especially useful in the development of this chapter. I highly recommend reading chapters 1-3 for readers who are interested in learning more about the history of this subject.
+
+The goal of this chapter is not necessarily to derive many mathematical expressions, as most of the methods used were archaic and difficult to interpret for the modern reader. Goldstine has great historical analysis of these mathematics that is beyond the scope of the historical background presented here.
 
 \section{Isaac Newton (1643-1727)} 
 
@@ -426,7 +565,7 @@ The book by Goldstine \cite{goldstine_history_1980} has been especially useful i
 
 The history of any kind of mechanics must start with a study of Isaac Newton. Newton is very famous for his description of mechanics based on forces and vectors. However, Newton is also instrumental character in our study of energy mechanics. 
 
-In fact, Newton was instrumental to the development of Calculus of Variations, solving two of the first problems in the subject, the \textit{minimal resistance problem} and the \textit{brachistichrone} problem, which we will further explore in our study of the calculus of variations. It is on these subjects that we will spend most of the time 
+In fact, Newton was instrumental to the development of Calculus of Variations, solving two of the first problems in the subject, the \textit{minimal resistance problem} and the \gls{brachistochrone} problem, which we will further explore in our study of the calculus of variations. It is on these subjects that we will spend most of the time.
 
 Before we explore his contributions in this field, though, an understanding of his work in force-based mechanics and calculus is needed. This background section draws mostly from the text \cite{noauthor_isaac_2017}. Newton's work on variational calculus draws from several different sources, including the original \textit{Principia} and the \cite{goldstine_fermat_1980} chapter of Goldstine.
 
@@ -435,13 +574,13 @@ In a story likely familiar to many people who find their interests in the realm 
 
 Born on Christmas Day in 1642 (Early January, 1643 in the modern calendar), Newton was born into an England in the midst of a civil war and full of strife. His father had died 3 months prior to his birth, and he was born prematurely. Newton was unwanted by his own mother, so he was raised by his maternal grandmother, Margery Ayscough.
 
-Needless to say, Isaac Newton's early years were dominated by a lack of control and great turmoil. It is thus that Newton took great solace in the isolation and fundamental truth of mathematics. 
+Needless to say, Isaac Newton's early years were dominated by a lack of control and great turmoil. Thus, Newton took great solace in the isolation and fundamental truth of mathematics. This background in Newton's early life is likely to have had profound influences on his growth into adulthood and his later exploration of math.
 
 Newton, in his years of study before college, had a great fascination for mechanical devices and an understanding of the world around him. It was in 1661 that he gained admittance to the Trinity College in Cambridge, right as the English Civil War was coming to a close.
 
 \subsection{The Newtonian Calculus (1661-1679)}
 
-During his time in college, Newton began his real exploration of mathematics. Newton's first great contribution to mathematics was in his studies of the Binomial theorem, which can give an expansion for a binomial raised to an arbitrary degree. Before Newton, there existed a theorem for the binomial theorem for the integers, $\mathbb{Z}$, which is presented below in Theorem \ref{thm: binomial}.
+During his time in college, Newton began his real exploration of mathematics. Newton's first great contribution to mathematics was in his studies of the Binomial theorem, which can give an expansion for a binomial raised to an arbitrary degree. Before Newton, there existed a theorem for the binomial theorem for the integers, $\mathbb{Z}$, which is presented below in \autoref{thm: binomial}.
 
 \begin{theorem}[Binomial theorem]\label{thm: binomial}
     A binomial of form $x+y$ to a power n, where $n\in\mathbb{Z}$, the expansion can be written as:
@@ -450,7 +589,7 @@ During his time in college, Newton began his real exploration of mathematics. Ne
     $$\binom{n}{k}=\frac{n!}{k!(n-k)!}$$
 \end{theorem}
 
-The original scope of this theorem only applies to the integer elements, $\mathbb{Z}$. Newton, however, extended the application of this theorem to the whole of the real numbers, $\mathbb{R}$. Newton's generalized theorem is thus:
+The original scope of this theorem only applies to the integer elements, $\mathbb{Z}$. Newton, however, extended the application of this theorem to the whole of the real numbers, $\mathbb{R}$. Newton's generalized theorem is then:
 
 
 \begin{theorem}[Generalized Binomial theorem]
@@ -460,8 +599,10 @@ The original scope of this theorem only applies to the integer elements, $\mathb
     $$\binom{r}{k}=\frac{r(r-1)(r-2)\cdots(r-k+1)}{k!}$$
 \end{theorem}
 
-We note here that Newton has introduced an infinite sum! This is one of the first steps towards the methods of calculus. In fact, this equation has applicability towards the definition of the constant $e$, which is very fundemental in our studies of calculus. We can see this by taking the definition of $e$ as:
+We note here that Newton has introduced an infinite sum! This is one of the first steps towards the methods of calculus. In fact, this equation has applicability towards the definition of the constant $e$, which is very fundemental in our studies of calculus. We can see this by inspection the definition of $e$ as:
 $$ \lim_{x\to\infty} \left(1+\frac{1}{n}\right)^n$$
+Using Newton's generalized binomial theorem, this infinite limit can be approximated and the value of $e$ can be closely approximated.
+
 Newton continued his work on this subject, graduating in 1665. When Trinity University closed due to the Black Plague in the summer of that year, Newton took his work back home and began the most prolific part of his mathematical career, where he famously had the thought experiment of the apple falling towards the earth. It was during this time that Newton made his famous discoveries in optics and universal gravitation.
 
 It was also during this period of great mathematical bounty that Newton began his studies of calculus. As early as 1665, Newton had methods to compute the derivative and find integral areas of curves. Using the generalized binomial theorem, Newton began to develop the concepts of integration and their applications to physics.
@@ -477,37 +618,70 @@ While the Newtonian methods of calculus are largely forgotten today in favor of 
 \end{figure}
 It is in the midst of Newton's most fruitful years that we must talk about Fermat's contributions to the subject of energy mechanics, which predate Newton's earliest contributions by nearly a score.
 
-Fermat is famous in mathematics for \textit{Fermat's Last Theorem}, which remained unsolved for 358 years. A solution involving elliptic curves, which you can find an in depth discussion in \cite{hellegouarch_invitation_2001} (this is entirely irrelevant to our work here). His contributions here, however, relate to the so-called \textit{Fermat's Principle of Least Time}. Fermat's biggest insight was the understanding that 'nature operates by means and ways that are easiest and fastest'. Although this way seem a simple statement, it will underlie the physical principle at the root of the calculus of variations.
+Fermat is famous in mathematics for \textit{Fermat's Last Theorem}, which remained unsolved for 358 years. A solution involving elliptic curves exists, which you can find an in-depth discussion in \cite{hellegouarch_invitation_2001} (this is entirely irrelevant to our work here). 
 
-Fermat's Principle of Least Time involves finding a light path such that the time is minimized. \footnote{It can be shown that this is not exactly true, as the only condition required for sufficiency in this problem is that the changes to the variation are of the second-order. Fermat's condition is simply one such case of this.}Fermat's set up is as shown in \ref{fig:least time ray}.
+His contributions here, however, relate to the so-called \textit{Fermat's Principle of Least Time}. Fermat's biggest insight was the understanding that 'nature operates by means and ways that are easiest and fastest'. Although this way seem a simple statement, it will underlie the physical principle at the root of energy mechanics.
 
-\begin{figure}[ht]
+Fermat's Principle of Least Time involves finding a light path such that the time is minimized.\footnote{It can be shown that this is not exactly true, as the only condition required for sufficiency in this problem is that the changes to the variation are of the second-order. Fermat's condition is simply one such case of this. See \cite{feynman_feynman_1963} for more info.}Fermat's set up is as shown in \autoref{fig:least time ray}. Fermat noticed that the light path will refract and change its angle when moving through a medium where the speed of light is slower.
+
+The law of reflection can also be shown from Fermat's Principle, although that will not be done here. It is quite similar to the derivation of the refraction law.
+
+If you find an interest in the subject matter here, a much more in-depth discussion in the wonderful Feynman lectures on physics can be found in \cite{feynman_feynman_1963}.
+
+\begin{figure}
     \centering
     
+
 \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
 \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
 %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
 
-%Shape: Rectangle [id:dp6708114455602667] 
-\draw  [color={rgb, 255:red, 126; green, 219; blue, 222 }  ,draw opacity=0.51 ][fill={rgb, 255:red, 126; green, 219; blue, 222 }  ,fill opacity=0.51 ] (110,160) -- (550,160) -- (550,280) -- (110,280) -- cycle ;
-%Straight Lines [id:da6428685375335336] 
-\draw    (130,90) -- (350,160) ;
-\draw [shift={(130,90)}, rotate = 17.65] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
-%Straight Lines [id:da7310900658578104] 
-\draw    (350,160) -- (410,240) ;
-\draw [shift={(410,240)}, rotate = 53.13] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
-%Shape: Arc [id:dp45852649988194416] 
-\draw  [draw opacity=0] (236.39,123.09) .. controls (252.29,76.98) and (297.15,43.75) .. (350,43.75) -- (350,160) -- cycle ; \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (237.64,119.65) .. controls (254.54,75.34) and (298.47,43.75) .. (350,43.75) ; \draw [shift={(350,43.75)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.03) -- (0,-5.03)   ; \draw [shift={(236.39,123.09)}, rotate = 289.02] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ;
-%Shape: Arc [id:dp21512964060589046] 
-\draw  [draw opacity=0] (382.69,203.39) .. controls (373.53,209.9) and (362.23,213.75) .. (350,213.75) -- (350,160) -- cycle ; \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (380.17,205.08) .. controls (371.49,210.56) and (361.13,213.75) .. (350,213.75) ; \draw [shift={(350,213.75)}, rotate = 360] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.03) -- (0,-5.03)   ; \draw [shift={(382.69,203.39)}, rotate = 144.58] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ;
-%Straight Lines [id:da11658348664865648] 
-\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (350,40) -- (350,280) ;
+%Shape: Rectangle [id:dp8879936647316232] 
+\draw  [color={rgb, 255:red, 126; green, 219; blue, 222 }  ,draw opacity=0.51 ][fill={rgb, 255:red, 126; green, 219; blue, 222 }  ,fill opacity=0.51 ] (110,130) -- (550,130) -- (550,250) -- (110,250) -- cycle ;
+%Straight Lines [id:da9092976870956871] 
+\draw    (130,60) -- (350,130) ;
+\draw [shift={(130,60)}, rotate = 17.65] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+%Straight Lines [id:da28057638271133667] 
+\draw    (350,130) -- (410,210) ;
+\draw [shift={(410,210)}, rotate = 53.13] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+%Shape: Arc [id:dp9634726814563676] 
+\draw  [draw opacity=0] (236.39,93.09) .. controls (252.29,46.98) and (297.15,13.75) .. (350,13.75) -- (350,130) -- cycle ; \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (237.64,89.65) .. controls (254.54,45.34) and (298.47,13.75) .. (350,13.75) ; \draw [shift={(350,13.75)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.03) -- (0,-5.03)   ; \draw [shift={(236.39,93.09)}, rotate = 289.02] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ;
+%Shape: Arc [id:dp3411757437853058] 
+\draw  [draw opacity=0] (382.69,173.39) .. controls (373.53,179.9) and (362.23,183.75) .. (350,183.75) -- (350,130) -- cycle ; \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (380.17,175.08) .. controls (371.49,180.56) and (361.13,183.75) .. (350,183.75) ; \draw [shift={(350,183.75)}, rotate = 360] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.03) -- (0,-5.03)   ; \draw [shift={(382.69,173.39)}, rotate = 144.58] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ;
+%Straight Lines [id:da9977458453758269] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (350,10) -- (350,250) ;
+%Straight Lines [id:da33608457803837766] 
+\draw    (130,260) -- (410,260) ;
+\draw [shift={(410,260)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (0,5.59) -- (0,-5.59)   ;
+\draw [shift={(130,260)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da7724749653392198] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (410,130) -- (410,207) ;
+\draw [shift={(410,210)}, rotate = 270] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ;
+\draw [shift={(410,130)}, rotate = 270] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (0,5.03) -- (0,-5.03)   ;
+%Straight Lines [id:da7478103517482707] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (130,130) -- (130,63) ;
+\draw [shift={(130,60)}, rotate = 90] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ;
+%Straight Lines [id:da3656630452978258] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (130,130) -- (347,130) ;
+\draw [shift={(350,130)}, rotate = 180] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ;
 
 % Text Node
-\draw (251,52.4) node [anchor=north west][inner sep=0.75pt]    {$\theta _{i}$};
+\draw (251,22.4) node [anchor=north west][inner sep=0.75pt]    {$\theta _{i}$};
 % Text Node
-\draw (361,220.4) node [anchor=north west][inner sep=0.75pt]    {$\theta _{r}$};
+\draw (361,190.4) node [anchor=north west][inner sep=0.75pt]    {$\theta _{r}$};
+% Text Node
+\draw (270,263.4) node [anchor=north] [inner sep=0.75pt]    {$L$};
+% Text Node
+\draw (412,170) node [anchor=west] [inner sep=0.75pt]    {$h_{2}$};
+% Text Node
+\draw (128,95) node [anchor=east] [inner sep=0.75pt]    {$h_{1}$};
+% Text Node
+\draw (126,54.6) node [anchor=south east] [inner sep=0.75pt]    {$A$};
+% Text Node
+\draw (412,213.4) node [anchor=north west][inner sep=0.75pt]    {$B$};
+% Text Node
+\draw (240,126.6) node [anchor=south] [inner sep=0.75pt]    {$x$};
 
 \end{tikzpicture}
 
@@ -516,37 +690,299 @@ Fermat's Principle of Least Time involves finding a light path such that the tim
     \label{fig:least time ray}
 \end{figure}
 
-I do not delve into the proof by Fermat, but it involves a geometric proof using the Law of Cosines and finding the minimization by setting the derivative of the function of the length equal to zero $f'(0)=0$. This is a similar methodology we will see more rigorously defined in the calculus of variations. Fermat's result, in the modern language, is often referred to as \textit{Snell's Law}, which gives $n_i\sin\theta_i=n_r\sin\theta_r$. We will keep this result in mind, as we will see it again when we solve the problem of the \textit{Brachistichrone}.
+I do not delve into the proof by Fermat, since it uses archaic methods of calculus that are more confusing than enlighting to the modern audience. Fermat's solution is mostly geometric and it involves a geometric proof using the Law of Cosines. 
+
+Following the standard procedures of calculus, we will find a minimization of the function by considering the point where the first derivative is zero.
+
+I will present here a modern derivation of this principle, because I believe it makes the later derivations more satisfying and provides a brief introduction to the methodologies of the calculus of variations.
+
+Starting from the set-up shown in \autoref{fig:least time ray}, we can write equations for the time for each of the sections of the light path. To do so, we use the fundemental relationship for velocity:
+$$t=\frac{d}{v}$$
+Using the definition that the velocity in an optical medium is $v=\frac{c}{n}$, we can write the time for each section. Starting with the section in the lower optical density:
+$$t_{upper}=\frac{n_i\sqrt{{h_1}^2+x^2}}{c}$$
+And for the more dense optical surface, we do the same:
+$$t_{lower}=\frac{n_r\sqrt{{h_2}^2+(l-x)^2}}{c}$$
+Altogether, we have a the following relationship:
+$$t=\frac{n_i\sqrt{{h_1}^2+x^2}}{c}+\frac{n_r\sqrt{{h_2}^2+(l-x)^2}}{c}$$
+We can achieve the desired goal of finding the minimum time by taking the derivative of this time with respect to the variable $x$ and setting it equal to zero as follows:
+$$\frac{dt}{dx}=\frac{n_ix}{c\sqrt{{h_1}^2+x^2}}-\frac{n_r(l-x)}{c\sqrt{{h_2}^2+(l-x)^2}}=0$$
+A rearrangement leads to the following:
+$$\frac{n_ix}{c\sqrt{{h_1}^2+x^2}}=\frac{n_r(l-x)}{c\sqrt{{h_2}^2+(l-x)^2}}$$
+Using the established angles $\theta_1$ and $\theta_2$, we can express this relation more simply as:
+\begin{gather}
+    \color{blue}\boxed{\color{black}n_i\sin\theta_i=n_r\sin\theta_r}\\
+    \color{blue}\mathrm{Snell's \ Law}
+\end{gather}
+We will keep this result in mind, as we will see it again when we solve the problem of the \gls{brachistochrone}.
+
+\subsection{Application to Quantum Mechanics}
+The curious reader may not be fully satisfied with the answer given by Fermat. Why does light take a path that minimizes time? Is there any physical reason for this?
+
+Well, to answer that, we have to open a whole can of worms relating to the wave nature of light and quantum mechanics. However, that description must wait until we further develop our ideas on the calculus of variations and energy methods. Rest assured - we will return to this question once we have gathered sufficient knowledge.
+
+For now, I will present a more simple explanation - when the wavelength of the light is very small compared to the size of the optics of our system ($\lambda\ll l$), we can treat the light as a particle. For a particle, any deviation from its current trajectory requires an energy or force be exerted on it. In an unperturbed path, there is no reason for the particle to change energy.
+
+The beauty of this quantum description is that it will give us an understanding of why the principle of least action is true not only for light; but also for particles in general.
+
+Of course, such an explanation glosses over many intricacies, such as the fact that light has no intrinsic mass. These will be explored in more depth when we give a short treatment of the quantum mechanical description.
 
 \section{Principia (1687)}
+It is in \textit{Principia} that we find the first evidences of Newton's contributions to the field of energy mechanics. It is Newton's work in the \textit{Principia} that most scholars agree are the first real works of the calculus of variations.
 
-It is in \textit{Principia} that we find the first evidences of Newton's contributions to the field of energy mechanics. It is Newton's work in the \textit{Principia} that most agree the first real works of the the calculus of variations are found.
+In 1685, Newton formulated the \textit{minimal resistance problem}. In essense, this problem involves finding a solid of revolution for which the object produces a minimal drag. In Newton's time, no solidified theories of fluid dynamics had been formulated, so Newton suggested a fluid that is 'a rare medium of very small quiescent particles of equal magnitude and freely disposed at equal distances from one other'. Although this fluid is not at all reminiscent of a real fluid, it still remains a useful exercise in the study of the calculus of variations.
 
-In 1685, Newton formulated the \textit{minimal resistance problem}. In essense, this problem involves finding a solid of revolution for which the object produces a minimal drag. In Newton's time, no solidified theories of fluid dynamics had been formulated, so Newton suggested a fluid that is iso
+The major advancement in this problem came from Newton's formulation to solve it. Skipping a few steps of the geometry, Newton came up with a simple integral to represent the drag of an object:
+$$\int_{t_1}^{t_2}{\frac{y\dot{y}^3dt}{\dot{x}^2+\dot{y}^2}}$$
+In this equation, Newton has parameterized the curve in terms of the variable $t$ and expressed the derivatives of $x$ and $y$ with respect to $t$ as $\dot{x}$ and $\dot{y}$.
 
-The major
+As we will see later, this integral is something that we will call a \gls{functional}, and it is the quantity which we want to minimize. 
+
+Newton, despite sharing this result in his \textit{Principia}, did not share his methodology in the original publication. It was not until 1691, when Huygens began independent study of the problem, that anyone had shed any light on the methods of solving the problem. The text, however, still inspired the idea of the functional and began the further exploration of the subject of calculus of variations.
+
+With the idea of the functional created and a methodology to solve problems in the calculus of variations, the next major step in the subject came with the \gls{brachistochrone} problem.
+
+\section{Brachistochrone (1696)}
+
+In June of 1696, nearly a decade after Newton's initial foray into the calculus of variations, John Bernoulli challenged the mathematical world to solve the problem of the \gls{brachistochrone} - a word coming from Greek, meaning 'shortest time'. In its simplest description, the problem involves finding a curve for which a frictionless bead will descend the fastest. A simple diagram of the system is reproduced in \autoref{fig:Brachistochrone}. 
+
+\begin{figure}[ht]
+    \centering
 
 
 
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Curve Lines [id:da5626290173929862] 
+\draw [line width=2.25]    (226,80) .. controls (224.23,164.47) and (303.23,269.47) .. (426,230) ;
+%Shape: Circle [id:dp16005060334035148] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (228,88) .. controls (228,85.24) and (230.24,83) .. (233,83) .. controls (235.76,83) and (238,85.24) .. (238,88) .. controls (238,90.76) and (235.76,93) .. (233,93) .. controls (230.24,93) and (228,90.76) .. (228,88) -- cycle ;
+%Straight Lines [id:da9179973387326911] 
+\draw    (136,80) -- (136,118) ;
+\draw [shift={(136,120)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da23565770066909053] 
+\draw    (136,80) -- (174,80) ;
+\draw [shift={(176,80)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+
+% Text Node
+\draw (207,72.4) node [anchor=north west][inner sep=0.75pt]    {$A$};
+% Text Node
+\draw (437,222.4) node [anchor=north west][inner sep=0.75pt]    {$B$};
+% Text Node
+\draw (130,122.4) node [anchor=north west][inner sep=0.75pt]    {$\hat{x}$};
+% Text Node
+\draw (179,70.4) node [anchor=north west][inner sep=0.75pt]    {$\hat{y}$};
+
+
+\end{tikzpicture}
+
+
+    \caption{Brachistochrone Problem Set-Up}
+    \label{fig:Brachistochrone}
+\end{figure}
+
+John Bernoulli, at the time, had come up with a quite an ingenious solution to the problem. However, he challenged the rest of the mathematical world to solve the problem as well, with a deadline of Easter of 1697.
+
+At the time, there were 4 notable solutions, those coming from Leibniz, John Bernoulli, James Bernoulli, and Isaac Newton (who submitted anonymously). 
+
+Newton, supposedly, spent one night on his anonymous solution, and submitted it to Bernoulli. Despite being an anonymous submission, Bernoulli is said to have recognized Newton's solution by the nature of the writing. It is said that Bernoulli said, ''tanquam ex ungue leonem'' (I recognize the lion by its claw), of Newton's solution.
+
+An exploration of the problem in the modern context (using the Euler-Lagrange approach) will be studied in \autoref{chap:calculus of variations}. The approach of Leibniz and Newton is similar to the modern approach, so I will not touch on those here.
+
+However, I will explore the solution of John Bernoulli here, mostly for the interesting approach. This will also help prime the reader for the derivation that is to come later. This derivation is by no means necessary to the understanding of the calculus of variations, but readers may find it to be quite elegant and enjoyable.
+
+\subsection{The Bernoulli Brachistochrone Solution}
+The set-up of the \gls{brachistochrone} problem is fairly simple. From energy relations, we know that the total energy of the system must be conserved:
+$$E=T+U$$
+Defining the reference at point $A$ as shown in \autoref{fig:Brachistochrone}, it is apparent that the velocity at any given point is:
+$$v(x)^2=2g(x-x_0)+v_0^2$$
+Where $v_0$ and $x_0$ represent initial conditions. Typically, we take these to be zero for the problem and can simplify this relation to:
+$$v(x)=\sqrt{2gx}$$
+Importantly, we can see that the velocity is independent of the horizontal range or the path of the particle. In other words, we have a \textit{conservative} system, which gives us great flexibility.
+
+From here, we can proceed in a number of ways. The standard method to do this will be explored later. Here, however, Bernoulli makes an insight relating the problem to Fermat's Least Time principle.
+
+Bernoulli's insight is as follows - a ray of light moves through a medium in a way that reaches the boundary in the shortest amount of time (as shown by Fermat). So, Bernoulli sets the index of refraction at each height inversely proportional to the velocity (as shown in \autoref{fig:Brachistochrone Optical}). By finding the path that light would take through this medium, Bernoulli can find the curve of fastest descent.
+
+Because the velocity is path independent, Bernoulli sets this refraction index for the whole horizontal length. So, by tracking the path that a ray of light would take through this optical medium, we can find a solution for the \gls{brachistochrone} problem.
+\begin{figure}[ht]
+    \centering
+    
+% Gradient Info
+  
+\tikzset {_3o1kvs6si/.code = {\pgfsetadditionalshadetransform{ \pgftransformshift{\pgfpoint{0 bp} { 0 bp }  }  \pgftransformrotate{-270 }  \pgftransformscale{2 }  }}}
+\pgfdeclarehorizontalshading{_iflcsb4zm}{150bp}{rgb(0bp)=(0.85,0.93,0.98);
+rgb(37.5bp)=(0.85,0.93,0.98);
+rgb(62.5bp)=(0.46,0.8,0.8);
+rgb(100bp)=(0.46,0.8,0.8)}
+\tikzset{_1rpym1rdo/.code = {\pgfsetadditionalshadetransform{\pgftransformshift{\pgfpoint{0 bp } { 0 bp }  }  \pgftransformrotate{-270 }  \pgftransformscale{2 } }}}
+\pgfdeclarehorizontalshading{_2n3dpfjln} {150bp} {color(0bp)=(transparent!61);
+color(37.5bp)=(transparent!61);
+color(62.5bp)=(transparent!49);
+color(100bp)=(transparent!49) } 
+\pgfdeclarefading{_lcv8mc5cx}{\tikz \fill[shading=_2n3dpfjln,_1rpym1rdo] (0,0) rectangle (50bp,50bp); } 
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Curve Lines [id:da20777690252029246] 
+\draw [line width=2.25]    (123,70) .. controls (143.99,142.01) and (203.32,227.34) .. (327,218) ;
+%Shape: Rectangle [id:dp29650606190117645] 
+\draw  [draw opacity=0][shading=_iflcsb4zm,_3o1kvs6si,path fading= _lcv8mc5cx ,fading transform={xshift=2}] (120,70) -- (330,70) -- (330,230) -- (120,230) -- cycle ;
+
+% Text Node
+\draw (99,60.4) node [anchor=north west][inner sep=0.75pt]    {$A$};
+% Text Node
+\draw (335,210.4) node [anchor=north west][inner sep=0.75pt]    {$B$};
+
+
+\end{tikzpicture}
+
+    \caption{Brachistochrone Represented as Optical Medium}
+    \label{fig:Brachistochrone Optical}
+\end{figure}
+
+So, with Bernoulli's idea in mind, let us formalute a mathematical description. We will start by showing a modern depiction of Bernoulli's drawing, which I will discuss as we work through the problem. This is shown in \autoref{fig:Brachistochrone Bernoulli}.  The \gls{brachistochrone} curve is denoted with the curve $ABK$. The velocity of the particle as function of height is denoted by the blue curve $AH$, with the magnitude at that height denoted by the horizontal distance from the line $\overline{AC}$. $A$ and $B$, like before, denote the start and end points of the \gls{brachistochrone}.
+
+
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da10833852271097855] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (209,152) -- (429,152) ;
+%Curve Lines [id:da5021295458279481] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (209,152) .. controls (179.84,151.72) and (151.84,210.12) .. (149,272) ;
+%Shape: Circle [id:dp04643442100307038] 
+\draw   (369,212) .. controls (369,178.86) and (395.86,152) .. (429,152) .. controls (462.14,152) and (489,178.86) .. (489,212) .. controls (489,245.14) and (462.14,272) .. (429,272) .. controls (395.86,272) and (369,245.14) .. (369,212) -- cycle ;
+%Straight Lines [id:da4186467531833358] 
+\draw    (339,262) ;
+\draw [shift={(339,262)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da8938403817574153] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (429,152) -- (429,272) ;
+%Straight Lines [id:da8730461996297206] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (155,231) -- (429,231) ;
+%Straight Lines [id:da39714506859684306] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (209,152) -- (209,272) ;
+%Curve Lines [id:da24877719413783894] 
+\draw    (209,152) .. controls (238.24,250.12) and (347.04,272.52) .. (429,272) ;
+\draw [shift={(209,152)}, rotate = 73.41] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da6942131018955847] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=0.45 ]   (359,120) -- (279,210) ;
+%Shape: Rectangle [id:dp7342305689582604] 
+\draw  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=0.45 ] (239,210) -- (299,210) -- (299,250) -- (239,250) -- cycle ;
+%Shape: Rectangle [id:dp7388601050866793] 
+\draw  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=0.45 ] (319,20) -- (469,20) -- (469,120) -- (319,120) -- cycle ;
+%Straight Lines [id:da9882885067136051] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (319,70) -- (469,70) ;
+%Curve Lines [id:da7784742509656426] 
+\draw    (322,20) .. controls (372.64,72.92) and (410.24,92.12) .. (469,118) ;
+%Straight Lines [id:da9415670416334097] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ][line width=0.75]  [dash pattern={on 4.5pt off 4.5pt}]  (319,90) -- (469,90) ;
+%Curve Lines [id:da28920502828750827] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=1.5]    (379,70) .. controls (393.71,80.73) and (397.71,82.33) .. (411,90) ;
+%Straight Lines [id:da04174893208828001] 
+\draw    (379,70) ;
+\draw [shift={(379,70)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da18742414177909505] 
+\draw    (410,90) ;
+\draw [shift={(410,90)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da1580581124462085] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (379,70) -- (379,90) ;
+%Straight Lines [id:da4349956438306438] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (379,90) ;
+\draw [shift={(379,90)}, rotate = 0] [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ][fill={rgb, 255:red, 128; green, 128; blue, 128 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da8642935211536492] 
+\draw    (429,272) ;
+\draw [shift={(429,272)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da5335808398156509] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (209,231) ;
+\draw [shift={(209,231)}, rotate = 0] [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ][fill={rgb, 255:red, 128; green, 128; blue, 128 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da9917624511792703] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (155,231) ;
+\draw [shift={(155,231)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+
+% Text Node
+\draw (200,132.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$A$};
+% Text Node
+\draw (332,265.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$B$};
+% Text Node
+\draw (375,44.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$M$};
+% Text Node
+\draw (399,93) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$m$};
+% Text Node
+\draw (412,71.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$dz$};
+% Text Node
+\draw (423,276.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$K$};
+% Text Node
+\draw (432,223.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$O$};
+% Text Node
+\draw (194,216.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$C$};
+% Text Node
+\draw (366,93) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$n$};
+% Text Node
+\draw (141,216.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$H$};
+% Text Node
+\draw (470,61.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$\overline{OC}$};
+
+\end{tikzpicture}
+
+    \caption{Depiction of John Bernoulli's Brachistochrone Set-Up}
+    \label{fig:Brachistochrone Bernoulli}
+\end{figure}
 
 
 
+Next, we find the differential element, $dz$. This is given by the vertical component ($\hat{x}$-direction in our established coordinates), which is given by the length $\overline{Mn}$, and the horizontal component ($\hat{y}$-direction), $\overline{nm}$. Denoting these distances $dx$ and $dy$, we have the fundemental relation:
+\begin{equation}\label{eq:pathlength}
+    dz^2=dx^2+dy^2
+\end{equation}
+Next, he uses the relationship from Snell's Law:
+$$n\sin\theta=const.$$
+The quantity $\sin\theta$ is thus $\frac{dy}{dz}$ and $n$ some arbitrary value depending on the exact curve.
 
+Remembering that the optical density is inversely proportional to the velocity at a point, Bernoulli relates the horizontal and path length distance to the velocity as well, using the previously established relationship that $\sin\theta=\frac{dy}{dz}$:
+$$\frac{dy}{dz}=\frac{v}{n}$$
+Using the fact relation from \eqautoref{eq:pathlength}, this can be related to $\frac{dy}{dx}$:
+$$\frac{dy}{dx}=\frac{v}{\sqrt{n^2-v^2}}$$
+There is one final step in this derivation. Using the fact from before that the velocity of the particle is $v=\sqrt{nx}$, the problem can be solved for a particle acted upon by gravity. Rearrangement yields:
+\begin{equation}
+\frac{dy}{dx}=\frac{\sqrt{nx}}{\sqrt{n^2-nx}}
+\end{equation}
+Which can be further simplified by dividing out a $\sqrt{n}$ term:
+\begin{equation}
+        \frac{dy}{dx}=\sqrt{\frac{x}{n-x}}
+\end{equation}
+From here, it is simply a matter of solving the differential equation to yield the resulting curve. Performing separation of variables and integrating, we arrive at the final solution:
+$$a\tan^{-1}\left(\sqrt{\frac{x}{n-x}}\right)-(n-x)\sqrt{\frac{x}{n-x}}$$
+This curve is the curve of a cycloid, the curve generated by tracking a point on a circle which rolls without slipping.
 
-\chapter{Calculus of Variations}
+The cycloid, Bernoulli noted, also has some other interesting properties which are strongly connected with the \gls{brachistochrone}. Huygens, another famous mathematician and physicist, had found earlier that a pendulum with a cycloidal path is \textit{isochronous}, meaning that the time for a swing of the pendulum is indepenent of the amplitude. Similarly, for the \gls{brachistochrone}, a particle released at any point along the curve will reach point $B$ at exactly the same time.
 
-The calculus of variations underpins the ideas of \gls{Lagrangian} and Hamiltonian mechanics, so it is important to understand the principles behind it before moving on to the actual mechanics. In analogy to how single variable calculus is fundamental to Newtonian mechanics, the calculus of variations is fundamental to energy mechanics.
+%include some graphs of curve and some cool facts about it - same time from any point, pendulum with cycloidal path, Huygens, etc.
 
-\newglossaryentry{geodesic}
-{
-    name=geodesic,
-    first = {\textit{geodesic}},
-    description={The shortest path between two points in an arbitrarily curved space}
-}
+It is at this point that we have sufficient background to understand the work that led to the creation of the calculus of variations. From these foundations, mathematicians such as Euler and Lagrange built up a rigorous basis for the subject, which we will now explore.
 
-The fundamental idea of the calculus of variations is simple. We want to find the maximums and minimums of some quantity in our problem. Why? In physics, we often see that quantities are minimized or maximized for some reason. For example, a soap surface will minimize its surface area, or a beam of photons will follow a \gls{geodesic} of spacetime. Light will also refract through surfaces to minimize time as seen in Snell's Law. 
+% Maupertuis?
 
-Because so many physical phenomena are governed by this behavior to minimize certain quantities, Hamilton (the same mathematical hero who formulated quaternions), decided to formulate a mathematical description of this.
+\chapter{Calculus of Variations}\label{chap:calculus of variations}
+
+\begin{chapquote}{Richard Feynman}
+ ''Nature uses only the longest threads to weave her patterns, so that each small piece of her fabric reveals the organization of the entire tapestry.''
+\end{chapquote}
+
+The calculus of variations underpins the ideas of \gls{Lagrangian} and \gls{Hamiltonian} mechanics, so it is important to understand the principles behind it before moving on to the actual mechanics. In analogy to how single variable calculus is fundamental to Newtonian mechanics, the calculus of variations is fundamental to energy mechanics.
+
+The fundamental idea of the calculus of variations is simple. We want to find the maximums and minimums of some quantity in our problem. Why? In physics, we often see that quantities are minimized or maximized for some reason. For example, a soap surface will minimize its surface area, or a beam of photons will follow a \gls{geodesic} of spacetime. Light will also refract through surfaces to minimize time as seen in Fermat's least time principle.
+
+Because so many physical phenomena are governed by this behavior to minimize certain quantities, Hamilton (the same mathematical hero who formulated quaternions) and others, decided to formulate a mathematical description of this.
 
 \section{Derivation of the Euler-Lagrange Equation}
 
@@ -557,11 +993,13 @@ Because so many physical phenomena are governed by this behavior to minimize cer
     description={A quantity that maps a function onto the real number line. Often,  this is called a 'function of a function'}
 }
 
-Before we get to Hamilton's formulation, we need to understand what the calculus of variations is trying to do. To find a minima means that naturally, we should look for the extrema of some quantity. We call this quantity a \gls{functional}, which we define as:
+Before we get to Hamilton's formulation, we need to understand what the calculus of variations is trying to do. To find a minima means that, naturally, we should look for the extrema of some quantity. 
+
+In essence, we are attempting to find a function that is the minimum of some set of conditions. These conditions also take the form of a function, so we attempt to find a function that is a minimum of another function. We call this quantity which we are minimizing a \gls{functional}, which we define as:
 \begin{equation}\label{eq:functional}
     J=\int_{x_1}^{x_2}f\left[y(x),y'(x);x\right]{dx}
 \end{equation}
-The \gls{functional}, $J$, is a quantity which maps a function onto the real number line. This means that it takes the function as an input and outputs a single real number. We are attempting to find an input function, $y(x)$, that yields an extrema of $J$. 
+The \gls{functional}, $J$, is a quantity which maps a function onto the real number line. This means that it takes the function as an input and outputs a single real number (that is, a function of a function). We are attempting to find an input function, $y(x)$, that yields an extrema of $J$. 
 
 \newglossaryentry{neigh func}
 {
@@ -572,28 +1010,28 @@ The \gls{functional}, $J$, is a quantity which maps a function onto the real num
 
 To be precise about this definition of an extrema - we are attempting to find a function $y(x)$ such that any other function added to $y(x)$, no matter how close it is to $y(x)$, must change the value of $J$ such that it is no longer an extrema. By convention, this other function added to $y(x)$ is called the \gls{neigh func}, and is denoted $\eta(x)$.
 
-We can compactly write this $y(x)+\eta(x)$ as $y(\varepsilon,x)$. We define the condition $y(0,x)\equiv y(x)$, where $y(x)$ is the function that gives the extrema of $J$. So, we can write $y(\varepsilon,x)$ as
+We can compactly write this $y(x)+\eta(x)$ as $y(\varepsilon,x)$. We define the condition $y(0,x)\equiv y(x)$, where $y(x)$ is the function that gives the extrema of $J$. So, we can write $y(\varepsilon,x)$ as:
 \begin{equation}\label{eq:y epsilon}
     y(\varepsilon,x)=y(0,x)+\varepsilon\eta(x)
 \end{equation}
-The important restriction that we impose on $\eta(x)$ is that it must vanish at the endpoints, $x_1$ and $x_2$. This will prove important later so we can apply integration rules on our function. We also want a continuous first derivative so that $y'(\varepsilon,x)$ can be defined as
+The important restriction that we impose on $\eta(x)$ is that it must vanish at the endpoints, $x_1$ and $x_2$. This will prove important later so we can apply integration rules on our function. We also want a continuous first derivative so that $y'(\varepsilon,x)$ can be defined as:
 \begin{equation}\label{eq:y prime epsilon}
     y'(\varepsilon,x)=\frac{dy(0,x)}{dx}+\varepsilon\frac{d\eta}{dx}
 \end{equation}
 
-Using this definition of the \gls{neigh func}, we can rewrite \eqref{eq:functional} as
+Using this definition of the \gls{neigh func}, we can apply it to \eqautoref{eq:functional} to write the more general form as:
 \begin{equation}\label{eq:neighborhood functional}
     J(\varepsilon)=\int_{x_1}^{x_2}f\left[y(\varepsilon,x),y'(\varepsilon,x);x\right]{dx}
 \end{equation}
-So, with this redefined version of the function, we can finally find the extrema using the familiar calculus rule, setting the derivative equal to zero. We also evaluate at zero since this is where we defined the extrema to exist:
+So, with this redefined version of the function, we can finally find the extrema using the familiar calculus rule, setting the derivative equal to zero. We also evaluate at zero since  we defined the extrema to exist at $y(0)$:
 \begin{equation}
     \left.\frac{\partial J(\varepsilon)}{\partial\varepsilon}\right\vert_{\varepsilon=0}=0
 \end{equation}
-Applying this to \eqref{eq:functional}, we arrive at
+Applying this to \eqautoref{eq:functional}, we arrive at
 \begin{equation}\label{eq:neighborhood functional diff}
     \frac{\partial J(\varepsilon)}{\partial\varepsilon}= \frac{\partial}{\partial\varepsilon}\int_{x_1}^{x_2}f\left[y(0,x),y'(0,x);x\right]{dx}
 \end{equation}
-The $\varepsilon$ terms drop out from the RHS from the evaluation of $\varepsilon=0$. Applying the Leibniz Integral Rule, the partial derivative can be moved inside the RHS integral:
+The $\varepsilon$ terms drop out from the RHS from the evaluation of $\varepsilon=0$. Applying the Leibniz integral rule, the partial derivative can be moved inside the RHS integral:
 \begin{equation}
     \frac{\partial J(\varepsilon)}{\partial\varepsilon}= \int_{x_1}^{x_2}\frac{\partial}{\partial\varepsilon}f\left[y(x),y'(x);x\right]{dx}
 \end{equation}
@@ -601,9 +1039,9 @@ Applying the rules of implicit integration on the integrand, we get:
 \begin{equation}\label{eq:diff functional}
     \frac{\partial J(\varepsilon)}{\partial\varepsilon}= \int_{x_1}^{x_2}f\left(\frac{\partial f}{\partial y}\frac{\partial y}{\partial\varepsilon}+\frac{\partial f}{\partial y'}\frac{\partial y'}{\partial\varepsilon}\right){dx}
 \end{equation}
-Note that we still must take the partial derivative with respect to $\varepsilon$ on the RHS, even though we have plugged in 0 for $\varepsilon$.
+Note that we still must take the partial derivative with respect to $\varepsilon$ on the RHS, even though we have plugged in 0 for $\varepsilon$. This is because these are still functions of $\varepsilon$, even after plugging in values of 0.
 
-Next, we can find expressions for $\frac{\partial y}{\partial \varepsilon}$ and $\frac{\partial y'}{\partial \varepsilon}$. This is done with the expressions \eqref{eq:y epsilon} and \eqref{eq:y prime epsilon}. Starting with the first, we differentiate \eqref{eq:y epsilon} with respect to $\varepsilon$:
+Next, we can find expressions for $\frac{\partial y}{\partial \varepsilon}$ and $\frac{\partial y'}{\partial \varepsilon}$. This is done with the expressions \eqautoref{eq:y epsilon} and \eqautoref{eq:y prime epsilon}. Starting with the first, we differentiate \eqautoref{eq:y epsilon} with respect to $\varepsilon$:
 \begin{equation}\label{eq:y diff epsilon}
     \frac{\partial}{\partial \varepsilon}y(\varepsilon,x)=\frac{\partial}{\partial \varepsilon}\left[y(0,x)+\varepsilon\eta(x)\right]
 \end{equation}
@@ -611,11 +1049,11 @@ Here, $y(0,x)$ is independent of $\varepsilon$ since we define it to occur at va
 \begin{equation}\label{eq:diff y diff epsilon}
      \frac{\partial y}{\partial \varepsilon}= \eta(x)
 \end{equation}
-Doing the same for \eqref{eq:y diff epsilon}, we arrive at
+Doing the same for \eqautoref{eq:y prime epsilon}, we arrive at
 \begin{equation}\label{diff y' diff epsilon}
      \frac{\partial y'}{\partial \varepsilon}= \frac{\partial \eta}{\partial x}
 \end{equation}
-Finally, plugging these back into the original expression for \eqref{eq:diff functional}, we get the expression
+Finally, plugging these back into the original expression for \eqautoref{eq:diff functional}, we get the expression
 \begin{equation}\label{eq:diff functional subs}
     \frac{\partial J(\varepsilon)}{\partial\varepsilon}= \int_{x_1}^{x_2}\left(\frac{\partial f}{\partial y}\eta(x)+\frac{\partial f}{\partial y'}\frac{\partial \eta}{\partial x}\right){dx}
 \end{equation}
@@ -623,7 +1061,12 @@ Finally, performing some integration by parts, we arrive at the final integral e
 \begin{equation}\label{eq:diff functional final}
     \frac{\partial J(\varepsilon)}{\partial\varepsilon}= \int_{x_1}^{x_2}\left(\frac{\partial f}{\partial y}-\frac{d}{dx}\frac{\partial f}{\partial y'}\right)\eta(x){dx}
 \end{equation}
-Since we are evaluating the maximum, $\frac{\partial J(\varepsilon)}{\partial\varepsilon}$ evaluates to 0. Since $\eta(x)$ is an arbitrary function, the only way to guarantee an equality is to ensure that the part of the integrand in parenthesis is 0.
+Since we are evaluating the maximum, $\frac{\partial J(\varepsilon)}{\partial\varepsilon}$ evaluates to 0. This leaves us with the final form of the expression, which will give us the useful result we have been looking for:
+\begin{equation}
+    0= \int_{x_1}^{x_2}\left(\frac{\partial f}{\partial y}-\frac{d}{dx}\frac{\partial f}{\partial y'}\right)\eta(x){dx}
+\end{equation}
+
+Since $\eta(x)$ is an arbitrary function, the only way to guarantee equality is to ensure that the integrand part in parentheses is 0.
 
 \newglossaryentry{Euler Equation}
 {
@@ -634,31 +1077,120 @@ Since we are evaluating the maximum, $\frac{\partial J(\varepsilon)}{\partial\va
 }
 
 This gives us the fundamental equation of the calculus of variations, called \gls{Euler Equation}:
-\begin{equation}\label{eq: Euler's Diff eq}
-    \frac{\partial f}{\partial y}-\frac{d}{dx}\frac{\partial f}{\partial y'}=0
-\end{equation}
+\begin{gather}\label{eq: Euler's Diff eq}
+\color{blue}\boxed{\color{black}\frac{\partial f}{\partial y}-\frac{d}{dx}\frac{\partial f}{\partial y'}=0}\\
+\color{blue}\mathrm{Euler's \ Equation}
+\end{gather}
 \subsection{Delta Notation}
 In later sections, it is useful to have a shorthand for these partial derivative quantities. For a quantity $\chi$, the variation, $\delta$ is given as:
-$$\delta\equiv\frac{\partial\chi}{\partial \varepsilon}d\varepsilon$$Using this notation, we can rewrite \eqref{eq:diff functional final} after some algebraic manipulation as:
+$$\delta\equiv\frac{\partial\chi}{\partial \varepsilon}d\varepsilon$$Using this notation, we can rewrite \eqautoref{eq:diff functional final} after some algebraic manipulation as:
 \begin{equation}
     \delta J= \int_{x_1}^{x_2}\left(\frac{\partial f}{\partial y}-\frac{d}{dx}\frac{\partial f}{\partial y'}\right)\delta y{dx}
 \end{equation}
-And thus, \eqref{eq: Euler's Diff eq} can be written concisely as:
+And thus, \eqautoref{eq: Euler's Diff eq} can be written concisely as:
 \begin{equation}
-    \color{blue}\boxed{\color{black}\delta J=0}
+    {\color{black}\delta J=0}
 \end{equation}
 This is a very general and far reaching conclusion that can be applied to many systems. For our use cases in dynamics, we have more useful forms of this equation which will be explored in the following section.
 
-\chapter{Energy Methods of Mechanics}\label{sec:energy methods}
+\begin{example}[Geodesics of a Sphere]\label{ex:geodesic}
+To show an example of the use of variational calculus, we will consider finding the shortest path of a spherical surface. We know from intuition that this path is a great circle. Let us prove this mathematically with variational calculus:
+
+To start, we need to define what an arc length on a spherical surface looks like. In general, we have the formula for arc length that $ds^2=dx^2+dy^2+dz^2$. We can use the standard spherical coordinates:
+    $$\begin{array}{l}
+        x=r\sin\theta\cos\theta\\
+        y=rsin\theta\sin\phi\\
+        z=r\cos\phi
+    \end{array}$$
+
+Some long and arduous mathematics gives the following for the arc length:
+$$ds=\sqrt{r^2d\theta^2+r^2\sin^2\theta d\phi^2}$$
+At this point, we want to make two assumptions to get this into a form that we can easily evaluate. Since we are only looking for a geodesic, we can assume that $r=1$ without losing any information. Next, we want to put our solution in terms of just one variable - either $d\theta$ or $d\phi$. In this case, I choose $d\theta$. This means that we parameterize our path with $\phi=\phi(\theta)$. Taking this derivative, we have:
+$$\phi'=\frac{d\phi}{d\theta}$$
+This gives ${\phi'}^2=\frac{d\phi^2}{d\theta^2}$. Rewriting with these new terms, we have an expression for $ds$:
+$$ds=\sqrt{1+\sin^2\theta{\phi'}^2}d\theta$$
+To get the total arc length, we simply integrate this path over the desired path.
+$$S=\int_{\theta_1}^{\theta_2}{\sqrt{1+\sin^2\theta{\phi'}^2}d\theta}$$
+
+Up to here, the problem has been mostly set-up. Now, we apply the variational principles to find the minimum. In this case, $S$ is our functional which should be minimized to give the minimum length, that is, to find $\delta S=0$.
+
+We take our function $f$ to be $\sqrt{1+\sin^2\theta{\phi'}^2}$ and apply the Euler equation:
+$$\frac{\partial f}{\partial \phi}=\frac{d}{d\theta}\frac{\partial f}{\partial \phi'}$$
+
+Note that $\phi$ has replaced $y$ in the form presented in \eqautoref{eq: Euler's Diff eq}, $\phi'$ has replaced $y'$, and $\theta$ has replaced $x$. The fundamental nature of the equation is identical.
+
+Now, we simply perform the calculus to find our answer:
+$$\frac{\partial f}{\partial \phi}=\frac{\partial}{\partial\phi}\left(\sqrt{1+\sin^2\theta{\phi'}^2}\right)=0$$
+
+We find that this first expression is 0 since there are no terms containing $\phi$ explicitly. This means that the derivative of $\frac{\partial f}{\partial \phi'}$, $\frac{d}{d\theta}\frac{\partial f}{\partial \phi'}$, must be constant with respect to $\theta$ so that its derivative is 0. We will use this fact below. We establish the whole term as:
+
+$$\frac{d}{d\theta}\frac{\partial f}{\partial \phi'}=\frac{d}{d\theta}\left[\frac{\partial}{\partial \phi'}\left(\sqrt{1+\sin^2\theta{\phi'}^2}\right)\right]=0$$
+Computing the partial derivative, we have:
+
+\begin{equation}
+\frac{\partial}{\partial \phi'}\left(\sqrt{1+\sin^2\theta{\phi'}^2}\right)=\frac{\sin^2\theta\phi'}{\sqrt{1+\sin^2\theta\phi'}}=const.
+\end{equation}
+
+We can rearrange the statement to solve for the constant (which I will now call $c$) in terms of $\phi'$, which is simply algebraic manipulation.
+\begin{equation}
+    \begin{split}
+      c &=\frac{\sin^2\theta\phi'}{\sqrt{1+\sin^2\theta\phi'}}\\
+\sin^2\theta\phi' &= c\sqrt{1+\sin^2\theta\phi'}\\
+\sin^4\theta{\phi'}^2 &= c^2\left(1+\sin^2\theta\phi'\right)\\
+c^2 &= {\phi'}^2\sin^2\theta\left(\sin^2{\theta}-c^2\right)\\
+{\phi'}&=\frac{c}{\sin\theta\left(\sin^2\theta-c^2\right)}
+    \end{split}
+\end{equation}
+
+We have been using the implicit assumption that $\phi$ is a function of $\theta$, so we finally integrate this with respect to $\theta$ to attain the final geodesic curve in terms of $\phi$ and $\theta$.
+
+$$\phi=\int{\phi'}=\int{\frac{c}{\sin\theta\left(\sin^2\theta-c^2\right)}}$$
+After looking at the problem for a long time, it becomes apparent that we should perform u-substitution with $u=\cot\theta$. Evaluation of this integral can easily be done with MATLAB or Mathematica (there is no useful information gleaned from doing this integral). Doing so yields: $$\cot{\theta}=a\cos{(\phi-\phi_0)}$$
+
+Where $\phi_0$ comes from the integration constant. This is our final answer. We can solve for $a$ and $\phi_0$ using numerical methods since the equation is transcendental.
+
+A MATLAB Script which shows such geodesics is 
+
+\lstinputlisting[language=Matlab, caption=1 DoF]{6DoF Explanation Scripts/OneDofEuler.m}\label{Script 1}
+
+
+For a short path length where the distance is much smaller than the sphere radius $r$, we expect that this will return the standard straight line as the shortest distance.
+
+Performing a Taylor expansion and keeping only the first-order terms:
+$$\frac{1}{\theta}=a$$
+So, it is seen that the value $\theta$, as expected, is constant for a short path length. This formula thus returns the standard equation of a line on short scales!
+
+One important consequence of this is that a spherical geometry, when looked at `closely' (this is, looking at an infinitesimal portion of the surface) is locally Euclidean!
+\end{example}
+
+\section{Revisiting the Brachistochrone}
+
+\begin{example}[Brachistochrone]\label{ex:brachistrochrone}
+    Let us return to the example of the \gls{brachistochrone} to demonstrate the usefulness of the calculus of variations.
+\end{example}
+
+refer to \autoref{ex:brachistrochrone}
+
+
+%clean this up and explain
+You are a prominent mathematician in the year 1696. Bernoulli proposes a problem to you to find a curve from a point $(x_0,y_0)$ to another point $\left(x_f,y_f\right)$. When a particle is placed on this path, it should be a faster path than any other path the particle could take down the slope under the influence of only gravity.
+
+Find the velocity as a function of the distance from the initial height, $h$, for the particle using energy conservation.
+
+Write a general expression for the amount of time it takes a particle to descent a path using an integral. \textit{Hint: you can write $t=\frac{ds}{v}$}.
+
+Use the Euler-Lagrange equation to solve for the form of this curve (You may find the integral form useful!). Plot the result.
+
+\chapter{Lagrangian Mechanics}\label{chap:lagrangian}
 \begin{chapquote}{Joseph Fourier}
     ''Mathematics compares the most diverse phenomena and discovers the secret analogies that unite them.''
 \end{chapquote}
 
-Energy methods of mechanics employ the concepts of the energy of a system to solve a problem in mechanics. This is in contrast to the Newtonian method, which considers the forces of a system. The good news is that both will result in the same answer (see proof in \ref{equiv newt and lang}). However, having both in your set of tools as an engineer can prove especially useful.
+Energy methods of mechanics employ the concepts of the energy of a system to solve a problem in mechanics. This is in contrast to the Newtonian method, which considers the forces of a system. The good news is that both will result in the same answer (see proof in \autoref{equiv newt and lang}). However, having both in your set of tools as an engineer can prove especially useful.
 
 To grasp energy methods, it is best to have an intuition for Newtonian dynamics first. A thorough reading of Volume I and other sources will help prepare the reader for this section.
 
-There are two main types of energy mechanics, referred to as Hamiltonian and \gls{Lagrangian} Mechanics. In this chapter, we will mostly focus on the \gls{Lagrangian} version of these mechanics. Hamiltonian mechanics are arguably more fundamental, but will only be briefly discussed.
+There are two main types of energy mechanics, referred to as \gls{Hamiltonian} and \gls{Lagrangian} Mechanics. In this chapter, we will mostly focus on the \gls{Lagrangian} version of these mechanics. \gls{Hamiltonian} mechanics will be discussed further in \autoref{chap:hamiltonian}.
 
 \newglossaryentry{symplectic int}
 {
@@ -667,11 +1199,11 @@ There are two main types of energy mechanics, referred to as Hamiltonian and \gl
     description={A class of numerical integration schemes that are energy preserving because they preserve certain geometric properties of a differential equation}
 }
 
-Although the Hamiltonian and \gls{Lagrangian} are not directly used in the case of our 6-\gls{dof}, they are fundamental to other areas of mechanics and make derivations far simpler in many cases. The Hamiltonian and \gls{Lagrangian} descriptions of mechanics are more often taught to physics students rather than engineers, but we feel that they deserve inclusion among the topics presented here. When we discuss \gls{numerical int}, we can use \glspl{symplectic int} when our problem has a Hamiltonian description. This will be further discussed in Section \ref{sec: Syplectic and Variational Ints}. You may find that certain \gls{eom} derivations, such as the spinning top and problems in orbital mechanics are more easily accomplished with energy methods.
+Although the \gls{Hamiltonian} and \gls{Lagrangian} are not directly used in the case of our 6-\gls{dof}, they are fundamental to other areas of mechanics and make derivations far simpler in many cases. The \gls{Hamiltonian} and \gls{Lagrangian} descriptions of mechanics are more often taught to physics students rather than engineers, but we feel that they deserve inclusion among the topics presented here. When we discuss \gls{numerical int}, we can use \glspl{symplectic int} when our problem has a \gls{Hamiltonian} description. This will be further discussed in \autoref{sec: Syplectic and Variational Ints}. You may find that certain \gls{eom} derivations, such as the spinning top and problems in orbital mechanics are more easily accomplished with energy methods.
 
 Another reason to motivate these systems is that these energy methods are rotationally invariant because energy methods can employ a generalized coordinate system. These generalized coordinates are very powerful and allow us to describe a huge variety of systems. We will see this later in some examples.
 
-A brief overview of the differences between the two schemes of \gls{eom} derivation is shown in Figure \ref{fig:newt v lang}
+A brief overview of the differences between the two schemes of \gls{eom} derivation is shown in \autoref{fig:newt v lang}
 
 \begin{figure}[ht]
     \centering
@@ -686,15 +1218,9 @@ A brief overview of the differences between the two schemes of \gls{eom} derivat
 
 Following directly from the ideas of the calculus of variations, Hamilton (alongside many other mathematicians) wanted to apply this to physical systems. Hamilton's Principle is as follows:
 \begin{theorem}[Hamilton's Principle]
-A system which may travel from one point to another within a specific time interval, the path that is followed is the path which minimizes the time integral of the difference between the kinetic and potential energies.
+In a conservative system which may travel from one point to another within a specific time interval, the path that is followed is the path which minimizes the time integral of the difference between the kinetic and potential energies.
 $$\delta \int_{t_1}^{t_2}{T-U}{dt}=0$$
 \end{theorem}
-\newglossaryentry{Lagrangian}
-{
-    name=Lagrangian,
-    first = {\textit{Lagrangian}},
-    description={A description of the energy of a system given by $L\equiv T-U$. Denoted with the letter $L$}
-}
 
 The quantity $T-U$, the kinetic energy minus the potential energy, is a quantity called the \gls{Lagrangian}, denoted $L$. 
 \begin{equation}
@@ -726,13 +1252,13 @@ $$\delta S=0$$
 
 \newglossaryentry{euler lagrange}
 {
-    name=Euler-Lagrange Equation,
-    first = {\textit{Euler-Lagrange Equation}},
-    description={The fundemental equations describing the solutions that give the extrema of the action in a Lagrangian system},
+    name=Euler-Lagrange equation,
+    first = {\textit{Euler-Lagrange equation}},
+    description={The fundemental equation describing the solutions that give the extrema of the action in a Lagrangian system.},
     see={action}
 }
 
-Expressed using Euler's differential equation, \eqref{eq: Euler's Diff eq}, we get the \glspl{euler lagrange}:
+Expressed using Euler's differential equation, \eqautoref{eq: Euler's Diff eq}, we get the \glspl{euler lagrange}:
 \begin{gather}\label{eq: Euler-Lagrange}
     \color{blue}\boxed{\color{black}\frac{\partial L}{\partial x_i}-\frac{d}{dt}\frac{\partial L}{\partial \dot{x}_i}=0}\\ \mathrm{\color{blue}Euler-Lagrange \ Equations}
 \end{gather}
@@ -751,7 +1277,7 @@ So, for systems that are non-conservative, it is best to stick with the Newtonia
 
 With that noted, let us use the \gls{Lagrangian} in a few examples to see how it can turn some complex Newtonian systems into fairly trivial problems.
 \subsection{Mass-Spring System}
-As a very basic first system, we will consider a mass spring system as shown in Figure \ref{fig:mass spring lagrange}. We consider the length $x$ to be referenced from the rest length of the spring.
+As a very basic first system, we will consider a mass spring system as shown in \autoref{fig:mass spring lagrange}. We consider the length $x$ to be referenced from the rest length of the spring.
 \begin{figure}[ht]
 
 \centering
@@ -841,13 +1367,13 @@ So, in essence, we are using the \gls{Lagrangian} \textit{a posteriori} to match
 
 First, we will find the \gls{Lagrangian} of the system. The kinetic energy of the particle is given by the linear translation only (there is no rotational motion for a point particle), so we have $T=\frac{1}{2}m\dot{x}^2$. The potential energy is the energy of the spring, given as $U=\frac{1}{2}kx^2$. So, the \gls{Lagrangian} is:
 $$L=\frac{1}{2}m\dot{x}^2-\frac{1}{2}kx^2$$
-Now, applying \eqref{eq: Euler-Lagrange} in the $\hat{x}$-direction, as this is the only degree of freedom:
+Now, applying \eqautoref{eq: Euler-Lagrange} in the $\hat{x}$-direction, as this is the only degree of freedom:
 $$\frac{\partial L}{\partial x}-\frac{d}{dt}\frac{\partial L}{\partial \dot{x}}=0$$
 Taking each term individually,
 $$\frac{\partial L}{\partial x}=-kx$$
 $$\frac{\partial L}{\partial \dot{x}}=m\dot{x}$$
 $$\frac{d}{dt}\left(m\dot{x}\right)=m\ddot{x}$$
-So, the \eqref{eq: Euler-Lagrange} equation gives us:
+So, the \eqautoref{eq: Euler-Lagrange} equation gives us:
 $$-kx-m\ddot{x}=0$$
 A simple change of signs gives the exact same result as the Newtonian approach:
 $$m\ddot{x}+kx=0$$
@@ -871,7 +1397,13 @@ The acceleration of the particles, when Newton's Laws are applied, are a functio
 \subsection{Constraints}\label{sec:constaints}
 Constraint equations are fundamental to \gls{Lagrangian} mechanics. In the previous section, we very vaguely stated the need for $n$ generalized coordinates. To find a precise number, we turn our attention to constraints.
 
-For each particle, we need 3 values to define the position, so we need $3N$ generalized coordinates. 
+We can imagine constraints as a condition that restricts the motion of a body in some way. A body which has complete freedom to move translationally and rotate in any way is free. When a constraint is applied, this freedom is reduced. Often, we see these constraints denoted with either an equality or an inequality. These constraints, most often, are functions of the position, velocity, and time. We see constraints written most often in the form:
+$$f(\vec{r},\vec{v},t)=0$$
+The powerful thing about constraints in \gls{Lagrangian} mechanics is that we only need to know the way in which a particle is constrained, not the force or analytical description of this constraint. For complex problems, this can be especially useful.
+
+\subsubsection{Holonomic Constraints}
+
+To contextualize this, we take the example of a system of particles. For each particle, we need 3 values to define the position, so we need $3N$ generalized coordinates. 
 
 \newglossaryentry{holonomic const}
 {
@@ -892,9 +1424,10 @@ The number of \glspl{holonomic const}, $K$, will change the number of generalize
 \color{blue}\boxed{\color{black}\mathcal{M}=3N-K}\color{black}
 \end{gather}
 The quantity $\mathcal{M}$ is the number of \gls{dof}. However, this is the number of \gls{dof} for the whole system, which is why it can exceed 6 in some cases!
-\subsubsection{Constraint Example}
-Suppose we have a single particle that is constrained to motion along a path in the $xy$-plane. This path is given by $y=g(x)$. 
-\begin{figure}[ht]
+
+   \begin{example}[Particle on Path]
+        Suppose we have a single particle that is constrained to motion along a path in the $xy$-plane. This path is given by $y=g(x)$. 
+\begin{figure}[H]
     \centering
 
 
@@ -946,16 +1479,18 @@ We can select our generalized coordinates to be the same as the cartesian coordi
 \begin{gather}
     q_1=x\\q_2=y\\q_3=z
 \end{gather}
-So, to write these as \glspl{holonomic const}, we can write:
+With no other information, this is likely the best choice of generalized coordinates. However, we can start applying the constraints to simplify the equation. The first constraint is that the motion is confined to the $xy$-plane. Thus, 
+$$q_3=z=0$$
+Next, we have the path constraint which is given by $y=g(x)$. We can write this as a \glspl{holonomic const}:
 \begin{gather}
-    q_3=0\\
     q_2-g(x)=0
 \end{gather}
-With these two constraints, we have reduced the number of degrees of freedom, $\mathcal{M}$, to 1.
+With these two constraints, we have reduced the number of degrees of freedom, $\mathcal{M}$, to 1. This makes sense intuitively, as the particle can only move along the path specified by the equation $g(x)$, therefore only having one degree of freedom.
 
-This makes sense intuitively, as the particle can only move along the path specified by the equation $g(x)$, therefore only having one degree of freedom.
+In this example, we could describe that single degree of freedom with our coordinate, $q_1=x$.
 
-The power of using generalized coordinates is that we could define a coordinate that more easily defines this system. For example, our one coordinate could be the arc length along the path, $s$ defined from some starting point.
+The power of using generalized coordinates is that we could choose a coordinate that more easily defines this system. For example, our one coordinate could be the arc length along the path, $s$ defined from some starting point.
+\end{example}
 
 In general, these generalized coordinates do not even need to have units of length! We can select any parameters that are most convenient for defining the state, even those that are energies, so long as we can define a continuous derivative of that state and use the \gls{euler lagrange}.
 
@@ -970,7 +1505,7 @@ So this constraint takes the 6-\gls{dof} for the two particles and reduces it to
 
 An example of these constraints would be the position of the first particle in Cartesian coordinates (giving 3 of the generalized coordinates, $x,y,z$, and the azimuthal and elevation angle, $\phi$ and $\theta$. The roll angle does not change the system in any measurable way, hence we only need 5 parameters to define a two particle system.
 
-In the general case of $N$ particles composing a \gls{rigid body}, we have $3N$-\gls{dof} in a completely unconstrained system. However, we must constrain each pair of particles. An example of this for the 3 particle system in shown in Figure \ref{fig:rigid body 3 particle}.
+In the general case of $N$ particles composing a \gls{rigid body}, we have $3N$-\gls{dof} in a completely unconstrained system. However, we must constrain each pair of particles. An example of this for the 3 particle system in shown in \autoref{fig:rigid body 3 particle}.
 
 \begin{figure}[ht]
     \centering
@@ -1032,7 +1567,7 @@ So, we have 3 constraint equations in a system with 9 particles. This gives a to
 }
 So far, we have only discussed holonomic constraints, those that are related to position or on the generalized parameters, and possibly have some relation in time. When a system is a \gls{holonomic sys}, that is, purely defined by \glspl{holonomic const}, it is always possible to find a set of $\mathcal{M}$ generalized parameters to describe the particle motion. In other words, the minimum number of parameters is equivalent to the number of degrees of freedom in the system.
 
-That said, we often choose to use more parameters, particularly in the case of rotations. As we will see in Volume II, we often find it more useful to use a non-minimal set of constraints to encode rotations for reasons to avoid singularities in the solution.
+That said, we often choose to use more parameters, particularly in the case of rotations. As we see in Volume II, we often find it more useful to use a non-minimal set of constraints to encode rotations for reasons to avoid singularities in the solution.
 
 It is also common to see a non-minimal set of constraints used when the minimal set is cumbersome and does not give an intuitive feel to the problem.
 \subsubsection{Non-Holonomic Constraints}
@@ -1044,7 +1579,7 @@ It is also common to see a non-minimal set of constraints used when the minimal 
     description={A constraint that depends on more than the position of the particles in the system},
     see={holonomic const}
 }
-The other class of constraints are those constraints that are not merely a function of the generalized coordinates. These constraints, called \glspl{non holo const}, define the set of all constraints that depend on more than just the position of particles. This is a huge class of constraints so we will not cover every type. These are also less important to our derivations so we will only briefly discuss them.
+The other class of constraints are those constraints that are not merely a function of the generalized coordinates. These constraints, called \glspl{non holo const}, define the set of all constraints that depend on more than just the position of particles. This is a huge class of constraints, so we only cover specific cases here.
 
 \newglossaryentry{gen vel}
 {
@@ -1057,12 +1592,15 @@ The other class of constraints are those constraints that are not merely a funct
 
 The most common among these, and where we will focus our attention here, is constraints on the time derivative of the generalized coordinates. These are called \glspl{gen vel}, denoted $\dot{q}_j$. Such an example of a constraint on \glspl{gen vel} is a roller skate. A roller stake only allows a velocity in the direction of the skate and restricts velocity along the direction normal to the roller stake.
 
-One important thing about \glspl{non holo const} is that they do not reduce the number of parameters needed to define the system. 
+One important thing about \glspl{non holo const} is that they do not reduce the number of parameters needed to define the system. Additionally, there is no general way to solve systems which have non-holonomic constraints. Later, we will look at a few cases which can be solved. For now, we will concern ourselves mostly with systems consisting of holonomic constraints.
 
-%add more if needed.
+It may seem that this limits us greatly, but in fact, this is not the case for most physics problems! When we are considering large systems, this may be quite limiting, but when considering small scale physics, such as atomic problems, we often find that \glspl{non holo const} are the exception, not the rule. Most systems are conservative and have constraints only on positions. As such, most of our modern theories can use these Lagrangian's.
+
+In the context of engineering problems, we can sometimes make derivations under the assumption of holonomic constraints and then use empirical data and correlations where needed to find suitable solutions (when friction or other factors are present).
+
 \subsection{Lagrange's Equation in Generalized Coordinates}
 
-The good thing about the \gls{Lagrangian} method is that it is invariant to changes in our coordinate system. Because the \gls{Lagrangian} is an equation of energy, and energy is independent of coordinate transformations, we can easily express the \gls{euler lagrange} in generalized coordinates with little hassle.
+The good thing about the \gls{Lagrangian} method is that it is invariant to changes in our coordinate system. Because the \gls{Lagrangian} is an equation of energy, and energy is independent of coordinate transformations, we can easily express the \gls{euler lagrange} in generalized coordinates with little hassle.\endnote{I note here that this explanation is not strictly correct, since our \gls{Lagrangian} does not have to be coordinate lengths. Instead, the configuration space has special properties that make it invariant to such transformations. Deriving the \gls{Lagrangian} from Hamilton's principle ensures that this is always true, which the intrepid reader may prove to themselves by studying differential geometry and Lagrangians on manifolds.} 
 
 Using the generalized coordinates, the kinetic energy is a function of the generalized positions, velocities, and time. The potential is a function of the generalized position and time, so the \gls{Lagrangian} becomes:
 $$L\equiv T-U=T(q_j,\dot{q}_j,t)-U(q_j,t)$$
@@ -1072,9 +1610,9 @@ Stated another way, the \gls{Lagrangian} is a function of the generalized positi
 \mathrm{\color{blue}Generalized \ Euler-Lagrange \ Equations}
 \end{gather}
 Next we will show a problem where the rotational invariance and generalized coordinates proves especially useful in simplifying our derivation:
-\subsection{Pendulum EOM Derivation}
+\section{Pendulum EOM Derivation}
 \subsubsection{Problem Set-Up}
-Suppose we have a pendulum of length L. The mass is rigidly attached to the pendulum. A reference frame $a$ that moves with the pendulum is shown in Figure \ref{fig:Pendulum}. The \gls{inertial frame} is also shown. The pendulum moves in only the $xy$ plane.
+Suppose we have a pendulum of length L. The mass is rigidly attached to the pendulum. A reference frame $a$ that moves with the pendulum is shown in \autoref{fig:Pendulum}. The \gls{inertial frame} is also shown. The pendulum moves in only the $xy$ plane.
 \begin{figure}[ht]
 
 \centering
@@ -1127,6 +1665,8 @@ Suppose we have a pendulum of length L. The mass is rigidly attached to the pend
     \caption{Pendulum Set-Up}
     \label{fig:Pendulum}
 \end{figure}
+Our goal here is to approach the problem in several different ways to gain insight into the benefits and drawbacks of each method in a practical setting.
+
 \subsubsection{Newtonian Approach}
 You have likely seen the Newtonian approach many times, but we show it here for completeness and to contrast the approach with the \gls{Lagrangian} more directly. 
 
@@ -1162,7 +1702,7 @@ Next, we define constraints. Since there is no motion in the z-axis:
 $$z=0$$
 And the constraint on the length gives us:
 $$q_1-L=0$$
-So, we have 1 \gls{dof} from \eqref{eq:dof}. Since both $z$ and $r$ are constrained, we can express our \gls{eom} in terms of one generalized coordinate, $\theta$.
+So, we have 1 \gls{dof} from \eqautoref{eq:dof}. Since both $z$ and $r$ are constrained, we can express our \gls{eom} in terms of one generalized coordinate, $\theta$.
 
 Next, we define the \gls{Lagrangian}. Knowing that the linear velocity of the particle is $\dot{\theta}L$, we get:
 $$T=\frac{1}{2}m\dot{\theta}^2L^2$$
@@ -1172,7 +1712,7 @@ And a coordinate transformation into polar using $y=r\cos\theta$ yields:
 $$U=-mgL\cos\theta$$
 This gives the \gls{Lagrangian}:
 $$L=\frac{1}{2}m\dot{\theta}^2L^2+mgL\cos\theta$$
-Applying the Euler-Lagrange formula for generalized coordinates, \eqref{eq:Euler-Lagrange General} on the single generalized coordinate:
+Applying the Euler-Lagrange formula for generalized coordinates, \eqautoref{eq:Euler-Lagrange General} on the single generalized coordinate:
 \begin{gather}
     \frac{\partial L}{\partial \theta}=-mgL\sin\theta\\
     \frac{\partial L}{\partial \dot{\theta}}=mL^2\dot{\theta}\\
@@ -1184,52 +1724,14 @@ With some rearrangement:
 $$\ddot{\theta}+\frac{g}{L}\sin\theta=0$$
 We notice that with the \gls{Lagrangian} approach, we did not need to have an understanding of the vector directions, frame translations, or \gls{bke} to find our \gls{eom}. This, in addition to the flexibility of the generalized coordinates, is the real power of this approach.
 
- \section{An Intuitive Approach to Hamilton's Principle}
+\section{Generalized Forces}
+\subsection{D'Alembert's Principle}
 
- We have so far seen that Hamilton's principle is useful for solving these problems. Now, with our background for generalized coordinates built up, we can explore a derivation of the action which will explain the presence of the $T-U$ term and the $T+U$ term in the Hamiltonian.
-
-The approach described here comes mostly from the work in \cite{carcassi_geometric_2023}. I have simplified some of the details of this approach to make this section more simple for the reader, but I recommend reading this paper for a deeper understanding of the subject.
- 
-
- 
-
-%\section{Generalized Forces}
-
-\section{Hamiltonian Mechanics}\label{sec:hamiltonian}
-After the formulation of \gls{Lagrangian} Mechanics, another formulation was created by Hamilton later on. The Hamiltonian formulation, like the \gls{Lagrangian}, does not introduce any new concepts, because it is simply an alternate approach to dynamics. However, like the \gls{Lagrangian}, it makes some types of problems more simple. We present the Hamiltonian here briefly for its use case in \glspl{symplectic int}.
-\subsection{Derivation of the Hamiltonian}
-The exact derivation of the Hamiltonian using Legendre transforms is beyond the scope of our present discussion, so we will mostly discuss the consequences of this derivation. 
-
-\newglossaryentry{gen momenta}
-{
-    name=generalized momenta,
-    first = {\textit{generalized momenta}},
-    description={A generalized coordinate that is defined as $\frac{\partial L}{\partial \dot{q}_i}$}
-}
-
-The Hamiltonian method replaces the generalized velocities with \gls{gen momenta}. The generalized momenta are a function of $q,\dot{q},$ and $t$. We express the \gls{gen momenta} as $p$. $p$ is defined to be:
-$$p(q,\dot{q},t)\equiv\dfrac{\partial L}{\partial \dot{q}_i}$$
-Thus, we express our Hamiltonian, $\mathcal{H}$, in terms of the generalized positions, \gls{gen momenta}, and time. This looks like:
-$$\mathcal{H}=\mathcal{H}(q_j,p_j,t)$$
-In a \gls{conservative} system, we can also write: $$\mathcal{H}=T+U$$
-Using relations with the \gls{Lagrangian}, we can write two first order differential equations for the \gls{eom} with the Hamiltonian.
-
-\begin{gather}
-\color{blue}\boxed{
-\begin{array}{r}\color{black}
-     \dot{q}_k=\dfrac{\partial \mathcal{H}}{\partial p_k}\\
-     \color{black}
-  -\dot{p}_k=\dfrac{\partial \mathcal{H}}{\partial q_k}
-\end{array}
-}\\
-\color{blue}\mathrm{Hamiltonian \ EOM's}
-\end{gather}
-This is all we will note about Hamiltonian Mechanics for now. We will note here that these are more useful in the case of \gls{numerical int} because these are first order differential equations, as opposed to the second order differential equations of \gls{Lagrangian} Mechanics.
-\section{Lagrangian Derivation of Rigid Body Dynamics}
+\section{Lagrangian Rigid Body Dynamics}
 
 In Volume I, we explored the Newtonian method of deriving the Euler rotation equations using the \gls{bke}. Here, we present an alternative derivation that utilizes the \gls{Lagrangian} approach and is ultimately a more fundamental and simple derivation.
 
-We showed earlier in Section \ref{sec: rigid body constraints} that we can describe a \gls{rigid body} system with 6 generalized parameters, three of which are angles.
+We showed earlier in \autoref{sec: rigid body constraints} that we can describe a \gls{rigid body} system with 6 generalized parameters, three of which are angles.
 \subsection{Torque Free Equations}
 In the case of no applied torque, the derivations of \glspl{Euler Equation} become surprisingly simple. We can assume that the change in height of the \gls{rigid body} is irrelevant for pure rotation, so the \gls{Lagrangian} is simply the kinetic energy of the object. We can suppose that we are also in a coordinate system where the translational kinetic energy is 0. This gives:
 \begin{equation}\label{eq:rigid body KE}
@@ -1259,7 +1761,7 @@ We notice here that $\frac{\partial \omega_1}{\partial \psi}=\omega_2$ and $\fra
     \frac{\partial \omega_2}{\partial \dot{\psi}}=0\\
     \frac{\partial \omega_3}{\partial \dot{\psi}}=1
 \end{gather}
-Last, we can make a substitution for the $\frac{\partial L}{\partial \omega_i}$ term by taking a derivative of the kinetic energy\eqref{eq:rigid body KE}:
+Last, we can make a substitution for the $\frac{\partial L}{\partial \omega_i}$ term by taking a derivative of the kinetic energy \eqautoref{eq:rigid body KE}:
 $$\frac{\partial L}{\partial \omega_i}=I_i\omega_i$$
 Plugging everything into the Euler-Lagrange formula, we have:
 $$I_1\omega_1\omega_2-I_2\omega_1\omega_2-\frac{d}{dt}I_3\omega_3=0$$
@@ -1280,6 +1782,14 @@ We can perform the analogous analysis for the other axes, yielding the full set 
 \mathrm{Torque-Free \ Rotations}
 \end{gather}
 \subsection{Forced Euler Rigid Body Dynamics}
+
+ \section{An Intuitive Approach to Hamilton's Principle}
+
+ We have so far seen that Hamilton's principle is useful for solving these problems. Now, with our background for generalized coordinates built up, we can explore a derivation of the action which will explain the presence of the $T-U$ term and the $T+U$ term in the \gls{Hamiltonian}.
+
+The approach described here comes mainly from the work in \cite{carcassi_geometric_2023}. I have simplified some of the details of this approach to make this section more simple for the reader, but I recommend reading this paper for a deeper understanding of the subject.
+ 
+
 \section{Key Ideas}
 \begin{enumerate}
     \item We can find the \gls{eom} of a system using either the Newtonian approach or the \gls{Lagrangian} approach, and it is often easier to find an \gls{eom} using the \gls{Lagrangian} for a \gls{conservative} system.
@@ -1290,7 +1800,7 @@ We can perform the analogous analysis for the other axes, yielding the full set 
 \section{Further Reading}
 The following section borrows heavily from the derivations of Chapter 6 and 7 of  \cite{thornton_classical_nodate} and Chapter 5 of  \cite{cline_variational_2017}. A good video overview of this topic can be found at \cite{veritasium_closest_2024}.
 
-There are an abundance of sources for classical mechanics. We can personally recommend the video series at \cite{ross_lagranges_nodate}, which covers this material in a manner more suitable to engineering contexts.
+There are an abundance of sources for classical mechanics. We can personally recommend the video series at \cite{ross_lagranges_nodate}, which covers this material in a more suitable manner to engineering contexts.
 
 \section{Practice Problems}
 \begin{enumerate}
@@ -1298,23 +1808,156 @@ There are an abundance of sources for classical mechanics. We can personally rec
 
 Find a suitable set of generalized coordinates to describe this system. Write out any equations of constraints of the system. \textit{Hint: A apple is topologically similar to a sphere!}
 
-    \item You are a prominent mathematician in the year 1696. Bernoulli proposes a problem to you to find a curve from a point $(x_0,y_0)$ to another point $\left(x_f,y_f\right)$. When a particle is placed on this path, it should be a faster path than any other path the particle could take down the slope under the influence of only gravity.
-%    \item brachistochrone
-\begin{enumerate}
-    \item Find the velocity as a function of the distance from the initial height, $h$, for the particle using energy conservation.
-    \item Write a general expression for the amount of time it takes a particle to descent a path using an integral. \textit{Hint: you can write $t=\frac{ds}{v}$}.
-    \item Use the Euler-Lagrange equation to solve for the form of this curve (You may find the integral form useful!). Plot the result.
+\item  Th\'eoden, king of the Rohirrim, is riding his armies north through the Emyn Muil. His horse, Snowmane, trips on a small rock and Th\'eoden begins to lose his balance.
+
+You can model Th\'eoden as a mass on the end of a massless rod and his horse as a cart constrained to motion along the $\hat{x}$-axis. The angle of Th\'eoden from the vertical is denoted as $\theta$. Derive the \gls{eom} of the system using energy methods. The set-up is shown in \autoref{fig:Inverted Pendulum}.
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Rectangle [id:dp1823165404229382] 
+\draw   (270,160) -- (380,160) -- (380,210) -- (270,210) -- cycle ;
+%Straight Lines [id:da7877170508964265] 
+\draw    (365,85) -- (327.12,179.71) ;
+\draw [shift={(325,185)}, rotate = 111.8] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 6.7, y radius= 6.7]   ;
+\draw [shift={(365,85)}, rotate = 111.8] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 6.7, y radius= 6.7]   ;
+%Straight Lines [id:da5998055377665403] 
+\draw    (365,185) -- (422,185) ;
+\draw [shift={(425,185)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Shape: Arc [id:dp2580429075144265] 
+\draw  [draw opacity=0] (325,120) .. controls (325,120) and (325,120) .. (325,120) .. controls (325,120) and (325,120) .. (325,120) .. controls (333.21,120) and (341.07,121.52) .. (348.3,124.3) -- (325,185) -- cycle ; \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (325,120) .. controls (325,120) and (325,120) .. (325,120) .. controls (325,120) and (325,120) .. (325,120) .. controls (332.18,120) and (339.1,121.17) .. (345.56,123.32) ; \draw [shift={(348.3,124.3)}, rotate = 195.83] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ; \draw [shift={(325,120)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)   ;
+
+% Text Node
+\draw (428,175.4) node [anchor=north west][inner sep=0.75pt]    {$\dot{x}$};
+% Text Node
+\draw (332,97.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$\theta $};
+
+
+\end{tikzpicture}
+
+    \caption{Inverted Pendulum Set-Up}
+    \label{fig:Inverted Pendulum}
+\end{figure}
+\newpage
+\item After his daring stunt with the rock, Th\'eoden runs into Frodo, who is carrying the Phial of Galadriel, which holds the light of E\"arendil's star, which has some of the primordial light from the two trees of Valinor.
+
+The Phial is hanging from a chain. The dynamics of the system can be modelled as a double pendulum with two rigid arms, both of length $L$, which are free to rotate in the $xy$-plane. Find the \gls{eom} for the system as shown in \autoref{fig:Double Pendulum}.
+\begin{figure}[ht]
+    \centering
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da88879495030041] 
+\draw [line width=1.5]    (480,80) -- (180,80) ;
+%Straight Lines [id:da8592675948010826] 
+\draw    (480,70) -- (470,80) ;
+%Straight Lines [id:da3909809682368328] 
+\draw    (460,70) -- (450,80) ;
+%Straight Lines [id:da5390474411922489] 
+\draw    (440,70) -- (430,80) ;
+%Straight Lines [id:da0997286622802952] 
+\draw    (420,70) -- (410,80) ;
+%Straight Lines [id:da7214366710106086] 
+\draw    (400,70) -- (390,80) ;
+%Straight Lines [id:da5228157742795766] 
+\draw    (380,70) -- (370,80) ;
+%Straight Lines [id:da3575127382469875] 
+\draw    (360,70) -- (350,80) ;
+%Straight Lines [id:da4822573164742765] 
+\draw    (340,70) -- (330,80) ;
+%Straight Lines [id:da910185342676816] 
+\draw    (320,70) -- (310,80) ;
+%Straight Lines [id:da8454826691956545] 
+\draw    (300,70) -- (290,80) ;
+%Straight Lines [id:da9491977902298143] 
+\draw    (280,70) -- (270,80) ;
+%Straight Lines [id:da28933539575593303] 
+\draw    (260,70) -- (250,80) ;
+%Straight Lines [id:da5230450852671863] 
+\draw    (240,70) -- (230,80) ;
+%Straight Lines [id:da9457720673849641] 
+\draw    (220,70) -- (210,80) ;
+%Straight Lines [id:da10165059225338346] 
+\draw    (200,70) -- (190,80) ;
+%Straight Lines [id:da8370629677522231] 
+\draw    (330,80) -- (360,150) ;
+%Straight Lines [id:da40863186306124] 
+\draw    (360,150) -- (420,200) ;
+\draw [shift={(420,200)}, rotate = 39.81] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 6.7, y radius= 6.7]   ;
+%Straight Lines [id:da04311473222375517] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (330,80) -- (330,160) ;
+%Straight Lines [id:da1285462775825963] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (360,150) -- (390,220) ;
+%Shape: Arc [id:dp034239614321454614] 
+\draw  [draw opacity=0][line width=0.75]  (355.4,139.85) .. controls (347.6,143.17) and (339.01,145) .. (330,145) -- (330,80) -- cycle ; \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (352.56,140.98) .. controls (345.53,143.58) and (337.93,145) .. (330,145) ; \draw [shift={(330,145)}, rotate = 360] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)   ; \draw [shift={(355.4,139.85)}, rotate = 156.97] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Shape: Arc [id:dp05018931071899502] 
+\draw  [draw opacity=0][line width=0.75]  (409.06,192.64) .. controls (402.71,199.94) and (394.75,205.81) .. (385.75,209.7) -- (360,150) -- cycle ; \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][line width=0.75]    (407,194.9) .. controls (401.03,201.15) and (393.81,206.22) .. (385.75,209.7) ; \draw [shift={(385.75,209.7)}, rotate = 336.64] [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)   ; \draw [shift={(409.06,192.64)}, rotate = 131.02] [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (351,102.4) node [anchor=north west][inner sep=0.75pt]    {$L$};
+% Text Node
+\draw (397,152.4) node [anchor=north west][inner sep=0.75pt]    {$L$};
+% Text Node
+\draw (337,152.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$\theta $};
+% Text Node
+\draw (400,210.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,opacity=1 ]  {$\phi $};
+
+\end{tikzpicture}
+
+    \caption{Double Pendulum Set-Up}
+    \label{fig:Double Pendulum}
+\end{figure}
+
 \end{enumerate}
 
-\item You have a pendulum attached to a cart that can move back and forth along the $\hat{x}$-axis. Derive the \gls{eom} of the system using energy methods.
-\item You have a double pendulum with two rigid arms, both of length $l$, which are free to rotate in the $xy$-plane. Find the \gls{eom} for the system.
 
-\end{enumerate}
+\newpage
+\printendnotes
+
+\chapter{Hamiltonian Mechanics}\label{chap:hamiltonian}
+After the formulation of \gls{Lagrangian} Mechanics, another formulation was created by Hamilton later on. The \gls{Hamiltonian} formulation, like the \gls{Lagrangian}, does not introduce any new concepts, because it is simply an alternate approach to dynamics. However, like the \gls{Lagrangian}, it makes some types of problems more simple. We present the \gls{Hamiltonian} here briefly for its use case in \glspl{symplectic int}.
+\subsection{Derivation of the Hamiltonian}
+The exact derivation of the \gls{Hamiltonian} using Legendre transforms is beyond the scope of our present discussion, so we will mostly discuss the consequences of this derivation. 
+
+\newglossaryentry{gen momenta}
+{
+    name=generalized momenta,
+    first = {\textit{generalized momenta}},
+    description={A generalized coordinate that is defined as $\frac{\partial L}{\partial \dot{q}_i}$}
+}
+
+The \gls{Hamiltonian} method replaces the generalized velocities with \gls{gen momenta}. The generalized momenta are a function of $q,\dot{q},$ and $t$. We express the \gls{gen momenta} as $p$. $p$ is defined to be:
+$$p(q,\dot{q},t)\equiv\dfrac{\partial L}{\partial \dot{q}_i}$$
+Thus, we express our \gls{Hamiltonian}, $\mathcal{H}$, in terms of the generalized positions, \gls{gen momenta}, and time. This looks like:
+$$\mathcal{H}=\mathcal{H}(q_j,p_j,t)$$
+In a \gls{conservative} system, we can also write: $$\mathcal{H}=T+U$$
+Using relations with the \gls{Lagrangian}, we can write two first order differential equations for the \gls{eom} with the \gls{Hamiltonian}.
+
+\begin{gather}
+\color{blue}\boxed{
+\begin{array}{c}\color{black}
+     \dot{q}_k=\dfrac{\partial \mathcal{H}}{\partial p_k}\\\\
+     \color{black}
+  -\dot{p}_k=\dfrac{\partial \mathcal{H}}{\partial q_k}
+\end{array}
+}\\
+\color{blue}\mathrm{Hamiltonian \ EOM's}
+\end{gather}
+This is all we will note about \gls{Hamiltonian} Mechanics for now. We will note here that these are more useful in the case of \gls{numerical int} because these are first order differential equations, as opposed to the second order differential equations of \gls{Lagrangian} Mechanics.
+
 
 \chapter{Symplectic and Variational Integrators}\label{sec: Syplectic and Variational Ints}
-In addition to the standard \gls{numerical int} schemes explored in Volume I, there are a variety of integration schemes that use energy conservation as the basis of their integration schemes. These types of integrators are called \glspl{symplectic int} and \glspl{variational int}. These types of integrators directly solve Hamilton's equations for a Hamiltonian system. The form of these equations is discussed briefly in Section \ref{sec:hamiltonian}.
+In addition to the standard \gls{numerical int} schemes explored in Volume I, there are a variety of integration schemes that use energy conservation as the basis of their integration schemes. These types of integrators are called \glspl{symplectic int} and \glspl{variational int}. These types of integrators directly solve Hamilton's equations for a \gls{Hamiltonian} system. The form of these equations is discussed briefly in \autoref{chap:hamiltonian}.
 
-Because the Hamiltonian equations are first order already, they are ready for numerical integration without the need for order reduction.
+Because the \gls{Hamiltonian} equations are first order already, they are ready for numerical integration without the need for order reduction.
 
 A similar operation can be done to reduce the \gls{Lagrangian} to two first order equations, in a system known as a variational integrator.
 
@@ -1323,10 +1966,67 @@ MATLAB has no built in functions for variational or \glspl{symplectic int}, so w
 \subsubsection{Use Case of Symplectic Integrators}
 Although MATLAB does not have built-in functions for these integrators, scripts to do so can be written or found online.
 
-The best use case for these algorithms is for systems with a Hamiltonian or Lagrangian description that need to be integrated over a long time span. Because these integrators conserve energy, they will better preserve the characteristics of these systems over long times as compared to RK integrators.
+The best use case for these algorithms is for systems with a \gls{Hamiltonian} or \gls{Lagrangian} description that need to be integrated over a long time span. Because these integrators conserve energy, they will better preserve the characteristics of these systems over long times as compared to RK integrators.
 
-\part{Controls}
+\chapter{Further Applications}\label{chap:further applications}
+I may, at some point, devote an entire book to the study of modern physics and the application of variational calculus and energy methods there. Since that is yet to be released, I choose to devote this chapter to some of the applications of these mechanics in the more broad realm of physics outside of the studies in aerospace. This chapter will focus on high level overviews rather than in-depth discussion of mathematics.
+
+This chapter is primarily for those readers interested in this subject matter and is not necessary for understanding the rest of the book. I do think, however, that a good engineer should explore domains outside the strict confines of their field, as they will often gain greater appreciation of their own subject matter in doing so.
+
+\section{Differential Geometry}
+
+The subject of differential geometry was lightly touched upon in \autoref{ex:geodesic}.
+\section{Special Relativity}
+
+\section{General Relativity}
+
+\section{Quantum Mechanics}
+
+\section{Field Theories}
+
+
+
+\part{Orbital Applications}
+
+\
+\begin{chapquote}{J. Robert Oppenheimer}
+    ''The history of science is rich in the example of the fruitfulness of bringing two sets of techniques, two sets of ideas, developed in separate contexts for the pursuit of new truth, into touch with one another.''
+\end{chapquote}
+
+ If we loosen our definition of rocket modeling \textit{slightly}, orbital mechanics becomes a very important part of our discussion. The \gls{Lagrangian} and \gls{Hamiltonian} description of mechanics are instrumental to orbital applications. Because many of the applications of our previously mentioned dynamics are in the realm of spacecraft dynamics, I feel it is a necessity to include information on orbits.
+
+Additionally, we will find that energy mechanics has extensive uses here, as space is the perfect playground for our 'no frictional forces or drag' that we often use for energy mechanics.
+
+\chapter{Orbital Mechanics Introduction}
+\section{2-D Conic Orbits}
+\section{3-D Conic Orbits}
+\section{Orbit Transfers}
+
+
+\chapter{Numerical Simulation of Orbits}
+\section{Basic N-Body simulations}
+\section{CR3BP}
+\section{Lambert Equation}
+\section{Trajectory Optimization}
+\section{Gravity Assists and Multiple Transfers}
+
+\section{Relativistic Considerations}
+
+In this book, we will only dip our toes into the deep pool of modern physics and the considerations of special and general relativity for spacecraft. Some of the underlying principles have been discussed in \autoref{chap:further applications}. Here, I will only discuss the application of those principles relevant to aerospace orbital mechanics.
+
+
+\part{Control Theory}
 Controls is a vast subject which is to vast to cover in its entirety in one book. Similar to Volume I, then, I will cover this subject mostly in it's applicability to our application with rocket modeling and a few select aerospace applications.
+
+\newacronym{lti}{LTI}{Linear Time Invariant}
+
+An introduction to control theory as a whole is essential to understanding aerospace applications. This section will cover \gls{lti} systems and the usage of the Laplace transform and transfer functions in analyzing these systems. Linear systems are quite simple to model mathematically because they exhibit useful properties such as superposition. 
+
+Next, I choose to discuss some aspects of optimal control. This ties in to our discussion of the calculus of variations. This section will include some discussion of Kalman filtering and some parts of optimal control in aerospace applications. 
+
+Of course, nearly all systems are non-linear to some degree. Thus, it is prudent to cover some examples where we need to implement non-linear control schemes. Non-linear systems will be discussed in brief at the end of the chapter. Non-linear systems, in general, are hard to generalize mathematically, so I take the approach of mostly covering linear dynamics. Then, we use simulation to fine tune the linear model. Non-linear dynamics are easily simulated in MATLAB, which we have shown extensively in Volume I and Volume II. Our main goal here, then, is to show some examples of modifying linear systems to suit non-linear models.
+
+\chapter{Introduction to Control Theory}
 
 \chapter{The Laplace Domain}
 
@@ -1378,10 +2078,40 @@ We can now return to the example of the exponential functions, $e^{at}$. If we s
     \color{blue}\boxed{\color{black}f(t)\cdot e^{st}=\int_0^\infty{f(t)e^{-st}}}\\
     \color{blue}\mathrm{Laplace \ Transform}
 \end{gather}
+\chapter{Linear Time Invariant Systems}
+\section{Transfer Functions}
+
+\section{Stability}
 
 
+\section{Bode Plots}
+
+\section{Nyquist Plots}
+
+\chapter{The Inverted Pendulum}
+
+\chapter{Controls in Aerospace}
+
+\chapter{Optimal Control}
+
+\chapter{Basics of Non-Linear Control}
+
+\chapter{Trajectory Optimization}
+
+\chapter{Flight Dynamics and Control}
 
 \chapter{Appendix}
+
+\section{Brachistrochrone Extras (Delete maybe)}
+From Brachistochrone section:
+
+Next, we can express this velocity as a infinitesimal element of the arc-length traversed over an infinitesimal time span. This is more simply stated mathematically:
+$$v=\dfrac{ds}{dt}$$
+Now, we can use these two relations to formulate an integral for the time. Taking the two and setting them in an equality:
+$$\frac{ds}{dt}=\sqrt{2gx}$$
+Performing seperation of variables and writing the integral, with the assumption that $t=\frac{s}{v}$ and that the initial conditions are zero:
+$$\sqrt{2g}T=\int_{t_1}^{t_2}\frac{\sqrt{\dot{x}^2+\dot{y}^2}}{\sqrt{x}}$$
+
 
 \section{Proofs}
 \subsection{Equivalence of Newtonian and Lagrangian Mechanics}\label{equiv newt and lang}
