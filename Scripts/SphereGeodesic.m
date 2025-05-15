@@ -34,7 +34,6 @@ theta_2 = deg2rad(theta_2);
 %create a unit sphere which the geodesic lies on that looks like earth
 
 sp.npanels = 100; % Increase this if you want a smoother surface on the earth
-
 [xSphere,ySphere,zSphere] = sphere(100);
 sp.imgFile = "earth.jpg";
 sp.globe = surf(xSphere, ySphere, -zSphere, 'FaceColor', 'none', 'EdgeColor', 'none','HandleVisibility','off'); 
@@ -46,22 +45,16 @@ syms phi_0
 eqn = cot(theta_1)/cot(theta_2)==cos(phi_1-phi_0)/cos(phi_2-phi_0);
 phi_0 = vpasolve(eqn,phi_0);
 phi_0 = double(phi_0(1));
-
 a = cot(theta_1)/cos(phi_1-phi_0);
 
 %find the phi and theta matrices
-%theta = linspace(theta_1,theta_2,200);
-%phi = phi_0 - acos(cot(theta)/a);
-
 phi = linspace(phi_1,phi_2,200);
 theta = acot(a*cos(phi - phi_0));
 
-rho = 1;
-
 % convert the spherical coordinate system to cartesian for plotting
-x = rho*sin(theta).*cos(phi);
-y = rho*sin(theta).*sin(phi);
-z = rho*cos(theta);
+x = sin(theta).*cos(phi);
+y = sin(theta).*sin(phi);
+z = cos(theta);
 
 figure(1)
 %surf(xSphere,ySphere,zSphere, 'FaceColor','blue', 'LineStyle','none', 'FaceAlpha','0.2
