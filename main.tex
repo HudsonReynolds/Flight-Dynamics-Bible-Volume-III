@@ -304,6 +304,12 @@
 
 \newacronym{bke}{BKE}{Basic Kinematic Equation}
 
+\newacronym{lti}{LTI}{Linear Time Invariant}
+
+\newacronym{bibo}{BIBO}{Bounded Input Bounded Output}
+
+\newacronym{siso}{SISO}{Single Input Single Output}
+
 \newglossaryentry{inertial frame}
 {
     name=inertial frame,
@@ -525,6 +531,9 @@ This volume attempts to derive most equations in a way that is intuitive to the 
 I assume some base knowledge of physics as well, but not much is covered outside the scope of standard undergraduate engineering coursework.
 
 \part{Energy Mechanics}
+\begin{chapquote}{Joseph Fourier}
+    ``Mathematics compares the most diverse phenomena and discovers the secret analogies that unite them.''
+\end{chapquote}
 
 \chapter{Energy Mechanics Overview}
 
@@ -1105,7 +1114,6 @@ To start, we need to define what an arc length on a spherical surface looks like
         y=rsin\theta\sin\phi\\
         z=r\cos\phi
     \end{array}$$
-
 Some long and arduous mathematics gives the following for the arc length:
 $$ds=\sqrt{r^2d\theta^2+r^2\sin^2\theta d\phi^2}$$
 At this point, we want to make two assumptions to get this into a form that we can easily evaluate. Since we are only looking for a \gls{geodesic}, we can assume that $r=1$ without losing any information. Next, we want to put our solution in terms of just one variable - either $d\theta$ or $d\phi$. In this case, I choose $d\theta$. This means that we parameterize our path with $\phi=\phi(\theta)$. Taking this derivative, we have:
@@ -1148,11 +1156,11 @@ $$\phi=\int{\phi'}=\int{\frac{c}{\sin\theta\left(\sin^2\theta-c^2\right)}}$$
 After looking at the problem for a long time, it becomes apparent that we should perform u-substitution with $u=\cot\theta$. Evaluation of this integral can easily be done with MATLAB or Mathematica (there is no useful information gleaned from doing this integral). Doing so yields: $$\cot{\theta}=a\cos{(\phi-\phi_0)}$$
 Where $\phi_0$ comes from the integration constant. This is our final answer. We can solve for $a$ and $\phi_0$ using numerical methods since the equation is transcendental.
 
-A MATLAB Script which shows such \glspl{geodesic} is included in the Appendix in \autoref{script:Geodesic}. The output of the script is shown in \autoref{fig:Geodesic}
+A MATLAB Script which shows such \glspl{geodesic} is included in the Appendix in \autoref{script:Geodesic}. The output of the script is shown in \autoref{fig:Geodesic}.
 
 \begin{figure}[H]
     \centering
-    \includesvg[width=\columnwidth]{Scripts/Geodesic.svg}
+    \includesvg[width=\linewidth]{Scripts/Geodesic.svg}
     \caption{Geodesic shown on the Earth}
     \label{fig:Geodesic}
 \end{figure}
@@ -1163,19 +1171,15 @@ Performing a Taylor expansion and keeping only the first-order terms:
 $$\frac{1}{\theta}=a$$
 So, it is seen that the value $\theta$, as expected, is constant for a short path length. This formula thus returns the standard equation of a line on short scales!
 
-One important consequence of this is that a spherical geometry, when looked at `closely' (this is, looking at an infinitesimal portion of the surface) is locally Euclidean!
+One important consequence of this is that a spherical geometry, when looked at `closely' (this is, looking at an infinitesimal portion of the surface) is locally Euclidean! This fact that the geometry looks locally Euclidean will be important in our later discussions in \autoref{chap:lie theory}
 \end{example}
 
 \section{Revisiting the Brachistochrone}
 
 \begin{example}[Brachistochrone]\label{ex:brachistrochrone}
     Let us return to the example of the \gls{brachistochrone} to demonstrate the usefulness of the calculus of variations.
-\end{example}
 
-refer to \autoref{ex:brachistrochrone}
-
-
-%clean this up and explain
+    %clean this up and explain
 You are a prominent mathematician in the year 1696. Bernoulli proposes a problem to you to find a curve from a point $(x_0,y_0)$ to another point $\left(x_f,y_f\right)$. When a particle is placed on this path, it should be a faster path than any other path the particle could take down the slope under the influence of only gravity.
 
 Find the velocity as a function of the distance from the initial height, $h$, for the particle using energy conservation.
@@ -1183,11 +1187,9 @@ Find the velocity as a function of the distance from the initial height, $h$, fo
 Write a general expression for the amount of time it takes a particle to descent a path using an integral. \textit{Hint: you can write $t=\frac{ds}{v}$}.
 
 Use the Euler-Lagrange equation to solve for the form of this curve (You may find the integral form useful!). Plot the result.
+\end{example}
 
 \chapter{Lagrangian Mechanics}\label{chap:lagrangian}
-\begin{chapquote}{Joseph Fourier}
-    ''Mathematics compares the most diverse phenomena and discovers the secret analogies that unite them.''
-\end{chapquote}
 
 Energy methods of mechanics employ the concepts of the energy of a system to solve a problem in mechanics. This is in contrast to the Newtonian method, which considers the forces of a system. The good news is that both will result in the same answer (see proof in \autoref{equiv newt and lang}). However, having both in your set of tools as an engineer can prove especially useful.
 
@@ -1957,6 +1959,149 @@ Using relations with the \gls{Lagrangian}, we can write two first order differen
 This is all we will note about \gls{Hamiltonian} Mechanics for now. We will note here that these are more useful in the case of \gls{numerical int} because these are first order differential equations, as opposed to the second order differential equations of \gls{Lagrangian} Mechanics.
 
 
+\section{Ostrogradsky instability}
+Why natural phenomenon are typically of 2nd order
+
+not writing any more rn because I don't know it
+
+\chapter{Lie Theory}\label{chap:lie theory}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images/}
+    \caption{Caption}
+    \label{fig:enter-label}
+\end{figure}
+
+The goal of this first part until now has been to introduce the methods of \gls{Lagrangian} and \gls{Hamiltonian} mechanics in a way that does not require very rigorous mathematical formalisms. However, to tie up some of the loose ends, it is useful to introduce some mathematical concepts which can be used to understand these concepts on a more fundamental level. Along the way, we will also gain insight into the nature of rotations and curved spaces. Introducing these concepts will allow us to formalize huge swaths of the content covered in both Volume II and Volume III up to now, and will prove beneficial in the future endeavors of this volume as well.
+
+This mathematical description is not strictly necessary to use the concepts mentioned throughout this book, but it is helpful for readers who hope to gain a full understanding of the content. I will warn that this chapter is likely the most technical in the book and will require significant effort from the reader.
+
+\section{Motivation}
+
+
+\section{Lie Groups}
+
+\subsection{The Axioms of Groups}
+
+As mentioned before, the defining feature of the lie group is that it is both a group and a manifold. We must first define the attributes of a group if we are to formally define this concept. 
+
+A group is a mathematical \textit{set} which obeys the following four properties for a given \textit{binary operation}. These properties are shown formally and then explained afterward.
+
+\begin{enumerate}
+    \item $Closure{:} \mathrm{\ for \ all\ } g,h \in G, g\cdot h \in G$
+\item $Associativity{:} \mathrm{\ for \ all \ } g,h,k \in  G, (g\cdot h)\cdot k=g\cdot(h\cdot k)$
+\item $Identity{:} \mathrm{\ there \ is  \ } e\in G, \mathrm{\ for \ all \ } g \in G, e\cdot g=g\cdot e=g$
+\item $Inverse{:} \mathrm{\ for \ all \ } g \in G, \mathrm{\ there \ is  \ } h \in G, g \cdot h=h\cdot g =e$
+\end{enumerate}
+
+I will now go over all of these properties to explain their meaning in more natural language for readers not familiar with the notation above.
+
+\begin{enumerate}
+    \item By Closure, we mean that when we apply an operation on a \textit{set}, we get another element of that set. This is best motivated by an example. 
+
+    Let us take the natural numbers, denoted $\mathbb{N}$ to be our set. The natural numbers are given as $1,2,3\cdots$  and so on. We say that the natural numbers are closed under addition, because adding any of the elements of the set together, we get another element of the set. For example, adding $1$ and $3$, we get $4$, which is also in the set $\mathbb{N}$. Moreover, any composition of these operations will also be part of the set. Performing addition twice will still give an element of the sequence. 
+    
+    Connecting this to our notation, we say that two elements, $g$ and $h$ are in the set $G$, which we represent with this notation: $g,h \in G$. We define the operation to be `$\cdot$', which is the notation for a general operation. We can then say that the elements, when acted upon by this operation, are still in the set $G$: $g\cdot h \in G$.
+    \item Associativity is a more simple concept which most readers are likely familiar with. It simply means that the grouping of the operations does not matter. Note that associativity \textit{does not} imply communitivity! If we take the example of matrices, $(AB)C=A(BC)$, which is an expression of associativity, but $AB\neq BA$ for matrices.
+    \item Identity is also relatively simple. Identity simply means that there exists an element of the set $G$, which when applied on another element of set $G$, has no effect. For the real numbers, $\mathbb{R}$, multiplication by the number $1$ is an example of an identity element.
+    \item Inverse is the last property, which states that for each element in the set, there is another element in the set, that when acted upon by an operation, returns the identity.
+\end{enumerate}
+
+Lastly, as a bonus, I will explain what a \textit{binary operation} is. Stated simply, a binary operation is an operation which takes in two inputs and returns a single output. Most operations, such as addition, subtraction, and multiplication are binary. Something like a conditional statement ("if/else") could be a ternary operation (3 inputs instead of just 2).
+\begin{example}[The Real Numbers]
+    To wrap our minds around the concepts of groups, we consider the example of the integers, $\mathbb{Z}$.
+
+    To check if the integers form a group, we first need to define our operation. We will choose addition. Then, we simply check each of the properties. 
+    
+    We have shown previously that adding any two natural numbers gives another natural number, and we can intuitively extend this to the integers as well. Next, we consider the associativity. It is easily seen that $(a+b)+c=a+(b+c)$, since addition is associative. Next, we consider the identity. For the operation of addition, the identity is the number $0$, which when added to any integer, $z$, does nothing. Lastly, we consider the inverse. We should have for every integer another integer such that $a+b=0$. It is obvious that $b=-a$, which is satisfied since the integers include negative numbers.
+
+    Thus, we have shown that the integers are closed under addition. The reader should try this reasoning to show why the integers are not a group under multiplication. Which axiom is violated?
+\end{example}
+
+The axioms of groups can be applied to create a group from any set of objects. In our study, it is most helpful to assign group identities to matrices, since our studies of rotations and control systems involve matrices heavily.
+
+\subsubsection{Matrix Groups}
+
+To define matrix groups, we need to again satisfy all of the four criteria. For matrices, we do this in a slightly different way that is worth covering here.
+
+
+
+\subsection{Manifolds}
+The other important defining aspect of Lie groups is that they are manifolds. More specifically, a Lie group must be a \textit{differentiable manifold}. 
+
+But before we get ahead of ourselves, what \textit{is} a manifold? A manifold is simply a `space' that looks like Euclidean space on small scales.\endnote{More specifically, this is a topological space. The exact definition of a topological space is not important to us, but it involves defining a series of open sets with certain properties.} This means that at local scales, the geometry must look like straight lines, where superposition and linearity hold. These are the exact criteria of a vector space.
+
+To apply the rules of calculus, such as taking a derivative, it is necessary that we have a vector space. 
+
+\section{Lie Algebras}
+
+
+
+\section{Rotations}
+
+Volume II has extensive information on rotations, but it will be helpful to solidify that information with the mathematics of Lie groups. Additionally, this means that we can gain an understanding of \textit{any possible} implementation of rotation schemes, because this underlying principle dictates all of them.
+
+To describe a rotation mathematically, we first need to understand what rotations do. Aside from the obvious fact that rotations `rotate', what properties are inherit no matter what space we rotate in (although 2D and 3D are the most common for us).
+
+\begin{enumerate}
+    \item  Rotations are linear. If we rotate once, and then rotate again, the result is still a rotation, and more importantly, the result is the sum of the first and second rotation.
+    \item Secondly, a rotation preserves angles and lengths. By rotating, the length of a vector is never changed. Additionally, the angle between two vectors must also be constant.
+    \item Lastly, and likely the most overlooked, rotations preserve the orientations of objects. If we have
+
+
+\end{enumerate}
+
+Figure for all of these
+
+Each of these have direct mathematical implications. We can go through each of the previously listed properties in order, describing them mathematically:
+\begin{enumerate}
+    \item The fact that rotations are linear tells us that we can express them in terms of vectors and matrices. Using the other properties, we can ascertain more about the matrix that represents this rotation.
+    \item Preserving angles and rotations means that the dot product is constant under a rotation. Assuming that our rotation is denoted $R$, this means that two vectors, $\vec{v}$ and $\vec{w}$ have the following relationship under a rotation:
+
+    \begin{equation}\label{eq:dotty dot prod}
+        \vec{v}\cdot \vec{w}=(R\vec{v})\cdot(R\vec{w})
+    \end{equation}
+    
+    It is known that for real dot products, we can replace the dot product of $\vec{v}\cdot \vec{w}$ with $\vec{v}^T \vec{w}$ (you can easily prove this to yourself). So, we can rewrite \eqautoref{eq:dotty dot prod} as:
+ \begin{equation}
+        \vec{v}^T \vec{w}=(R\vec{v})^T(R\vec{w})
+    \end{equation}
+Which can be simplifed using the identity that $(R\vec{v})^T=\vec{v}^TR^T$ to:
+ \begin{equation}
+        \vec{v}^T \vec{w}=\vec{v}^TR^TR\vec{w}
+    \end{equation}
+For this statement to be true $R^TR$ must be equal to the identity matrix, $I$. The only way this can occur is if:
+\begin{enumerate}
+    \item R is invertible.
+    \item     The transpose of $R$ is it's inverse.
+\end{enumerate}
+The first statement implies that $R$ must be square (Invertible Matrix Theorem). The second condition that $R^{-1}=R^T$ is a special condition which implies that the matrix is \textit{orthogonal}.
+
+    \item 
+    
+\end{enumerate}
+
+Skew Symmetric - Lie group
+
+exponentiate to obtain the lie algebra
+
+One of the simplest cases in showcasing the relationship between the Lie group and the Lie algebra is the rotation.
+
+Starting with an infinitesimal rotation, which is a group in $\mathfrak{so}(3)$, we have:
+$$A=\begin{bmatrix}
+    0 &-\omega_z & \omega_y \\
+    \omega_y & 0 & -\omega_x \\
+    -\omega_y & \omega_x & 0
+\end{bmatrix}$$
+
+We can use the exponential map to go from the Lie group to the Lie algebra. For matrices, we use the matrix exponential as the exponential map. Performing the exponentiation, we have that $e^{A}$ is a rotation matrix.
+
+
+\section{Lagrangian and Hamiltonians on Manifolds}
+
+
+
 \chapter{Symplectic and Variational Integrators}\label{sec: Syplectic and Variational Ints}
 In addition to the standard \gls{numerical int} schemes explored in Volume I, there are a variety of integration schemes that use energy conservation as the basis of their integration schemes. These types of integrators are called \glspl{symplectic int} and \glspl{variational int}. These types of integrators directly solve Hamilton's equations for a \gls{Hamiltonian} system. The form of these equations is discussed briefly in \autoref{chap:hamiltonian}.
 
@@ -1977,8 +2122,14 @@ I may, at some point, devote an entire book to the study of modern physics and t
 This chapter is primarily for those readers interested in this subject matter and is not necessary for understanding the rest of the book. I do think, however, that a good engineer should explore domains outside the strict confines of their field, as they will often gain greater appreciation of their own subject matter in doing so.
 
 \section{Differential Geometry}
+The subject of differential geometry was lightly touched upon in \autoref{ex:geodesic}, where we considered the shortest path on a spherical surface. Differential geometry is a field of study that is concerned with the study of smooth manifolds - which essentially means that it is an object which `looks' like a vector space when viewed closely. This is, of course, a loose definition that is not rigorous. In \autoref{ex:geodesic}, we showed this property on the sphere, 
 
-The subject of differential geometry was lightly touched upon in \autoref{ex:geodesic}.
+We can also think of a manifold as anything which we can continuously parameterize. So, our 3D rotations that we parameterize with Euler angles or quaternions are also elements of a manifold.
+
+We also see that manifolds are also useful in \gls{Lagrangian} and \gls{Hamiltonian} mechanics in the form of \textit{symplectic manifolds}.
+
+So, this is a field of study that touches upon many of the mathematic concepts that we encounter in the study of dynamics.
+
 \section{Special Relativity}
 
 \section{General Relativity}
@@ -2021,8 +2172,6 @@ In this book, we will only dip our toes into the deep pool of modern physics and
 \part{Control Theory}
 Controls is a vast subject which is to vast to cover in its entirety in one book. Similar to Volume I, then, I will cover this subject mostly in it's applicability to our application with rocket modeling and a few select aerospace applications.
 
-\newacronym{lti}{LTI}{Linear Time Invariant}
-
 An introduction to control theory as a whole is essential to understanding aerospace applications. This section will cover \gls{lti} systems and the usage of the Laplace transform and transfer functions in analyzing these systems. Linear systems are quite simple to model mathematically because they exhibit useful properties such as superposition. 
 
 Next, I choose to discuss some aspects of optimal control. This ties in to our discussion of the calculus of variations. This section will include some discussion of Kalman filtering and some parts of optimal control in aerospace applications. 
@@ -2030,27 +2179,30 @@ Next, I choose to discuss some aspects of optimal control. This ties in to our d
 Of course, nearly all systems are non-linear to some degree. Thus, it is prudent to cover some examples where we need to implement non-linear control schemes. Non-linear systems will be discussed in brief at the end of the chapter. Non-linear systems, in general, are hard to generalize mathematically, so I take the approach of mostly covering linear dynamics. Then, we use simulation to fine tune the linear model. Non-linear dynamics are easily simulated in MATLAB, which we have shown extensively in Volume I and Volume II. Our main goal here, then, is to show some examples of modifying linear systems to suit non-linear models.
 
 \chapter{Introduction to Control Theory}
+Control Theory, at its base, is about understanding how a system reacts to inputs and how we can change those inputs to modify the system. We want to take a system and bring it to a desired `state'. To start, we need to define what we mean by a `system' in the context of control theory.
+
+\subsection{Systems}
+In control theory, a system 
 
 \chapter{The Laplace Domain}
 
 We start our exploration of control theory by exploring the \gls{laplace transform}
 \textit{}
-The \gls{laplace transform} is an integral transform, much like the \textit{Fourier Transform}. We find the Laplace transform of special use for its applications in solving differential equations.
+The \gls{laplace transform} is an integral transform, much like the \textit{Fourier Transform}. We find the Laplace transform of special use for its applications in solving linear differential equations.
 
 Here, I want to present an alternative impetus for the \gls{laplace transform} that is often not taught in differential equations, by analyzing the \glspl{eigenfunction} of the derivative operator.
 
 I find this explanation especially enlightening on this topic, although others may prefer the more conventional approach to this topic. As such, I have included some resources that cover the \gls{laplace transform} in the more conventional manner.
 
 \section{Eigenfunction of Derivatives}
-\Glspl{eigenfunction} are in essense, the building blocks of the solutions for equations. When we have a linear operator, such as an integral or derivative, there must exist a function that when acted upon by this operator, is unchanged by the operator aside from being scaled. This is precisely what we mean when we define something as an \gls{eigenfunction}. I find the etyomology of this word especially useful in this case. Eigen, in German, is a word meaning 'self' or 'own'. So, any time we see something, such as an eigenvalue or \gls{eigenfunction}, it is a quantity for which it in some way produces itself.
-
-In the context of differential equations, where the derivative operator is especially prevalent, we find such a function especially useful.
+\Glspl{eigenfunction} are in essense, the building blocks of the solutions for equations. When we have a linear operator, such as an integral or derivative, there must exist a function that when acted upon by this operator, is unchanged by the operator aside from being scaled. This is precisely what we mean when we define something as an \gls{eigenfunction}. I find the etyomology of this word especially useful in this case. Eigen, in German, is a word meaning 'self' or 'own'. So, any time we see something, such as an eigenvalue or \gls{eigenfunction}, it is a quantity for which it in some way produces itself. We define the eigenfunction as follows:
+$$Df=\lambda f$$
+Where $D$ is some operator, $f$ is a function, and $\lambda$ is an eigenvalue. In the context of differential equations, where the derivative operator is especially prevalent, we find such a function especially useful.
 
 It is with this context that we investigate the exponential function, $e^{ax}$, which we find useful for exactly this property.
-
 More precisely, we want to solve the eigenvalue system $Dy=\lambda y$, where we denote the differentiation operator $\frac{d}{dx}\equiv D$. We can see that, plugging in $e^{ax}$ for this system, we have this exact property:
 $$De^{ax}=ae^{ax}$$
-So we have our eigenfunction, $e^{ax}$, which produces an eigenvalue $a$. Now, we want to use this useful property on equations that are not exponentials. We can do so by \textit{projection} of these functions onto the exponential functions.
+So we have our eigenfunction, $e^{ax}$, which produces an eigenvalue $a$. Now, we want to use this useful property on equations that are not strictly exponentials. We can do so by \textit{projection} of these functions on to the exponential functions. How can we project functions on to each other? That is the function of the inner product, which we discuss next.
 
 \section{Inner Product Spaces}
 To perform this projection, we must first define some new terminology and mathematical understanding. In mathematics, we generally have a simple case which we want to generally extent. The same is true here, which will motivate our discussion of inner products.
@@ -2059,12 +2211,19 @@ We start with the standard definition of projection in a finite-dimensional vect
 
 %add tikZ image here
 
-If we want to find the component of one vector in the direction of the other vector, we use the linear operation of the dot product. This quantity tells us the 'similarity' of the two vectors.
+If we want to find the component of one vector in the direction of the other vector, we use the linear operation of the dot product. This quantity tells us the `similarity' of the two vectors.
 
 We can define the dot product of two vectors in a finite $n$-dimensional space generally as:
 $$\vec{a}\cdot \vec{b}=\sum_{k=0}^{n}{a_kb_k}$$
-To continue further, we will extend this definition to the complex numbers.
-
+It will prove useful in the future to be able to extend this definition to complex vectors. In other words, we are extending our domain from $\mathbb{R}^n$ to $\mathbb{C}^n$. Nothing about the inner product changes aside from the fact that we must take the \textit{conjugate} of $b_k$ now, so that:
+$$\vec{a}\cdot \vec{b}=\sum_{k=0}^{n}{a_k\bar{b}_k}$$
+I have denoted the conjugate of $b$ as $\bar{b}$, although other notations such as $b^*$ are also commonly used. We define the conjugate as follows:
+\begin{equation}
+    \begin{split}
+        b&=\sigma+i\omega\\
+        \bar{b}&=\sigma-i\omega
+    \end{split}
+\end{equation}
 \subsection{Complex Numbers}
 
 \subsection{Generalized Inner Product Spaces}
@@ -2081,6 +2240,7 @@ We can now return to the example of the exponential functions, $e^{at}$. If we s
     \color{blue}\boxed{\color{black}f(t)\cdot e^{st}=\int_0^\infty{f(t)e^{-st}}}\\
     \color{blue}\mathrm{Laplace \ Transform}
 \end{gather}
+The Laplace Transform will prove extraordinarily useful for analyzing LTI systems
 \chapter{Linear Time Invariant Systems}
 \section{Transfer Functions}
 
@@ -2098,6 +2258,8 @@ We can now return to the example of the exponential functions, $e^{at}$. If we s
 \chapter{Optimal Control}
 
 \chapter{Basics of Non-Linear Control}
+\section{Pertubation Theory}
+\section{Lyapunov}
 
 \chapter{Trajectory Optimization}
 
