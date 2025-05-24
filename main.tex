@@ -20,6 +20,8 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
 \usepackage{xfrac}
 \usepackage{enumitem}
 \usepackage{extarrows}
@@ -47,9 +49,6 @@
 
 % examples creation:
 
-%OLD:
-
-
 \usepackage[framemethod=TikZ]{mdframed}
 
 \mdfsetup{skipabove=\topskip,skipbelow=\topskip}
@@ -59,7 +58,7 @@
 \newcounter{example}[chapter]
 \renewcommand{\theexample}{\thechapter.\arabic{example}}
 
-% Define the example environment
+%%  Define the example environment
 \newenvironment{example}[1][]{%
   \refstepcounter{example}%
   \ifstrempty{#1}%
@@ -79,6 +78,7 @@
   \begin{mdframed}[]\relax%
 }{\end{mdframed}}
 
+
 % autoref names
 \newcommand{\lstnumberautorefname}{Script}
 \renewcommand{\chapterautorefname}{Chapter}
@@ -94,6 +94,7 @@
 
 \definecolor{linkgreen}{rgb}{0.117,0.67,0.24}
 \definecolor{refRed}{rgb}{0.443,0.0588,0.0392}
+\definecolor{Maroon}{rgb}{0.749,0.047,0.09}
 
 \usepackage{graphicx}
 \usepackage[english]{babel}
@@ -102,6 +103,34 @@
 \mathtoolsset{showonlyrefs} 
 
 \newcommand{\eqautoref}[1]{\hyperref[#1]{Equation~\eqref{#1}}}
+
+%% define the exercise environment
+
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+
+% Define exercise counter that resets with each chapter
+
+\newcounter{exercise}[chapter]
+\renewcommand{\theexercise}{\thechapter.\arabic{exercise}}
+
+\newenvironment{exercise}[1][]{%
+  \refstepcounter{exercise}%
+  \ifstrempty{#1}%
+    {\mdfsetup{
+      frametitle={\strut \color{Maroon}Exercise \theexercise}}}%
+    {\mdfsetup{
+      frametitle={\strut \color{Maroon}Exercise \theexercise:~#1}}}%
+  \mdfsetup{
+    innertopmargin=10pt,
+    linecolor=Maroon!20,
+    linewidth=2pt,
+    topline=false,
+    rightline=false,
+    bottomline=true,
+    frametitleaboveskip=\dimexpr-\ht\strutbox\relax,
+  }%
+  \begin{mdframed}[]\relax%
+}{\end{mdframed}}
 
 
 
@@ -393,9 +422,8 @@ This book weaves through a course of lots of - sometimes seemingly unrelated - m
 
 \section*{Acknowledgments}
 \begin{itemize}
-\item I would like to give my deepest appreciation and thanks to Professor Cunningham for his support with each of the volumes of the Flight Dynamics Bible and his support in helping Preston and I. 
+\item I would like to give my deepest appreciation and thanks to Professor Cunningham for his support with each of the volumes of the Flight Dynamics Bible and his support in helping Preston and I. I would also like to thank everyone at JHU APL who has helped me learn so much during my time there in the Summer of 2025. Their support and knowledge has been invaluable and has helped me in innumerable ways. I want to give special thanks to my mentors, Brian Caskey and Brandon Gray, who were especially helpful.
 \end{itemize}
-
 
 \chapter*{Notation and Standards}
 Mathematical notation for energy mechanics that we discuss is somewhat formalized, but there are some areas where we may use notation slightly unfamiliar or different to standard textbooks. To remove any doubt, we describe the notation that we use here at the beginning for quick reference.
@@ -1966,39 +1994,56 @@ not writing any more rn because I don't know it
 
 \chapter{Lie Theory}\label{chap:lie theory}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\linewidth]{Images/}
-    \caption{Caption}
-    \label{fig:enter-label}
-\end{figure}
-
 The goal of this first part until now has been to introduce the methods of \gls{Lagrangian} and \gls{Hamiltonian} mechanics in a way that does not require very rigorous mathematical formalisms. However, to tie up some of the loose ends, it is useful to introduce some mathematical concepts which can be used to understand these concepts on a more fundamental level. Along the way, we will also gain insight into the nature of rotations and curved spaces. Introducing these concepts will allow us to formalize huge swaths of the content covered in both Volume II and Volume III up to now, and will prove beneficial in the future endeavors of this volume as well.
 
-This mathematical description is not strictly necessary to use the concepts mentioned throughout this book, but it is helpful for readers who hope to gain a full understanding of the content. I will warn that this chapter is likely the most technical in the book and will require significant effort from the reader.
+This mathematical description is not strictly necessary to use the concepts mentioned throughout this book, but it is helpful for readers who hope to gain a full understanding of the content. I will warn that this chapter is likely the most technical in the book and will require significant effort from the reader. Throughout the chapter, I will slowly introduce the standard mathematical notation of proofs to use as a shorthand instead of writing everything out. This will help acquaint the reader if they are to read further on the subject matter discussed.
 
-\section{Motivation}
+\section{Motivation and Background}\label{sec:motivationa and background lie}
+\begin{chapquote}{Mark A. Armstrong}
+    ``Numbers measure size, groups measure symmetry''
+\end{chapquote}
+Before we dive into the mathematical foundations of Lie theory, we should first examine why it is of importance to us. The quote above is a great primer and gives the essence of Lie theory. Lie theory is concerned with the inherit symmetries of mathematical objects. More specifically, the theory is concerned with so-called \textit{continuous symmetries}.
 
+For us, this is especially useful in our study of dynamic systems. Often, we do have symmetries in our problems. There are those symmetries that are obvious - such as axial symmetry and reflectional symmetry of an object. There are deeper, more fundamental symmetries though, such as the symmetry between the rotational invariance of the Lagrangian and conservation of angular momentum (we will touch on this more in \autoref{Noether's Theorem}).
+
+Such was the background under which Lie theory was developed. Originally, Sophus Lie (shown in \autoref{fig:Lie}) developed the theory in order to understand the continuous symmetries of differential equations. However, the theory proved to be much more useful in describing other symmetries, such as the rotations and conservation equations which we are familiar with in dynamics.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images/Portrett_av_Sophus_Lie.jpg}
+    \caption{A Portrait of Sophus Lie}
+    \label{fig:Lie}
+\end{figure}
+
+The big question, then, is how we can describe symmetry mathematically. A mathematical object known as a \textit{group} is the answer. Groups contain inherit information about symmetry  Lie extends this concept via the inclusion of \textit{manifolds} - which will be detailed later. The important conceptual understanding is that groups provide the symmetry, and the manifolds give a `language' to describe our system using a set of coordinates - much like we can describe any point on the surface of earth using latitude and longitude.
+
+The other big part of Lie theory is that we can describe the attributes of our system at a point using \textit{algebras}. By thinking about our system as a manifold, we are able to describe coordinates for a certain location. Then, we can do something akin to a derivative - looking at the space `tangent' to the manifold at that point. This `tangent space' is what we call the \textit{Lie algebra}.
+
+Lie algebras are useful because the tangent space is flat. Because it is flat, typical rules of geometry and calculus can be used, making analysis much easier.
+
+The last important thing to mention is that we can convert between the Lie group and the Lie algebra using something called an \textit{exponential map}. For some groups and operations, this exponential map is simply an exponential function. Other times, however, we need a different way to describe these exponential transformations. This will be discussed later.
+
+The most important thing to realize is that we can relate a complex non-linear system (represented in Lie theory by a group on a manifold) locally with a linearized version of the system, which we essentially 'project' onto the system via the exponential map.
 
 \section{Lie Groups}
 
 \subsection{The Axioms of Groups}
-
-As mentioned before, the defining feature of the lie group is that it is both a group and a manifold. We must first define the attributes of a group if we are to formally define this concept. 
+As mentioned before, the defining feature of the Lie group is that it is both a group and a manifold. We must first define the attributes of a group if we are to formally define this concept.
 
 A group is a mathematical \textit{set} which obeys the following four properties for a given \textit{binary operation}. These properties are shown formally and then explained afterward.
 
 \begin{enumerate}
-    \item $Closure{:} \mathrm{\ for \ all\ } g,h \in G, g\cdot h \in G$
+\item $Closure{:} \mathrm{\ for \ all\ } g,h \in G, g\cdot h \in G$
 \item $Associativity{:} \mathrm{\ for \ all \ } g,h,k \in  G, (g\cdot h)\cdot k=g\cdot(h\cdot k)$
 \item $Identity{:} \mathrm{\ there \ is  \ } e\in G, \mathrm{\ for \ all \ } g \in G, e\cdot g=g\cdot e=g$
 \item $Inverse{:} \mathrm{\ for \ all \ } g \in G, \mathrm{\ there \ is  \ } h \in G, g \cdot h=h\cdot g =e$
 \end{enumerate}
 
+
 I will now go over all of these properties to explain their meaning in more natural language for readers not familiar with the notation above.
 
 \begin{enumerate}
-    \item By Closure, we mean that when we apply an operation on a \textit{set}, we get another element of that set. This is best motivated by an example. 
+    \item By closure, we mean that when we apply an operation on a \textit{set}, we get another element of that set. This is best motivated by an example. 
 
     Let us take the natural numbers, denoted $\mathbb{N}$ to be our set. The natural numbers are given as $1,2,3\cdots$  and so on. We say that the natural numbers are closed under addition, because adding any of the elements of the set together, we get another element of the set. For example, adding $1$ and $3$, we get $4$, which is also in the set $\mathbb{N}$. Moreover, any composition of these operations will also be part of the set. Performing addition twice will still give an element of the sequence. 
     
@@ -2021,38 +2066,241 @@ Lastly, as a bonus, I will explain what a \textit{binary operation} is. Stated s
 
 The axioms of groups can be applied to create a group from any set of objects. In our study, it is most helpful to assign group identities to matrices, since our studies of rotations and control systems involve matrices heavily.
 
-\subsubsection{Matrix Groups}
+\subsection{Matrix Multiplication Groups}\label{sec:matrix groups}
 
-To define matrix groups, we need to again satisfy all of the four criteria. For matrices, we do this in a slightly different way that is worth covering here.
+To define matrix groups under multiplication, we need to again satisfy all four criteria of groups. For matrices, there are some subtleties that are worth covering. 
 
+There are a few types of matrix multiplication groups that are important for our purposes. Here, I will cover 4 of the most important ones to our study, starting with the most broad and adding constraints until we reach the most specific. Here, we will we cover $GL(n)$ and $SL(n)$.$O(n)$, $SO(n)$, $U(n)$, and $SU(n)$ will be covered later. We will go through these in this order, starting with $GL(n)$, deriving it from the fundamental axioms of groups.
 
+First, we will only consider $n{\times} n$ matrices so that we can apply matrix multiplication from either direction freely. We can then proceed to see what conditions are necessary for this to be a group, which we will call $GL$. We will denote the size, $n$, in parenthesis, giving us $GL(n)$ as our group for matrices of size $n{\times}n$. To write the group in full, we need to also specify the field that we are considering. 
+
+Typically, there are 3 fields that we consider. Those being the real numbers $(\mathbb{R})$, complex numbers $(\mathbb{C})$, and quaternions $(\mathbb{H})$.\endnote{The quaternions do not actually form a field since their multiplication is not communitative. However, we still consider them as an option over which we can define our field because the algebra of quaternions, $\mathbb{H}$ is isomorphic to $\mathbb{R}$ $(\mathbb{H}\cong\mathbb{R})$, so we are fine to use it in our field.} For now, for the sake of simplicity, we will consider the real numbers, so we would write $GL(n,\mathbb{R)}$. I will use the shorthand of $GL(n)$ since it is understood we are only considering reals for now. Other sources may make this explicit using the other notation for groups, though.
+
+Starting with closure, we can write:
+$$AB \in GL $$
+Without additional information about $A$, $B$, and $GL$, it is hard to define additional properties at this point. 
+
+The property of associativity also does not help much, since all $n{\times} n$ matrices must satisfy associativity by their nature:
+$$(AB)C=A(BC)$$
+The first information about this group comes from the identity property. There must exist some square $n{\times} n$ matrix such that multiplication of the identity on either side of $A$ returns $A$.
+
+\begin{proof}[Identity Matrix]
+    We know from intuition that this identity matrix is of the form:
+$$I(n)=\begin{bmatrix}
+    1 & 0  &\cdots &0\\
+    0&1&\cdots&0\\
+    \vdots&\vdots&\ddots&0\\
+    0&0&0&1
+\end{bmatrix}$$
+
+This can be proved using the fact that matrix multiplication takes the form
+$$(AB)_{ij}=\sum_{k=1}^n{A_{ik}}{B}_{kj}$$
+and noticing that the identity matrix takes the form of Kronecker delta $\delta_{ij}$ such that $\delta_{ij}=1$ when $i=j$ and is zero otherwise. So, we have shown that the matrix $I(n)$ must be an element of the group $G(n)$.
+\end{proof}
+
+The last property is an inverse property, such that for all elements in $GL(n)$, there must exist another matrix in $GL(n)$ that when multiplied by returns $I(n)$. 
+
+\begin{proof}[Square Matrix Inverse]
+    In linear algebra, it is known that a square matrix has an inverse if and only if the determinant is non-zero. This is proven by the invertible matrix theorem.
+\end{proof}
+Because the determinant must be non-zero, the columns of any element of $GL(n)$ must be linearly independent from the invertible matrix theorem. This is an important result, as it puts a definitive constraint on which matrices are part of $GL(n)$. Only the matrices with $n$ linear independent columns will be elements of $GL(n)$.
+
+As a last step, we can go back and check that $GL$ is closed under the conditions that we described. 
+\begin{proof}[Closure of GL(n)]
+    Supposing that matrices $A,B \in GL(n)$, we know that both have positive determinants from the invertible matrix theorem. We can then use the fact that $\det(AB)=\det(A)\det(B)$. Since $\det(A)>0$ and $\det(B)>0$, it must be true that $\det(AB)>0$ and thus $AB \in GL(n)$.
+\end{proof}
+
+So, we have proven the most general group of $n{\times}n$ invertible matrices, which is called $GL(n)$ for the \textit{general linear group}.
+
+\subsubsection{The role of the determinant}
+
+The determinant has a special meaning in linear algebra. It is representative of the scaling of `volume' that is performed under a linear transformation. In the case of a $2{\times}2$ or $3{\times}3$ matrix, this can easily be seen. However, the same is true for any $n{\times}n$ matrix.
+
+%figure of determinant in 2D case.
+
+In our study of dynamics, we often deal with rigid bodies or fluid dynamics that are a fixed volume. So, when we have physical descriptions of phenomena in matrices, we often want the property that $\det=1$ so that the matrix performs no scaling on the body.
+
+These linear transformations with $\det=1$ are so important that they get a special group name with the prefix $S$ for special. In the case of $GL(n)$, we can identify a \textit{subset} of $GL(n)$, which we call the \textit{special linear group}, $SL(n)$. If this subset is also a group, we denote it as a \textit{subgroup} of $GL(n)$. Notationally, we show this as $SL(n) \subset GL(n)$. 
+
+So, we have defined the important properties of matrix groups under multiplication. Now, it is simply a case of small modifications to apply these groups to aerospace applications.
 
 \subsection{Manifolds}
 The other important defining aspect of Lie groups is that they are manifolds. More specifically, a Lie group must be a \textit{differentiable manifold}. 
 
-But before we get ahead of ourselves, what \textit{is} a manifold? A manifold is simply a `space' that looks like Euclidean space on small scales.\endnote{More specifically, this is a topological space. The exact definition of a topological space is not important to us, but it involves defining a series of open sets with certain properties.} This means that at local scales, the geometry must look like straight lines, where superposition and linearity hold. These are the exact criteria of a vector space.
+But before we get ahead of ourselves, what \textit{is} a manifold? A manifold is simply a `space' that looks like Euclidean space on small scales.\endnote{More specifically, this is a topological space. The exact definition of a topological space is not important to us, but it can be defined in a number of ways. The most common definition involves defining a series of open sets with certain properties. Intuitively, a topological space as the most broad definition of a space. A topological space of set $X$ must contain $X$ and $\tau$ (the topological space is defined $(X,\tau)$). A satisfactory definition for $\tau$ is that it contains the empty set, $\varnothing$, and $X$.} This means that at local scales, the geometry must look like straight lines, where superposition and linearity hold. These are the exact criteria of a vector space.
 
 To apply the rules of calculus, such as taking a derivative, it is necessary that we have a vector space. 
 
 \section{Lie Algebras}
+As before, I will start with the formal definition and then break down the meaning. Before going straight into Lie algebras, it is best to define what an \textit{algebra} is:
+\begin{definition}[Algebra]
+    An algebra, $\mathfrak{g}$, is a vector space over a field, $K$ with a multiplication, defined $*$, which is a binary operator, taking two inputs from $\mathfrak{g}$ and returning an output also in $\mathfrak{g}$. More succinctly, $\mathfrak{g}$ is an algebra if it is a vector space with a bilinear product.
+\end{definition}
+We have seen most of the elements of this definition before when discussing Lie groups. The notable feature here is that two inputs from $\mathfrak{g}$, when multiplied, are still in $\mathfrak{g}$. This is a feature that we call \textit{bilinearity}. We may denote this in standard notation as $\mathfrak{g}\times \mathfrak{g}\rightarrow \mathfrak{g}$.
 
+We can formalize this definition of bilinearity to check if any operation is bilinear. If we denote $\mathfrak{g}$ as the vector space which $x,y$ and $z$ are elements of, and $a$ and $b$ as elements of $K$, then we have the following properties:
+\begin{enumerate}
+    \item Right Distributivity: $(x+y)\cdot z=x\cdot y+y\cdot z$
+    \item Left Distributivity: $z\cdot(x+y)=z\cdot x +z\cdot y$
+    \item Compatibility with scalars: $(ax)\cdot(by)=(ab)(x\cdot y)$
+\end{enumerate}
+
+The particulars of algebras beyond this are not of great concern to us. Instead, we will be concerned with the specific properties of Lie algebras. The Lie algebra is similar to an algebra, but has some additional properties. Notably, we define an operation called the \textit{Lie bracket}, which we denote $[\cdot,\cdot]$. For a lie algebra, we must then have the following properties for the Lie bracket.
+\begin{itemize}
+    \item It is bilinear
+    \item It is skew-symmetric, meaning that $[x,y]=-[y,x]$ for all $x,y$.
+    \item It satisfies the Jacobi Identity, which states that: $[x,[y,z]]+[y,[z,x]]+[z,[x,y]]=0$.
+\end{itemize}
+
+Right now, this is a very vague definition which probably has no meaning to the reader. Let us consider the cross product as an example familiar to the reader:
+
+\begin{example}[The cross product as a Lie algebra]
+    We can start with the properties that we assumed for the Lie algebra. Taking the Lie bracket operation to be the cross product, that is: $[x,y]=x\times y$, it is easy to show that all of the properties are satisfied.
+
+\textbf{Bilinearity:} taking $x$ and $y$ to be vectors, which we would commonly denote $\vec{x}$ and $\vec{y}$, we know that the cross product is defined when $x$ and $y$ exist in $\mathbb{R}^3$. We also know that the cross product generates a vector orthogonal to $x$ and $y$, which also exists in $\mathbb{R}^3$. So, we can see that the cross product satisfies bilinearity.
+
+\textbf{Skew Symmetry:} It is commonly known that the cross product has the property that $x\times y=-y\times x$. This is commonly demonstrated with the right hand rule. Reversing the cross product direction flips the resultant direction.
+
+We can show skew symmetry in another form though, using the matrix representation of the cross product. We can use two vectors, which we represent as follows:
+$$\begin{pmatrix}
+    a\\b\\c
+\end{pmatrix} \times \begin{pmatrix}
+    x\\y\\z
+\end{pmatrix}$$
+We have already shown that this should be a mapping from $\mathbb{R}^3\rightarrow\mathbb{R}^3$. If we take the matrix containing $a$, $b$, and $c$ to be fixed, we can represent it as a linear combination of $x$, $y$, and $z$. Performing the cross product, we can easily see how this is done:
+$$\begin{pmatrix}
+    a\\b\\c
+\end{pmatrix} \times \begin{pmatrix}
+    x\\y\\z
+\end{pmatrix}=\begin{pmatrix}
+    bz-cy\\cx-az\\ay-bx
+\end{pmatrix}$$
+So, we can simply rewrite the RHS as a matrix of $a$, $b$, and $c$:
+$$\begin{pmatrix}
+    0&-c&b\\c&0&-a\\-b&a&0
+\end{pmatrix}\begin{pmatrix}
+    x\\y\\z
+\end{pmatrix}$$
+So, we can see that the matrix for the cross product is also skew symmetric - but in a different way. For a matrix, we say that it is skew symmetric when $A^T=-A$, which is shown in the matrix for the cross product. It turns out that this matrix lie algebra is called $\mathfrak{so}(3)$ and is related to rotations, which we will investigate further later.
+
+\textbf{Jacobi Identity:} Satisfaction of the Jacobi Identity is simply a practice of our algebraic skills, but it is still worthwhile to show that the cross product validates this identity for completeness. We can use the cross product shortcut to make this a bit easier:
+\begin{equation}
+    \underset{\leftharpoondown}{\stackrel{\rightharpoonup}{xyzxy}}
+\end{equation}
+The Jacobi Identity written as cross products gives us the following:
+$$x\times(y\times z)+y\times (z\times x)+z \times (x\times y)=0$$
+We can evaluate the expression in parenthesis first, giving:
+$$x\times(x)+y\times (y)+z \times (z)=0$$
+Since any vector crossed with itself is 0, the sum very obviously goes to zero. And so, we have shown that the cross product
+\end{example}
+
+\section{Relating Lie Groups and Algebras}
+In \autoref{sec:motivationa and background lie}, I briefly discussed the \textit{exponential map} as a way to convert between the Lie group and the Lie algebra. Here, we will take that definition and solidify its meaning.
+
+For real numbers, we can define exponentiation easily. Operating on a variable $x$, where $x \in \mathbb{R}$, we define exponentiation simply as: $e^x$. One way to define this expression is using the limit definition:
+$$e^x=\lim_{n\rightarrow\infty}{\left(1+\frac{x}{n}\right)^n}$$
+Our Lie algebra, in general, is not going to be a number. As we saw with the cross product, it is often a matrix or complex number instead. How can we find an exponential for these?
+
+To do this, we turn to the Taylor expansion of $e^x$ for an answer. We can write the Taylor expansion as a summation:
+$$e^A\equiv\sum_{n=0}^\infty{\frac{A^n}{n!}}$$
+This is the definition that we use for all of the more complex cases, such as complex numbers and matrices. Since we are only using integer indices for $n$, all of these operations are well-defined and valid.
+
+\subsection{Computation of Matrix Exponentials}
+The most important elements to exponentiate in our use cases will be matrices, as they are very important to all of the subject matter discussed heretofore and in the future.
+
+There are several ways to approach the matrix exponential, with each having their own advantages in approach. We will start with the simplest to construct and move to more complex (although sometimes better!) approaches.
+
+\subsubsection{Matrix Exponential as Taylor Series}
+Expressing the Matrix Exponential as a Taylor series is the simplest definition we can use, although a closed form only exists in limited cases. Such as an example is:
+$$A=\begin{bmatrix}
+    0&1&1\\0&0&1\\
+    0&0&0
+\end{bmatrix}$$
+For this matrix, we can take the Taylor series directly to find $e^A$.
+\begin{equation}\label{eq:eA taylor series}
+    e^A=\sum_{n=0}^2{\frac{A^n}{n!}}=A^0+A+\frac{A^2}{2}
+\end{equation}
+
+Although it may not be immediately apparent why we can stop the sum at $n=2$, it becomes immediately apparent upon computation. We have:
+$$A^0=I,A=\begin{bmatrix}
+    0&1&1\\0&0&1\\
+    0&0&0
+\end{bmatrix},A^2=\begin{bmatrix}
+    0&0&1\\0&0&0\\
+    0&0&0
+\end{bmatrix},A^3=\begin{bmatrix}
+    0&0&0\\0&0&0\\
+    0&0&0
+\end{bmatrix}$$
+So, $A^3$ and any successive derivative is exactly zero, so the sum is finite. So, the computation simply becomes addition of the matrices, giving us:
+$$e^A=\begin{bmatrix}
+    1&1&\frac{3}{2}\\0&1&1\\
+    0&0&1
+\end{bmatrix}$$
+This closed form only exists for simple matrices. We can extend this \textit{slightly} for some some matrices, as we can separate $e^A$ into $e^{(A+B)}=e^Ae^B$ in the case that $AB=BA$ (otherwise known as $A$ and $B$ \textit{commuting}). This is generally not the case so we will not dive further.
+
+The reason to present this method is that sometimes the other methods I will present to perform matrix exponentiation will not always work. In that case, when computing the matrix exponential, it is often okay for our purposes to find a `close enough' value by taking some finite sum of the Taylor series expansion. This will always work since we all remember from calculus II that $\sum_{n=0}^\infty{\frac{A^n}{n!}}$ is an absolutely convergent series.
+
+\subsubsection{Matrix Exponential as Eigenvalue Decomposition}
+The next method will likely be familiar to students of linear algebra. This method involves taking the eigenvalue decomposition of the matrix $A$ to find its exponential. Diagonalization Theorem (presented in \autoref{thm:diagonalization thm}) tells us that we can only perform this diagonalization if $A$ has $n$ linearly independent eigenvectors. We can easily check this in MATLAB with the command "[P,D]=eig(A)", which returns the eigenvector matrix "P" and diagonalized matrix "D". We will not cover how to derive these matrices here. If you want a derivation, a good high-level overview is presented in \cite{michael_penn_matrix_2022}.
+
+\begin{theorem}[Diagonalization Theorem]\label{thm:diagonalization thm}
+    An $n{\times}n$ matrix $A$ is diagonalizable if and only if $A$ has $n$ linearly independent eigenvectors.
+\end{theorem}
+
+When we satisfy these criteria, we can write the matrix $A$ as $A=PDP^-1$.\endnote{You may see this decomposition as either $A=PDP^{-1}$ or $A=P^{-1}DP$. This distinction depends on how you choose to represent $P$. I choose to use the notation that allows users to use write the given equations in MATLAB and have it work directly.} This becomes useful when computing the matrix exponential. Why exactly is this useful if we now have more terms?
+
+\begin{example}[$A^2$ for diagonalizable matrices]
+    We can take the example of $A^2$ for a general matrix $A$ with the decomposition $A=PDP^{-1}$ to show the usefulness. 
+    
+We start by squaring both sides of the equality $$A^2=\left(PDP^{-1}\right)^2$$ which we can expand to $$A^2=PDP^{-1}PDP^{-1}$$We notice that the middle term, $P^{-1}P$, reduces to $I$, so the sum is simply $$A^2=P(DID)P^{-1}$$which we can express plainly as $$A^2=PD^2P^{-1}$$
+\end{example}
+
+We can notice that for any integer $n$, the middle terms $P$ and $P^{-1}$ will cancel each other, given us the general formula:
+\begin{gather}
+    A^n=PD^nP^{-1}
+\end{gather}
+We also notice that it is remarkably simple to find $D^n$ since $D$ is a diagonal $n{\times} n$ matrix. We  have:
+$$D^n=\begin{bmatrix}
+    {d_{11}}^n &0&\cdots&0\\
+    0 &{d_{22}}^n & \cdots &0\\
+    \vdots & \vdots & \ddots & 0\\
+    0&0&0&{d_{nn}}^n
+\end{bmatrix}$$
+From here it is simple to extent this to the matrix exponential. We can refer back to our original form for the matrix exponential in \eqautoref{eq:eA taylor series} and rewrite is slightly for the diagonalized matrix:
+$$e^A=\sum_{n=0}^{\infty}{\frac{1}{n!}A^n}=P\sum_{n=0}^{\infty}{\frac{1}{n!}D^n}P^{-1}$$
+We can see that ${\frac{1}{n!}D^n}$ will simplify greatly since $D^n$ has a closed form. We can use the Taylor series definition to get:
+$$\sum_{n=0}^{\infty}\frac{1}{n!}D^n=\begin{bmatrix}
+    e^{d_{11}} &0&\cdots&0\\
+    0 &e^{d_{22}} & \cdots &0\\
+    \vdots & \vdots & \ddots & 0\\
+    0&0&0&e^{d_{nn}}
+\end{bmatrix}=e^D$$
+So we have a quite simple way to express the matrix exponential for diagonalizable matrices:
+$$e^A=Pe^DP^{-1}$$
+\begin{exercise}[Show $e^{tr(A)}=\det\left(e^A\right)$]
+    To ensure that you understand this method of computing the matrix exponential, show that $e^{tr(A)}=\det\left(e^A\right)$ for the matrix: $$A=\begin{bmatrix}
+        4&1\\2&5
+    \end{bmatrix}$$
+    Bonus points are awarded if you can show this property holds for a general diagonalizable matrix $A$!
+\end{exercise}
 
 
 \section{Rotations}
-
 Volume II has extensive information on rotations, but it will be helpful to solidify that information with the mathematics of Lie groups. Additionally, this means that we can gain an understanding of \textit{any possible} implementation of rotation schemes, because this underlying principle dictates all of them.
 
-To describe a rotation mathematically, we first need to understand what rotations do. Aside from the obvious fact that rotations `rotate', what properties are inherit no matter what space we rotate in (although 2D and 3D are the most common for us).
+\subsection{Rotation Groups}
+To describe a rotation mathematically, we first need to understand what rotations do. Aside from the obvious fact that rotations `rotate', what properties are inherit no matter what space we rotate in (although 2D and 3D are the most common for us). These properties will help us define the group structure of rotations:
 
 \begin{enumerate}
     \item  Rotations are linear. If we rotate once, and then rotate again, the result is still a rotation, and more importantly, the result is the sum of the first and second rotation.
     \item Secondly, a rotation preserves angles and lengths. By rotating, the length of a vector is never changed. Additionally, the angle between two vectors must also be constant.
-    \item Lastly, and likely the most overlooked, rotations preserve the orientations of objects. If we have
+    \item Lastly, and likely the most overlooked, rotations preserve the orientations of objects. A pure rotation will never change the order of vectors.
 
 
 \end{enumerate}
 
-Figure for all of these
+%Figure for all of these
 
 Each of these have direct mathematical implications. We can go through each of the previously listed properties in order, describing them mathematically:
 \begin{enumerate}
@@ -2076,11 +2324,36 @@ For this statement to be true $R^TR$ must be equal to the identity matrix, $I$. 
     \item R is invertible.
     \item     The transpose of $R$ is it's inverse.
 \end{enumerate}
-The first statement implies that $R$ must be square (Invertible Matrix Theorem). The second condition that $R^{-1}=R^T$ is a special condition which implies that the matrix is \textit{orthogonal}.
+The first statement implies that $R$ must be square (Invertible Matrix Theorem). The second condition that $R^{-1}=R^T$ is a special condition which implies that the matrix is \textit{orthogonal}. This is a modification of the condition that we saw in \autoref{sec:matrix groups}. In that section, we defined the general linear group $GL(n)$. With the additional constraint that $R^T=R^{-1}$, we say that rotations exist in the $O(n)$ group. Thus, $O(n) \subset GL(n)$.
 
-    \item 
+    \item The last property is that the orientation is preserved. Once again, this is the same property that we saw with the special linear group $SL(n)$, and we use the same notation here for the special orthogonal group - denoting it $SO(n)$.
+
+\subsection{Rotation Algebras}
     
 \end{enumerate}
+As mentioned in the introduction to Lie theory, the Lie algebra represents the tangent space of the Lie group. We can intuitively think of the tangent space as taking a derivative. So, we can create our mathematical description of the Lie algebra for rotations in this way.
+
+We start by taking a differential rotation, one that is very small, which we denote $\varepsilon$. We then use the defining relationship of $O(n)$:
+\begin{equation}\label{eq:rotationDef}
+    R^TR=I
+\end{equation}
+
+We can think of $R$ for an infinitesimal rotation. For a very small rotation, the matrix will be only very slightly different from the identity, shifted by some amount $\varepsilon A$, say. Of course, there are some higher order corrections, but choosing $\varepsilon$ to be small, these are insignificant. Thus, we can write:
+$$R=I+\varepsilon A$$
+The matrix $A$ is representative of the Lie Algebra, the form of which we have yet to define. We can use this relationship in \eqautoref{eq:rotationDef} to find properties of A:
+$$(I+\varepsilon A)^T(I+\varepsilon A)=I$$
+We expand the product and ignore any terms with coefficients of $\varepsilon^2$  since these higher order corrections are insignificant. This leads us to:
+$$I+\varepsilon(A^T+A)+I$$
+From here, the $I$ matrices cancel, and we are left with the relationship that:
+\begin{gather}
+    \color{blue}\boxed{\color{black}A^T=-A}\\
+    \color{blue}\mathrm{Skew \ Symmetry}
+\end{gather}
+This relationship is called \textit{skew symmetry}, and it is the fundamental property of infinitesimal rotations (or the Lie algebras of rotations, put another way). One notable feature of skew symmetric matrices is that the diagonal must be zero for the property to hold. 
+
+What about the condition on the determinant
+We call the Lie algebra for which this condition holds $\mathfrak{so}(n)$.
+
 
 Skew Symmetric - Lie group
 
@@ -2098,26 +2371,33 @@ $$A=\begin{bmatrix}
 We can use the exponential map to go from the Lie group to the Lie algebra. For matrices, we use the matrix exponential as the exponential map. Performing the exponentiation, we have that $e^{A}$ is a rotation matrix.
 
 
+
 \section{Lagrangian and Hamiltonians on Manifolds}
 
+\section{Noether's Theorem}\label{Noether's Theorem}
+
+\newpage
+
+\printendnotes
 
 
 \chapter{Symplectic and Variational Integrators}\label{sec: Syplectic and Variational Ints}
-In addition to the standard \gls{numerical int} schemes explored in Volume I, there are a variety of integration schemes that use energy conservation as the basis of their integration schemes. These types of integrators are called \glspl{symplectic int} and \glspl{variational int}. These types of integrators directly solve Hamilton's equations for a \gls{Hamiltonian} system. The form of these equations is discussed briefly in \autoref{chap:hamiltonian}.
+In addition to the standard \gls{numerical int} schemes explored in Volume I, there are a variety of integration schemes that use energy conservation as the basis of their integration schemes. These types of integrators are called \glspl{symplectic int} and \glspl{variational int}. These types of integrators directly solve Hamilton's equations for a \gls{Hamiltonian} system. The form of these equations is discussed in \autoref{chap:hamiltonian}.
 
 Because the \gls{Hamiltonian} equations are first order already, they are ready for numerical integration without the need for order reduction.
 
 A similar operation can be done to reduce the \gls{Lagrangian} to two first order equations, in a system known as a variational integrator.
 
-MATLAB has no built in functions for variational or \glspl{symplectic int}, so we do not discuss them further here for now.
+MATLAB has no built in functions for variational or \glspl{symplectic int}, so to implement them we need to discuss their properties in full. Our discussion will build off the mathematical discussion of the $SL(n)$ group, so a thorough reading of \autoref{chap:lie theory} is recommended.
 
+We will use a group called the 
 \subsubsection{Use Case of Symplectic Integrators}
 Although MATLAB does not have built-in functions for these integrators, scripts to do so can be written or found online.
 
 The best use case for these algorithms is for systems with a \gls{Hamiltonian} or \gls{Lagrangian} description that need to be integrated over a long time span. Because these integrators conserve energy, they will better preserve the characteristics of these systems over long times as compared to RK integrators.
 
 \chapter{Further Applications}\label{chap:further applications}
-I may, at some point, devote an entire book to the study of modern physics and the application of variational calculus and energy methods there. Since that is yet to be released, I choose to devote this chapter to some of the applications of these mechanics in the more broad realm of physics outside of the studies in aerospace. This chapter will focus on high level overviews rather than in-depth discussion of mathematics.
+I may, at some point, devote an entire book to the study of modern physics and the application of variational calculus and energy methods there. Since that is yet to be released, I choose to devote this chapter to some of the applications of these mechanics in the more broad realm of physics outside of the studies in aerospace. This chapter will focus on high level overviews rather than in-depth discussion of mathematics. Some sufficient mathematics has already been detailed in \autoref{chap:lie theory}, so I will not go to great depths in this chapter.
 
 This chapter is primarily for those readers interested in this subject matter and is not necessary for understanding the rest of the book. I do think, however, that a good engineer should explore domains outside the strict confines of their field, as they will often gain greater appreciation of their own subject matter in doing so.
 
@@ -2251,6 +2531,17 @@ The Laplace Transform will prove extraordinarily useful for analyzing LTI system
 
 \section{Nyquist Plots}
 
+
+\chapter{Optimal Estimation}
+
+\section{What is Filtering?}
+
+\section{The Average and Low Pass Filter}
+
+\section{The Kalman Filter}
+
+\section{Extensions of Kalman Filtering}
+
 \chapter{The Inverted Pendulum}
 
 \chapter{Controls in Aerospace}
@@ -2260,6 +2551,7 @@ The Laplace Transform will prove extraordinarily useful for analyzing LTI system
 \chapter{Basics of Non-Linear Control}
 \section{Pertubation Theory}
 \section{Lyapunov}
+\section{Lie Theory}
 
 \chapter{Trajectory Optimization}
 
