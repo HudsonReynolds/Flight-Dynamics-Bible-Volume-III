@@ -341,6 +341,8 @@
 
 \newacronym{siso}{SISO}{Single Input Single Output}
 
+\newacronym{qed}{QED}{quantum electrodynamics}
+
 \newglossaryentry{inertial frame}
 {
     name=inertial frame,
@@ -463,7 +465,7 @@ Because most of my experience lies in rocket modeling, I explore some of these c
 
 New to this volume, I include a separate notational overview and outline for each section. While the subjects discussed are closely related, notational differences arise that are large enough that notation guide and overview for each section is necessitated. Additionally, I have tried to keep the sections separated enough that a reader interested in only one half will not feel lost. Of course, reading all of the sections will provide the most insight and benefit to the reader.
 
-This book weaves through a course of lots of -- sometimes seemingly unrelated -- material. However, my hope is that I have tied together some apparently unrelated concepts in a way that helps to display the beautiful and deep mathematical connections shared between these subjects.
+This book weaves through a course of lots of -- sometimes seemingly unrelated -- material. However, my hope is that I have tied together some apparently unrelated concepts in a way that helps to display the beautiful and deep mathematical connections shared between these subjects. I hope I can inspire at least some readers to find a subject they are passionate about in the course of reading this book.
 
 \section*{Acknowledgments}
 \begin{itemize}
@@ -654,19 +656,19 @@ What is the fundamental nature of the universe?
 
 If you lived in the time of Isaac Newton, the answer might be fairly simple - if we know the positions, velocities, and accelerations of objects, you can determine the future of that object with exacting certainty. 
 
-Later, physicists would derive a different way of looking at mechanics - using the methods of energy. This is what we explore in our study of variational calculus and energy mechanics. At the time, many physicists believed that this reframing was simply another expression of Newtonian physics. In some way, this is true. However, the energy method allows us to peer more deeply into the beating heart of physics to examine the fundamental qualities of nature. 
+Later, physicists would derive a different way of looking at mechanics -- using the methods of energy. This is what we explore in our study of variational calculus and energy mechanics. At the time, many physicists believed that this reframing was simply another expression of Newtonian physics. In some way, this is true. However, the energy method allows us to peer more deeply into the beating heart of physics to examine the fundamental qualities of nature. 
 
-Examining the proceedings of physics in the 20th century, we see this become increasingly apparent. Mass - Einstein had shown - was fundamentally tied to the energy of particles in perhaps the most famous equation of all time, $E^2=m^2c^4+p^2c^2$. Later, as physicists began to develop quantum mechanics, energy, not forces, became the fundamental quantity to measure.
+Examining the proceedings of physics in the 20th century, we see this become increasingly apparent. Mass -- Einstein had shown -- was fundamentally tied to the energy of particles in perhaps the most famous equation of all time, $E^2=m^2c^4+p^2c^2$. Later, as physicists began to develop quantum mechanics, energy, not forces, became the fundamental quantity to measure.
 
 It is with this background that we motivate the study of energy mechanics. This subject gives us the key understanding needed to examine subjects from the smallest to the largest scales of the universe.
 
 \chapter{Historical Background }
 
-In this chapter,, we cover a brief history of the early years of energy mechanics. I will mostly cover the main figures and ideas that are instrumental to our study of energy mechanics. These main figures include Isaac Newton, Pierre de Fermat, and Johann Bernoulli.
+In this chapter, I cover a brief history of the early years of energy mechanics. I will mostly cover the main figures and ideas that are instrumental to our study of energy mechanics. These main figures include Isaac Newton, Pierre de Fermat, and Johann Bernoulli.
 
 The story of these figures is closely intertwined. It is impossible to discuss one figure without discussing the others as well. This section will thus take on a more chronological approach, but background information about some of the important characters is also included. Notably, I include some information about Isaac Newton for his far-reaching impacts in many aspects of mechanics.
 
-The story of these figures will converge  and culminate in energy mechanics, possibly the most important implication of the studies of these historic figures. The foundations set by these scientists persist in the landscape of modern engineering and physics.
+The story of these figures will culminate in energy mechanics, possibly the most important implication of the studies of these historic figures. The foundations set by these scientists persist in the landscape of modern engineering and physics.
 
 Euler, Lagrange, Hamilton, and others later contributions to the subjects will not be discussed here, but rather in \autoref{chap:calculus of variations}, \autoref{chap:lagrangian}, and \autoref{chap:hamiltonian}.
 
@@ -744,11 +746,9 @@ Fermat is famous in mathematics for \textit{Fermat's Last Theorem}, which remain
 
 His contributions here, however, relate to the so-called \textit{Fermat's Principle of Least Time}. Fermat's biggest insight was the understanding that 'nature operates by means and ways that are easiest and fastest'. Although this way seem a simple statement, it will underlie the physical principle at the root of energy mechanics.
 
-Fermat's Principle of Least Time involves finding a light path such that the time is minimized.\footnote{It can be shown that this is not exactly true, as the only condition required for sufficiency in this problem is that the changes to the variation are of the second-order. Fermat's condition is simply one such case of this. See \cite{feynman_feynman_1963} for more info.}Fermat's set up is as shown in \autoref{fig:least time ray}. Fermat noticed that the light path will refract and change its angle when moving through a medium where the speed of light is slower.
+Fermat's Principle of Least Time involves finding a light path such that the time is minimized.\endnote{It can be shown that this is not exactly true, as the only condition required for sufficiency in this problem is that the changes to the variation are of the second-order. Fermat's condition is simply one such case of this. See \cite{feynman_feynman_1963} for more info.}Fermat's set up is as shown in \autoref{fig:least time ray}. Fermat noticed that the light path will refract and change its angle when moving through a medium where the speed of light is slower.
 
-The law of reflection can also be shown from Fermat's Principle, although that will not be done here. It is quite similar to the derivation of the refraction law.
-
-If you find an interest in the subject matter here, a much more in-depth discussion in the wonderful Feynman lectures on physics can be found in \cite{feynman_feynman_1963}.
+The law of reflection can also be shown from Fermat's Principle, although that will not be done here. It is quite similar to the derivation of the refraction law. If you find an interest in the subject matter here, a much more in-depth discussion in the wonderful Feynman lectures on physics can be found in \cite{feynman_feynman_1963}.
 
 \begin{figure}
     \centering
@@ -812,9 +812,9 @@ If you find an interest in the subject matter here, a much more in-depth discuss
     \label{fig:least time ray}
 \end{figure}
 
-I do not delve into the proof by Fermat, since it uses archaic methods of calculus that are more confusing than enlighting to the modern audience. Fermat's solution is mostly geometric and it involves a geometric proof using the Law of Cosines. 
+I do not delve into the proof by Fermat, since it uses archaic methods of calculus that are more confusing than enlightening to the modern audience. Fermat's solution is mostly geometric and it involves a geometric proof using the Law of Cosines. 
 
-Following the standard procedures of calculus, we will find a minimization of the function by considering the point where the first derivative is zero.
+Instead, I will take a more modern approach which follows roughly along with Fermat. Following the standard procedures of calculus, we will find a minimization of the function by considering the point where the first derivative is zero.
 
 I will present here a modern derivation of this principle, because I believe it makes the later derivations more satisfying and provides a brief introduction to the methodologies of the calculus of variations.
 
@@ -837,16 +837,321 @@ Using the established angles $\theta_1$ and $\theta_2$, we can express this rela
 \end{gather}
 We will keep this result in mind, as we will see it again when we solve the problem of the \gls{brachistochrone}.
 
-\subsection{Application to Quantum Mechanics}
-The curious reader may not be fully satisfied with the answer given by Fermat. Why does light take a path that minimizes time? Is there any physical reason for this?
+\subsection{Connection to Quantum Electrodynamics}
+The curious reader may not be fully satisfied with the answer given by Fermat. Why does light take a path that minimizes time? Is there any physical reason for this? In this section we will take a brief aside from the history to answer these questions.
 
-Well, to answer that, we have to open a whole can of worms relating to the wave nature of light and quantum mechanics. However, that description must wait until we further develop our ideas on the calculus of variations and energy methods. Rest assured - we will return to this question once we have gathered sufficient knowledge.
+To fully understand this question, we must understand that during Fermat's time there was a rift in the world of physics concerning the behavior of light. Some, such as Newton, believed light to be a particle. Others, led by the prominent dutch mathematician Christaan Huygens, believed that light was a wave.
 
-For now, I will present a more simple explanation - when the wavelength of the light is very small compared to the size of the optics of our system ($\lambda\ll l$), we can treat the light as a particle. For a particle, any deviation from its current trajectory requires an energy or force be exerted on it. In an unperturbed path, there is no reason for the particle to change energy.
+When we consider light to be a wave, the problem of least time is solved! If the light takes a suboptimal trajectory (that is, a trajectory that takes more time), the wave will destructively interfere with itself. It is only light which takes the shortest path which will constructively interfere and produce a  bright spot! So the riddle is solved. Newton is wrong, and light is in fact a wave! The problem is this: We can measure individual packets of light, photons, arriving at photomultipliers or digital sensors. When a light source gets dimmer, we simply measure fewer numbers of photons, but the energies associated with each one is exactly the same.
 
-The beauty of this quantum description is that it will give us an understanding of why the principle of least action is true not only for light; but also for particles in general.
+So we must again reconsider our viewpoint. Light must showcase both properties to match all of the evidence! Of course, it is now popularly understood that light - and in fact everything else - exhibits both properties in a wave-particle duality.
 
-Of course, such an explanation glosses over many intricacies, such as the fact that light has no intrinsic mass. These will be explored in more depth when we give a short treatment of the quantum mechanical description.
+The existence of this duality alone does not necessarily answer our question, but it gets us on the path to doing so. The true answer to this question remained unknown for nearly 300 years -- until the advent of \gls{qed} in the 1940's, the invention of which would lead Richard Feynman to winning the Nobel Prize in physics.
+
+Of course, explaining a Nobel Prize worthy achievement in physics is no easy task! Luckily, Feynman himself has offered quite a simple explanation of the phenomena of light in his book, \cite{richard_phillips_feynman_qed_1988}. I highly suggest the interested reader to read this book in full (it is quite short and easy to read) to better comprehend this. Here, I will present only a portion of Feynman's argument to convince you that the least action principle naturally arises from \gls{qed}.
+
+\subsubsection{Mirrors}
+Although we earlier made a computation for Snell's Law using Fermat's principle, we will instead take the case of the mirror here. The derivation of the equivalent least time principle for the mirror is left as an exercise, but follows from a similar procedure.
+\begin{exercise}
+    Using the same methods as were used to derive Snell's Law, find the criteria that minimizes time for the case of a mirror, which reflects light instead of refracting it. The set up for such a mirror system is shown in \autoref{fig:mirror}.
+\begin{figure}[H]
+    \centering
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Rectangle [id:dp6275989944924254] 
+\draw  [color={rgb, 255:red, 126; green, 219; blue, 222 }  ,draw opacity=0.51 ][fill={rgb, 255:red, 126; green, 219; blue, 222 }  ,fill opacity=0.51 ] (90,140) -- (570,140) -- (570,260) -- (90,260) -- cycle ;
+%Straight Lines [id:da6083348703679279] 
+\draw    (110,70) -- (330,140) ;
+\draw [shift={(110,70)}, rotate = 17.65] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+%Shape: Arc [id:dp6990536523303199] 
+\draw  [draw opacity=0] (216.39,103.09) .. controls (232.29,56.98) and (277.15,23.75) .. (330,23.75) -- (330,140) -- cycle ; \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (217.64,99.65) .. controls (234.54,55.34) and (278.47,23.75) .. (330,23.75) ; \draw [shift={(330,23.75)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.03) -- (0,-5.03)   ; \draw [shift={(216.39,103.09)}, rotate = 289.02] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ;
+%Straight Lines [id:da21803443744202755] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (330,20) -- (330,260) ;
+%Straight Lines [id:da33439071823558864] 
+\draw    (110,270) -- (550,270) ;
+\draw [shift={(550,270)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (0,5.59) -- (0,-5.59)   ;
+\draw [shift={(110,270)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da48893176676953176] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (110,140) -- (110,73) ;
+\draw [shift={(110,70)}, rotate = 90] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ;
+%Straight Lines [id:da28787272817377096] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (110,140) -- (327,140) ;
+\draw [shift={(330,140)}, rotate = 180] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ;
+%Straight Lines [id:da5717809459497747] 
+\draw    (550,70) -- (330,140) ;
+\draw [shift={(550,70)}, rotate = 162.35] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+%Shape: Arc [id:dp08924222560062933] 
+\draw  [draw opacity=0] (330,23.75) .. controls (330,23.75) and (330,23.75) .. (330,23.75) .. controls (382.85,23.75) and (427.71,56.98) .. (443.61,103.09) -- (330,140) -- cycle ; \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (330,23.75) .. controls (381.8,23.75) and (425.91,55.66) .. (442.62,100.34) ; \draw [shift={(443.61,103.09)}, rotate = 250.98] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ; 
+
+% Text Node
+\draw (231,32.4) node [anchor=north west][inner sep=0.75pt]    {$\theta _{i}$};
+% Text Node
+\draw (330,273.4) node [anchor=north] [inner sep=0.75pt]    {$L$};
+% Text Node
+\draw (108,105) node [anchor=east] [inner sep=0.75pt]    {$h_{1}$};
+% Text Node
+\draw (106,64.6) node [anchor=south east] [inner sep=0.75pt]    {$A$};
+% Text Node
+\draw (557,52.4) node [anchor=north west][inner sep=0.75pt]    {$B$};
+% Text Node
+\draw (220,136.6) node [anchor=south] [inner sep=0.75pt]    {$x$};
+% Text Node
+\draw (406,31.4) node [anchor=north west][inner sep=0.75pt]    {$\theta _{f}$};
+
+
+\end{tikzpicture}
+
+    \caption{Mirror Set-Up}
+    \label{fig:mirror}
+\end{figure}
+\end{exercise}
+
+Readers who carefully perform the derivation above using the methods shown before will find that in the case of the mirror, $\theta_i=\theta_f$. That is, the incident angle is equal to the outgoing angle. In our previous derivations, we showed this to be a consequence of the principle of least time.
+
+If we think of the problem more `democratically', we shouldn't give any preference to any one path though! Let's consider all of the straight line paths that light can take. A few of these paths are shown in \autoref{fig:light traj}.
+\begin{figure}[ht]
+    \centering
+
+% Pattern Info
+ 
+\tikzset{
+pattern size/.store in=\mcSize, 
+pattern size = 5pt,
+pattern thickness/.store in=\mcThickness, 
+pattern thickness = 0.3pt,
+pattern radius/.store in=\mcRadius, 
+pattern radius = 1pt}
+\makeatletter
+\pgfutil@ifundefined{pgf@pattern@name@_6b3jznvkh}{
+\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_6b3jznvkh}
+{\pgfqpoint{0pt}{0pt}}
+{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{
+\pgfsetcolor{\tikz@pattern@color}
+\pgfsetlinewidth{\mcThickness}
+\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+\pgfusepath{stroke}
+}}
+\makeatother
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Rectangle [id:dp13216032235189357] 
+\draw  [color={rgb, 255:red, 126; green, 219; blue, 222 }  ,draw opacity=0.51 ][fill={rgb, 255:red, 126; green, 219; blue, 222 }  ,fill opacity=0.51 ] (100,240) -- (560,240) -- (560,280) -- (100,280) -- cycle ;
+%Shape: Rectangle [id:dp7152402004015799] 
+\draw  [pattern=_6b3jznvkh,pattern size=7.5pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 0; green, 0; blue, 0}] (320,130) -- (340,130) -- (340,170) -- (320,170) -- cycle ;
+%Straight Lines [id:da14645204907035414] 
+\draw [line width=0.75]    (140,160) -- (330,240) ;
+%Straight Lines [id:da5333244615267384] 
+\draw [line width=0.75]    (520,160) -- (330,240) ;
+%Straight Lines [id:da19778015344004796] 
+\draw [line width=0.75]    (140,160) -- (240,240) ;
+%Straight Lines [id:da47608518269163747] 
+\draw [line width=0.75]    (520,160) -- (240,240) ;
+%Straight Lines [id:da14756293959452693] 
+\draw [line width=0.75]    (520,160) -- (420,240) ;
+%Straight Lines [id:da7018685323723184] 
+\draw [line width=0.75]    (140,160) -- (420,240) ;
+%Straight Lines [id:da7703911392020962] 
+\draw [line width=0.75]    (140,160) -- (180,240) ;
+%Straight Lines [id:da3928605678682944] 
+\draw [line width=0.75]    (520,160) -- (180,240) ;
+%Straight Lines [id:da5605057304874714] 
+\draw [line width=0.75]    (520,160) -- (480,240) ;
+%Straight Lines [id:da19372382419577583] 
+\draw [line width=0.75]    (140,160) -- (480,240) ;
+
+% Text Node
+\draw (121,142.4) node [anchor=north west][inner sep=0.75pt]    {$A$};
+% Text Node
+\draw (527,142.4) node [anchor=north west][inner sep=0.75pt]    {$B$};
+
+
+\end{tikzpicture}
+    \caption{Possible trajectories of light across a mirror}
+    \label{fig:light traj}
+\end{figure}
+
+Of course, we know from experience that mirrors do not show reflections like this. If they did, we could look from point $A$ at any angle and we would see $B$ centered in the view. There must be something wrong with our model! And there is: we are missing a key component called the phase of the light. Essentially, the phase measures the `direction' of the light (this description will suffice for our purposes). We can think of the phase of the light as a little clock that moves with the light. The clock hand starts pointing straight up at point $A$, and it winds around at a constant rate until the photon reaches point $B$, at that point, we measure the direction the clock hand is pointing. This direction will be a vector with a length of 1, but the direction will change based on the time duration!
+
+So, if we take phase into consideration, we get a new picture of the phenomenon, which is shown in \autoref{fig:polarization paths}. What is shown is the time that it takes each ray of light to reach point $B$ based on the point where it hits the mirror. These are marked with a red marker below the point of intersection with the mirror.
+
+The final phase of the light upon reaching point $B$ is shown below this image. The light rotates very rapidly, so a difference in time will cause large changes in the phase of the light. However, for paths that are close to the path of least time, we can move the intersection point left and right and the amount of time taken doesn't change much at all! This occurs, of course, because we are at a local minimum of the function, where the derivative is 0.
+
+When we look at the vectors for these portions, we find that the phase for each of these is almost identical! So we find that these paths near the path of least time have vectors that are all very similar to each other.
+
+The last step in this process is to add all of the vectors together to generate a final vector. The square of this final vector is representative of the probability that light reaches point $B$. By adding all of the vectors from before together, we can see that the largest contribution to the final vector comes from the portion in the middle. In fact, some of the portions near the outside can cancel each other out so that they have almost no effect.
+
+\begin{figure}[ht]
+    \centering
+
+
+
+% Pattern Info
+ 
+\tikzset{
+pattern size/.store in=\mcSize, 
+pattern size = 5pt,
+pattern thickness/.store in=\mcThickness, 
+pattern thickness = 0.3pt,
+pattern radius/.store in=\mcRadius, 
+pattern radius = 1pt}
+\makeatletter
+\pgfutil@ifundefined{pgf@pattern@name@_bnexa4sr6}{
+\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_bnexa4sr6}
+{\pgfqpoint{0pt}{0pt}}
+{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{
+\pgfsetcolor{\tikz@pattern@color}
+\pgfsetlinewidth{\mcThickness}
+\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+\pgfusepath{stroke}
+}}
+\makeatother
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,415); %set diagram left start at 0, and has height of 415
+
+%Shape: Rectangle [id:dp13216032235189357] 
+\draw  [color={rgb, 255:red, 126; green, 219; blue, 222 }  ,draw opacity=0.51 ][fill={rgb, 255:red, 126; green, 219; blue, 222 }  ,fill opacity=0.51 ] (100,130) -- (560,130) -- (560,170) -- (100,170) -- cycle ;
+%Shape: Rectangle [id:dp7152402004015799] 
+\draw  [pattern=_bnexa4sr6,pattern size=7.5pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 0; green, 0; blue, 0}] (320,20) -- (340,20) -- (340,60) -- (320,60) -- cycle ;
+%Straight Lines [id:da14645204907035414] 
+\draw [line width=0.75]    (140,50) -- (330,130) ;
+%Straight Lines [id:da5333244615267384] 
+\draw [line width=0.75]    (520,50) -- (330,130) ;
+%Straight Lines [id:da19778015344004796] 
+\draw [line width=0.75]    (140,50) -- (240,130) ;
+%Straight Lines [id:da47608518269163747] 
+\draw [line width=0.75]    (520,50) -- (240,130) ;
+%Straight Lines [id:da14756293959452693] 
+\draw [line width=0.75]    (520,50) -- (420,130) ;
+%Straight Lines [id:da7018685323723184] 
+\draw [line width=0.75]    (140,50) -- (420,130) ;
+%Straight Lines [id:da7703911392020962] 
+\draw [line width=0.75]    (140,50) -- (180,130) ;
+%Straight Lines [id:da3928605678682944] 
+\draw [line width=0.75]    (520,50) -- (180,130) ;
+%Straight Lines [id:da5605057304874714] 
+\draw [line width=0.75]    (520,50) -- (480,130) ;
+%Straight Lines [id:da19372382419577583] 
+\draw [line width=0.75]    (140,50) -- (480,130) ;
+%Shape: Arc [id:dp8977631415857631] 
+\draw  [draw opacity=0] (499.01,206.52) .. controls (463.55,238.66) and (401.11,260) .. (330,260) .. controls (258.89,260) and (196.45,238.66) .. (160.99,206.52) -- (330,145) -- cycle ; \draw   (499.01,206.52) .. controls (463.55,238.66) and (401.11,260) .. (330,260) .. controls (258.89,260) and (196.45,238.66) .. (160.99,206.52) ;  
+%Straight Lines [id:da5752570776084447] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (180,221) ;
+\draw [shift={(180,221)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(180,221)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da1280857343863272] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (240,248) ;
+\draw [shift={(240,248)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(240,248)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da08965219408030722] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (330,260) ;
+\draw [shift={(330,260)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(330,260)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da37818780636602134] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (480,221) ;
+\draw [shift={(480,221)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(480,221)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da47667957118212323] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (420,248) ;
+\draw [shift={(420,248)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(420,248)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da007076057060994345] 
+\draw    (130,190) -- (130,270) ;
+%Straight Lines [id:da14315018255479806] 
+\draw    (530,270) -- (130,270) ;
+%Straight Lines [id:da15061696183681172] 
+\draw [line width=0.75]    (140,50) -- (310,130) ;
+%Straight Lines [id:da2002580638128295] 
+\draw [line width=0.75]    (520,50) -- (310,130) ;
+%Straight Lines [id:da32478234854039456] 
+\draw [line width=0.75]    (140,50) -- (350,130) ;
+%Straight Lines [id:da23492277853880672] 
+\draw [line width=0.75]    (520,50) -- (350,130) ;
+%Straight Lines [id:da4384311212275247] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (310,259) ;
+\draw [shift={(310,259)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(310,259)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da09345020430918904] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (350,260) ;
+\draw [shift={(350,260)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(350,260)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da5924170533496909] 
+\draw    (170,290) -- (188,290) ;
+\draw [shift={(190,290)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da5827611285701653] 
+\draw    (470,290) -- (488,290) ;
+\draw [shift={(490,290)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da6566762407882489] 
+\draw    (246,298) -- (232.46,285.36) ;
+\draw [shift={(231,284)}, rotate = 43.03] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da5408338245488791] 
+\draw    (427,298) -- (413.46,285.36) ;
+\draw [shift={(412,284)}, rotate = 43.03] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da4955723577989215] 
+\draw    (302,295) -- (313.64,282.47) ;
+\draw [shift={(315,281)}, rotate = 132.88] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da5611205109573854] 
+\draw    (323,295) -- (337.45,283.26) ;
+\draw [shift={(339,282)}, rotate = 140.91] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da876842810834746] 
+\draw    (344,294) -- (361.27,284) ;
+\draw [shift={(363,283)}, rotate = 149.93] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da1460915799548117] 
+\draw    (302,380) -- (320,380) ;
+\draw [shift={(322,380)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da0417350409731837] 
+\draw    (340,314) -- (358,314) ;
+\draw [shift={(360,314)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da9009267203358027] 
+\draw    (322,380) -- (308.46,367.36) ;
+\draw [shift={(307,366)}, rotate = 43.03] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da6327757626913345] 
+\draw    (355,328) -- (341.46,315.36) ;
+\draw [shift={(340,314)}, rotate = 43.03] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da8821395763135093] 
+\draw    (307,366) -- (318.64,353.47) ;
+\draw [shift={(320,352)}, rotate = 132.88] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da20662846712873373] 
+\draw    (320,352) -- (334.45,340.26) ;
+\draw [shift={(336,339)}, rotate = 140.91] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da35979068209407283] 
+\draw    (336,339) -- (353.27,329) ;
+\draw [shift={(355,328)}, rotate = 149.93] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da4924995281799577] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=1.5]    (302,380) -- (358.02,316.25) ;
+\draw [shift={(360,314)}, rotate = 131.31] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=1.5]    (9.95,-2.99) .. controls (6.32,-1.27) and (3.01,-0.27) .. (0,0) .. controls (3.01,0.27) and (6.32,1.27) .. (9.95,2.99)   ;
+
+% Text Node
+\draw (121,32.4) node [anchor=north west][inner sep=0.75pt]    {$A$};
+% Text Node
+\draw (527,32.4) node [anchor=north west][inner sep=0.75pt]    {$B$};
+% Text Node
+\draw (95,212) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {Time};
+
+
+\end{tikzpicture}
+
+    \caption{Polarizations of light for different paths}
+    \label{fig:polarization paths}
+\end{figure}
+Although the methodology described above is perfectly sound, the angular differences described here are quite exaggerated. In reality, even paths deviating by less than a degree from the ideal path tend to cancel each other out for visible light.
+
+If you want to gain a better understanding of this relationship, "mirror.m"
 
 \section{Principia (1687)}
 It is in \textit{Principia} that we find the first evidences of Newton's contributions to the field of energy mechanics. It is Newton's work in the \textit{Principia} that most scholars agree are the first real works of the calculus of variations.
@@ -1094,6 +1399,10 @@ It is at this point that we have sufficient background to understand the work th
 
 % Maupertuis?
 
+\newpage
+
+\printendnotes
+
 \chapter{Calculus of Variations}\label{chap:calculus of variations}
 
 \begin{chapquote}{Richard Feynman}
@@ -1282,7 +1591,7 @@ One important consequence of this is that a spherical geometry, when looked at `
 \section{Revisiting the Brachistochrone}
 
 \begin{example}[Brachistochrone]\label{ex:brachistrochrone}
-    Let us return to the example of the \gls{brachistochrone} to demonstrate the usefulness of the calculus of variations.
+    Let us return to the example of the \gls{brachistochrone} to demonstrate the usefulness of the calculus of variations in solving  this problem. Of course, we have seen John
 
     %clean this up and explain
 You are a prominent mathematician in the year 1696. Bernoulli proposes a problem to you to find a curve from a point $(x_0,y_0)$ to another point $\left(x_f,y_f\right)$. When a particle is placed on this path, it should be a faster path than any other path the particle could take down the slope under the influence of only gravity.
@@ -1893,6 +2202,9 @@ We can perform the analogous analysis for the other axes, yielding the full set 
 \end{gather}
 \subsection{Forced Euler Rigid Body Dynamics}
 
+\section{From Quantum to Lagrangian Mechanics}
+% maybe here, maybe at the beginning
+
  \section{An Intuitive Approach to Hamilton's Principle}
 
  We have so far seen that Hamilton's principle is useful for solving these problems. Now, with our background for generalized coordinates built up, we can explore a derivation of the action which will explain the presence of the $T-U$ term and the $T+U$ term in the \gls{Hamiltonian}.
@@ -2091,6 +2403,8 @@ Why natural phenomenon are typically of 2nd order
 
 not writing any more rn because I don't know it
 
+\part{Further Mathematics}
+
 \chapter{Lie Theory}\label{chap:lie theory}
 
 % clean up the notation for groups and ensure its all the same.
@@ -2111,11 +2425,11 @@ For those readers who would like to dive deeper into the  subject or prefer writ
 \end{chapquote}
 Before we dive into the mathematical foundations of \gls{lie theory}, we should first examine why it is of importance to us. The quote above is a great primer and gives the essence of \gls{lie theory}. \gls{lie theory} is concerned with the inherit symmetries of mathematical objects. More specifically, the theory is concerned with so-called \textit{continuous symmetries}.
 
-A big question is why do \textit{we} care? Well, it turns out that all of the rotations that we study are understood with \gls{lie theory}. It is also used to describe quaternions, sympletic groups (in Lagrangian and Hamiltonian mechanics), and some advanced control methods. Gaining an intuition for the underlying mathematics will prove useful for us. 
+A big question is why do \textit{we} care? Well, it turns out that all of the rotations that we study are understood with \gls{lie theory}. It is also used to describe quaternions, sympletic groups (in Lagrangian and Hamiltonian mechanics), advanced control methods, robotics, and inertial navigation, just to name a few use cases. Gaining an intuition for the underlying mathematics will prove useful for us. 
 
-For us, \gls{lie theory} is especially useful in our study of dynamic systems. Often, we do have symmetries in our problems. There are those symmetries that are obvious - such as axial symmetry and reflectional symmetry of an object. There are deeper, more fundamental symmetries though, such as the symmetry between the rotational invariance of the Lagrangian and conservation of angular momentum (we will touch on this more in \autoref{Noether's Theorem}).
+For us, \gls{lie theory} is especially useful in our study of dynamic systems. Often, we do have symmetries in our problems. There are those symmetries that are obvious -- such as axial symmetry and reflectional symmetry of an object. There are deeper, more fundamental symmetries though, such as the symmetry between the rotational invariance of the Lagrangian and conservation of angular momentum (we will explore this more in \autoref{Noether's Theorem}).
 
-Such was the background under which \gls{lie theory} was developed. Originally, Sophus Lie (shown in \autoref{fig:Lie}) developed the theory in order to understand the continuous symmetries of differential equations. However, the theory proved to be much more useful in describing other symmetries, such as the rotations and conservation equations which we are familiar with in dynamics.
+Such was the background under which \gls{lie theory} was developed. Originally, Sophus Lie (shown in \autoref{fig:Lie}) developed the theory in order to understand the continuous symmetries of differential equations. However, the theory also proved to be useful in describing other symmetries, such as the rotations and conservation equations which we are familiar with in dynamics.
 
 \begin{figure}[ht]
     \centering
@@ -2124,7 +2438,7 @@ Such was the background under which \gls{lie theory} was developed. Originally, 
     \label{fig:Lie}
 \end{figure}
 
-The big question, then, is how we can describe symmetry mathematically. A mathematical object known as a \textit{group} is the answer. Groups contain inherit information about symmetry  Lie extends this concept via the inclusion of \textit{manifolds} - which will be detailed later. The important conceptual understanding is that groups provide the symmetry, and the manifolds give a `language' to describe our system using a set of coordinates - much like we can describe any point on the surface of earth using latitude and longitude.
+The big question, then, is how we can describe symmetry mathematically. A mathematical object known as a \textit{group} is the answer. Groups contain inherit information about symmetry. Lie extends this concept via the inclusion of \textit{manifolds} - which will be detailed later. The important conceptual understanding is that groups provide the symmetry, and the manifolds give a `language' to describe our system using a set of coordinates - much like we can describe any point on the surface of earth using latitude and longitude.
 
 The other big part of \gls{lie theory} is that we can describe the attributes of our system at a point using \textit{algebras}. By thinking about our system as a manifold, we are able to describe coordinates for a certain location. Then, we can do something akin to a derivative - looking at the space `tangent' to the manifold at that point. This `tangent space' is what we call the \gls{lie algebra}.
 
@@ -2136,8 +2450,158 @@ The most important thing to realize is that we can relate a complex non-linear s
 
 As a final point, I believe that Lie theory is simply a beautiful theory which ties together so much mathematics. A careful study of Lie theory will unite many of the mathematic
 
+\section{Groups and Symmetries}
+
+Before we get to formal definitions, it is helpful to have a mental picture of what a group is. From there, we can narrow our view to the concept of a  \gls{lie group}. As always, 3Blue1Brown has a good video to help introduce this concept, which has be found at \cite{3blue1brown_eulers_2017}.
+
+2-D Shapes are a good motivating example for what groups are, at the basic level. We can consider a basic shape, like the equilateral triangle, as an example. We can construct a group which measures all of the symmetries that a triangle has. 
+
+\begin{example}[The Symmetries of a Triangle]
+A triangle is a good showcase of the symmetries that we find naturally in geometry. Let us consider an equilateral triangle as shown in \autoref{fig:eq triangle}.
+
+\begin{figure}[H]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Triangle [id:dp8868857688850825] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=2.25]  (330,70.47) -- (410,210) -- (250,210) -- cycle ;
+
+% Text Node
+\draw (236,212.4) node [anchor=north west][inner sep=0.75pt]    {$1$};
+% Text Node
+\draw (415,212.4) node [anchor=north west][inner sep=0.75pt]    {$2$};
+% Text Node
+\draw (325,48.4) node [anchor=north west][inner sep=0.75pt]    {$3$};
+
+\end{tikzpicture}
+
+    \caption{An Equilateral Triangle}
+    \label{fig:eq triangle}
+\end{figure}
+
+The vertices of this triangle have only been labeled so that we can keep track of them as we perform actions on this triangle.
+
+It is natural to say that this triangle is symmetric, but what do we really mean when we say that? Mathematically, we're saying that we can perform some operation, which we may call $g$, and the result is that the triangle looks exactly identical afterward. 
+
+We can reflect about the vertical line through `3' as an example of such a symmetry.
+\begin{figure}[H]
+    \centering
+    
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Triangle [id:dp8868857688850825] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=2.25]  (330,70.47) -- (410,210) -- (250,210) -- cycle ;
+%Straight Lines [id:da17313732782624203] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (330,70.47) -- (330,210) ;
+
+% Text Node
+\draw (236,212.4) node [anchor=north west][inner sep=0.75pt]    {$2$};
+% Text Node
+\draw (415,212.4) node [anchor=north west][inner sep=0.75pt]    {$1$};
+% Text Node
+\draw (325,48.4) node [anchor=north west][inner sep=0.75pt]    {$3$};
+
+
+\end{tikzpicture}
+    \caption{Reflectional Symmetry of Triangle}
+    \label{fig:triangle reflect}
+\end{figure}
+We can see that this action flips the locations of `1' and `2', but if we had not designated these points, we'd have no way of knowing the triangle was changed! For this reason, we call this action a symmetry of the triangle.
+
+We can also rotate the triangle by $120
+\degree$ about it's geometric center to get another indistinguishable triangle.
+\begin{figure}[H]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Triangle [id:dp021503950787327253] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=2.25]  (330,70.47) -- (410,210) -- (250,210) -- cycle ;
+%Shape: Arc [id:dp6942684746026092] 
+\draw  [draw opacity=0] (331.64,69.49) .. controls (382.91,70.36) and (424.2,112.19) .. (424.2,163.67) .. controls (424.2,180.24) and (419.92,195.82) .. (412.4,209.35) -- (330,163.67) -- cycle ; \draw    (334.71,69.59) .. controls (384.54,72.04) and (424.2,113.22) .. (424.2,163.67) .. controls (424.2,180.24) and (419.92,195.82) .. (412.4,209.35) ;  \draw [shift={(331.64,69.49)}, rotate = 4.65] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (236,212.4) node [anchor=north west][inner sep=0.75pt]    {$2$};
+% Text Node
+\draw (415,212.4) node [anchor=north west][inner sep=0.75pt]    {$3$};
+% Text Node
+\draw (325,48.4) node [anchor=north west][inner sep=0.75pt]    {$1$};
+% Text Node
+\draw (377,116.4) node [anchor=north west][inner sep=0.75pt]    {$120\degree $};
+
+
+\end{tikzpicture}
+
+    \caption{Rotational Symmetry of a Triangle}
+    \label{fig:rot triangle}
+\end{figure}
+In total, there are 6 ways that we can create a triangle which looks exactly the same as the one we started with. All of these are shown in \autoref{fig:sym tri}.
+\begin{figure}[H]
+    \centering
+    
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Triangle [id:dp021503950787327253] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=2.25]  (330,70.47) -- (410,210) -- (250,210) -- cycle ;
+%Shape: Arc [id:dp6942684746026092] 
+\draw  [draw opacity=0] (331.64,69.49) .. controls (382.91,70.36) and (424.2,112.19) .. (424.2,163.67) .. controls (424.2,180.24) and (419.92,195.82) .. (412.4,209.35) -- (330,163.67) -- cycle ; \draw    (334.71,69.59) .. controls (384.54,72.04) and (424.2,113.22) .. (424.2,163.67) .. controls (424.2,180.24) and (419.92,195.82) .. (412.4,209.35) ;  \draw [shift={(331.64,69.49)}, rotate = 4.65] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Shape: Arc [id:dp18064647912182097] 
+\draw  [draw opacity=0] (410.74,212.18) .. controls (384.35,256.14) and (327.48,270.98) .. (282.9,245.25) .. controls (268.55,236.96) and (257.2,225.47) .. (249.24,212.19) -- (330,163.67) -- cycle ; \draw    (409.12,214.79) .. controls (382.08,256.72) and (326.59,270.47) .. (282.9,245.25) .. controls (268.55,236.96) and (257.2,225.47) .. (249.24,212.19) ;  \draw [shift={(410.74,212.18)}, rotate = 124.65] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Shape: Arc [id:dp048284149806032906] 
+\draw  [draw opacity=0] (247.61,209.34) .. controls (222.74,164.5) and (238.32,107.83) .. (282.9,82.09) .. controls (297.25,73.81) and (312.88,69.73) .. (328.36,69.47) -- (330,163.67) -- cycle ; \draw    (246.17,206.63) .. controls (223.37,162.25) and (239.21,107.31) .. (282.9,82.09) .. controls (297.25,73.81) and (312.88,69.73) .. (328.36,69.47) ;  \draw [shift={(247.61,209.34)}, rotate = 244.65] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da4638366372358793] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (330,70.47) -- (330,210) ;
+%Straight Lines [id:da9032255747155441] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (290,140) -- (410,210) ;
+%Straight Lines [id:da6037792210940448] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (370,140) -- (250,210) ;
+
+% Text Node
+\draw (236,212.4) node [anchor=north west][inner sep=0.75pt]    {$1$};
+% Text Node
+\draw (415,212.4) node [anchor=north west][inner sep=0.75pt]    {$2$};
+% Text Node
+\draw (325,48.4) node [anchor=north west][inner sep=0.75pt]    {$3$};
+% Text Node
+\draw (284,130) node [anchor=east] [inner sep=0.75pt]    {$240\degree $};
+% Text Node
+\draw (330,221.4) node [anchor=north] [inner sep=0.75pt]    {$360\degree $};
+% Text Node
+\draw (381,130) node [anchor=west] [inner sep=0.75pt]    {$120\degree $};
+
+\end{tikzpicture}
+
+    \caption{Symmetries of the Trangle}
+    \label{fig:sym tri}
+\end{figure}
+    The very special thing about these symmetries is that we can do two of them -- one after the other -- and we get another symmetry of the group. Go ahead and try it! You'll find that no matter which operations you do, there's always a way to accomplish it with a single operation! This very special property is called \textit{closure}.
+
+    One last thing to note: you'll notice that a rotation by $360\degree$ is equivalent to rotation by $0\degree$. This rotation effectively `does nothing'. This is what we call the identity element. Although it seems simple, it is a very important part of the group.
+
+    This brief introduction should give you everything you need to help motivate the axiomatic treatment of groups and the \glspl{lie group} that are to follow.
+\end{example}
+
+Of course, groups are much more than this. We can think of this example as being analogous to thinking of numbers as physical groups of objects. When you first learn numbers, you might picture `3' as say, `3 apples'. But the concept becomes much more powerful when you think of `3' as an abstraction -- representing many possible different things. This abstraction will be even more useful for groups, so try and keep the idea of the group flexible in your mind.
+
+If you want to dive deeper, a wonderful introductory text which is still mathematically rigorous can be found in \cite{armstrong_groups_1988}.
+
 \section{Lie Groups}
-Before we get to the formal definition of a group, it is helpful to have a mental picture of what a \gls{lie group} is in essence, which is shown in \autoref{fig:Lie Group}:
+The \gls{lie group} is in essence a group and a manifold, which is shown in \autoref{fig:Lie Group}:
 \begin{figure}[ht]
     \centering
 
@@ -2208,7 +2672,9 @@ color(400bp)=(transparent!50)}
     \caption{Visualization of the Lie Group}
     \label{fig:Lie Group}
 \end{figure}
-This demonstrates the important property of the \gls{lie group} - it is both a group and a manifold. The blue `orb' denoted $G$ is representative of a smooth manifold in $\mathbb{R}^n$. We can think of the manifold in this example as the surface of a 2D ellipsoid on which all the members of the group must live. We can see three points defined $g_1$, $g_2$, and $g_1\cdot g_2$. In this example, $g_1\cdot g_2$ is simply the multiplication of $g_1$ and $g_2$.
+What exactly does it mean for the \gls{lie group} to be both a group and a manifold?
+
+The blue `orb' denoted $G$ is representative of a smooth manifold in $\mathbb{R}^n$. We can think of the manifold in this example as the surface of a 2D ellipsoid on which all the members of the group must live. We can see three points defined $g_1$, $g_2$, and $g_1\cdot g_2$. In this example, $g_1\cdot g_2$ is simply the multiplication of $g_1$ and $g_2$. We can remember from our triangle example that the product $g_1\cdot g_2$ must also be in the group because of closure.
 
 The property that must hold for a \gls{lie group} is that not only do all $g_1,g_2,g_1\cdot g_2$ reside in $\mathbb{R}^n$, but additionally also lie on the surface of the ellipsoid! In other words, $g_1,g_2,g_1\cdot g_2\in G$. Now that we have a mental picture, we can move on to the formal definition.
 
@@ -2232,13 +2698,18 @@ I will now go over all of these properties to explain their meaning in more natu
 
     Let us take the natural numbers, denoted $\mathbb{N}$ to be our set. The natural numbers are given as $1,2,3\cdots$  and so on. We say that the natural numbers are closed under addition, because adding any of the elements of the set together, we get another element of the set. For example, adding $1$ and $3$, we get $4$, which is also in the set $\mathbb{N}$. Moreover, any composition of these operations will also be part of the set. Performing addition twice will still give an element of the sequence. 
     
-    Connecting this to our notation, we say that two elements, $g$ and $h$ are in the set $G$, which we represent with this notation: $g,h \in G$. We define the operation to be `$\cdot$', which is the notation for a general operation. We can then say that the elements, when acted upon by this operation, are still in the set $G$: $g\cdot h \in G$.
-    \item Associativity is a more simple concept which most readers are likely familiar with. It simply means that the grouping of the operations does not matter. Note that associativity \textit{does not} imply communitivity! If we take the example of matrices, $(AB)C=A(BC)$, which is an expression of associativity, but $AB\neq BA$ for matrices.
+    Connecting this to our notation, we say that two elements, $g$ and $h$ are in the set $G$, which we represent with this notation: $g,h \in G$. We define the operation to be `$\cdot$', which is the notation for a general operation. We can then say that the elements, when acted upon by this operation, are still in the set $G$: $g\cdot h \in G$. This is what the formal definition of closure is.
+    \item Associativity is a more simple concept which most readers are likely familiar with. It simply means that the grouping of the operations does not matter. Note that associativity \textit{does not} imply communitivity! If we take the example of matrices, $(AB)C=A(BC)$, which is an expression of associativity, but $AB\neq BA$ for matrices. 
     \item Identity is also relatively simple. Identity simply means that there exists an element of the set $G$, which when applied on another element of set $G$, has no effect. For the real numbers, $\mathbb{R}$, multiplication by the number $1$ is an example of an identity element.
-    \item Inverse is the last property, which states that for each element in the set, there is another element in the set, that when acted upon by an operation, returns the identity.
+    \item Inverse is the last property, which states that for each element in the set, there is another element in the set, that when acted upon by an operation, returns the identity. This is analogous to the inverse of a number, or inverse of a function, which you have studied in algebra.
 \end{enumerate}
 
-Lastly, as a bonus, I will explain what a \textit{binary operation} is. Stated simply, a binary operation is an operation which takes in two inputs and returns a single output. Most operations, such as addition, subtraction, and multiplication are binary. Something like a conditional statement ("if/else") could be a ternary operation (3 inputs instead of just 2).
+Lastly, I will explain what a \textit{binary operation} is. Stated simply, a binary operation is an operation which takes in two inputs and returns a single output. Most operations, such as addition, subtraction, and multiplication are binary. Something like a conditional statement ("if/else") could be a ternary operation (3 inputs instead of just 2).
+
+\subsubsection{Further Group Examples}
+
+Let's solidify our understanding of groups with some examples. Some of these are worked out examples (blue), and some will require the reader to work through them (red).
+
 \begin{example}[The Real Numbers]
     To wrap our minds around the concepts of groups, we consider the example of the integers, $\mathbb{Z}$.
 
@@ -2253,31 +2724,57 @@ The axioms of groups can be applied to create a group from any set of objects. I
 We have shown in the previous example how the real numbers are closed under addition. Using the same axiomatic approach,  show why the integers are not a group under multiplication. Which axiom(s) is/are violated?
 \end{exercise}
 
-\subsection{The Symmetries of Groups}
-So, we have shown that we can make groups out of the elements of the number line. Previously, we have stated that groups contain information about symmetries. These symmetries may be hard to see in the example of the number line. In that case, it is helpful to give a pictorial representation instead. To do so, we will construct an equilateral triangle.
-
-\begin{example}[The Symmetries of a Triangle]
+\begin{exercise}
+    We have shown that we can make groups out of the elements of the number line. Previously, we have stated that groups contain information about symmetries. Think about the symmetries that are associated with the number line. How are these different than the symmetries associated with geometry? 
     
-\end{example}
+    Symmetries, typically, are quite broad! Here are just a few examples that you can try. See if you can explain what symmetries may exist for these objects:
+    \begin{itemize}
+        \item Functions (even, odd)
+        \item Matrices
+        \item Taylor Series
+    \end{itemize}
+There are many more types of symmetries which you may encounter if you further study mathematics!
+\end{exercise}
+
+
 
 \begin{example}[The Quaternion Group]
-We have shown in Volume II that the Quaternions form an algebra which we call $\mathbb{H}$. We define the elements of $\mathbb{H}$:
-$q=q_0+iq_q+jq_2+kq_3 ,\quad q_0,q_1,q_2,q_3\in\mathbb{R}$
+We have shown in Volume II that the quaternions form an algebra which we call $\mathbb{H}$. We define the elements of $\mathbb{H}$:
+$q=q_0+q_1i+q_2j+q_3k ,\quad q_0,q_1,q_2,q_3\in\mathbb{R}$
     More specifically, this algebra is a four-dimensional associate unital algebra. We have the four dimensions defined by the basis: $1,i,j,k$. These elements are associative, meaning that the order in which we perform operations does not matter (the order itself, does matter!). Unital simply means that the algebra contains an identity element.
 
-    We can again show all of the properties of the \gls{lie group} hold for the quaternion group.
+    We can again show all of the properties of the \gls{lie group} hold for the quaternion algebra.
+
+    \begin{enumerate}
+        \item Closure: We can show the closure of the group by considering the multiplication of any element of the quaternion group with any other element.
+$$\begin{array}{c|cccc}
+     \times&1&i&j&k  \\
+     \hline
+     1&1&i&j&k\\
+     i&i&-1&k&-j\\
+     j&j&-k&-1&i\\
+     k&k&j&-i&-1\\
+\end{array}$$
+As we can see, the there is no multiplication that we can do that gives an element outside of the group. Therefore, the quaternions are closed under multiplication.
+\item Associativity: An exact proof of the associativity of quaternions follows from the Cayley-Dickson construction of the quaternions or from Clifford algebras (which are discussed in Volume II). This is not immediately evident, but it is true that the quaternions are associative. More information can be found in \cite{michael_penn_climbing_2023} for the approach using the Cayley-Dickson construction or in \cite{sudgylacmoe_swift_2020} for the approach using Clifford algebras.
+\item Identity: The identity element of the quaternions is simple, it is the element which contains only a real part of 1 and no other element.
+\item Inverse: The inverse for the quaternions is also fairly simple. We can see from the multiplication table that any element of the quaternion algebra multiplied by itself gives the negative of the identity. So, we can simply multiply one of these terms by $-1$ to construct the identity. Since $-1$ is in the span of the real numbers, this is perfectly fine to do!
+
+
+    \end{enumerate}
+    So we have shown that the quaternions form both an algebra and a group! This is a quite interesting property. See if there are any other common mathematical objects that you can find group representations for!
 \end{example}
 
 \subsection{Representation Theory}
 It is useful that we can describe groups axiomatically, but it is hard to do mathematical operations with groups. Luckily, we can express most groups in a way that is simpler to perform mathematical operations on. This is part of a field of mathematics called \textit{Representation Theory}.
 
-Luckily, it is possible to represent almost any group using a matrix! This representation is typically denoted as $\rho$. We can then write the representation:
+The key realization is that it is possible to represent almost any group using a matrix! This representation is typically denoted as $\rho$. We can then write the representation:
 $$\rho:G\rightarrow GL(V)$$
-We would say that $\rho$ is a representation which maps $G$ onto $GL(V)$. We haven't discussed $GL(V)$ yet -- but it is simply a matrix group.
+We would say that `$\rho$' is a representation which maps $G$ onto $GL(V)$. We haven't discussed $GL(V)$ yet -- but it is simply a matrix group.
 
 The proof of this theorem is beyond the scope of our text, but the important thing to note is that we can write these groups as matrices -- we only need to figure out the vector field, $V$, and some other properties of the matrices. We also note that we can express any \gls{lie algebra} with a matrix representation. 
 
-Interested readers can look more into \autoref{thm:cayley} and \autoref{thm:Ado}, which describe the details behind why this is true. These theorems will not be used elsewhere in this text, they are simply shown for completeness.
+Interested readers can look into \autoref{thm:cayley} and \autoref{thm:Ado}, which describe the details behind why this is true. These theorems will not be used elsewhere in this text, they are simply shown for completeness.
 
 \begin{theorem}[Cayley's Theorem]\label{thm:cayley}
     Every group $G$ is isomorphic to a subgroup of the symmetric group.
@@ -2289,19 +2786,19 @@ Interested readers can look more into \autoref{thm:cayley} and \autoref{thm:Ado}
 Knowing that we can represent groups like this, we should describe some of the properties of matrix groups so that we can do mathematical operations with them!
 
 \subsection{Matrix Multiplication Groups}\label{sec:matrix groups}
-We have previously used representation theory to show why it is important to study matrix multiplication groups. To define matrix groups under multiplication, we need to again satisfy all four criteria of groups. For matrices, there are some subtleties that are worth covering. 
+We have previously used representation theory to show why it is important to study matrix multiplication groups. To define matrix groups under multiplication, we need to again satisfy all four criteria of groups. For matrices, there are some subtleties that are worth covering in depth.
 
 There are a few types of matrix multiplication groups that are important for our purposes. As noted before, $GL(V)$ is an important group to cover. All other groups will come from $GL(V)$, so it is the most important to describe. Note that $GL(V)$ will also be denoted $GL(n)$, but $V$ is still implied to exist in the group.
 
-Here, I will cover 4 of the most important ones to our study, starting with the most broad and adding constraints until we reach the most specific. We will start by covering $GL(n)$ and $SL(n)$. $O(n)$, $SO(n)$, $U(n)$, and $SU(n)$ will be covered later. We will go through these in this order, starting with $GL(n)$, deriving it from the fundamental axioms of groups.
+Here, I will cover some of the most important ones to our study, starting with the most broad and adding constraints until we reach the most specific. We will start by covering $GL(n)$ and $SL(n)$. $O(n)$, $SO(n)$, $U(n)$, and $SU(n)$ will be covered later. We will go through these in this order, starting with $GL(n)$, deriving it from the fundamental axioms of groups.
 
 First, we will only consider $n{\times} n$ matrices so that we can apply matrix multiplication from either direction freely. We can then proceed to see what conditions are necessary for this to be a group, which we will call $GL$. We will denote the size, $n$, in parenthesis, giving us $GL(n)$ as our group for matrices of size $n{\times}n$. To write the group in full, we need to also specify the field that we are considering. 
 
 Typically, there are 3 fields that we consider. Those being the real numbers $(\mathbb{R})$, complex numbers $(\mathbb{C})$, and quaternions $(\mathbb{H})$.\endnote{The quaternions do not actually form a field since their multiplication is not commutative. However, we still consider them as an option over which we can define our field because the algebra of quaternions, $\mathbb{H}$, is isomorphic to $\mathbb{R}$ $(\mathbb{H}\cong\mathbb{R})$, so we are fine to use it in our field.} For now, for the sake of simplicity, we will consider the real numbers, so we would write $GL(n,\mathbb{R)}$. I will use the shorthand of $GL(n)$ since it is understood we are only considering reals for now. Other sources may make this explicit using the other notation for groups, though.
 
-Starting with closure, we can write:
+Starting with closure, we can write the following for any two matrices $A,B\in\mathbb{R}$:
 $$AB \in GL $$
-Without additional information about $A$, $B$, and $GL$, it is hard to define additional properties at this point. 
+Without additional information about $A$, $B$, and $GL$, it is hard to define additional properties at this point. We will come back to this after establishing some of the other identities.
 
 The property of associativity also does not help much, since all $n{\times} n$ matrices must satisfy associativity by the nature of matrix multiplication:
 $$(AB)C=A(BC)$$
@@ -2318,7 +2815,15 @@ $$\mathbb{I}(n)=\begin{bmatrix}
 
 This can be proved using the fact that matrix multiplication takes the form
 $$(AB)_{ij}=\sum_{k=1}^n{A_{ik}}{B}_{kj}$$
-and noticing that the identity matrix takes the form of Kronecker delta $\delta_{ij}$ such that $\delta_{ij}=1$ when $i=j$ and is zero otherwise. So, we have shown that the matrix $\mathbb{I}(n)$ must be an element of the group $G(n)$.
+and noticing that the identity matrix takes the form of Kronecker delta $\delta_{ij}$ such that $\delta_{ij}=1$ when $i=j$ and is zero otherwise.
+
+In effect, if we take $A$ to be the identity matrix, we can see that the product will only exist when $i=k$ in the sum. As a result the sum is effectively reduced to a single term because $k$ can only attain one possible value, $i$:
+$$(AB)_{ij}={A_{ii}}{B}_{ij}$$
+We have also defined the Knonecker delta $\delta_{ij}$ such that $\delta_{ii}=1$. Thus $A_{ii}$ also has a value of 1. From here, we can see that the equality reduces to
+$$(AB)_{ij}={B}_{ij}$$
+So, when matrix $A$ is the identity, it has the property of an identity element. Remember that we need this `do nothing' identity element in every group. It is a basic property that all matrix multiplication groups have $\mathbb{I}_n$!
+
+So, we have shown that the matrix $\mathbb{I}(n)$ must be the identity element of the group $G(n)$.
 \end{proof}
 
 The last property is an inverse property, such that for all elements in $GL(n)$, there must exist another matrix in $GL(n)$ that when multiplied by returns $\mathbb{I}(n)$. 
@@ -2335,7 +2840,7 @@ As a last step, we can go back and check that $GL$ is closed under the condition
 
 So, we have proven the most general group of $n{\times}n$ invertible matrices, which is called $GL(n)$ for the \textit{general linear group}.
 
-\subsubsection{The role of the determinant}\label{sec:role of determinant}
+\subsubsection{The role of the determinant}\label{sec:role of the determinant}
 
 The determinant has a special meaning in linear algebra. It is representative of the scaling of `volume' that is performed under a linear transformation. In the case of a $2{\times}2$ or $3{\times}3$ matrix, this can easily be seen. However, the same is true for any $n{\times}n$ matrix.
 
@@ -2343,9 +2848,9 @@ The determinant has a special meaning in linear algebra. It is representative of
 
 In our study of dynamics, we often deal with rigid bodies or fluid dynamics that are a fixed volume. So, when we have physical descriptions of phenomena in matrices, we often want the property that $\det=1$ so that the matrix performs no scaling on the body.
 
-These linear transformations with $\det=1$ are so important that they get a special group name with the prefix $S$ for special. In the case of $GL(n)$, we can identify a \textit{subset} of $GL(n)$, which we call the \textit{special linear group}, $SL(n)$. If this subset is also a group, we denote it as a \textit{subgroup} of $GL(n)$. In the common notation, we show this as $SL(n) \subset GL(n)$.  We should note that any matrix \gls{lie group} must be a subgroup of $GL(n)$ since it is the most generic case of the matrix \gls{lie group}! In fact, being a subset of the general linear group is used to define many matrix \glspl{lie group}.
+These linear transformations with $\det=1$ are so important that they get a special group name with the prefix $S$ for special. In the case of $GL(n)$, we can identify a \textit{subset} of $GL(n)$, which we call the \textit{special linear group}, $SL(n)$. If this subset is also a group, we denote it as a \textit{subgroup} of $GL(n)$. In the common notation, we show this as $SL(n) \subset GL(n)$.  We should note that any matrix \gls{lie group} must be a subgroup of $GL(n)$ since it is the most generic case of the matrix \gls{lie group}! In fact, being a subset of the general linear group is used to define matrix \glspl{lie group}. You will find this definition in many textbooks.
 
-So, we have defined the important properties of matrix groups under multiplication. Now, it is simply a case of small modifications to apply these groups to aerospace applications.
+So, we have defined the important properties of matrix groups under multiplication. Now, it is simply a case of small modifications to apply these groups to more specific aerospace applications.
 
 \subsection{Manifolds}
 The other important defining aspect of \glspl{lie group} is that they are manifolds. More specifically, a \gls{lie group} must be a \textit{differentiable manifold}. 
@@ -2356,7 +2861,7 @@ To apply the rules of calculus, such as taking a derivative, it is necessary tha
 
 So, we can axiomatically prove that any set is a group, but how do we go further to show that it is also a smooth manifold, and thus a \gls{lie group}?
 
-Part of the answer lies in the fact that the \gls{lie group} must have a smooth manifold. This means that the spatial derivatives at a point must exist, because if it does not the curve may have a sharp discontinuity.
+Part of the answer lies in the fact that the \gls{lie group} must be smooth. This means that the spatial derivatives at a point must exist, because if it does not the surface may have a sharp discontinuity.
 
 \begin{example}[Manifold Nature of $SL(2)$]
     We have shown in the previous section that $SL(n)$ forms a group. To narrow the scope of our example, we consider the case of $n=2$ and our field to be $\mathbb{R}$. We can write this in shorthand as either $SL_2(\mathbb{R})$ or $SL(2,\mathbb{R})$. Here, we will prefer the latter notation.\textbf{ (or former? It lowkey looks cooler)}
@@ -2375,7 +2880,7 @@ Using the condition on the determinant, we have $ad-bc=1$. Because the group mus
 Since all of the partial derivatives are non-zero and there must be at least two of the elements in $a,b,c,d$ non-zero for $ad-bc=1$ to hold, we can conclude that the manifold must be smooth! 
 \end{example}
 
-This is all that we will say about manifold structure for now. When studying  matrix \gls{lie group}, there are some special conditions that are required to show that they are manifolds, but we will only discuss those that are well behaved here. The interested reader can look into the cited sources for more information.
+This is all that we will say about manifold structure for now. When studying matrix \gls{lie group}, there are some special conditions that are required to show that they are manifolds, but we will only discuss \glspl{lie group} that are well behaved here and we can assume this holds. The interested reader can look into the cited sources for more information.
 
 \section{Lie Algebras}
 
@@ -2634,7 +3139,7 @@ There is one more method that we will employ to compute the matrix exponential, 
 
 
 \section{Bringing it Together - The Circle Group}
-Let's bring all of the previously mentioned concepts of \gls{lie theory} together into one concrete example. This example will showcase the full process of describing the \gls{lie group}, \gls{lie algebra}, and \gls{exponential map}. Since most of us have been studying circles since preschool, this should be a fairly interesting example!
+Let's bring all of the previously mentioned concepts of \gls{lie theory} together into one concrete example. This example will showcase the full process of describing the \gls{lie group}, \gls{lie algebra}, and \gls{exponential map}. The prototypical example of study here is the circle group. Since most of us have been studying circles since preschool, this should be a fairly interesting example!
 
 We'll start by describing the group itself. We often call this group $\mathbb{S}^1$, which is a very fancy way of saying the group is a circle. $S$ refers to spheres, and the superscript to the dimension. $S^0$ is a point, $S^1$ to circles, $S^2$ to the surface of a sphere, and so on. The $\mathbb{S}$ is used to distinguish the group from the surface itself.
 
@@ -2792,7 +3297,8 @@ Setting this equal to $-\mathbb{I}$, we have the following four conditions:
     ac+cd=0\\
     bc+d^2=-1
 \end{gather}
-We also know that $|i|=1$, which gives us another condition. For a matrix, the analogue of the magnitude is the determinant, the reasoning for which I describe briefly in \autoref{sec:role of determinant}. This gives us $\det A=1$, yielding a final equation, $ad-bc=1$.
+
+We also know that $|i|=1$, which gives us another condition. For a matrix, the analogue of the magnitude is the determinant, the reasoning for which I describe briefly in \autoref{sec:role of the determinant}. This gives us $\det A=1$, yielding a final equation, $ad-bc=1$.
 
 Even though it \textit{looks} like we should be able to solve this system of 4 variables with 5 equations, we actually have some redundant conditions which means that three solutions are possible here. There are two ways out of this predicament: we can either use some properties of rotations that are known (that the matrices are orthogonal, which we will discuss later) or we can use the assumption that the values of the matrix must be real numbers.
 
@@ -2841,7 +3347,7 @@ We can start with an example you can try at home to whet our appetite for the ma
 
     We can show this fairly easily in real life! We can take any object which has 3 distinct axes that are easily distinguishable -- a book or phone, as an example -- and rotate them according to each sequence.
 
-    In fact, your head is another good example! Most of our necks are not especially flexible (to rotate in the directions we need, at least). However we naturally associate motions of `
+    In fact, your head is another good example! Most of our necks are not especially flexible (to rotate in the magnitudes we need, at least). However we naturally associate motions of `pitch', `roll' and `yaw' with different head movements so it's quite an intuitive one to use for rotations.
 
     When we perform large rotations, such as rotating our object through each axis by $90\degree$, we very obviously get different final orientations. We demonstrate this in \autoref{fig:large rot}.
 
@@ -2851,11 +3357,21 @@ We can start with an example you can try at home to whet our appetite for the ma
         \caption{Example of non-commutative rotation sequences}
         \label{fig:large rot}
     \end{figure}
-    As we can see, our monkey, Susanne, has ended up in very different rotations in either case, even though we performed the same rotation operations. Of course, if you have read Volume II, this is not at all an unexpected result. 
+    As we can see, our monkey, Suzanne, has ended up in very different rotations in either case, even though we performed the same rotation operations. Of course, if you have read Volume II, this is not at all an unexpected result. 
 
-However, something strange happens if we consider rotations that are small in magnitude. This is best shown visually, which we will do in 
+However, something strange happens if we consider rotations that are small in magnitude. This is best shown visually, which we will do in \autoref{fig:small rot}. Each rotation in this image is only $10\degree$.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/SmallRotationsExample.png}
+    \caption{Example of small rotations being nearly commutative}
+    \label{fig:small rot}
+\end{figure}
+We see that these small rotations yield the same rotation. Go ahead and try the same rotation sequence with your head! If you choose angles that are fairly small, you will see that you do in fact end up looking in the same spot no matter which rotation sequence you choose! Of course, these two rotations are not \textit{exactly} identical, but they are really close! You can notice some small difference by looking at where Suzanne's' ear intersects with the eyebrow. 
 
+However, these two do seem very similar, which is definitely a different outcome than the large rotations. As we will later prove rigorously, as these rotations get smaller and smaller, these so-called \textit{infinitesimal} rotations will be mathematically identical.
+
+Based on what we've learned from \gls{lie theory} so far, this should give us a few hints as to whats happening. The small rotations are very close to the \gls{lie algebra}, where the elements form a vector space. However, the large rotations exhibit behavior that can only be explained on the manifold. The following sections will explain these more mathematically and give special characteristics of rotation groups and algebras.
 \end{example}
 
 \subsection{Rotation Groups}
@@ -2922,8 +3438,6 @@ What about the condition on the determinant?
 We call the \gls{lie algebra} for which this condition holds $\mathfrak{so}(n)$.
 
 
-
-
 One of the simplest cases in showcasing the relationship between the \gls{lie group} and the \gls{lie algebra} is the rotation.
 
 Starting with an infinitesimal rotation, which is a group in $\mathfrak{so}(3)$, we have:
@@ -2934,6 +3448,9 @@ $$A=\begin{bmatrix}
 \end{bmatrix}$$
 
 We can use the \gls{exponential map} to go from the \gls{lie group} to the \gls{lie algebra}. For matrices, we use the matrix exponential as the \gls{exponential map}. Performing the exponentiation, we have that $e^{A}$ is a rotation matrix.
+
+\section{Beyond Rotations}
+Until now, we have not discussed complex-valued matrices. However, these find use in physics quite often and we can even parameterize the quaternions in terms of complex matrices. We will now explore these complex matrices to gain an understanding of more complex matrix transformations, which are beyond the 3-D rotations we have discussed so far.
 
 
 \section{Relation to Differential Equations}\label{sec:lie theory relation to differential equations}
@@ -2953,13 +3470,16 @@ We noted in the beginning of this chapter that \gls{lie theory} was originally d
     \end{gather}
     This equation must be important because I have placed a blue box around it. We can see the presence of the matrix exponential $e^{At}$, which we have seen before when discussing the \gls{lie theory} of matrices! This is an important connection to make, so let us expand on it for clarity.
 
-    Generally, in control theory, we may denote $e^{At}$ (or $e^{A\Delta t}$, they are practically the same) as the \textit{state transition matrix}, which is sometimes denoted $\Phi$. This state transition matrix
+    Generally, in control theory, we may denote $e^{At}$ (or $e^{A\Delta t}$, they are practically the same) as the \textit{state transition matrix}, which is sometimes denoted $\Phi$. This state transition matrix will extraordinarily important when we discuss concepts such as Kalman filtering.
 
+    So why does it appear here, and how can we relate that to our discussion of \gls{lie theory}?
+
+    We can think of it in the following way. Our matrix $A$ represents infinitesimal behavior of the system. That's why $\dot{x}$ is described in terms of $A$! It tells us how the parameters vary on an infinitesimal scale. The matrix exponential $e^{At}$, is effectively a map from this infinitesimal solution to a finite time solution; that is, something we can measure.
+
+    In \gls{lie theory} we have the exact parallel behavior. We have some tangent group on the \gls{lie algebra}, which is mapped onto the group element by the exponential map!
+
+    We can see that these two descriptions are very similar! The key difference is that \gls {lie theory} can describe groups which are non-linear, which makes is a more powerful tool than solving a linear differential equation.
 \end{example}
-
-% talk about lie theory non-linear vs diff eq linear
-
-
 
 
 \section{Lagrangian and Hamiltonians on Manifolds}
@@ -2971,9 +3491,27 @@ We touched on this briefly in \autoref{sec:motivation and background lie}, but i
 \begin{theorem}[Noether's Theorem]
 In a system that can be modeled purely by a Lagrangian (that is, a conservative system), every continuous symmetry has a corresponding conservation law.
 \end{theorem}
-Although we have discussed continuous symmetries quite a bit, it is worth showing a few examples to solidify the meaning of this theorem.
+The implications of this statement are quite great. Noether's Theorem gives us a pathway to understand where the conservation laws of symmetry actually come from. Of course, we can also reverse the statement and understand the symmetries of our system based on the conserved quantities!
 
-\subsection{The Mathematical Proof}
+Although we have discussed continuous symmetries quite a bit in our discussion of \gls{lie theory}, concrete examples will aid us greatly.
+
+\subsection{Conservation in Physics}
+
+Before we get started, we should concretely define the terminology of the theorem. What exactly do we mean by a conserved quantity?
+
+A conserved quantity is simply one that does not change over time. When we say that energy is conserved, we mean that the energy of the system will be exactly the same if observed at $t=0\ \mathrm{s}$ or $t=100\ \mathrm{s}$. If we call our quantity of interest $X$, we can of course express this as:
+$$\frac{dX}{dt}=0$$
+
+\subsection{Symmetries in Physics}
+As we have discussed earlier, the picture of groups and symmetries changes a bit between each domain of math or physics that we are discussing. In the domain of physics, our picture of symmetries is most definitely different than the picture of triangles or number lines.
+
+When we discuss a symmetry in physics, we mean to say that the physics that act upon that system are in no way altered by whatever transformation we have performed (that is to say, the \gls{eom} is identical).
+
+For example, if we decide to move our rocket launch 20 ft to the north, the aerodynamics, gravity, and forces of the rocket are still exactly the same. We have performed a transformation -- in the form of moving the launch location -- but there are no observable differences to the system!
+
+Of course, these transformations are not merely limited to physical movements of the system, there are other types of transformations that we can do that do not impact the physics of the system.
+
+\subsection{The Mathematical Formulation}
 
 We know from Hamilton's Principle that physical trajectories have an action of zero. We denote this action as $S$, and the path it follows as $\gamma$, so we may write $S[\gamma]=0$. It may be possible to find another path $S[\gamma_2]=0$ somewhere else along the state space. This is not particularly noteworthy. We can take the analogy of the derivative from calculus as an example in \autoref{fig:calc sym}:
 \begin{figure}[H]
@@ -3023,6 +3561,9 @@ Given a general function, it is expected that there will likely be multiple mini
 $$\gamma\xrightarrow{T}\gamma'$$
 When we have a continuous symmetry between these two, there is no difference in the action! So $S[\gamma]=S[\gamma']$.
 
+\section{From Complex Numbers to Quaternions: The Cayley-Dickson Construction}
+Prolly not do this lmao. Maybe in Vol II?
+
 \section{The Limitations of Lie Theory}
 A fundamental understanding of the mathematics that relate groups and algebras is quite interesting, but ultimately, our goal in engineering is to be able to control a system which is not mathematically ideal. We will have disturbances and random behaviors and noisy sensors in all of our real systems. Do these non-idealities make \gls{lie theory} useless for us? Of course not, but it does impose limitations of the extent to which we can use it.
 
@@ -3053,7 +3594,9 @@ We will construct a group called the \textit{Symplectic Linear Group} to do this
         0&I(n)\\-I(n)&0
     \end{bmatrix}
 \end{gather}
-We can deconstruct the meaning of the line to be: The special linear group is a group, such that set $\psi$, which is a subset of the general linear group $GL(2n,\mathbb{R})$, satisfies the property that $\psi^T\Omega\psi=\Omega$.
+We can deconstruct the meaning of the line to be: The symplectic linear group is a group, such that set $\psi$, which is a subset of the general linear group $GL(2n,\mathbb{R})$, satisfies the property that $\psi^T\Omega\psi=\Omega$.
+
+Moreover, $Sp(2n)$ is a \gls{lie group}!
 
 
 \subsubsection{Use Case of Symplectic Integrators}
@@ -3069,14 +3612,31 @@ This chapter is primarily for those readers interested in this subject matter an
 
 From our study of \gls{lie theory}, the study of differentiable manifolds naturally arises as another area of study. So, I devote this first section to a brief overview of differential geometry. In fields such as geometric control, we also see this being used.
 
-\section{Differential Geometry}
-The subject of differential geometry was lightly touched upon in \autoref{ex:geodesic}, where we considered the shortest path on a spherical surface. Differential geometry is a field of study that is concerned with the study of smooth manifolds - which essentially means that it is an object which `looks' like a vector space when viewed closely. This is, of course, a loose definition that is not rigorous. In \autoref{ex:geodesic}, we showed this property on the sphere, 
+To supplement the information in this chapter, I have found that \cite{hirvonen_profound_nodate} has some quite readable and good articles on many of these topics. There are, of course, many other sources which are good for deep dives into any of these concepts.
+
+\chapter{Differential Geometry Introduction}
+The subject of differential geometry was lightly touched upon in \autoref{ex:geodesic}, where we considered the shortest path on a spherical surface. Differential geometry is a field of study that is concerned with the study of smooth manifolds - which essentially means that it is an object which `looks' like a vector space when viewed closely. This is, of course, a loose definition that is not completely rigorous.
+
+In \autoref{ex:geodesic}, we showed this property on the sphere, but differential geoemetry allows us to study any manifold, so long as it is smooth!
 
 We can also think of a manifold as anything which we can continuously parameterize. So, our 3D rotations that we parameterize with Euler angles or quaternions are also elements of a manifold.
 
 We also see that manifolds are also useful in \gls{Lagrangian} and \gls{Hamiltonian} mechanics in the form of \textit{symplectic manifolds}.
 
-So, this is a field of study that touches upon many of the mathematic concepts that we encounter in the study of dynamics.
+So, this is a field of study that touches upon many of the mathematical concepts that we encounter in the study of dynamics.
+
+\subsection{The Metric Tensor}
+
+\subsection{Distances}
+We can generalize the concept of the Euclidean distance, which we typically define as
+$$s=\sqrt{x^2+y^2}$$
+
+In a generic metric space, we can define this as
+$$s=\int_a^b\sqrt{g_{ij}\frac{dx^i}{d\lambda}\frac{dx^j}{d\lambda}}d\lambda$$
+\subsubsection{Applying Euler-Lagrange}
+We notice that the form of the equation for the arc-length matches the form of a functional in \gls{Lagrangian} mechanics! We can apply the Euler-Lagrange equation to get a general equation for the geodesic on any surface!
+
+$$\frac{d^2x^i}{d\lambda^2}+\Gamma_{mn}^i\frac{dx^m}{d\lambda}\frac{dx^n}{d\lambda}=0$$
 
 \section{Special Relativity}
 
@@ -3202,6 +3762,7 @@ Control theory, at the fundamental level, is about understanding how a system re
 The point is that at the current time, this definition is quite broad. So, we need to narrow it down and focus on the types of systems that we want to analyze here. 
 
 \section{Classifications of Control Systems}
+There are several characteristics that determine the classification of a control system. First and foremost is the distinction between an open-loop system and a closed-loop system, which we must first discuss before making any other distinctions.
 \subsubsection{Open-Loop Control}
 An open loop system is one that does a predetermined outcome based on some input. You can think of this like a "if/else" statement in code. "If" the input is `this', do this certain output. If the system begins to stray from the desired value, there is no way to detect this. The system simply keeps doing the same thing no matter what happens after the input. It's like trying to trying to walk around your house just based on the layout! It may work sometimes, but other times you will step on your cat or run into a wall. We would draw a system like this as shown in \autoref{fig:Open Loop Controller}.
 
@@ -3329,26 +3890,48 @@ We can alleviate the problems of the open-loop system by introducing \textit{fee
 
 This diagram indicates the key components of a closed-loop system. We have many components from the open-loop system again, such as the controller and the system. Now, we add a sensor, which senses the final output $y$. The $+/-$ element takes the difference between the input $r$ and the sensor measurement to generate an error, $e$. This error is now what feeds the controller. Typically, the goal of the closed-loop system is to configure the controller such that the error eventually goes to zero. In a well defined system, we can reduce this error to zero even when the system is subjected to disturbances, $d$!
 
-We can take the analogy of walking through your house to demonstrate the key difference with the closed-loop system. Now, you have your eyes (the sensor) to aid you in walking through your house. This makes it much easier and you can account for disturbance events now. We can thus see that closed-loop systems are preferable in most applications. As a result, the rest of this part will put its emphasis on closed-loop system design.
+We can take the analogy of walking through your house to demonstrate the key difference with the closed-loop system. Now, you have your eyes (the sensor) to aid you in walking through your house. This makes it much easier and you can account for disturbance events now. We can thus see that closed-loop systems are preferable in most applications. As a result, the rest of this book will put its emphasis on closed-loop system design.
 
-\section{Types of Systems}
+\subsection{Features of Closed-Loop Systems}
+Within closed-loop control systems (sometimes called feedback control systems), there are several further distinctions that can be made. We can classify systems as either \textit{linear} or \textit{non-linear}, and \textit{time invariant} or \textit{time varying}.
 
-Generally, we can classify our systems
+A system can have either of these attributes. For example, a system can be time varying, but also linear. A system cannot however, be both linear and non-linear, as these are mutually exclusive. In the next section we will discuss exactly what we mean by each of these terms
 
 \subsubsection{Linear Systems}
-The next level of distinction is more mathematical in nature. 
+Linear systems are best thought of in the following way: If we have one solution to the equation, and another solution to the equation, we can add them and get another valid solution. That is to say, in the more technical language, that a linear mapping exists. In control theory and other engineering and physics disciplines, this property is often referred to as \textit{superposition}.
 
-\subsubsection{Non-Linear Systems}
+Linear systems are useful for mathematics because they are easily solved. We have an immense number of tools at our disposal to solve linear equations. As a result, much of the theory of control systems is built around linear systems.
+
+\subsubsection{Nonlinear Systems}
+Of course, there are systems that are also non-linear. In fact, almost everything in the real world is non-linear to some extent. Any time we have a characteristic of a system that is a function of say $x^2$, $\sin x$, or $xy$, we have a nonlinearity. There is no way to express these with straight lines!
+
+As a result nonlinearities are everywhere in the real world. Luckily, there are ways we can tackle these nonlinearities. Readers who were particularly fond of \autoref{chap:lie theory} may already see how we may do so with \gls{lie theory}! There are other approaches too which can allow us to approximate solutions to non-linear systems.
+
+The typical workflow for a non-linear system is to make a simplification to linearize the system in some way. For example, we may take the derivative at some point to find a linearization of the function. From here, we can apply the tools that we develop for linear systems to help us formulate a control scheme.
+
+Often, the next step is to simulate the full non-linear dynamics with this control scheme acting on it. If we have done a good job linearizing the system and making appropriate assumptions, then we are done. Otherwise, we go back and make modifications to the control scheme to make it work with the nonlinear system.
+
+The last step is to deploy the control system on the real-world system. If our modeling of the real world system is adequate, our control scheme should work appropriate. For some applications however, such as control systems for high-powered rockets, there are many aspects of the simulation that are hard to account for and the control system design is very strict. Therefore, more modification is often required at this point.
+
+The key thing to note is that non-linear systems very often do not have closed-form solutions. As a result, we apply our knowledge of linear systems to help us start. The engineering challenge is to find a control system which works for the true nonlinear system, is cost effective, and is versatile to whatever disturbances or changes we expect.
+
+This is quite a tall order, but we will spend the rest of this book building up the theory and using practical examples to do this! Luckily, our knowledge of dynamics that we've built up along the way will help us immensely.
 
 \subsubsection{Time Invariant Systems}
+Time invariant systems are the next distinction to discuss. Time invariance is quite simple -- the system properties do not change over time. Of course, the state of the system will evolve over time, otherwise nothing would happen at all. By time invariant, we mean that characteristics that we define as traits of the system itself are constant. This will be easier to see when we develop our mathematical models, but we effectively mean that criteria such as the `System' in \autoref{fig:Closed Loop Controller} do not change at all over time.
 
 \subsubsection{Time Varying Systems}
+Time varying systems are those systems which do have elements that vary with time. For example, in our rocket, the mass changes as the fuel is expelled out of the back of the rocket. This is a feature that is dependent on time, so we say that our system is time variant.
+
+Typically time variant systems are not much harder to implement in code, as we can approximate these systems as being time invariant at every time step. However, they may be quite a bit harder to solve by hand. As such, most of the systems that we consider in the theory section will be time invariant.
+
+In fact, most of the theory of classical control theory is based around these simple linear time invariant (\gls{lti}) systems. We can even further simplify this by considering control systems which are \gls{siso}. This will be the foundation with which we start our exploration of control theory. Before we do so, however, we must explore the tools which we will use in analyzing linear control systems.
 
 \chapter{The Laplace Domain}
 
-We start our exploration of control theory by exploring the \gls{laplace transform}. The \gls{laplace transform} is an integral transform, much like the \textit{Fourier Transform}. We find the Laplace transform of special use for its applications in solving linear differential equations. The \gls{laplace transform} is especially useful because it converts a linear differential equation into an algebraic equation. This is especially useful because we are very well versed in solving algebraic equations!
+We start our exploration of linear control theory by exploring the \gls{laplace transform}. The \gls{laplace transform} is an integral transform, much like the \textit{Fourier Transform}. We find the Laplace transform of special use for its applications in solving linear differential equations. The \gls{laplace transform} is especially useful because it converts a linear differential equation into an algebraic equation. This is especially useful because we are very well versed in solving algebraic equations!
 
-This conversion of a differential equation to an algebraic equation, combined with a bit of practice, is enough to effectively use the \gls{laplace transform}. However, it doesn't give us an appreciation of \textit{what} the \gls{laplace transform} actually is. Here, I want to present an alternative impetus for the \gls{laplace transform} that is often not taught in introductory differential equations, by analyzing the \glspl{eigenfunction} of the derivative operator.
+This conversion of a differential equation to an algebraic equation, combined with a bit of practice, is enough to effectively use the \gls{laplace transform}. However, it doesn't give us an appreciation of \textit{what} the \gls{laplace transform} actually is. Here, I want to present an alternative impetus for the \gls{laplace transform} that is often not taught in introductory differential equations, by analyzing the \glspl{eigenfunction} of the derivative operator. I hope this explanation will be useful both to those learning the subject for the first time and to those learning the subject again. I will admit, however, this explanation will be most useful to those who have at least seen the \gls{laplace transform} before.
 
 I find this explanation especially enlightening on this topic, although others may prefer the more conventional approach to this topic. As such, I have included some resources that cover the \gls{laplace transform} in the more conventional manner.
 
@@ -3359,19 +3942,185 @@ Where $D$ is some operator, $f$ is a function, and $\lambda$ is an eigenvalue. I
 
 It is with this context that we investigate the exponential function, $e^{ax}$, which we find useful for exactly this property. More precisely, we want to solve the eigenvalue system $Dy=\lambda y$, where we denote the differentiation operator $\frac{d}{dx}\equiv D$. We can see that, plugging in $e^{ax}$ for this system, we have this exact property:
 $$De^{ax}=ae^{ax}$$
-So we have our eigenfunction, $e^{ax}$, which produces an eigenvalue $a$. Now, we want to use this useful property on equations that are not strictly exponentials. We can do so by \textit{projection} of these functions on to the exponential functions. How can we project functions on to each other? That is the function of the inner product, which we discuss next.
+So we have our eigenfunction, $e^{ax}$, which produces an eigenvalue $a$. Now, we want to use this useful property on equations that are not exponentials. We can think about the concept this way. There is some operation that will tell us how similar the two functions are. If they are very similar, this value will be close to 1 and we really like that function! If it is close to 0, those functions are effectively `orthogonal' to each other and we shouldn't care about it too much. 
+
+Formally, we call this operation a \textit{projection} of these functions. So we can project any other function on to the exponential functions and measure their similarity. How can we project functions on to each other? That is the function of the inner product, which we discuss next.
 
 \section{Inner Product Spaces}
-To perform this projection, we must first define some new terminology and mathematical understanding. In mathematics, we generally have a simple case which we want to generally extent. The same is true here, which will motivate our discussion of inner products.
+To perform this projection, we must first define some new terminology and mathematical understanding. In mathematics, we often have a simple case which we want to generally extent. The same is true here, which will motivate our discussion of inner products.
 
-We start with the standard definition of projection in a finite-dimensional vector space. We consider two vectors, both existing in $\mathbb{R}^2$ space.
+We start with the standard definition of projection in a finite-dimensional vector space. We consider two vectors, both existing in $\mathbb{R}^2$ space, which is shown in \autoref{fig:2d vec}.
 
-%add tikZ image here
+\begin{figure}[ht]
+    \centering
+    
 
-If we want to find the component of one vector in the direction of the other vector, we use the linear operation of the dot product. This quantity tells us the `similarity' of the two vectors.
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
-We can define the dot product of two vectors in a finite $n$-dimensional space generally as:
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da1402308417777972] 
+\draw    (250,230) -- (250,82) ;
+\draw [shift={(250,80)}, rotate = 90] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da8323133877657714] 
+\draw    (250,230) -- (398,230) ;
+\draw [shift={(400,230)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da984721650125026] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (250,230) -- (327.74,161.98) ;
+\draw [shift={(330,160)}, rotate = 138.81] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da12678737743098834] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (250,230) -- (377.08,200.67) ;
+\draw [shift={(380,200)}, rotate = 167.01] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (258,68.54) node [anchor=north west][inner sep=0.75pt]    {$\mathbb{R}^{2}$};
+% Text Node
+\draw (387,190.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$\vec{a}$};
+% Text Node
+\draw (335,142.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$\vec{b}$};
+
+
+\end{tikzpicture}
+
+    \caption{The standard picture of 2-D vectors}
+    \label{fig:2d vec}
+\end{figure}
+
+If we want to find the component of one vector in the direction of the other vector (that is to say, find the component of $\vec{b}$ in the direction of $\vec{a}$), we use the linear operation of the dot product. This quantity tells us the `similarity' of the two vectors.
+
+We can start with an intuitive definition of the dot product and build up from there.
+
+We often see the dot product written out as $$a\cdot b=|a||b|\cos\theta$$
+This definition intuitively matches our `similarity' criteria. If the two vectors have the same angle, they are very `similar', and so the $\cos\theta$ term is close to 1. However, if the two vectors are oriented $90\degree$ from each other, we see that this term goes to zero, as the vectors are completely dissimilar.
+
+This definition only has a physical meaning to us when we can define an angle between the two vectors $\vec{a}$ and $\vec{b}$. Beyond 3-dimensional space, this concept of an angle between vectors begins to be more unclear (although it is still mathematically valid).
+
+As a result, we often want to use an alternative definition of the dot product. We can formulate such a definition by writing something that is equivalent to the case for two dimensions but that will extend to higher dimensions as well.
+
+We can do this by considering the decomposition of a vector in $\mathbb{R}^2$, which we can then extend to many dimensions. In \autoref{fig:vec decomp}, this is shown for the case of $\mathbb{R}^2$ space.
+\begin{figure}[ht]
+    \centering
+
+
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da67293580166529] 
+\draw    (270,250) -- (270,102) ;
+\draw [shift={(270,100)}, rotate = 90] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da25752973634046794] 
+\draw    (270,250) -- (418,250) ;
+\draw [shift={(420,250)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da4451601467637182] 
+\draw  [dash pattern={on 0.84pt off 2.51pt}]  (390,180) -- (390,250) ;
+%Straight Lines [id:da2667435734649499] 
+\draw  [dash pattern={on 0.84pt off 2.51pt}]  (390,180) -- (270,180) ;
+%Straight Lines [id:da16843504883751226] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (270,250) -- (387.41,181.51) ;
+\draw [shift={(390,180)}, rotate = 149.74] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (407,162.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$\vec{a}$};
+% Text Node
+\draw (424,239.4) node [anchor=north west][inner sep=0.75pt]    {$\hat{e}_{1}$};
+% Text Node
+\draw (244,92.4) node [anchor=north west][inner sep=0.75pt]    {$\hat{e}_{2}$};
+% Text Node
+\draw (278,88.54) node [anchor=north west][inner sep=0.75pt]    {$\mathbb{R}^{n}$};
+% Text Node
+\draw (381,252.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$a_{1}$};
+% Text Node
+\draw (253,172.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$a_{2}$};
+
+\end{tikzpicture}
+
+    \caption{Vector decomposition in 2-D}
+    \label{fig:vec decomp}
+\end{figure}
+
+We can apply the our definition of the dot product to this vector to understand it's decomposition. By taking the dot product between $\vec{a}$  and $\hat{e}_1$, we get a resulting element $a_1$ in the direction of $\hat{e}_1$. This component $a_1$ is also orthogonal to $\hat{e}_2$,  so the dot product between $a_1$ and $\hat{e}_2$ is zero! We can use the same reasoning to write $a_2$ solely in terms of $\hat{e}_2$.
+
+In fact, when we use an orthonormal basis, we will always be able to decompose a vector of dimension $n$ into the dot products with each axis in $\mathbb{R}^n$ space. We can express this for an arbitrary $n$-dimensional space as:
+$$\sum_{i=1}^n{a_i\hat{e}_i}$$
+Of course these properties are fairly obvious and we have seen vector composition from an early age. However, it is worth refreshing this concept as we will extend this concept and make it more abstract later.
+
+Now that we know how this relationship works for a vector and the basis, we can take the dot product between two vectors, $\vec{a}$ and $\vec{b}$, which gives $\vec{a}\cdot\vec{b}$.
+
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da07194338650536147] 
+\draw    (270,220.86) -- (270,72.86) ;
+\draw [shift={(270,70.86)}, rotate = 90] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da8965708304392496] 
+\draw    (270,220.86) -- (418,220.86) ;
+\draw [shift={(420,220.86)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da9421113913029678] 
+\draw  [dash pattern={on 0.84pt off 2.51pt}]  (390,150.86) -- (390,220.86) ;
+%Straight Lines [id:da7944597894464402] 
+\draw  [dash pattern={on 0.84pt off 2.51pt}]  (390,150.86) -- (270,150.86) ;
+%Straight Lines [id:da3683558397635107] 
+\draw  [dash pattern={on 0.84pt off 2.51pt}]  (340,130) -- (340,220) ;
+%Straight Lines [id:da5891702614671979] 
+\draw  [dash pattern={on 0.84pt off 2.51pt}]  (340,130) -- (270,130) ;
+%Straight Lines [id:da5322994190102411] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (270,220.86) -- (338.17,132.38) ;
+\draw [shift={(340,130)}, rotate = 127.61] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da19322918869231698] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (270,220.86) -- (387.41,152.37) ;
+\draw [shift={(390,150.86)}, rotate = 149.74] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Shape: Arc [id:dp9279619891884023] 
+\draw  [draw opacity=0] (294.74,189.42) .. controls (298.67,192.52) and (302,196.33) .. (304.54,200.67) -- (270,220.86) -- cycle ; \draw   (294.74,189.42) .. controls (298.67,192.52) and (302,196.33) .. (304.54,200.67) ;  
+
+% Text Node
+\draw (399,136.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$\vec{a}$};
+% Text Node
+\draw (424,210.26) node [anchor=north west][inner sep=0.75pt]    {$\hat{e}_{1}$};
+% Text Node
+\draw (244,63.26) node [anchor=north west][inner sep=0.75pt]    {$\hat{e}_{2}$};
+% Text Node
+\draw (278,59.4) node [anchor=north west][inner sep=0.75pt]    {$\mathbb{R}^{n}$};
+% Text Node
+\draw (344,108.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$\vec{b}$};
+% Text Node
+\draw (381,230.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$a_{1}$};
+% Text Node
+\draw (253,142.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$a_{2}$};
+% Text Node
+\draw (333,230.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$b_{1}$};
+% Text Node
+\draw (253,122.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$b_{2}$};
+% Text Node
+\draw (303,178.83) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$\theta $};
+
+
+\end{tikzpicture}
+
+
+    \caption{The link between the algebraic and geometric dot product}
+    \label{fig:geometric dot}
+\end{figure}
+We can see in \autoref{fig:geometric dot} that we have the geometric representation, $\vec{a}\cdot\vec{b}=|a||b|\cos\theta$. We can equivalently write the algebraic representation, using the fact that we can decompose the vectors into their components in the basis directions for both $\vec{a}$ and $\vec{b}$. Now that both are in the same plane, we can multiply the components in a way we are familiar with, the simple $a*b=ab$. Doing so gives us:
+$$\vec{a}\cdot\vec{b}=a_1\hat{e}_1*b_1\hat{e}_1+a_1\hat{e}_1*b_2\hat{e}_2+a_2\hat{e}_2*b_1\hat{e}_1+a_2\hat{e}_2*b_2\hat{e}_2$$
+Using the independence of the basis from before, we can cancel any terms which have $\hat{e}_1*\hat{e}_2$, since we know these two to be orthogonal! Additionally we know that $\hat{e}_1*\hat{e}_1=1$ since $\hat{e}_1$ has a unit length. Thus our dot product is simply 
+$$\vec{a}\cdot\vec{b}=a_1b_1+a_2b_2$$
+We can generalize this statemant past the two dimensional space by realizing that any two indices that are not-equal will be non orthogonal. That is, $\hat{e}_i*\hat{e}_j=0$ for $i\neq j$. We can then define the dot product of two vectors in a finite $n$-dimensional space generally as:
 $$\vec{a}\cdot \vec{b}=\sum_{k=0}^{n}{a_kb_k}$$
+As we have seen earlier, we can also express this sum more compactly if we consider $\vec{a}$ and $\vec{b}$ to be column vectors. We can write the multiplication as:
+$$\vec{a}^T\vec{b}$$
+Which is an equivalent formulation to the sum.
+
+
 It will prove useful in the future to be able to extend this definition to complex vectors. In other words, we are extending our domain from $\mathbb{R}^n$ to $\mathbb{C}^n$. Nothing about the inner product changes aside from the fact that we must take the \textit{conjugate} of $b_k$ now, so that:
 $$\vec{a}\cdot \vec{b}=\sum_{k=0}^{n}{a_k\bar{b}_k}$$
 I have denoted the conjugate of $b$ as $\bar{b}$, although other notations such as $b^*$ are also commonly used. We define the conjugate as follows:
@@ -3397,7 +4146,7 @@ We can now return to the example of the exponential functions, $e^{at}$. If we s
     \color{blue}\boxed{\color{black}f(t)\cdot e^{st}=\int_0^\infty{f(t)e^{-st}}}\\
     \color{blue}\mathrm{Laplace \ Transform}
 \end{gather}
-The Laplace Transform will prove extraordinarily useful for analyzing LTI systems
+The Laplace Transform will prove extraordinarily useful for analyzing \gls{lti} systems.
 
 \subsection{The Lebesgue Integral and Measure}
 
@@ -3414,7 +4163,9 @@ For the reader interested in the mathematics behind inner product spaces, I have
 We find that \gls{lti} systems are simplest to describe in the Laplace domain. Luckily, we have developed some background in using \glspl{laplace transform} which will aid us greatly in doing this.
 
 \section{Transfer Functions}
-A \gls{transfer function}
+A \gls{transfer function} is a tool that is used in linear control theory to gain an understanding of the input-output relationship of a system. Given a certain input, the transfer function will tell us what the output will be!
+
+In the Laplace domain, this is extremely useful.
 
 \section{Stability}
 
@@ -3432,7 +4183,17 @@ Optimal estimation is a subject that is concerned with finding estimates of some
 
 There are two main reasons to apply estimation. First, no true sensor is perfect. There are always errors and uncertainties associated with any sensor. Optimal estimation provides us a way to reduce uncertainties in the most optimal way and get better estimates of the true state.
 
-The second reason is that we can use estimation to gain an understanding of states that we cannot directly observe. This is very useful for us in many applications! For example, if we are flying our rocket, there is no instrument that we can use to measure our drag coefficient, $C_D$. However, we can apply optimal estimation to get a very good estimate of the $C_D$ nonetheless. 
+The second reason is that we can use estimation to gain an understanding of states that we cannot directly observe. This is very useful for us in many applications! For example, if we are flying our rocket, there is no instrument that we can use to measure our drag coefficient, $C_D$. However, we can apply optimal estimation to get a very good estimate of the $C_D$ nonetheless.
+
+The most common way to perform optimal estimation is with the Kalman Filter. We will see later than the Kalman Filter is the optimal linear filter.
+
+Lets look at a few more examples where the Kalman Filter is useful. Say for example we want to measure the temperature of a rocket engine exhaust. We have a physical constraint on the system that any thermometer will melt under the heat of a rocket engine. What can we do then?
+
+We can put a thermometer on the outside of the engine and measure the temperature there. If we know the metal that the engine is made of and some properties of our cooling system, we can construct a pretty good model of what the heat transfer across the engine will look like. In other words, we build a model that tells us what we should expect. Of course, we can also correlate this with some other sensors, say a barometer to measure some aspects of pressure that are tied to the temperature.
+
+These two examples touch on some key aspects of the Kalman Filter. Firstly, we need a good model of our system for a Kalman Filter to work. This is becauase the Kalman Filter effectively acts as a real time numerical integrator! We have to update our model in real time to help us model the system behavior.
+
+The other part of the Kalman Filter is that we need measurements, and more importantly, we need to understand how those measurements are related to each other.
 
 \section{What is Filtering?}
 
@@ -3460,7 +4221,7 @@ Do this shit later lmao
 \chapter{Optimal Control}
 
 \chapter{Basics of Non-Linear Control}
-\section{Pertubation Theory}
+\section{Perturbation Theory}
 \section{Lyapunov}
 \section{Lie Theory}
 
