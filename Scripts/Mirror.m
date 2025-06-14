@@ -1,0 +1,231 @@
+% This script generates the probability for the case of a 2D plane mirror
+% and shows that the contributions from the middle are the most important.
+
+close all; clear; clc
+
+% Select the mode for the script:
+% Prompt user to select the mode
+% Define the options for the dialog
+options = {"Realistic Mode", "Demonstration Mode"};
+
+% Create the list dialog
+[selectedIndex, tf] = listdlg('ListString', options, ...
+    'SelectionMode', 'single', ...
+    'PromptString', 'Select a mode:', ...
+    'Name', 'Mode Selection', ...
+    'ListSize', [160, 100]);
+
+% Check if the user made a selection
+if tf
+    selectedMode = options{selectedIndex};
+    fprintf('You selected: %s\n', selectedMode);
+
+    options = {"Low Fidelity (Ray Trace Plot)", "High Fidelity (Vector Plot Only)"};
+
+    [selectedFidelity, tf] = listdlg('ListString', options, ...
+        'SelectionMode', 'single', ...
+        'PromptString', 'Select a mode:', ...
+        'Name', 'Mode Selection', ...
+        'ListSize', [160, 100]);
+
+    if tf
+        selectedFidelity = options{selectedFidelity};
+        fprintf('You selected: %s\n', selectedMode);
+    else
+        disp('No selection made, reverting to Demonstration Mode at low fidelity');
+
+        selectedMode = "Demonstration Mode";
+        selectedFidelity = "Low Fidelity (Ray Trace Plot)";
+    end
+else
+    disp('No selection made, reverting to Demonstration Mode at low fidelity');
+
+    selectedMode = "Demonstration Mode";
+    selectedFidelity = "Low Fidelity (Ray Trace Plot)";
+end
+
+
+
+if strcmp(selectedMode, "Realistic Mode")
+
+    width = 0.01;
+    height = 1;
+    if strcmp(selectedFidelity,"Low Fidelity (Ray Trace Plot)")
+        n = 49; % number of mirror subdivisions
+    else
+        n = 300;
+    end
+
+else
+    width = 1.5;
+    height = 1;
+    if strcmp(selectedFidelity,"Low Fidelity (Ray Trace Plot)")
+        n = 13; % number of mirror subdivisions
+    else
+        n = 100;
+    end
+end
+
+% turn the ray trace plot on and off based on the number of subdivisions of
+% the mirror
+if n > 50
+    rayTrace = 0;
+else
+    rayTrace = 1;
+end
+
+% Generate a mirror base and divide it into n components
+mirrorBase = linspace(-width, width, n); % Create a linear space for the mirror base
+
+
+ptLoc = 1;
+pointA = [-ptLoc, height];
+pointB = [ptLoc,height];
+
+
+% Generate paths for each ray:
+
+% Calculate the reflection paths for each subdivision of the mirror
+for idx = 1:n
+    % calculate the position of the reflection point
+    reflectionPoint(idx,:) = [mirrorBase(idx), 0]; % Ray hits the mirror at the base
+
+    % calculate the length of the first section
+
+    xLen1(idx) = abs(pointA(1) - reflectionPoint(idx,1));
+    yLen(idx) = height;
+    Len1 = [xLen1;yLen];
+
+
+    % calculate the length of the second section
+    xLen2(idx) = abs(pointB(1) - reflectionPoint(idx,1));
+    Len2 = [xLen2;yLen];
+end
+
+length1 = vecnorm(Len1,2);
+length2 = vecnorm(Len2,2);
+
+
+length = length1+length2;
+
+% associate a rotation with each length. The magnitude is 1 and the phase
+% is given by the time.
+
+
+if strcmp(selectedMode, "Realistic Mode")
+    % generate a realistic beam of monochromatic 550nm light
+    time = length / 3e8;
+    freq = 5.4e14;
+    vectors = exp(1i*time*freq);
+else
+    vectors = exp(1i*length*7);
+end
+
+
+% set the origin for each vector:
+% the first should start at zero
+X = 0;
+Y = 0;
+ReVec = real(vectors);
+ImVec = imag(vectors);
+
+for idx = 2:n
+    % The start of the vector is the current length plus the sum of last lengths
+    X(idx) = ReVec(idx-1) + X(idx-1);
+    Y(idx) = ImVec(idx-1) + Y(idx-1);
+end
+
+xTot = X(idx) + ReVec(idx);
+yTot = Y(idx) + ImVec(idx);
+
+
+if rayTrace == 1
+    figure(1)
+
+
+    % subplot 1, show the figure
+    subplot(3,1,1)
+    title("Paths of Light")
+    hold on
+    % plot the mirror base
+    rectangle('Position',[-width -.2 width*2 0.2], 'FaceColor', [.6 .9 .9], 'EdgeColor', [.5 .9 .9])
+
+    % plot point A
+    plot(pointA(1),pointA(2), '.', 'Color', 'k')
+    text(pointA(1)-.05,pointA(2)+0.1,'$A$')
+
+    % plot point B
+    plot(pointB(1),pointB(2), '.', 'Color', 'k')
+    text(pointB(1)+0.01,pointB(2)+0.1,'$B$')
+
+    % plot each ray
+
+    for idx = 1:n
+        % Plot the incoming and reflected rays
+        plot([pointA(1), reflectionPoint(idx,1)], [pointA(2), reflectionPoint(idx ,2)], 'k-');
+        plot([reflectionPoint(idx,1), pointB(2)], [reflectionPoint(idx,2),pointB(2)], 'k-');
+    end
+    hold off
+
+    xlabel('X-Position [m]')
+    ylabel('Height')
+
+    xlims = max(1.1*width,1.1*ptLoc);
+
+    xlim([-xlims,xlims])
+    ylim([-.2,height + 0.2])
+
+    % subplot 2, show the time
+
+    if strcmp(selectedMode, "Realistic Mode")
+        subplot(3,1,2)
+        title("Time of Each Path")
+        hold on
+        plot(reflectionPoint(:,1)*1e3, time*1e12)
+        plot(reflectionPoint(:,1)*1e3, time*1e12, 'rx')
+        xlabel('X-Position [mm]')
+        ylabel('Total time [ps]')
+        xl = xlim;
+
+        subplot(3,1,3)
+        quiver(reflectionPoint(:,1)*1e3, zeros(1,n),real(vectors),imag(vectors), .1)
+        xlim(xl)
+        axis equal
+        axis tight
+        grid off
+        box off
+        axis off
+    else
+        subplot(3,1,2)
+        title("Length of Each Path")
+        hold on
+        plot(reflectionPoint(:,1), length)
+        plot(reflectionPoint(:,1), length, 'rx')
+        xlabel('X-Position')
+        ylabel('Total length [m]')
+        xl = xlim;
+
+        subplot(3,1,3)
+        quiver(reflectionPoint(:,1)*1e3, zeros(1,n),real(vectors),imag(vectors), .1)
+        xlim(xl)
+        axis equal
+        axis tight
+        grid off
+        box off
+        axis off
+    end
+
+
+    % Plot the resulting vectors for each one:
+end
+
+figure(2)
+
+hold on
+quiver(X,Y,real(vectors),imag(vectors), "off")
+quiver(0,0,xTot,yTot,'off')
+title("Vector Sum of Components")
+axis equal
+grid off
+box off
+axis off
