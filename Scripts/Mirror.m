@@ -224,7 +224,7 @@ figure(2)
 hold on
 quiver(X,Y,real(vectors),imag(vectors), "off")
 quiver(0,0,xTot,yTot,'off')
-title("Vector Sum of Components")
+title("Vector Sum of Components", 'FontSize', 14)
 axis equal
 grid off
 box off
