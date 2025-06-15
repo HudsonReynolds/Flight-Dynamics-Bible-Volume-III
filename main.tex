@@ -985,12 +985,6 @@ Of course, we know from experience that mirrors do not show reflections like thi
 
 So, if we take phase into consideration, we get a new picture of the phenomenon, which is shown in \autoref{fig:polarization paths}. What is shown is the time that it takes each ray of light to reach point $B$ based on the point where it hits the mirror. These are marked with a red marker below the point of intersection with the mirror.
 
-The final phase of the light upon reaching point $B$ is shown below this image. The light rotates very rapidly, so a difference in time will cause large changes in the phase of the light. However, for paths that are close to the path of least time, we can move the intersection point left and right and the amount of time taken doesn't change much at all! This occurs, of course, because we are at a local minimum of the function, where the derivative is 0.
-
-When we look at the vectors for these portions, we find that the phase for each of these is almost identical! So we find that these paths near the path of least time have vectors that are all very similar to each other.
-
-The last step in this process is to add all of the vectors together to generate a final vector. The square of this final vector is representative of the probability that light reaches point $B$. By adding all of the vectors from before together, we can see that the largest contribution to the final vector comes from the portion in the middle. In fact, some of the portions near the outside can cancel each other out so that they have almost no effect.
-
 \begin{figure}[ht]
     \centering
 
@@ -1149,9 +1143,20 @@ pattern radius = 1pt}
     \caption{Polarizations of light for different paths}
     \label{fig:polarization paths}
 \end{figure}
-Although the methodology described above is perfectly sound, the angular differences described here are quite exaggerated. In reality, even paths deviating by less than a degree from the ideal path tend to cancel each other out for visible light.
 
-If you want to gain a better understanding of this relationship, "mirror.m"
+The final phase of the light upon reaching point $B$ is shown below this image. The light rotates very rapidly, so a difference in time will cause large changes in the phase of the light. For paths that are far away from the center, these time differences create arrows that point in seemingly random directions! The result of this is that, on average, these arrows tend to cancel each other out.
+
+However, for paths that are close to the path of least time, we can move the intersection point left and right and the amount of time taken doesn't change much at all! This occurs, of course, because we are at a local minimum of the function, where the derivative is 0. When we look at the vectors for these portions, we find that the phase for each of these is almost identical! So we find that these paths near the path of least time have vectors that are all very similar to each other.
+
+The last step in this process is to add all of the vectors together to generate a final vector. The square of this final vector is representative of the probability that light reaches point $B$. By adding all of the vectors from before together, we can see that the largest contribution to the final vector comes from the portion in the middle. In fact, some of the portions near the outside can cancel each other out so that they have almost no effect.
+
+Although the methodology described above is perfectly sound, the angular and time differences described here are quite exaggerated. In reality, even paths deviating by less than a degree from the ideal path tend to cancel each other out for visible light. This is a result of the frequency of light being so high that phase shifts occur on the scale of picoseconds.
+
+If you want to gain a better understanding of this relationship, an interactive MATLAB script "Mirror.m" in \autoref{sec: Quantum Deriv Mirror} will run a simulation of this scenario. There, you can see how the vectors add for our demonstration model and also for a real physical system. The main thing to note is that the effects occur on a much smaller scale for a physical system.
+
+
+
+Lastly, we should note that the actual computation involves computing every possible path that light can take! This includes all of the other infinitely many straight line paths that we ignored, but also 
 
 \section{Principia (1687)}
 It is in \textit{Principia} that we find the first evidences of Newton's contributions to the field of energy mechanics. It is Newton's work in the \textit{Principia} that most scholars agree are the first real works of the calculus of variations.
@@ -4240,6 +4245,9 @@ If you have any suggestions for improvements to these books, please message me o
 \subsection{Geodesics of a Sphere}
 \lstinputlisting[style=Matlab-editor, caption=Sphere Geodesic]{Scripts/SphereGeodesic.m}\label{script:Geodesic}
 
+\subsection{Quantum Derivation of the Mirror} \label{sec: Quantum Deriv Mirror}
+\lstinputlisting[style=Matlab-editor, caption=QED Mirror]{Scripts/Mirror.m}\label{script:Mirror}
+
 \section{Brachistrochrone Extras (Delete maybe)}
 From Brachistochrone section:
 
@@ -4286,7 +4294,6 @@ This section contains lengthier segments of example code from either the 6-\gls{
 
 \setglossarystyle{altlist}
 \printglossary[title=Special Terms, toctitle = Special Terms]
-
 \printbibliography[heading=bibintoc, title={References}]
 
 \end{document}
