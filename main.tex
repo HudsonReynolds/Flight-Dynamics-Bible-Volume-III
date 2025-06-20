@@ -848,7 +848,7 @@ So we must again reconsider our viewpoint. Light must showcase both properties t
 
 The existence of this duality alone does not necessarily answer our question, but it gets us on the path to doing so. The true answer to this question remained unknown for nearly 300 years -- until the advent of \gls{qed} in the 1940's, the invention of which would lead Richard Feynman to winning the Nobel Prize in physics.
 
-Of course, explaining a Nobel Prize worthy achievement in physics is no easy task! Luckily, Feynman himself has offered quite a simple explanation of the phenomena of light in his book, \cite{richard_phillips_feynman_qed_1988}. I highly suggest the interested reader to read this book in full (it is quite short and easy to read) to better comprehend this. Here, I will present only a portion of Feynman's argument to convince you that the least action principle naturally arises from \gls{qed}.
+Of course, explaining a Nobel Prize worthy achievement in physics is no easy task! Luckily, Feynman himself has offered quite a simple explanation of the phenomena of light in his book, \cite{richard_phillips_feynman_qed_1988}. I highly suggest the interested reader to read this book in full (it is quite short and easy to read) to better comprehend this section. Here, I will present only a portion of Feynman's argument to convince you that the least action principle naturally arises from \gls{qed}.
 
 \subsubsection{Mirrors}
 Although we earlier made a computation for Snell's Law using Fermat's principle, we will instead take the case of the mirror here. The derivation of the equivalent least time principle for the mirror is left as an exercise, but follows from a similar procedure.
@@ -1140,7 +1140,7 @@ pattern radius = 1pt}
 
 \end{tikzpicture}
 
-    \caption{Polarizations of light for different paths}
+    \caption{Phase of light for different paths}
     \label{fig:polarization paths}
 \end{figure}
 
@@ -1150,13 +1150,20 @@ However, for paths that are close to the path of least time, we can move the int
 
 The last step in this process is to add all of the vectors together to generate a final vector. The square of this final vector is representative of the probability that light reaches point $B$. By adding all of the vectors from before together, we can see that the largest contribution to the final vector comes from the portion in the middle. In fact, some of the portions near the outside can cancel each other out so that they have almost no effect.
 
-Although the methodology described above is perfectly sound, the angular and time differences described here are quite exaggerated. In reality, even paths deviating by less than a degree from the ideal path tend to cancel each other out for visible light. This is a result of the frequency of light being so high that phase shifts occur on the scale of picoseconds.
+Although the methodology described above is perfectly sound, the angular and time differences described here are quite exaggerated. In reality, even paths deviating by less than a degree from the ideal path tend to cancel each other out for visible light. This is a result of the frequency of light being so high that phase shifts occur on the order of picoseconds.
 
-If you want to gain a better understanding of this relationship, an interactive MATLAB script "Mirror.m" in \autoref{sec: Quantum Deriv Mirror} will run a simulation of this scenario. There, you can see how the vectors add for our demonstration model and also for a real physical system. The main thing to note is that the effects occur on a much smaller scale for a physical system.
+If you want to gain a better understanding of this relationship, an interactive MATLAB script "Mirror.m" in \autoref{sec: Quantum Deriv Mirror} will run a simulation of this scenario. There, you can see how the vectors add for our demonstration model and also for a real physical system with a variable number of elements. The main thing to note is that the effects occur on a much smaller scale for a true physical system. However, we will still see the same effects arise and the form spiral patterns near the ends, where the vectors tend to cancel each other out. Altogether, they form a very beautiful spiral reminiscent of soundholes of a string instrument. Again, only the components near the path of least time add together! So, on the large scale, we say that light does indeed take the path of least time, even though we can show on the quantum scale that it is free to do anything!
 
+\begin{figure}
+    \centering
+\includesvg[width=.625\linewidth]{Scripts/MirrorVectors.svg}
+    \caption{Vector Representation of Mirror}
+    \label{fig:mirror vec 2}
+\end{figure}
 
+Lastly, note that the actual computation involves computing every possible path that light can take! This includes all of the other infinitely many straight line paths that we ignored, but also paths that are curved in any arbitrary manner. This is quite difficult to do, so I have stuck with the straight-line examples here. As it turns out, both yield the same final answer.
 
-Lastly, we should note that the actual computation involves computing every possible path that light can take! This includes all of the other infinitely many straight line paths that we ignored, but also 
+Another simplification you may have noticed is that the magnitude of the final vector arrow squared is the probability. However, we have given each component a length of 1! So if we add infinitely many of these together, the total probability will go to $\infty$, which is obviously incorrect. This is a problem in \gls{qed} called renormalization. Despite some of these challenges, \gls{qed} still provides a very nice framework that allows us to understand why the principle of least time holds.
 
 \section{Principia (1687)}
 It is in \textit{Principia} that we find the first evidences of Newton's contributions to the field of energy mechanics. It is Newton's work in the \textit{Principia} that most scholars agree are the first real works of the calculus of variations.
@@ -1416,19 +1423,31 @@ It is at this point that we have sufficient background to understand the work th
 
 The calculus of variations underpins the ideas of \gls{Lagrangian} and \gls{Hamiltonian} mechanics, so it is important to understand the principles behind it before moving on to the actual mechanics. In analogy to how single variable calculus is fundamental to Newtonian mechanics, the calculus of variations is fundamental to energy mechanics.
 
-The fundamental idea of the calculus of variations is simple. We want to find the maximums and minimums of some quantity in our problem. Why? In physics, we often see that quantities are minimized or maximized for some reason. For example, a soap surface will minimize its surface area, or a beam of photons will follow a \gls{geodesic} of spacetime. Light will also refract through surfaces to minimize time as seen in Fermat's least time principle.
+The fundamental idea of the calculus of variations is simple. We want to find the maximums and minimums of some quantity in our problem. Why? In physics, we often see that quantities are minimized or maximized for some reason. For example, a soap surface will minimize its surface area, or a beam of photons will follow a \gls{geodesic} of spacetime. Light will also refract through surfaces to minimize time as we have seen in Fermat's least time principle. As we will see, all of mechanics can be understood by the fact that a quantity called the \textit{action} can also be minimized.
 
-Because so many physical phenomena are governed by this behavior to minimize certain quantities, Hamilton (the same mathematical hero who formulated quaternions) and others, decided to formulate a mathematical description of this.
+Because so many physical phenomena are governed by this behavior to minimize certain quantities, the calculus of variations became a prominent field of study from the 17th through the 20th centuries. Of course, the calculus of variations also has many applications outside of these confines, some of which will be explored at the end of this chapter. The key component of this theory that we need for energy mechanics is called the Euler-Lagrange equation, which we will now derive.
 
 \section{Derivation of the Euler-Lagrange Equation}
 
-Before we get to Hamilton's formulation, we need to understand what the calculus of variations is trying to do. To find a minima means that, naturally, we should look for the extrema of some quantity. 
+As stated before, for an optimization problem, we need to find the minima or maxima of a quantity. In single variable calculus, we only concern ourselves with finding the minimum value of a function, say finding the minimum value of $x^2$. Here however, we now have a new challenge. That challenge to find a whole function which is a minimum.
 
-In essence, we are attempting to find a function that is the minimum for some set of conditions. These conditions also take the form of a function, so we attempt to find a function that is a minimum of another function. We call this quantity which we are minimizing a \gls{functional}, which we define as:
+Stated more precisely, we are attempting to find a function that is the minimum for some set of conditions. The conditions are often posed as conditions on a function or its derivative. We may write the conditions generally as $y(x)$ and $y'(x)$.
+
+These conditions take the form of a function, as they are dependent on some variable $x$. The tricky part about variational calculus is that we need to find another function, $f$, which abides by these constraint equations, but is also a minimum! Since $f$ has a dependence on these constraints, we may generally write $f$ as:
+$$f[y(x),y'(x);x]$$
+This statement means that $f$ is a function which is defined by $y(x)$ and its derivative $y'(x)$. The semicolon notes that the variable of interest is $x$.
+
+We may write a function $f$ which abides by these conditions, say $f = y(x)+2y'(x)$. That is fine, but how can we find where this function is minimum? What does that even mean?
+
+Since our function exists over a whole range of values of $x$, the sensible thing to do is to consider the function $f$ over all values of $x$, and assign a value to it that way. Of course, we can do this quite easily with an integral! We can evaluate this at two set endpoints, $x_1$ and $x_2$, and this will return a single number value that represents the function! We call this scalar output a \gls{functional}. This \gls{functional} is essentially a function of $f$, so it is a function of a function!
+
+We typically describe a functional with the letter $J$, and we write the form of the integral as:
 \begin{equation}\label{eq:functional}
     J=\int_{x_1}^{x_2}f\left[y(x),y'(x);x\right]{dx}
 \end{equation}
-The \gls{functional}, $J$, is a quantity which maps a function onto the real number line. This means that it takes the function as its input and outputs a single real number (that is, a function of a function). We are attempting to find an input function, $y(x)$, that yields an extrema of $J$. 
+Remember that the most important aspect of $J$ is that we have taken an entire function, over a fixed range, and collapsed all of that functions properties into a single number, $J$! We may say this more precisely as: The \gls{functional}, $J$, is a quantity which maps a function onto the real number line. This means that it takes the function as its input and outputs a single real number (that is, a function of a function). 
+
+This, in essence, is the calculus of variations. For our purposes, we only want a specific application, which is to solve optimization problems to find the minima of functions. That is, we are attempting to find conditions on the function, $y(x)$ and $y'(x)$, which yield an extrema of $J$. 
 
 \newglossaryentry{neigh func}
 {
@@ -1437,22 +1456,117 @@ The \gls{functional}, $J$, is a quantity which maps a function onto the real num
     description={A small function added to another function in the calculus of variations. Analogous to a differential element in single variate calculus}
 }
 
-To be precise about this definition of an extrema - we are attempting to find a function $y(x)$ such that any other function added to $y(x)$, no matter how close it is to $y(x)$, must change the value of $J$ such that it is no longer an extrema. By convention, this other function added to $y(x)$ is called the \gls{neigh func}, and is denoted $\eta(x)$.
+\subsubsection{Extrema conditions}
+To find the extrema of the function is quite similar to the approach we would take in single variate calculus. We are all familiar with the method by which is this accomplished in single variable calculus. To find the minima or maxima of a function $f(x)$, we find where $f'(x)=0$ (\autoref{fig:single var func}).
+\begin{figure}[ht]
+    \centering
 
-We can compactly write this $y(x)+\eta(x)$ as $y(\varepsilon,x)$. We define the condition $y(0,x)\equiv y(x)$, where $y(x)$ is the function that gives the extrema of $J$. So, we can write $y(\varepsilon,x)$ as:
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Polynomial [id:dp31740373171286806] 
+\draw  [line width=1.5]  (137,222) .. controls (207,32) and (277,317) .. (347,127) ;
+%Straight Lines [id:da15243145724705576] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=1.5]    (248.6,196.2) -- (328.6,196.2) ;
+\draw [shift={(288.6,196.2)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=1.5]      (0, 0) circle [x radius= 1.74, y radius= 1.74]   ;
+%Straight Lines [id:da29067177346887385] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (255.59,233.41) -- (279.13,208.4) ;
+\draw [shift={(281.19,206.21)}, rotate = 133.26] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da5077584687934987] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (334.4,136.6) -- (294.4,106.6) ;
+%Straight Lines [id:da6280064979254578] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=1.5]    (154.4,153.6) -- (234.4,153.6) ;
+\draw [shift={(194.4,153.6)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=1.5]      (0, 0) circle [x radius= 1.74, y radius= 1.74]   ;
+%Straight Lines [id:da1070293344802159] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (204.39,231.01) -- (192.17,169.16) ;
+\draw [shift={(191.59,166.21)}, rotate = 78.83] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (204.2,232.8) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$f'=0$};
+% Text Node
+\draw (263.4,89) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$f( x)$};
+
+
+\end{tikzpicture}
+
+    \caption{Extrema of a single variable function}
+    \label{fig:single var func}
+\end{figure}
+What is important to note is what happens right around these extremal points. If we are right at the point where $f'(0)$, we are of course at a local minimum or maximum of the function. However, if we move left or right by some very small amount -- which we call $\varepsilon$ -- the value of the function stays the same! This should come as no suprise, because $f'(x)$ gives a local value of the tangent of the function. In other words, it gives a linear approximation of the function at that location. As long as $\varepsilon$ remains small, $f(x)$ is perfectly represented by this linear approximation.
+
+Now, we may extend this definition to the more difficult case of the extrema in variational calculus. Instead of adding some small value, we are instead adding some small function. This function is typically denoted $\eta(x)$, and by convention we still multiply $\eta(x)$ by $\varepsilon$ to denote the fact that we are considering very small functions.
+
+In analogy to the single variable case of a minimum, if we have a minimized functional, we can add $\varepsilon\eta(x)$ to $y(x)$ and the value of the functional remains unchanged! We can see this in \autoref{fig:neigh func}.
+
+\begin{figure}[ht]
+    \centering
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Curve Lines [id:da3860827164688039] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (25,214) .. controls (122.59,140.96) and (278.59,220.96) .. (365,124) ;
+\draw [shift={(365,124)}, rotate = 311.71] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+\draw [shift={(25,214)}, rotate = 323.19] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+%Curve Lines [id:da7977961164869156] 
+\draw    (25,214) .. controls (108.39,160.8) and (292.39,197.6) .. (365,124) ;
+\draw [shift={(365,124)}, rotate = 314.61] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+\draw [shift={(25,214)}, rotate = 327.46] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+%Straight Lines [id:da527720029795286] 
+\draw    (423,210) -- (627,210) ;
+\draw [shift={(630,210)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (3.57,-1.72) -- (0,0) -- (3.57,1.72) -- cycle    ;
+\draw [shift={(420,210)}, rotate = 0] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (3.57,-1.72) -- (0,0) -- (3.57,1.72) -- cycle    ;
+%Straight Lines [id:da4291618420656924] 
+\draw    (525,93) -- (525,210) ;
+\draw [shift={(525,90)}, rotate = 90] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (3.57,-1.72) -- (0,0) -- (3.57,1.72) -- cycle    ;
+%Shape: Parabola [id:dp32441741010727465] 
+\draw   (430,100) .. controls (493.33,166.67) and (556.67,166.67) .. (620,100) ;
+
+% Text Node
+\draw (370,112.4) node [anchor=north west][inner sep=0.75pt]    {$y( x)$};
+% Text Node
+\draw (266,176.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$y( x) +\varepsilon \eta ( x)$};
+% Text Node
+\draw (416,89.4) node [anchor=north west][inner sep=0.75pt]    {$J$};
+% Text Node
+\draw (632,199.4) node [anchor=north west][inner sep=0.75pt]    {$\varepsilon $};
+% Text Node
+\draw (525,213.4) node [anchor=north] [inner sep=0.75pt]  [font=\small]  {$0$};
+
+\end{tikzpicture}
+    \caption{Graphical representation of the neighborhood function}
+    \label{fig:neigh func}
+\end{figure}
+
+We can see this playing the same role as it did in the single variable case. As $\varepsilon$ tends to zero, the functional approaches the minimum value (shown in the RHS of \autoref{fig:neigh func})! The calculus of variations has some special terminology to define these properties which we should discuss now. These special values where $J$ is minimized are called \textit{stationary points}. We call them this because of the fact we can add some $\varepsilon\eta(x)$ and they are unchanged! For values that are not the minimum of $J$, this condition does not hold.
+
+Typically we also call $\eta(x)$ the \gls{neigh func}. The function $\eta(x)$ must meet the condition that is has zero value at the endpoints of the integral, $x_1$ and $x_2$. Otherwise, there is no guarantee that $\varepsilon\eta(x)$ will converge to the correct answer! It will also prove useful later when we go to integrate our function.
+
+The \gls{neigh func} proves especially useful because we can use the criteria of a stationary point of $J$ to find solutions of $y(x)$ satisfying this!
+
+We often compactly write $y(x)+\varepsilon\eta(x)$ as $y(\varepsilon,x)$. We define the condition $y(0,x)\equiv y(x)$, where $y(x)$ is the function that gives the extrema of $J$. So, we can write $y(\varepsilon,x)$ as:
 \begin{equation}\label{eq:y epsilon}
     y(\varepsilon,x)=y(0,x)+\varepsilon\eta(x)
 \end{equation}
-The important restriction that we impose on $\eta(x)$ is that it must vanish at the endpoints, $x_1$ and $x_2$. This will prove important later so we can apply integration rules on our function. We also want a continuous first derivative so that $y'(\varepsilon,x)$ can be defined as:
+The other important condition is that both $y(x)$ and $\eta(x)$ must have a continuous first derivative so that $y'(\varepsilon,x)$ can be defined:
 \begin{equation}\label{eq:y prime epsilon}
     y'(\varepsilon,x)=\frac{dy(0,x)}{dx}+\varepsilon\frac{d\eta}{dx}
 \end{equation}
+Now, we have all of the components that we need to evaluate our original equation for $J$ in terms of $y(\varepsilon,x)$.
+
+\subsubsection{Solving for stationary points}
 
 Using this definition of the \gls{neigh func}, we can apply it to \eqautoref{eq:functional} to write the more general form as:
 \begin{equation}\label{eq:neighborhood functional}
     J(\varepsilon)=\int_{x_1}^{x_2}f\left[y(\varepsilon,x),y'(\varepsilon,x);x\right]{dx}
 \end{equation}
-So, with this redefined version of the function, we can finally find the extrema using the familiar calculus rule, setting the derivative equal to zero. We also evaluate at zero since  we defined the extrema to exist at $y(0)$:
+So, with this new version of the function, we can finally find the extrema using the familiar calculus rule, setting the derivative of $J$ equal to zero. We also evaluate this condition $\varepsilon=0$ since we defined the extrema to exist at $y(0)$:
 \begin{equation}
     \left.\frac{\partial J(\varepsilon)}{\partial\varepsilon}\right\vert_{\varepsilon=0}=0
 \end{equation}
@@ -1486,11 +1600,11 @@ Finally, plugging these back into the original expression for \eqautoref{eq:diff
 \begin{equation}\label{eq:diff functional subs}
     \frac{\partial J(\varepsilon)}{\partial\varepsilon}= \int_{x_1}^{x_2}\left(\frac{\partial f}{\partial y}\eta(x)+\frac{\partial f}{\partial y'}\frac{\partial \eta}{\partial x}\right){dx}
 \end{equation}
-Finally, performing some integration by parts, we arrive at the final integral expression of the maximum:
+Finally, performing integration by parts on the RHS to simplify, we arrive at the final integral expression:
 \begin{equation}\label{eq:diff functional final}
     \frac{\partial J(\varepsilon)}{\partial\varepsilon}= \int_{x_1}^{x_2}\left(\frac{\partial f}{\partial y}-\frac{d}{dx}\frac{\partial f}{\partial y'}\right)\eta(x){dx}
 \end{equation}
-Since we are evaluating the maximum, $\frac{\partial J(\varepsilon)}{\partial\varepsilon}$ evaluates to 0. This leaves us with the final form of the expression, which will give us the useful result we have been looking for:
+Since we are evaluating the extrema, $\frac{\partial J(\varepsilon)}{\partial\varepsilon}$ evaluates to 0. This leaves us with the final form of the expression, which will give us the useful result we have been looking for:
 \begin{equation}
     0= \int_{x_1}^{x_2}\left(\frac{\partial f}{\partial y}-\frac{d}{dx}\frac{\partial f}{\partial y'}\right)\eta(x){dx}
 \end{equation}
@@ -1522,6 +1636,10 @@ And thus, \eqautoref{eq: Euler's Diff eq} can be written concisely as:
 \end{equation}
 This is a very general and far reaching conclusion that can be applied to many systems. For our use cases in dynamics, we have more useful forms of this equation which will be explored in the following sections.
 
+\section{Using Variational Calculus}
+A vast majority of the use cases of variational calculus are solving optimization problems. For this purpose, we will use the \gls{Euler Equation} extensively. 
+
+\subsection{Geodesics}
 We will explore a short example of its usefulness here as it relates to problems in geometry - namely of the \glspl{geodesic} of spherical geometries.
 
 \begin{example}[Geodesics of a Sphere]\label{ex:geodesic}
@@ -1593,7 +1711,7 @@ So, it is seen that the value $\theta$, as expected, is constant for a short pat
 One important consequence of this is that a spherical geometry, when looked at `closely' (this is, looking at an infinitesimal portion of the surface) is locally Euclidean! This fact that the geometry looks locally Euclidean will be important in our later discussions in \autoref{chap:lie theory}.
 \end{example}
  
-\section{Revisiting the Brachistochrone}
+\subsection{Revisiting the Brachistochrone}
 
 \begin{example}[Brachistochrone]\label{ex:brachistrochrone}
     Let us return to the example of the \gls{brachistochrone} to demonstrate the usefulness of the calculus of variations in solving  this problem. Of course, we have seen John
@@ -2363,30 +2481,109 @@ Additionally, there is a nice geometrical interpretation that the \gls{Hamiltoni
 
 \section{Derivation of the Hamiltonian}
 
-After doing a few problems with the Lagrangian approach to mechanics, we notice that the $\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{q}_i}\right)$ term results in a second order derivative. If we want to solve this differential equation, then, we need to describe both the $q_i$'s and the $\dot{q}_i$'s. The effective analogy is that we need to know the initial position and velocity in order to integrate our acceleration \gls{eom}. So together, we have $2n$ independent variables that describe the full system motion.
+After doing a few problems with the \gls{Lagrangian} approach to mechanics, we notice that the $\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{q}_i}\right)$ term results in a second order derivative. If we want to solve this differential equation, then, we need to describe both the $q_i$'s and the $\dot{q}_i$'s. The effective analogy is that we need to know the initial position and velocity in order to integrate our acceleration \gls{eom}. So together, we have $2n$ independent variables that describe the full system motion.
 
 What if we could transform one of these coordinates so that we instead have only first order derivatives? Luckily, we can do this! We'll use something called the \textit{Legendre Transform} to do so.
 
+\subsection{The Legendre Transform}
+The Legendre transform is the key mathematical tool that we will need in order to derive the \gls{Hamiltonian}. The Legendre transform is conceptually very simple -- it simply changes the variables we are using the our equation while still maintaining equivalence.
+
+The way the Legendre transform accomplishes this is actually quite simple. There are geometric interpretations, but personally I feel that these geometric interpretations are more confusing than helpful.
+
+It turns out that derivative of a function encodes a lot of information about the function! In fact, given just the derivative of a function, we can fully reconstruct the original function through integration. In fact, this is exactly what we do with numerical integration schemes, which you may read more about in Volume I. The only thing we are missing is some initial condition!
+
+This is the key understanding that we need for the Legendre transform. We have some original function $f$ -- which in our case will be the \gls{Lagrangian} -- which we can transform by considering its derivative as the new input:
+$$f\Rightarrow f^*\left(\frac{df}{dx}\right)$$
+Of course, we also need to describe the initial condition. The Legendre transform does this for every point, by considering where the tangent line, with slope $\frac{df}{dx}$, intersects the origin. This guarantees that every single point has both a defined slope, as well as a defined starting point. To encode the origin intersection point, we take this to be the output of function $f^*$, so that 
+$$f^*\left(\frac{df}{dx}\right)=-b$$
+Where $b$ is the $y$-intercept we are intimately familiar with from algebra. Of course, we want to express $-b$ in terms of $\frac{df}{dx}$, that's what makes a functional expression useful! Here is where a geometric construction may help us. This is shown in \autoref{fig:Legendre}.
+
+\begin{figure}[ht]
+    \centering
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da01484601527940943] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (302,90) -- (302,130) ;
+%Shape: Axis 2D [id:dp9936162466939741] 
+\draw  (170,130.59) -- (350,130.59)(259.99,40) -- (259.99,220) (343,125.59) -- (350,130.59) -- (343,135.59) (254.99,47) -- (259.99,40) -- (264.99,47)  ;
+%Shape: Polynomial [id:dp0478973045554304] 
+\draw  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ] (170.81,180) .. controls (220.54,-4.8) and (270.27,224.8) .. (320,40) ;
+%Straight Lines [id:da9433398230086687] 
+\draw    (260,184) -- (302,90) ;
+\draw [shift={(302,90)}, rotate = 294.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(260,184)}, rotate = 294.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+
+% Text Node
+\draw (241,173.4) node [anchor=north west][inner sep=0.75pt]    {$b$};
+% Text Node
+\draw (311,104.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$f( x)$};
+% Text Node
+\draw (279,144.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,color={rgb, 255:red, 0; green, 0; blue, 0 }  ,opacity=1 ]  {$\frac{df}{dx}$};
+
+
+\end{tikzpicture}
+    \caption{Geometric construction of Legendre Transform}
+    \label{fig:Legendre}
+\end{figure}
+We can see that taking $\frac{df}{dx}$ and multiplying by the distance $x$, we get from point $b$ to $f(x)$. We can represent this as $\frac{df}{dx}x=f(x)-b$.
+
+We know that $f^*\left(\frac{df}{dx}\right)=-b$, so we can rearrange to solve for this in the equation above to get:
+\begin{gather}\label{eq:legendre}
+    \color{blue}\boxed{\color{black}f^*\left(\frac{df}{dx}\right)=\frac{df}{dx}x-f(x)}\\
+    \color{blue}\mathrm{Legendre \ Transform}
+\end{gather}
 \section{What is Momentum?}
+Now that we are equipped with the Legendre transform, we are ready to tackle the \gls{Hamiltonian}. To do so, we will need to define a new quantity, the momentum.
 
-\section{An Analogy With Fluid Dynamics}
-Most aerospace and mechanical engineers have seen fluid dynamics and studied it fairly extensively. As it turns out, there is a beautiful relationship between \gls{Hamiltonian} systems and a fluid dynamics analogy which will be explored in this section.
+Of course, many of us are familiar with the concept of momentum from introductory physics classes, or even higher level classes. Typically, we define the momentum to be $mv$. However, this concept only entails linear momentum! We also have angular momentum, $r\times mv$.
 
-
-
-The derivation of the \gls{Hamiltonian} is achieved using something called the Legendre transform. To understand the derivation of the Hamiltonian system, we need to have a bit of background on the Legendre transform.
-
-\newglossaryentry{gen momenta}
+\newglossaryentry{gen momentum}
 {
-    name=generalized momenta,
-    first = {\textit{generalized momenta}},
-    description={A generalized coordinate that is defined as $\frac{\partial L}{\partial \dot{q}_i}$}
+    name=generalized momentum,
+    first = {\textit{generalized momentum}},
+    plural = {generalized momenta},
+    description={A generalized coordinate that is defined as $\frac{\partial L}{\partial \dot{q}_i}.$ Generalized momentum is mostly used in Hamiltonian mechanics}
 }
 
-The \gls{Hamiltonian} method replaces the generalized velocities with \gls{gen momenta}. The generalized momenta are a function of $q,\dot{q},$ and $t$. We express the \gls{gen momenta} as $p$. $p$ is defined to be:
-$$p(q,\dot{q},t)\equiv\dfrac{\partial L}{\partial \dot{q}_i}$$
-Thus, we express our \gls{Hamiltonian}, $\mathcal{H}$, in terms of the generalized positions, \gls{gen momenta}, and time. This looks like:
-$$\mathcal{H}=\mathcal{H}(q_j,p_j,t)$$
+Furthermore, if you are familiar with quantum mechanics, you likely know that momentum can also be represented as $-i\hbar\frac{\partial}{\partial x}$. We know that the momentum of a relativistic particle is also different, given by $\gamma m_0v$. You may have also heard that photons have momentum. It seems that our notion of momentum of $mv$ is in dire need of a new, more general formulation! Of course, it is okay if you've never seen these representations of momentum before. They are here simply to show that momentum is a concept that is very broad. 
+
+What we hope to accomplish is to capture all of these in a single formula for momentum. As a result, we should define a \textit{generalized momentum}, analogous to what we have done for generalized positions and velocities. 
+
+Of course, this notion of the \gls{gen momentum} is more flexible than the ordinary momentum. To define the \gls{gen momentum}, we can consider the example of a free particle -- that is a particle acted upon by no potentials or forces.
+
+\begin{example}[The Free Particle]
+    The free particle likely has the simplest possible \gls{Lagrangian}. Since there are no potentials involved, we can fully describe the \gls{Lagrangian} of the free particle with $L=T$. Since the object is a point mass particle, the \gls{Lagrangian} is thus $$L=\frac{1}{2}m\dot{x}^2$$
+We can use the Euler-Lagrange equation here to find the equation of motion quite easily. The first term, $\frac{\partial L}{\partial x}$ goes to zero since there is no dependence on $x$. This leaves only the $\frac{d}{dt}\frac{\partial L}{\partial \dot{x}}=0$ term, which must be a constant. Upon evaluation, we have $m\dot{x}=C$, which means that the linear momentum, $m\dot{x}$ is conserved because it is constant! Moreover, it seems we have found a way to get the momentum from the \gls{Lagrangian}!
+\end{example}
+
+As it turns out, the way that we calculated the momentum in the example, as $\frac{\partial L}{\partial \dot{x}}$, is the way that we find the \gls{gen momentum}. We can formalize this for any generalized velocity, as
+\begin{gather}
+    \color{blue}\boxed{\color{black}p_j=\frac{\partial L}{\partial\dot{q}_j}}\\
+    \color{blue}\mathrm{Generalized\ Momentum}
+\end{gather}
+This definition of \gls{gen momentum} is much more powerful than the standard definition that we use. This definition, in fact, solves all of the problems that we listed before. By using the definition with the \gls{Lagrangian}, we are able to solve problems in quantum mechanics, special relativity, and of course, classical mechanics!
+
+Additionally, we can see the presence of a derivative in this definition goes hand in hand with the previously discussed Legendre transform.
+\subsection{From the Lagrangian to the Hamiltonian}
+With the \gls{gen momentum} defined, we are now ready to describe the \gls{Hamiltonian} in full. We will start with the \gls{Lagrangian}, which we can describe very broadly as a function of $q$ and $\dot{q}$:
+$$L(q_j,\dot{q}_j)$$
+Using the Legendre transform, we can transform $\dot{q}$ into a new variable. We replace $f$ with $L$ and $x$ with $\dot{q}$ in \eqautoref{eq:legendre} to get the following:
+$$L^*\left(\frac{\partial L}{\partial \dot{q}_j}\right)=\frac{\partial L}{\partial \dot{q}_j}\dot{q}_j-L$$
+We can recognize that the term $\frac{\partial L}{\partial \dot{q}}$ is the \gls{gen momentum} that we have just described! We can simplify the equation by calling this term $p$. We will also denote $L^*$ as $\mathcal{H}$:
+$$\mathcal{H}(q_j,p_j)=p_j\dot{q}_j-L$$
+We can notice that the expression for the \gls{Hamiltonian} still has $\dot{q}_j$ in it, so we still need an expression for the generalized velocities. However, we no longer need to take the derivative with respect to this term, so we have reduced the order of the differential equation.
+
+\section{The Hamiltonian as Total Energy}
+In the introduction to this section, I mentioned that the \gls{Hamiltonian} has an interpretation as the total energy of the system. This is not always the case, but we can show when this will be true.
+
+Let u
+
+\section{Hamilton's Equations of Motion}
 In a \gls{conservative} system, we can also write: $$\mathcal{H}=T+U$$
 Using relations with the \gls{Lagrangian}, we can write two first order differential equations for the \gls{eom} with the \gls{Hamiltonian}.
 
@@ -2400,13 +2597,18 @@ Using relations with the \gls{Lagrangian}, we can write two first order differen
 }\\
 \color{blue}\mathrm{Hamiltonian \ EOM's}
 \end{gather}
-This is all we will note about \gls{Hamiltonian} Mechanics for now. We will note here that these are more useful in the case of \gls{numerical int} because these are first order differential equations, as opposed to the second order differential equations of \gls{Lagrangian} Mechanics.
 
+
+
+\section{An Analogy With Fluid Dynamics}
+Most aerospace and mechanical engineers have seen fluid dynamics and studied it fairly extensively. As it turns out, there is a beautiful relationship between \gls{Hamiltonian} systems and a fluid dynamics analogy which will be explored in this section.
 
 \section{Ostrogradsky instability}
 Why natural phenomenon are typically of 2nd order
 
 not writing any more rn because I don't know it
+
+This shit too complicated probably
 
 \part{Further Mathematics}
 
@@ -2845,7 +3047,7 @@ As a last step, we can go back and check that $GL$ is closed under the condition
 
 So, we have proven the most general group of $n{\times}n$ invertible matrices, which is called $GL(n)$ for the \textit{general linear group}.
 
-\subsubsection{The role of the determinant}\label{sec:role of the determinant}
+\subsection{The role of the determinant}\label{sec:role of the determinant}
 
 The determinant has a special meaning in linear algebra. It is representative of the scaling of `volume' that is performed under a linear transformation. In the case of a $2{\times}2$ or $3{\times}3$ matrix, this can easily be seen. However, the same is true for any $n{\times}n$ matrix.
 
@@ -2985,13 +3187,11 @@ For a \gls{lie algebra}, we must have the following properties for the Lie brack
 \begin{itemize}
     \item It is bilinear (definition above)
     \item It is alternating, $[x,x]=0 \quad \forall x\in \mathfrak{g}$
-    \item It is skew-symmetric, meaning that $[x,y]=-[y,x] \ \ \forall x\forall y$
+    \item It is skew-symmetric, meaning that $[x,y]=-[y,x] \ \forall x\forall y$
     \item It satisfies the Jacobi Identity, which states that: $[x,[y,z]]+[y,[z,x]]+[z,[x,y]]=0$.
 \end{itemize}
 
-I should note that the property of being alternating and being skew-symmetric are the same. In the future, it will suffice to show only one.
-
-Right now, this definition likely has no meaning to the reader. Let us consider the cross product as an example familiar to the reader:
+I should note that the property of being alternating and being skew-symmetric are the same. In the future, it will suffice to show only one. Right now, this definition likely has no meaning to the reader. Let us consider the cross product as an example familiar to the reader:
 
 \begin{example}[The cross product as a Lie bracket]
     We can start with the properties that we assumed for the \gls{lie algebra}. Taking the Lie bracket operation to be the cross product, that is: $[x,y]=x\times y$, it is easy to show that all of the properties are satisfied.
@@ -3566,7 +3766,7 @@ Given a general function, it is expected that there will likely be multiple mini
 $$\gamma\xrightarrow{T}\gamma'$$
 When we have a continuous symmetry between these two, there is no difference in the action! So $S[\gamma]=S[\gamma']$.
 
-\section{From Complex Numbers to Quaternions: The Cayley-Dickson Construction}
+\section{From Complex Numbers to Quaternions and Beyond: The Cayley-Dickson Construction}
 Prolly not do this lmao. Maybe in Vol II?
 
 \section{The Limitations of Lie Theory}
@@ -4119,39 +4319,63 @@ We can see in \autoref{fig:geometric dot} that we have the geometric representat
 $$\vec{a}\cdot\vec{b}=a_1\hat{e}_1*b_1\hat{e}_1+a_1\hat{e}_1*b_2\hat{e}_2+a_2\hat{e}_2*b_1\hat{e}_1+a_2\hat{e}_2*b_2\hat{e}_2$$
 Using the independence of the basis from before, we can cancel any terms which have $\hat{e}_1*\hat{e}_2$, since we know these two to be orthogonal! Additionally we know that $\hat{e}_1*\hat{e}_1=1$ since $\hat{e}_1$ has a unit length. Thus our dot product is simply 
 $$\vec{a}\cdot\vec{b}=a_1b_1+a_2b_2$$
-We can generalize this statemant past the two dimensional space by realizing that any two indices that are not-equal will be non orthogonal. That is, $\hat{e}_i*\hat{e}_j=0$ for $i\neq j$. We can then define the dot product of two vectors in a finite $n$-dimensional space generally as:
+We can generalize this statement past the two dimensional space by realizing that any two indices that are not-equal will be non orthogonal. That is, $\hat{e}_i*\hat{e}_j=0$ for $i\neq j$. We can then define the dot product of two vectors in a finite $n$-dimensional space generally as:
 $$\vec{a}\cdot \vec{b}=\sum_{k=0}^{n}{a_kb_k}$$
 As we have seen earlier, we can also express this sum more compactly if we consider $\vec{a}$ and $\vec{b}$ to be column vectors. We can write the multiplication as:
-$$\vec{a}^T\vec{b}$$
-Which is an equivalent formulation to the sum.
+$$\vec{a}\cdot \vec{b}=\vec{a}^T\vec{b}$$
+So far, we have discussed inner products as being the same as dot products. In the cases so far, they are in fact identical! However, the inner product is a more broad, all-encompassing definition. For that reason, it is preferable to construct our definitions using the inner product so we can extend them to the cases to come.
 
+\subsubsection{Extension to Complex Numbers}
+The next step is to generalize this to the complex numbers, as we find these to be quite useful in the study of control theory, where analysis in the complex domain is very common. In other words, we are extending our domain from $\mathbb{R}^n$ to $\mathbb{C}^n$.
 
-It will prove useful in the future to be able to extend this definition to complex vectors. In other words, we are extending our domain from $\mathbb{R}^n$ to $\mathbb{C}^n$. Nothing about the inner product changes aside from the fact that we must take the \textit{conjugate} of $b_k$ now, so that:
+A natural way to do this is by considering the equivalent operation of the transpose for complex numbers, which we call the conjugate transpose. Unfortunately, there are many different notations for this, some including $\bar{A}$, $A^*$, and $A^{\dagger}$. Here, I will use $A^*$ notation which has also been used in Volume II. Using this notation, we can denote the inner product of two complex-valued vectors as:
+$$\vec{a}\cdot\vec{b}=\vec{a}^*\vec{b}$$
+We can equivalently write this in the summation notation. For single complex numbers, the conventional notation is to write the conjugate as $\bar{b}$. Some write the conjugate as $b^*$, but to avoid confusing this with the matrix operation of the conjugate transpose, I will use the bar notation instead. As we can see, nothing about the inner product changes aside from the fact that we must take the \textit{conjugate} of $b_k$ now, so that:
 $$\vec{a}\cdot \vec{b}=\sum_{k=0}^{n}{a_k\bar{b}_k}$$
-I have denoted the conjugate of $b$ as $\bar{b}$, although other notations such as $b^*$ are also commonly used. We define the conjugate as follows:
+We define the conjugate of $b$ to have the same real part, $\sigma$, but the imaginary part of the function is negated.
 \begin{equation}
     \begin{split}
         b&=\sigma+i\omega\\
         \bar{b}&=\sigma-i\omega
     \end{split}
 \end{equation}
-\subsection{Complex Numbers}
 
 \subsection{Generalized Inner Product Spaces}
-Now, we can make a generalization. Say we have a continuous function, $f(x)$. We can encode $f(x)$ as a vector by taking a measurement of the value of $f(x)$ at each input $x$. However, we run into a problem, because there are an infinite number of values of $x$! So, to do this, we would need a vector of infinite length.
+Now, we can make a generalization of the inner product. Say we have a continuous function, $f(x)$. We can encode $f(x)$ as a vector by taking a measurement of the value of $f(x)$ at each input $x$. However, we run into a problem, because there are an infinite number of values of $x$! So, to do this, we would need a vector of infinite length.
 
-So, we might try to do this by extending our sum out to infinity. Now our $a$ and $b$ are functions of $t$ since they are continuous in time:
+In this context, how would be take the inner product? We might try to do this by extending our sum out to infinity. Now our $a$ and $b$ are functions of $t$ since they are continuous in time. We may write this as something like:
 $$a(t)\cdot b(t)=\sum_{k=0}^{\infty}{a_kb_k}$$
-In doing so, we must change this infinite sum to an integral to evaluate over the time domain:
-$$a(t)\cdot b(t)=\int_0^\infty{a(t)b(t)}$$
-Now, we have made this a function which can be properly evaluated.
+Since we are summing to infinity, things can get out of control now! If the values of $a$ and $b$ never go to zero, then the sum will go off to infinity and be undefined. This is no good for us -- we want to work with functions that have finite values. One thing that we do is consider a finite interval, $\tau$, which means that we are less restrictive in the selection of functions. So long as a function does not have a value that approaches $\infty$ over the range of $\tau$, then this condition is satisfied. We can mathematically define this condition:
+$$\int_0^\tau{|f(t)|^2}dt<\infty$$
+Mathematicians define a space with these properties as a Lebesgue space. A Lebesgue space may be defined in many ways, but we will stick to a quite simple definition. We will only consider Euclidean geometry, where lengths are given by the familiar Pythagorean distance: $\sqrt{{x_1}^2+{x_2}^2+\dots {x_n}^2}$. We call this way of measuring distance a 2-norm. For a general p-norm, we can define the distance as:
+$$||x||_p=\left({|x_1|}^p+{|x_2|}^p+\dots+{|x_n|}^p\right)^{\frac{1}{p}}$$
+For now, we are only concerned with the case where $p=2$, which we call the Euclidean norm. Sometimes we use other norms, though, so it is good to introduce the general concept here.
 
-We can now return to the example of the exponential functions, $e^{at}$. If we suppose that $a$ can be a complex-valued number, which we call $s$ by convention, we have $e^{st}$. So, we can project our function onto the basis vectors defined by $e^{st}$. Doing so, we have the Laplace Transform:
+All of this formalism leads us to the final important realization, which we call the $L^2$ space -- $L$ for Lebesgue and $2$ for the 2-norm. In an $L^2$ space defined over the range $(0,\tau)$, we write the inner product as:
+$$a(t)\cdot b(t)=\frac{1}{\tau}\int_0^\tau{a(t)\overline{b(t)}}dt$$
+I should note that the addition of $\frac{1}{\tau}$ is not strictly necessary to make this an inner product. Instead, it is there as a `normalization' factor because it is often helpful to include it.
+
+\section{The Laplace Transform}
+We can now return to the example of the exponential functions, $e^{at}$. We have previously seen that these exponential functions are key in describing the solutions to differential equations. To further extend this definition, we can consider values of $a$ which are complex. We generally denote such complex values as $s$, which gives us the general function: $e^{st}$. This function contains all of the possible behaviors of a linear differential equation.
+
+We can show this quite easily by considering the possible cases for a linear differential equation. You may think this an intractable task -- there is no way that we can possibly do every variation! You would be correct, but the property of linearity allows us to combine solutions, so there in fact only a few special cases that we need to consider:
+
+\begin{enumerate}
+    \item $\dot{x}=0$, $\ddot{x}=0$, and so on. 
+    \item $\dot{x}=x$. This of course, is the quite famous result we are all familiar with. The solution to this equation is the exponential function, $x(t)=e^{x}$.
+\end{enumerate}
+
+Because the exponential is so robust, we would find it especially useful to define 
+ 
+ So, we can project our function onto the basis vectors defined by $e^{st}$. Doing so, we have the Laplace Transform:
 \begin{gather}
     \color{blue}\boxed{\color{black}f(t)\cdot e^{st}=\int_0^\infty{f(t)e^{-st}}}\\
     \color{blue}\mathrm{Laplace \ Transform}
 \end{gather}
-The Laplace Transform will prove extraordinarily useful for analyzing \gls{lti} systems.
+The Laplace transform will prove extraordinarily useful for analyzing \gls{lti} systems. We may refer to the Laplace transform of a function $f(t)$ by $\mathcal{L}\left\{f(t)\right\}$. We generally denote this Laplace transform in shorthand as $$\mathcal{L}\left\{f(t)\right\}\Rightarrow F(s)$$
+We note that the Laplace transform has transformed our function from one in the time domain, $t$, to one in the $s$-domain! This $s$-domain has some very unique properties which come as a result of intentionally choosing the exponential function as our basis.
+\subsection{Properties of the Laplace Transofrm}
+
 
 \subsection{The Lebesgue Integral and Measure}
 
@@ -4168,9 +4392,83 @@ For the reader interested in the mathematics behind inner product spaces, I have
 We find that \gls{lti} systems are simplest to describe in the Laplace domain. Luckily, we have developed some background in using \glspl{laplace transform} which will aid us greatly in doing this.
 
 \section{Transfer Functions}
-A \gls{transfer function} is a tool that is used in linear control theory to gain an understanding of the input-output relationship of a system. Given a certain input, the transfer function will tell us what the output will be!
+A \gls{transfer function} is a tool that is used in linear control theory to gain an understanding of the input-output relationship of a system. Given a certain input, the transfer function will tell us what the output will be! This is certainly helpful, as knowing these relationships
 
-In the Laplace domain, this is extremely useful.
+In the time domain, the relationship of the input and the output is quite complicated. To illustrate this complication, we can consider quite a simple system, a mass spring damper.
+\begin{figure}
+    \centering
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Rounded Rect [id:dp5168677792255342] 
+\draw  [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ][fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (135,139) .. controls (135,125.75) and (145.75,115) .. (159,115) -- (231,115) .. controls (244.25,115) and (255,125.75) .. (255,139) -- (255,211) .. controls (255,224.25) and (244.25,235) .. (231,235) -- (159,235) .. controls (145.75,235) and (135,224.25) .. (135,211) -- cycle ;
+%Shape: Spring [id:dp18486661329784781] 
+\draw   (25,175) .. controls (26.25,165) and (30.25,155) .. (38.25,155) .. controls (54.25,155) and (54.25,195) .. (48.25,195) .. controls (42.25,195) and (42.25,155) .. (58.25,155) .. controls (74.25,155) and (74.25,195) .. (68.25,195) .. controls (62.25,195) and (62.25,155) .. (78.25,155) .. controls (94.25,155) and (94.25,195) .. (88.25,195) .. controls (82.25,195) and (82.25,155) .. (98.25,155) .. controls (114.25,155) and (114.25,195) .. (108.25,195) .. controls (102.25,195) and (102.25,155) .. (118.25,155) .. controls (134.25,155) and (134.25,195) .. (128.25,195) .. controls (122.69,195) and (122.28,160.62) .. (135,155.61) ;
+%Straight Lines [id:da48917809963591186] 
+\draw [line width=1.5]    (25,235) -- (325,235) ;
+%Straight Lines [id:da7291657345764276] 
+\draw [line width=1.5]    (25,115) -- (25,235) ;
+%Straight Lines [id:da4196308102124934] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (115,95) -- (193,95) ;
+\draw [shift={(195,95)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+\draw [shift={(115,95)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da21212192554946507] 
+\draw    (25,245) -- (35,235) ;
+%Straight Lines [id:da9226657542524417] 
+\draw    (45,245) -- (55,235) ;
+%Straight Lines [id:da2593857619335517] 
+\draw    (65,245) -- (75,235) ;
+%Straight Lines [id:da5334828257775848] 
+\draw    (85,245) -- (95,235) ;
+%Straight Lines [id:da7393495983147294] 
+\draw    (105,245) -- (115,235) ;
+%Straight Lines [id:da3988704019767332] 
+\draw    (125,245) -- (135,235) ;
+%Straight Lines [id:da6375935074804753] 
+\draw    (145,245) -- (155,235) ;
+%Straight Lines [id:da79860535749578] 
+\draw    (165,245) -- (175,235) ;
+%Straight Lines [id:da15439712897499225] 
+\draw    (185,245) -- (195,235) ;
+%Straight Lines [id:da17824191948109824] 
+\draw    (205,245) -- (215,235) ;
+%Straight Lines [id:da03868402783046454] 
+\draw    (225,245) -- (235,235) ;
+%Straight Lines [id:da18909002386606077] 
+\draw    (245,245) -- (255,235) ;
+%Straight Lines [id:da6264968124144124] 
+\draw    (265,245) -- (275,235) ;
+%Straight Lines [id:da09773507366188205] 
+\draw    (285,245) -- (295,235) ;
+%Straight Lines [id:da11654339563196259] 
+\draw    (305,245) -- (315,235) ;
+%Straight Lines [id:da2977057121918255] 
+\draw    (15,135) -- (25,125) ;
+%Straight Lines [id:da04825267163848812] 
+\draw    (15,155) -- (25,145) ;
+%Straight Lines [id:da2046295008443908] 
+\draw    (15,175) -- (25,165) ;
+%Straight Lines [id:da9074215586396842] 
+\draw    (15,195) -- (25,185) ;
+%Straight Lines [id:da3508149429358898] 
+\draw    (15,215) -- (25,205) ;
+%Straight Lines [id:da19599155440412974] 
+\draw    (15,235) -- (25,225) ;
+% Plotting does not support converting to Tikz
+
+% Text Node
+\draw (152,75) node  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$x$};
+
+\end{tikzpicture}
+
+    \caption{Mass Spring Damper}
+    \label{fig:msd solution}
+\end{figure}
+
 
 \section{Stability}
 
@@ -4184,7 +4482,7 @@ In the Laplace domain, this is extremely useful.
 
 \chapter{Optimal Estimation}
 
-Optimal estimation is a subject that is concerned with finding estimates of some or all of the states in a system. If we have a system output that we measure directly with a sensor, why do we need to estimate it?
+Optimal estimation is a subject that is concerned with finding estimates of some or all of the states in a system in a way that we consider to be optimal. If we have a system output that we measure directly with a sensor, why do we need to estimate it?
 
 There are two main reasons to apply estimation. First, no true sensor is perfect. There are always errors and uncertainties associated with any sensor. Optimal estimation provides us a way to reduce uncertainties in the most optimal way and get better estimates of the true state.
 
@@ -4216,6 +4514,8 @@ Do this shit later lmao
 
 \subsection{The Unscented Kalman Filter}
 
+\chapter{Optimal Control}
+
 
 
 \chapter{The Inverted Pendulum}
@@ -4223,7 +4523,7 @@ Do this shit later lmao
 \chapter{Controls in Aerospace}
 %maybe take out
 
-\chapter{Optimal Control}
+
 
 \chapter{Basics of Non-Linear Control}
 \section{Perturbation Theory}
