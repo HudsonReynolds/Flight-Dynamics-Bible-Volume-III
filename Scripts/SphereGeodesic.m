@@ -68,10 +68,11 @@ view(45,30)
 set(gca,'XColor', 'w','YColor','w', 'ZColor', 'w')
 set(gca, 'color', 'w');
 axis equal
+axis tight
 g = gcf;
 %g.WindowState = 'maximized';
 set(gcf,'Color','w');
-print(gcf,'Geodesic','-dpng','-r600')
-print(gcf,'Geodesic','-svg')
+print(gcf,'Geodesic','-dpng','-r400')
+%print(gcf,'Geodesic','-svg')
 
 
