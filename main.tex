@@ -470,7 +470,6 @@ This book weaves through a course of lots of -- sometimes seemingly unrelated --
 \section*{Acknowledgments}
 \begin{itemize}
 \item I would like to give my deepest appreciation and thanks to Professor Cunningham for his support with each of the volumes of the Flight Dynamics Bible and his support in helping Preston and I. I would also like to thank everyone at JHU APL who has helped me learn so much during my time there in the Summer of 2025. Their support and knowledge has been invaluable and has helped me in innumerable ways. 
-%I want to give special thanks to my mentors, Brian Caskey and Brandon Gray, who were especially helpful.
 \end{itemize}
 
 \chapter*{Notation and Standards}
@@ -837,7 +836,7 @@ Using the established angles $\theta_1$ and $\theta_2$, we can express this rela
 \end{gather}
 We will keep this result in mind, as we will see it again when we solve the problem of the \gls{brachistochrone}.
 
-\subsection{Connection to Quantum Electrodynamics}
+\subsection{Connection to Quantum Electrodynamics}\label{sec: connection to quantum}
 The curious reader may not be fully satisfied with the answer given by Fermat. Why does light take a path that minimizes time? Is there any physical reason for this? In this section we will take a brief aside from the history to answer these questions.
 
 To fully understand this question, we must understand that during Fermat's time there was a rift in the world of physics concerning the behavior of light. Some, such as Newton, believed light to be a particle. Others, led by the prominent dutch mathematician Christaan Huygens, believed that light was a wave.
@@ -1728,11 +1727,11 @@ Use the Euler-Lagrange equation to solve for the form of this curve (You may fin
 
 \chapter{Lagrangian Mechanics}\label{chap:lagrangian}
 
-Energy methods of mechanics employ the concepts of the energy of a system to solve a problem in mechanics. This is in contrast to the Newtonian method, which considers the forces of a system. The good news is that both will result in the same answer (see proof in \autoref{equiv newt and lang}). However, having both in your set of tools as an engineer can prove especially useful.
+Energy methods of mechanics use the energy of a system to determine the \gls{eom} of the system . This is in contrast to the Newtonian method, which considers the forces of a system to produce its \gls{eom}. The good news is that both will result in the same answer (see proof in \autoref{equiv newt and lang}). However, having both in your set of tools as an engineer can prove especially useful.
 
-To grasp energy methods, it is best to have an intuition for Newtonian dynamics first. A thorough reading of Volume I and other sources will help prepare the reader for this section.
+To grasp energy methods, it is best to have an intuition for Newtonian dynamics first. A thorough reading of Volume I and other sources will help prepare the reader for this section. The two are quite different, but the \gls{Lagrangian} formalism deals less with intuition and more with analytical solutions, so having the intuition from the Newtonian approach will be useful.
 
-There are two main types of energy mechanics, referred to as \gls{Hamiltonian} and \gls{Lagrangian} Mechanics. In this chapter, we will mostly focus on the \gls{Lagrangian} version of these mechanics. \gls{Hamiltonian} mechanics will be discussed further in \autoref{chap:hamiltonian}.
+There are two main types of energy mechanics, referred to as \gls{Hamiltonian} and \gls{Lagrangian} Mechanics. In this chapter, we will mostly focus on the \gls{Lagrangian} version of these mechanics. \gls{Hamiltonian} mechanics will be discussed further in \autoref{chap:hamiltonian}. Both approaches use energy, but have some distinct differences in implementation. Generally, the \gls{Lagrangian} approach is more suited to solving problems in classical dynamics, so we will start with this approach.
 
 \newglossaryentry{symplectic int}
 {
@@ -1743,7 +1742,7 @@ There are two main types of energy mechanics, referred to as \gls{Hamiltonian} a
 
 Although the \gls{Hamiltonian} and \gls{Lagrangian} are not directly used in the case of our 6-\gls{dof}, they are fundamental to other areas of mechanics and make derivations far simpler in many cases. The \gls{Hamiltonian} and \gls{Lagrangian} descriptions of mechanics are more often taught to physics students rather than engineers, but we feel that they deserve inclusion among the topics presented here. When we discuss \gls{numerical int}, we can use \glspl{symplectic int} when our problem has a \gls{Hamiltonian} description. This will be further discussed in \autoref{sec: Syplectic Ints}. You may find that certain \gls{eom} derivations, such as the spinning top and problems in orbital mechanics are more easily accomplished with energy methods.
 
-Another reason to motivate these systems is that these energy methods are rotationally invariant because energy methods can employ a generalized coordinate system. These generalized coordinates are very powerful and allow us to describe a huge variety of systems. We will see this later in some examples.
+Another reason to motivate these systems is that these energy methods are invariant to transformations such as rotations. This occurs because energy methods employ a generalized coordinate system. These generalized coordinates are very powerful and allow us to describe a huge variety of systems. We will see this later in some examples.
 
 A brief overview of the differences between the two schemes of \gls{eom} derivation is shown in \autoref{fig:newt v lang}
 
@@ -2326,7 +2325,14 @@ We can perform the analogous analysis for the other axes, yielding the full set 
 \subsection{Forced Euler Rigid Body Dynamics}
 
 \section{From Quantum to Lagrangian Mechanics}
-% maybe here, maybe at the beginning
+Taking inspiration from \autoref{sec: connection to quantum} where I showed the connection between the principle of least time and the quantum formulation of the phenomenon, can we find a similar underlying principle for all of classical mechanics?
+
+Luckily, we can! This section will tackle the formalization of the topics discussed in \autoref{sec: connection to quantum} and extend them to the case far beyond the paths of light rays. A great video explanation, much of which is discussed here, is found in \cite{physics_with_elliot_how_2023}.
+
+Having started our study of classical mechanics, we now know that the same underlying principle dictates the motion of both light and classical behaviors -- the minimization of action. 
+
+For light, we could quite intuitively understand how this principle emerges using the phase of the light. For typical particles and rigid bodies, we can't measure a phase. Therefore, we need an approach that encompasses both phenomenon.
+
 
  \section{An Intuitive Approach to Hamilton's Principle}
 
@@ -3946,9 +3952,7 @@ In this book, we will only dip our toes into the deep pool of modern physics and
 
 
 \part{Control Theory}\label{part:control theory}
-\begin{chapquote}{Yo-Yo Ma}
-``The worst thing you can do is say to yourself, `I want to be just like somebody else.' You have to absorb knowledge from someone else, but ultimately you have to find your own voice.''
-\end{chapquote}
+
 
 \newpage
 \chapter*{Control Theory Overview}
@@ -4373,8 +4377,8 @@ Because the exponential is so robust, we would find it especially useful to defi
     \color{blue}\mathrm{Laplace \ Transform}
 \end{gather}
 The Laplace transform will prove extraordinarily useful for analyzing \gls{lti} systems. We may refer to the Laplace transform of a function $f(t)$ by $\mathcal{L}\left\{f(t)\right\}$. We generally denote this Laplace transform in shorthand as $$\mathcal{L}\left\{f(t)\right\}\Rightarrow F(s)$$
-We note that the Laplace transform has transformed our function from one in the time domain, $t$, to one in the $s$-domain! This $s$-domain has some very unique properties which come as a result of intentionally choosing the exponential function as our basis.
-\subsection{Properties of the Laplace Transofrm}
+It is typical to denote the transformation both by a chance of variable from $t$ to $s$ as well as from a lowercase function, such as $f$, to an upper case one, $F$. I note that the Laplace transform has transformed our function from one in the time domain, $t$, to one in the $s$-domain! This $s$-domain has some very unique properties which come as a result of intentionally choosing the exponential function as our basis. The properties important to our study of control theory will be explored in the following section.
+\subsection{Properties of the Laplace Transform}\label{sec:properties of laplace transform}
 
 
 \subsection{The Lebesgue Integral and Measure}
@@ -4392,85 +4396,65 @@ For the reader interested in the mathematics behind inner product spaces, I have
 We find that \gls{lti} systems are simplest to describe in the Laplace domain. Luckily, we have developed some background in using \glspl{laplace transform} which will aid us greatly in doing this.
 
 \section{Transfer Functions}
-A \gls{transfer function} is a tool that is used in linear control theory to gain an understanding of the input-output relationship of a system. Given a certain input, the transfer function will tell us what the output will be! This is certainly helpful, as knowing these relationships
+A \gls{transfer function} is a tool that is used in linear control theory to gain an understanding of the input-output relationship of a system. Given a certain input, the transfer function will tell us what the output will be!
 
 In the time domain, the relationship of the input and the output is quite complicated. To illustrate this complication, we can consider quite a simple system, a mass spring damper.
 \begin{figure}
     \centering
 
+\includesvg[width=\linewidth]{Images/MSD Time History.svg}
 
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
-
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
-
-%Rounded Rect [id:dp5168677792255342] 
-\draw  [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ][fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=1 ] (135,139) .. controls (135,125.75) and (145.75,115) .. (159,115) -- (231,115) .. controls (244.25,115) and (255,125.75) .. (255,139) -- (255,211) .. controls (255,224.25) and (244.25,235) .. (231,235) -- (159,235) .. controls (145.75,235) and (135,224.25) .. (135,211) -- cycle ;
-%Shape: Spring [id:dp18486661329784781] 
-\draw   (25,175) .. controls (26.25,165) and (30.25,155) .. (38.25,155) .. controls (54.25,155) and (54.25,195) .. (48.25,195) .. controls (42.25,195) and (42.25,155) .. (58.25,155) .. controls (74.25,155) and (74.25,195) .. (68.25,195) .. controls (62.25,195) and (62.25,155) .. (78.25,155) .. controls (94.25,155) and (94.25,195) .. (88.25,195) .. controls (82.25,195) and (82.25,155) .. (98.25,155) .. controls (114.25,155) and (114.25,195) .. (108.25,195) .. controls (102.25,195) and (102.25,155) .. (118.25,155) .. controls (134.25,155) and (134.25,195) .. (128.25,195) .. controls (122.69,195) and (122.28,160.62) .. (135,155.61) ;
-%Straight Lines [id:da48917809963591186] 
-\draw [line width=1.5]    (25,235) -- (325,235) ;
-%Straight Lines [id:da7291657345764276] 
-\draw [line width=1.5]    (25,115) -- (25,235) ;
-%Straight Lines [id:da4196308102124934] 
-\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (115,95) -- (193,95) ;
-\draw [shift={(195,95)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-\draw [shift={(115,95)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)   ;
-%Straight Lines [id:da21212192554946507] 
-\draw    (25,245) -- (35,235) ;
-%Straight Lines [id:da9226657542524417] 
-\draw    (45,245) -- (55,235) ;
-%Straight Lines [id:da2593857619335517] 
-\draw    (65,245) -- (75,235) ;
-%Straight Lines [id:da5334828257775848] 
-\draw    (85,245) -- (95,235) ;
-%Straight Lines [id:da7393495983147294] 
-\draw    (105,245) -- (115,235) ;
-%Straight Lines [id:da3988704019767332] 
-\draw    (125,245) -- (135,235) ;
-%Straight Lines [id:da6375935074804753] 
-\draw    (145,245) -- (155,235) ;
-%Straight Lines [id:da79860535749578] 
-\draw    (165,245) -- (175,235) ;
-%Straight Lines [id:da15439712897499225] 
-\draw    (185,245) -- (195,235) ;
-%Straight Lines [id:da17824191948109824] 
-\draw    (205,245) -- (215,235) ;
-%Straight Lines [id:da03868402783046454] 
-\draw    (225,245) -- (235,235) ;
-%Straight Lines [id:da18909002386606077] 
-\draw    (245,245) -- (255,235) ;
-%Straight Lines [id:da6264968124144124] 
-\draw    (265,245) -- (275,235) ;
-%Straight Lines [id:da09773507366188205] 
-\draw    (285,245) -- (295,235) ;
-%Straight Lines [id:da11654339563196259] 
-\draw    (305,245) -- (315,235) ;
-%Straight Lines [id:da2977057121918255] 
-\draw    (15,135) -- (25,125) ;
-%Straight Lines [id:da04825267163848812] 
-\draw    (15,155) -- (25,145) ;
-%Straight Lines [id:da2046295008443908] 
-\draw    (15,175) -- (25,165) ;
-%Straight Lines [id:da9074215586396842] 
-\draw    (15,195) -- (25,185) ;
-%Straight Lines [id:da3508149429358898] 
-\draw    (15,215) -- (25,205) ;
-%Straight Lines [id:da19599155440412974] 
-\draw    (15,235) -- (25,225) ;
-% Plotting does not support converting to Tikz
-
-% Text Node
-\draw (152,75) node  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$x$};
-
-\end{tikzpicture}
-
-    \caption{Mass Spring Damper}
+    \caption{Mass Spring Damper Time History}
     \label{fig:msd solution}
 \end{figure}
+The time history of the oscillation is shown on the right of \autoref{fig:msd solution}. If we want to know the transfer function at time $A$, it is quite hard to do! We would need information about all of the dynamics leading up to that event to understand the current system dynamics at point $A$. That is, even if we can measure the position at $A$, we don't have any information about the velocity or acceleration unless we have already been watching the system!
+
+One way to express this mathematically is with an operation called the convolution. We want to understand the input-output relationship of the force and the displacement of the mass. We describe the force input as $u(t)$ and the displacement output as $y(t)$. We should look for some intermediate function, $g(t)$, which maps $u(t)$ to $y(t)$. We can write this relationship as:
+$$u(t)*g(t)=y(t)$$
+We can say that at point $A$, the current time is given as $\tau$. To find the relationship between $u(t)$ and $y(t)$, we have to consider all times prior to this time, $\tau$, which have influenced the dynamics!
+
+To do this, we construct an integral over the interval from $0$ to $t$ (if we are to consider $t=0$ as the start of the dynamics). Then, the impact of each time \textit{before} the current time $\tau$ must be considered! This gives the integral:
+$$y(t)=(u*g)(t)=\int_0^tu(\tau)g(t-\tau)d\tau$$
+
+\subsubsection{Transfer Functions in the Laplace Domain}
+We have seen that the the description of the input-output relationship in the time domain is quite complex. As a result, it is a good idea to try and express this relationship in the Laplace domain instead.
+
+We can express the convolution with the Laplace integral as 
+$$\mathcal{L}\{(u*g)(t)\}=\int_0^\infty{\left(\int_0^\infty{}u(\tau)g(t-\tau)d\tau\right)}e^{-st}dt$$
+We can perform a substitution with $\sigma=t-\tau$, which simplifies the integral to:
+$$\mathcal{L}\{(u*g)(t)\}=\int_0^\infty{\left(\int_0^\infty{}u(\tau)g(\sigma)d\tau\right)}e^{-s(\sigma+\tau)}d\sigma$$
+Since $\tau$ is a constant, we can see that $dt=d\sigma$. This allows us to separate the integral into two components:
+$$\mathcal{L}\{(u*g)(t)\}=\int_0^\infty g(\sigma)e^{-s\sigma}d\sigma{\int_0^\infty{}u(\tau)e^{-s\tau}}d\tau$$
+We can see that these two integrations are simply the integrals for the Laplace transform of $g$ and $u$! This gives us the very important result that:
+$$\mathcal{L}\{(u*g)(t)\}=U(s)G(s)$$
+The result of this is that we can write the input output relationships in the Laplace domain very simply -- it is simply a multiplication. Considering our original function:
+$$u(t)*g(t)=y(t)$$
+We can rewrite this in the Laplace domain:
+$$U(s)G(s)=Y(s)$$
+Since we have turned this complicated formula of the convolution into multiplication, it is now trivial to find the transfer function, $G(s)$ through simple manipulation of the equation:
+$$G(s)=\frac{Y(s)}{U(s)}$$
+
+\subsubsection{Why does this work?}
+Although I have shown the mathematics which show that the convolution reduces to multiplication in the Laplace domain, I find it quite helpful to examine why this holds from a physical point of view.
+
+We can remember from \autoref{sec:properties of laplace transform} that the Laplace transform gives us quite simple representations of derivatives and integrals as multiplication and division by $s$. As a result, we can quite easily express equations of motion in the Laplace domain. For example, we can consider the \gls{eom} for a mass spring damper:
+$$m\ddot{y}(t)+c\dot{y}(t)+ky(t)=u(t)$$
+Expressed in the Laplace domain (assuming that the initial conditions are $0$, which is the usual condition for transfer functions):
+$$Y(s)\left[ms^2+cs+k\right]=U(s)$$
+It is in this equation that the insight behind the Laplace transform can be discovered. If we compare to the previous example, we had $Y(s)G(s)=U(s)$. It is exactly the \gls{eom} of the system that determines the input and output mapping!
+
+So, we can see that in the Laplace domain, all of the information of the system dynamics is directly captured in the transfer function. We can therefore, know what the position, velocity, or acceleration are for any value $s$. The tradeoff, of course, is that we lose information on the temporal component, $t$, during the transformation. However, we still find it extremely useful to have this `global view' of the function in the Laplace domain! When we need to consider the temporal aspects of the system, we can either revert to the time domain or use some other tools to understand the temporal nature of the transfer function.
+
+\subsection{The Impulse Response}
+
 
 
 \section{Stability}
+One key criteria in control theory is studying the stability of a system. Simply stated, the stability of a system describes the tendency of a system to either return to an equilibrium position. Systems that are stable tend to return to equilibrium, and those that are unstable tend to grow in magnitude. The main objective of control theory is to build a controller, typically denoted $u$, which can either enhance the stability of a system or turn an unstable system into one that is stable.
+
+In control theory, there are several notions of stability. As you become more advanced in your studies, different notions of stability will become important in different contexts. However, we should establish a baseline notion of stability for linear systems.
+
+
 
 
 \section{Bode Plots}
@@ -4481,7 +4465,6 @@ In the time domain, the relationship of the input and the output is quite compli
 
 
 \chapter{Optimal Estimation}
-
 Optimal estimation is a subject that is concerned with finding estimates of some or all of the states in a system in a way that we consider to be optimal. If we have a system output that we measure directly with a sensor, why do we need to estimate it?
 
 There are two main reasons to apply estimation. First, no true sensor is perfect. There are always errors and uncertainties associated with any sensor. Optimal estimation provides us a way to reduce uncertainties in the most optimal way and get better estimates of the true state.
@@ -4515,10 +4498,12 @@ Do this shit later lmao
 \subsection{The Unscented Kalman Filter}
 
 \chapter{Optimal Control}
+After our discussion on optimal estimation, we are only a short distance from developing a good theory of optimal control.
 
 
 
 \chapter{The Inverted Pendulum}
+
 
 \chapter{Controls in Aerospace}
 %maybe take out
@@ -4535,9 +4520,18 @@ Do this shit later lmao
 \chapter{Flight Dynamics and Control}
 
 \newpage
-And so, you have finished all three volumes of the Flight Dynamics Bible! Preston and I hope that this series has been beneficial to you and furthered your knowledge of flight dynamics and control. Of course, this reading is only the beginning of your journey. From here, there are many avenues that you can explore - be that \gls{gnc}, avionics systems, physics, or otherwise. 
+\chapter*{The End!}
+And so, you have finished all three volumes of the Flight Dynamics Bible! This is quite the accomplishment. Over the course of three volumes, you have read over 500 pages of content, representing over 80,000 words and 2,500 equations.
 
-If you have any suggestions for improvements to these books, please message me on slack @HudsonReynolds or reach out by email at HudsonJ.Reynolds@gmail.com
+Preston and I hope that this series has been beneficial to you and furthered your knowledge of flight dynamics and all other subject enclosed. Of course, this reading is only the beginning of your journey. From here, there are many avenues that you can explore - be that \gls{gnc}, avionics, robotics, physics, or otherwise.
+
+My hope is that the reader have derived from these books some useful intuition for these complex topics and are inspired to further research. There is a vast amount of knowledge to be gained, and so much fundamental beauty in studying the math and physics of the natural world. I will leave you with one final quote as you continue your journey. 
+
+\begin{chapquote}{Yo-Yo Ma}
+``The worst thing you can do is say to yourself, `I want to be just like somebody else.' You have to absorb knowledge from someone else, but ultimately you have to find your own voice.''
+\end{chapquote}
+
+If you have any suggestions for improvements to these books, please message me on slack @HudsonReynolds or reach out by email at HudsonJ.Reynolds@gmail.com. Thank you for reading.
 
 \chapter{Appendix}
 
