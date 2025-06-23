@@ -1740,24 +1740,25 @@ There are two main types of energy mechanics, referred to as \gls{Hamiltonian} a
     description={A class of numerical integration schemes that are energy preserving because they preserve certain geometric properties of a differential equation}
 }
 
-Although the \gls{Hamiltonian} and \gls{Lagrangian} are not directly used in the case of our 6-\gls{dof}, they are fundamental to other areas of mechanics and make derivations far simpler in many cases. The \gls{Hamiltonian} and \gls{Lagrangian} descriptions of mechanics are more often taught to physics students rather than engineers, but we feel that they deserve inclusion among the topics presented here. When we discuss \gls{numerical int}, we can use \glspl{symplectic int} when our problem has a \gls{Hamiltonian} description. This will be further discussed in \autoref{sec: Syplectic Ints}. You may find that certain \gls{eom} derivations, such as the spinning top and problems in orbital mechanics are more easily accomplished with energy methods.
+Although the \gls{Hamiltonian} and \gls{Lagrangian} are not directly used in the case of our 6-\gls{dof}, they are fundamental to other areas of mechanics and make derivations far simpler in many cases. The \gls{Hamiltonian} and \gls{Lagrangian} descriptions of mechanics are more often taught to physics students rather than engineers, but we feel that they deserve inclusion among the topics presented here. For the reader interested in applications in robotics, energy mechanics has a vast number of applications.
 
-Another reason to motivate these systems is that these energy methods are invariant to transformations such as rotations. This occurs because energy methods employ a generalized coordinate system. These generalized coordinates are very powerful and allow us to describe a huge variety of systems. We will see this later in some examples.
+When we discuss \gls{numerical int}, we can use \glspl{symplectic int} when our problem has a \gls{Hamiltonian} description. This will be further discussed in \autoref{sec: Syplectic Ints}. You may find that certain \gls{eom} derivations, such as the spinning top and problems in orbital mechanics are more easily accomplished with energy methods. Another reason to motivate these systems is that these energy methods are invariant to transformations such as rotations. This occurs because energy methods employ a generalized coordinate system. These generalized coordinates are very powerful and allow us to describe a huge variety of systems. We will see this later in some examples.
 
-A brief overview of the differences between the two schemes of \gls{eom} derivation is shown in \autoref{fig:newt v lang}
+A brief overview of the differences between the two schemes of \gls{eom} derivation is shown in \autoref{fig:newt v lang}. As can be seen from the figure, the underlying governing mechanics are no different, but the way in which we arrive at the \gls{eom} is completely different. Knowing this, we can begin our dive into \gls{Lagrangian} mechanics.
 
 \begin{figure}[ht]
     \centering
     
-\includegraphics[width=\linewidth]{Images/diagram-20250322.png}
+\includesvg[width=.6\linewidth]{Images/NewtonianLagrangian}
 
     \caption{Newtonian vs. Lagrangian Mechanics Approach}
     \label{fig:newt v lang}
 \end{figure}
 
 \section{Hamilton's Principle}
+The basis of \gls{Lagrangian} mechanics is Hamilton's Principle. Similar to Fermat's principle of least time, Hamilton's principle states that a quantity called the \gls{action} must be minimized.
 
-Following directly from the ideas of the calculus of variations, Hamilton (alongside many other mathematicians) wanted to apply this to physical systems. Hamilton's Principle is as follows:
+Although we may not have a physical intuition of why this is true right now (that will come later), it proves to be especially useful. Additionally, these ideas follow direction from the calculus of variations! Hamilton (alongside some others) formulated a definition of this principle that describes all physical systems. Hamilton's Principle is as follows:
 \begin{theorem}[Hamilton's Principle]
 In a conservative system which may travel from one point to another within a specific time interval, the path that is followed is the path which minimizes the time integral of the difference between the kinetic and potential energies.
 $$\delta \int_{t_1}^{t_2}{T-U}{dt}=0$$
@@ -1767,7 +1768,14 @@ The quantity $T-U$, the kinetic energy minus the potential energy, is a quantity
 \begin{equation}
     L\equiv T-U
 \end{equation}
+The \gls{Lagrangian} typically has no physical meaning. Instead, we simply choose a \gls{Lagrangian} such that the laws of mechanics work. The reason for the negative sign on the potential, $U$, can be seen in the derivation in \autoref{equiv newt and lang}. In short, the negative must be present so that the \gls{Lagrangian} matches the Newtonian description.
 
+Before we get too ahead of ourselves, though, we should investigate this integral a bit further. We can notice that the form of the integral is quite similar to the equations we have seen in the calculus of variations.
+
+In fact, we can notice that the potential energy, generally, is a function of the position, $y$, and the kinetic energy is a function of $y'$ -- the time derivative of the position.
+
+As a result, we can write our \gls{Lagrangian} quite generally as:
+$$\int_{t_1}^{t_2}f(y,y'$$
 \newglossaryentry{action}
 {
     name=action,
@@ -1790,6 +1798,7 @@ The time integral of the \gls{Lagrangian} is the \gls{action}, denoted $S$. This
 \end{equation}
 So, our \gls{action} takes the form of the \gls{functional} from the calculus of variations. From Hamilton's principle, this \gls{functional}, the \gls{action}, must be minimized. So, we often see the compact form of Hamilton's Principle as:
 $$\delta S=0$$
+We know from our previous studies that the extremal conditions of a functional can be found using the \gls{Euler Equation}.
 
 \newglossaryentry{euler lagrange}
 {
