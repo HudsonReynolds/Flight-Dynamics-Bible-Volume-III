@@ -451,19 +451,31 @@
     see={lie theory, lie group, lie algebra}
 }
 
+\newglossaryentry{action}
+{
+    name=action,
+    first = {\textit{action}},
+    description={The time integral of energy is known as the action, which is often denoted $S$}
+}
+
+\newglossaryentry{conservative}
+{
+    name=conservative,
+    first = {\textit{conservative}},
+    description={A system or potential which is independent of the path. A closed integral in a conservative field is 0}
+}
+
 \newacronym{gnc}{GNC}{Guidance, Navigation, and Control}
 \chapter*{Preface}\label{sec:preface}
-I begin working on this document after the release of Volume I of the Flight Dynamics Bible. In that edition, we present a brief overview of energy mechanics. In that exploration of energy mechanics, I gained a great appreciation of the subject and began work on this text shortly thereafter. As in the first volume, I hope this document can provide all of the basic concepts of energy mechanics and control theory in their application to aerospace engineering in a single place. My goal with this book is to provide a feel for concepts and practical ways of solving them, while still remaining quite rigorous. My hope here is to present these ideas and ways of solving them with only the minimal background need.
+I begin working on this document after the release of Volume I of the Flight Dynamics Bible. In that volume, I present a brief overview of energy mechanics. In that exploration of energy mechanics, I gained a great appreciation of the subject and began work on this text shortly thereafter. As in the first volume, I hope this document can provide all of the basic concepts of energy mechanics and control theory in their application to aerospace engineering in a single place. My goal with this book is to provide a feel for concepts and practical ways of solving them, while still remaining quite rigorous in a way that will allow the readers to reference this text even as they become quite advanced in their coursework. My hope here is to present these ideas and ways of solving them with only the minimal background need.
 
 Furthermore, I hope that this edition can provide a bridge between the realms of Newtonian dynamics and energy methods in greater detail than in the first volume.
 
 As with the first volume, we will be using excerpts of MATLAB script in some examples (code less than a page is included inline, and longer code is in the appendix) but our hope is that our explanations are thorough enough to facilitate the creation of code in any coding language. MATLAB is the language of choice for this document.
 
-As a note, while our work on flight dynamics has mainly focused on modeling rockets, we hope that this document can be used more widely in a variety of applications pertaining to energy mechanics and controls. As such, we have attempted to include content that is useful for other systems, such as orbital dynamics and physics systems, insofar as I have experience in these areas. 
+As a note, while our work on flight dynamics has mainly focused on modeling rockets, we hope that this document can be used more widely in a variety of applications pertaining to energy mechanics and controls. As such, we have attempted to include content that is useful for other systems, such as orbital dynamics and physics systems, insofar as I have experience in these areas. Because most of my experience lies in rocket modeling, I explore some of these concepts in the context of rocket modeling and 6-\gls{dof} creation.
 
-Because most of my experience lies in rocket modeling, I explore some of these concepts in the context of rocket modeling and 6-\gls{dof} creation.
-
-New to this volume, I include a separate notational overview and outline for each section. While the subjects discussed are closely related, notational differences arise that are large enough that notation guide and overview for each section is necessitated. Additionally, I have tried to keep the sections separated enough that a reader interested in only one half will not feel lost. Of course, reading all of the sections will provide the most insight and benefit to the reader.
+New to this volume, I include a separate notational overview and outline for each section. While the subjects discussed are closely related, notational differences arise that are large enough that notation guide and overview for each section is necessitated. Additionally, I have tried to keep the sections separated enough that a reader interested in only one section will not feel lost. Of course, reading all of the sections will provide the most insight and benefit to the reader. Sections with large overlap with previous content have been noted throughout the text.
 
 This book weaves through a course of lots of -- sometimes seemingly unrelated -- material. However, my hope is that I have tied together some apparently unrelated concepts in a way that helps to display the beautiful and deep mathematical connections shared between these subjects. I hope I can inspire at least some readers to find a subject they are passionate about in the course of reading this book.
 
@@ -582,14 +594,17 @@ $$\begin{array}{lll}
 \section*{Controls Notation}
 \subsection*{Vectors and Matrices}
 $$\begin{array}{ll}
-      \vec{X}& \mathrm{state\ vector}\\
+      {x}& \mathrm{state\ vector}\\
       A & \mathrm{state \ matrix}\\
       B & \mathrm{input\ vector}\\
       C & \mathrm{observation\ matrix}\\
       D & \mathrm{feedthrough\ matrix}\\
       \Phi & \mathrm{state\ transition \ matrix}\\
       P & \mathrm{covariance\ matrix}\\
+      u& \mathrm{force \ input} 
 \end{array}$$
+
+
 
 \subsection*{Scalar Quantities and Symbols}
 $$\begin{array}{ll}
@@ -662,6 +677,9 @@ Examining the proceedings of physics in the 20th century, we see this become inc
 It is with this background that we motivate the study of energy mechanics. This subject gives us the key understanding needed to examine subjects from the smallest to the largest scales of the universe.
 
 \chapter{Historical Background }
+
+\color{red} Finish this section by improving some of the things with the brachistrochrone at the end.
+\color{black}
 
 In this chapter, I cover a brief history of the early years of energy mechanics. I will mostly cover the main figures and ideas that are instrumental to our study of energy mechanics. These main figures include Isaac Newton, Pierre de Fermat, and Johann Bernoulli.
 
@@ -1416,6 +1434,9 @@ It is at this point that we have sufficient background to understand the work th
 
 \chapter{Calculus of Variations}\label{chap:calculus of variations}
 
+\color{red} This chapter needs to be expanded quite a bit, it is definitely lacking in the current state. Maybe include Lagrangian multipliers and problems of the 1st and 2nd variation. Finish the brachistochrone derivation. 
+\color{black}
+
 \begin{chapquote}{Richard Feynman}
  ''Nature uses only the longest threads to weave her patterns, so that each small piece of her fabric reveals the organization of the entire tapestry.''
 \end{chapquote}
@@ -1696,7 +1717,7 @@ A MATLAB Script which shows such \glspl{geodesic} is included in the Appendix in
 
 \begin{figure}[H]
     \centering
-    \includesvg[width=\linewidth]{Scripts/Geodesic.svg}
+    \includegraphics[width=.75\linewidth]{Scripts/Geodesic.png}
     \caption{Geodesic shown on the Earth}
     \label{fig:Geodesic}
 \end{figure}
@@ -1726,6 +1747,10 @@ Use the Euler-Lagrange equation to solve for the form of this curve (You may fin
 \end{example}
 
 \chapter{Lagrangian Mechanics}\label{chap:lagrangian}
+
+\color{red} This chapter needs a large amount of work still. Need to finish reading through Goldstein and include neccesary information from there. Include generalized forces, lagrangian multipliers, improve non-holonomic constraints, write the quantuam to lagrangian section, and write some good practice problems.
+
+\color{black}
 
 Energy methods of mechanics use the energy of a system to determine the \gls{eom} of the system . This is in contrast to the Newtonian method, which considers the forces of a system to produce its \gls{eom}. The good news is that both will result in the same answer (see proof in \autoref{equiv newt and lang}). However, having both in your set of tools as an engineer can prove especially useful.
 
@@ -1772,16 +1797,9 @@ The \gls{Lagrangian} typically has no physical meaning. Instead, we simply choos
 
 Before we get too ahead of ourselves, though, we should investigate this integral a bit further. We can notice that the form of the integral is quite similar to the equations we have seen in the calculus of variations.
 
-In fact, we can notice that the potential energy, generally, is a function of the position, $y$, and the kinetic energy is a function of $y'$ -- the time derivative of the position.
-
-As a result, we can write our \gls{Lagrangian} quite generally as:
-$$\int_{t_1}^{t_2}f(y,y'$$
-\newglossaryentry{action}
-{
-    name=action,
-    first = {\textit{action}},
-    description={The time integral of energy is known as the action, which is often denoted $S$}
-}
+In fact, we can notice that the potential energy, generally, is a function of the position, $y$, and the kinetic energy is a function of $y'$ -- the time derivative of the position. As a result, we can write our \gls{Lagrangian} quite generally as:
+$$\int_{t_1}^{t_2}f[y(x),y(x)';x]dx$$
+This of course, matches the definition for the functional that we described in \autoref{chap:calculus of variations}.
 
 \newglossaryentry{princ of least action}
 {
@@ -1790,9 +1808,7 @@ $$\int_{t_1}^{t_2}f(y,y'$$
     description={A form of Hamilton's Principle that states that the action of a system should be minimized in a physical mechanical system},
     see={action}
 }
-
-The time integral of the \gls{Lagrangian} is the \gls{action}, denoted $S$. This is often why Hamilton's Principle is also called the \gls{princ of least action}. 
-
+In the case of \gls{Lagrangian} mechanics, the functional is called the \gls{action}, denoted $S$. This is often why Hamilton's Principle is also called the \gls{princ of least action}.  We can thus equivalently write the integral as:
 \begin{equation}
     S=\int_{t_1}^{t_2}{L}{dt}
 \end{equation}
@@ -1808,26 +1824,25 @@ We know from our previous studies that the extremal conditions of a functional c
     see={action}
 }
 
-Expressed using Euler's differential equation, \eqautoref{eq: Euler's Diff eq}, we get the \glspl{euler lagrange}:
+Substituting in the variables that we use for the \gls{Lagrangian}, we have the \glspl{euler lagrange}, which is used to find the extremal solutions:
 \begin{gather}\label{eq: Euler-Lagrange}
     \color{blue}\boxed{\color{black}\frac{\partial L}{\partial x_i}-\frac{d}{dt}\frac{\partial L}{\partial \dot{x}_i}=0}\\ \mathrm{\color{blue}Euler-Lagrange \ Equations}
 \end{gather}
-Before we look into some examples of how to utilize these equations in practice, we should consider in what situations these will be better than the Newtonian methods.
+Hamilton's Principle then states that the solutions to this \gls{euler lagrange} are the \gls{eom} of the system!
 
-\newglossaryentry{conservative}
-{
-    name=conservative,
-    first = {\textit{conservative}},
-    description={A system or potential which is independent of the path. A closed integral in a conservative field is 0}
-}
+There is one small part of the principle that I glossed over during the derivation; the fact that the system must be \gls{conservative}. In short, a \gls{conservative} system is one in which the energy of the particle is path-independent. See \cite{goldstein_classical_2008} Chapter 1 for more information. This assumption helped when I assumed that the potential, $U$, was a function of position only. If this potential had a dependence of velocity, then the problem would not be easily solvable.
 
-We note that in this chapter, we will only consider potential functions which are \gls{conservative}, or path independent. This does mean that frictional forces and aerodynamics are not modeled with the \gls{Lagrangian} we describe here (although they can be with the utilization of Rayleigh's dissipation function and other techniques, such as those discussed in \cite{rabei_hamiltonian_2004}). This is the reason we do not directly use these equations in the 6-DoF.\footnote{However, much of the rotational dynamics we describe can be represented equivalently using the \gls{Lagrangian} approach, so we do use these equations in a roundabout manner.}
+This does mean that frictional forces and aerodynamics are not modeled with the \gls{Lagrangian} we describe here (although they can be with the utilization of Rayleigh's dissipation function and other techniques, such as those discussed in \cite{rabei_hamiltonian_2004}). This is the reason we do not directly use these equations in the 6-DoF.\footnote{However, much of the rotational dynamics we describe can be represented equivalently using the \gls{Lagrangian} approach, so we do use these equations in a roundabout manner.} This is also one reason that we need to use numerical integration methods to solve the \gls{eom} for the rocket trajectory when using Newtonian dynamics. In fact, the idea that the system in non-\gls{conservative} and cannot be solved analytically are intrinsically linked.
 
-So, for systems that are non-conservative, it is best to stick with the Newtonian method of mechanics, as we do for our 6-DoF. However, for those that are frictionless, the methods described here will work well. While it may seem that frictionless systems are very idealistic, we do see systems that can be approximated as frictionless quite often! Orbits, of course, are one case where this is especially true. For many other systems, such as a spinning top or other rotating bodies, we can often ignore the small amount of friction and arrive at analytical solutions without much hassle using the \gls{Lagrangian}. These methods also become extraordinarily important for our derivations of rotational equations.
+So, for systems that are non-conservative, it is best to stick with the Newtonian method of mechanics, as we do for our 6-DoF, since the methods to find approximate solutions for these equations are quite a bit simpler. 
+
+However, for systems that are frictionless, the methods described here will work well. While it may seem that frictionless systems are very idealistic, we do see systems that can be approximated as frictionless quite often! Orbits, of course, are one case where this is especially true. For many other systems, such as a spinning top or other rotating bodies, we can often ignore the small amount of friction and arrive at analytical solutions without much hassle using the \gls{Lagrangian}. These methods also become extraordinarily important for our derivations of rotational equations.
+
+I should also note that the concept of friction and air drag is only a macroscopic one. All of the interactions that we regard as friction are fundamentally electromagnetic in origin. Therefore, in fundamental and theoretical physics, the energy methods of mechanics are almost always suitable methods! Unfortunately, our 6-\gls{dof} model does not simulate atomic interactions, so us engineers are sometimes stuck with the barbaric methods of Newton.
 
 With that noted, let us use the \gls{Lagrangian} in a few examples to see how it can turn some complex Newtonian systems into fairly trivial problems.
 \subsection{Mass-Spring System}
-As a very basic first system, we will consider a mass spring system as shown in \autoref{fig:mass spring lagrange}. We consider the length $x$ to be referenced from the rest length of the spring.
+As a very basic prototypical system, we will consider a mass spring system as shown in \autoref{fig:mass spring lagrange}. We consider the length $x$ to be referenced from the rest length of the spring.
 \begin{figure}[ht]
 
 \centering
@@ -1927,8 +1942,12 @@ So, the \eqautoref{eq: Euler-Lagrange} equation gives us:
 $$-kx-m\ddot{x}=0$$
 A simple change of signs gives the exact same result as the Newtonian approach:
 $$m\ddot{x}+kx=0$$
-In this problem, we used a simple case where the dynamics were constrained along a single axis of motion. Before we move to a move complex problem, we will introduce the method by which \gls{Lagrangian} mechanics deals with these reference frames.
+In this problem, we used a simple case where the dynamics were constrained along a single axis of motion. Before we move to a more complex problem, we will introduce the method by which \gls{Lagrangian} mechanics deals with these reference frames.
 \section{Generalized Coordinates}
+\color{red} Need to possibly reorganize some of this. Should explain why generalized coordinates are needed in the context of constraints and how they solve problems with coordinates being coupled.
+
+\color{black}
+
 We recall that in Newtonian mechanics, we describe reference frames for an object. We represent the position, velocity, and acceleration of a particle in terms of these coordinate systems as a tridimensional vector. 
 Generally, we may write the $\vec{r}^{\ op}$  vector in a frame $a$ as:
 $$x\hat{a}_1+y\hat{a}_2+z\hat{a}_3$$
@@ -1936,24 +1955,24 @@ Because any tridimensional set of coordinates that we choose that are linearly i
 $$x\left(q_1,q_2,q_3\right)+y\left(q_1,q_2,q_3\right)+z\left(q_1,q_2,q_3\right)$$
 As a shorthand, we will write this full set of $q$, $\left(q_1,q_2,\cdots q_n\right)$, as $q_j$.
 
-We can also generalize this to the velocity and the acceleration. The components of velocity can be written in terms of $q_j, \dot{q}_j$ and those for acceleration in terms of $q_j, \dot{q}_j, \ddot{q}_j$.  When we do Newtonian dynamics, we need to use the \gls{bke} to transform these quantities if they are not in the \gls{inertial frame}.
+We can also generalize this to the velocity and the acceleration. The components of velocity can be written in terms of $q_j, \dot{q}_j$ and those for acceleration in terms of $q_j, \dot{q}_j, \ddot{q}_j$.  When we do Newtonian dynamics, we need to use the \gls{bke} to transform these quantities if they are not in an \gls{inertial frame}. Not so with the \gls{Lagrangian}! We are free to choose whatever $q$'s we want.
 
-Note that this is what this looks like for a single particle. When multiple particles are involved, we may need to increase this number of $q$ coordinates. As a very general statement, we can say for $N$ particles, we will need $n$ generalized coordinates in $q$. Expressed vectorially, given a particle of the $i^{\mathrm{th}}$ index:
+For a single particle, we can describe its position with the $q_j$ coordinates. When multiple particles are involved, we may need to increase this number of $q$ coordinates. As a very general statement, we can say for $N$ particles, we will need $n$ generalized coordinates in $q$. Expressed vectorially, given a particle of the $i^{\mathrm{th}}$ index:
 $$\vec{r}^{\ oi}(q_j)$$
 In other words, the position of an arbitrary particle is given in terms of $n$ generalized coordinates. 
 
-The acceleration of the particles, when Newton's Laws are applied, are a function of the $q_j$ as well as their derivatives, $\dot{q}_j$. So, the evolution of the system exists in a $2n$-dimensional state space. However, we can use our previously mentioned \gls{Lagrangian} to circumvent the need for Newton's Law and the \gls{bke} in our derivation of the \gls{eom}.
+The acceleration of the particles, when Newton's Laws are applied, are a function of the $q_j$ as well as their derivatives, $\dot{q}_j$. So, the evolution of the system exists in a $2n$-dimensional state space. However, we can use our previously mentioned \gls{Lagrangian} to circumvent the need for Newton's Law and the \gls{bke} in our derivation of the \gls{eom} using \textit{constraints} on the equation.
 
 \subsection{Constraints}\label{sec:constaints}
-Constraint equations are fundamental to \gls{Lagrangian} mechanics. In the previous section, we very vaguely stated the need for $n$ generalized coordinates. To find a precise number, we turn our attention to constraints.
+Constraint equations are fundamental to \gls{Lagrangian} mechanics. In the previous section, I stated the need for $n$ generalized coordinates. To find a precise number for a given system, we turn our attention to constraints.
 
-We can imagine constraints as a condition that restricts the motion of a body in some way. A body which has complete freedom to move translationally and rotate in any way is free. When a constraint is applied, this freedom is reduced. Often, we see these constraints denoted with either an equality or an inequality. These constraints, most often, are functions of the position, velocity, and time. We see constraints written most often in the form:
+We can imagine constraints as a condition that restricts the motion of a body in some way. A body which has complete freedom to move translationally and rotate in any way is free. When a constraint is applied, this freedom is reduced. Often, we see these constraints denoted with either an equality or an inequality. These constraints, most often, are functions of the position, velocity, and/or time. We see constraints written most often in the form:
 $$f(\vec{r},\vec{v},t)=0$$
 The powerful thing about constraints in \gls{Lagrangian} mechanics is that we only need to know the way in which a particle is constrained, not the force or analytical description of this constraint. For complex problems, this can be especially useful.
 
 \subsubsection{Holonomic Constraints}
 
-To contextualize this, we take the example of a system of particles. For each particle, we need 3 values to define the position, so we need $3N$ generalized coordinates. 
+To contextualize this, we take the example of a system of $N$ particles. For each particle, we need 3 values to define the position, so we need $3N$ generalized coordinates. 
 
 \newglossaryentry{holonomic const}
 {
@@ -2042,7 +2061,7 @@ In this example, we could describe that single degree of freedom with our coordi
 The power of using generalized coordinates is that we could choose a coordinate that more easily defines this system. For example, our one coordinate could be the arc length along the path, $s$ defined from some starting point.
 \end{example}
 
-In general, these generalized coordinates do not even need to have units of length! We can select any parameters that are most convenient for defining the state, even those that are energies, so long as we can define a continuous derivative of that state and use the \gls{euler lagrange}.
+In general, these generalized coordinates do not even need to have units of length! We can select any parameters that are most convenient for defining the state, even those that are energies or fourier coefficients, so long as we can define a continuous derivative of that state and use the \gls{euler lagrange}.
 
 \subsubsection{Rigid Body Constraints}\label{sec: rigid body constraints}
 For most of the systems that we will deal with, including our rocket, we make the assumption that particles are rigidly attached to each other, meaning that there is no change in distance between particles. Using the notation of constraints described above, we will show how this is done for a two particle system, which can then naturally be extended with more particles.
@@ -2053,7 +2072,7 @@ Written in the more standard notation:
 $$f\left(\vec{r}^{\ op_1},\vec{r}^{\ op_2}\right)=\left\Vert \vec{r}^{\ op_1}-\vec{r}^{\ op_2}\right\Vert-L=0$$
 So this constraint takes the 6-\gls{dof} for the two particles and reduces it to 5-\gls{dof}.
 
-An example of these constraints would be the position of the first particle in Cartesian coordinates (giving 3 of the generalized coordinates, $x,y,z$, and the azimuthal and elevation angle, $\phi$ and $\theta$. The roll angle does not change the system in any measurable way, hence we only need 5 parameters to define a two particle system.
+An example of the generalized coordinates describing this system would be the position of the first particle in Cartesian coordinates (giving 3 of the generalized coordinates, $x,y,z$, and the azimuthal and elevation angle, $\phi$ and $\theta$. The roll angle does not change the system in any measurable way, hence we only need 5 parameters to define a two particle system.
 
 In the general case of $N$ particles composing a \gls{rigid body}, we have $3N$-\gls{dof} in a completely unconstrained system. However, we must constrain each pair of particles. An example of this for the 3 particle system in shown in \autoref{fig:rigid body 3 particle}.
 
@@ -2117,10 +2136,14 @@ So, we have 3 constraint equations in a system with 9 particles. This gives a to
 }
 So far, we have only discussed holonomic constraints, those that are related to position or on the generalized parameters, and possibly have some relation in time. When a system is a \gls{holonomic sys}, that is, purely defined by \glspl{holonomic const}, it is always possible to find a set of $\mathcal{M}$ generalized parameters to describe the particle motion. In other words, the minimum number of parameters is equivalent to the number of degrees of freedom in the system.
 
-That said, we often choose to use more parameters, particularly in the case of rotations. As we see in Volume II, we often find it more useful to use a non-minimal set of constraints to encode rotations for reasons to avoid singularities in the solution.
+That said, we often choose to use more parameters, particularly in the case of rotations. As we see in Volume II, we often find it more useful to use a non-minimal set of constraints to encode rotations to avoid singularities in the solution.
 
-It is also common to see a non-minimal set of constraints used when the minimal set is cumbersome and does not give an intuitive feel to the problem.
+It is also common to see a non-minimal set of constraints used when the minimal set is cumbersome and does not give an intuitive feel to the problem. There is no strict requirement to use the minimal set of constraints for a problem, but you should be aware of the number of parameters required to describe the minimal set.
 \subsubsection{Non-Holonomic Constraints}
+
+\color{red} Discuss non integrability of non-holonomic constraints and the case of the rolling ball / ice skate.
+
+\color{black}
 
 \newglossaryentry{non holo const}
 {
@@ -2144,7 +2167,7 @@ The most common among these, and where we will focus our attention here, is cons
 
 One important thing about \glspl{non holo const} is that they do not reduce the number of parameters needed to define the system. Additionally, there is no general way to solve systems which have non-holonomic constraints. Later, we will look at a few cases which can be solved. For now, we will concern ourselves mostly with systems consisting of holonomic constraints.
 
-It may seem that this limits us greatly, but in fact, this is not the case for most physics problems! When we are considering large systems, this may be quite limiting, but when considering small scale physics, such as atomic problems, we often find that \glspl{non holo const} are the exception, not the rule. Most systems are conservative and have constraints only on positions. As such, most of our modern theories can use these Lagrangian's.
+It may seem that this limits us greatly, but in fact, this is not the case for most physics problems! When we are considering large systems, this may be quite limiting, but when considering small scale physics, such as atomic problems, we often find that \glspl{non holo const} are the exception, not the rule. Most systems are conservative and have constraints only on positions. As such, most of our modern theories can use these \glspl{Lagrangian}.
 
 In the context of engineering problems, we can sometimes make derivations under the assumption of holonomic constraints and then use empirical data and correlations where needed to find suitable solutions (when friction or other factors are present).
 
@@ -2274,8 +2297,47 @@ With some rearrangement:
 $$\ddot{\theta}+\frac{g}{L}\sin\theta=0$$
 We notice that with the \gls{Lagrangian} approach, we did not need to have an understanding of the vector directions, frame translations, or \gls{bke} to find our \gls{eom}. This, in addition to the flexibility of the generalized coordinates, is the real power of this approach.
 
+\subsubsection{Finding T}
+In the previous two examples that we explored, the functions for $T$ and $U$ were quite simple because the transformations from the generalized coordinates were quite simple and could be understood from intuition. In the case that they are not as simple, we would previously have to use \gls{bke} to find transformations or employ some other method. It would be useful if we had a general formula to express $T$ and $U$ in the generalized coordinates. We know that the kinetic energy is simply the following:
+$$T=\frac{1}{2}\sum_im_i{v_i}^2$$
+We can more explicitly define $v_i$ to be $\dot{r}_i$, with $r$ being the vector in cartesian coordinates. The kinetic energy in terms of $\dot{r}$ is thus:
+$$T=\frac{1}{2}\sum_im_i(\dot{r}_i\cdot\dot{r}_i)$$
+As we have shown before, $r_i$ can generally be represented in terms of the generalized positions, $q_j$:
+$$r_i=r_i(q_j)$$
+As a result, $\dot{r}$ can be expressed in terms of the generalized positions and velocities using the chain rule (it is worth doing this derivation yourself!):
+$$\dot{r}=\frac{dr}{dt}=\sum_k{\frac{\partial r_i}{\partial q_k}\dot{q}_k+\frac{\partial r_i}{\partial t}}$$
+Combining these two formulas, it is quite easy to see that we have the following for a general formula of the kinetic energy which converts between $r$ and the generalized coordinates\endnote{See \cite{goldstein_classical_2008} Chapter 1.6 for more information on this derivation} :
+$$T=\frac{1}{2}\sum_im_i\left(\sum_j\frac{\partial\vec{r}_i}{\partial q_j}\dot{q}_j+\frac{\partial \vec{r}_i}{\partial t}\right)^2$$
+
+\begin{example}[Free Particle in Polar Coordinates]
+We can show this equation in work with a simple example of a single free particle. We express the motion in polar coordinates in order to showcase the use of the formula. We need only know the transformations between the coordinate systems.
+
+We define the two cartesian coordinates of interest $x$ and $y$ such that $r=\sqrt{x^2+y^2}$. The two \gls{Lagrangian} coordinates are $r$ and $\theta$ since we have assumed polar coordinates. We are free, of course, to choose anything. The one fact we need to complete the derivation is that 
+\begin{gather}
+    x=r\cos\theta\\
+    y=r\sin\theta
+\end{gather}
+Of course, for a more general problem, there are methods to derive these relations if they are more complex, such as the Jacobian matrix.
+
+Since we are only considering a single particle in this example, the sum over $i$ for different masses need not be considered. We thus have:
+$$T=\frac{1}{2}m\left[\left(\frac{\partial r_1}{\partial r}\dot{r}+\frac{\partial r_1}{\partial t}\right)^2+\left(\frac{\partial r_1}{\partial \theta}\dot{\theta}+\frac{\partial r_1}{\partial t}\right)^2\right]$$
+We can quite easily eliminate the term $\frac{\partial r}{\partial t}$, since nothing has explicit dependence on time in our problem. From here, the problem is simply `bookkeeping' to ensure that all of the partial derivatives are performed properly. Expressing $r_1 = (r\cos\theta,r\sin\theta)$:
+$$\begin{array}{l}
+\dfrac{\partial}{\partial r}r_1=(\cos\theta,\sin\theta)\\
+    \dfrac{\partial}{\partial \theta}r_1=(-r\sin\theta,r\cos\theta)
+\end{array}$$
+Plugging back in, we have:
+$$T=\frac{1}{2}m\left[\left(\dot{r}\cos\theta-r\sin\theta\dot{\theta}\right)^2+\left(\dot{r}\sin\theta-r\cos\theta\dot{\theta}\right)^2\right]$$
+Upon computation of the cross terms, we find that they cancel and are left with:
+$$T=\frac{1}{2}m\left[\dot{r}^2+r^2\dot{\theta}^2\right]$$
+Which matches the Newtonian result and is generally applicable to many cases. More of this approach will be seen later in the case of the inverted pendulum.
+\end{example}
+
 \section{Generalized Forces}
+The next thing that we need to consider in our journey 
 \subsection{D'Alembert's Principle}
+
+\section{Lagrange Multipliers}
 
 \section{Lagrangian Rigid Body Dynamics}
 
@@ -2358,9 +2420,11 @@ The approach described here comes mainly from the work in \cite{carcassi_geometr
     \item %add Hamiltonian v. Lagrangian
 \end{enumerate}
 \section{Further Reading}
-The following section borrows heavily from the derivations of Chapter 6 and 7 of  \cite{thornton_classical_nodate} and Chapter 5 of  \cite{cline_variational_2017}. A good video overview of this topic can be found at \cite{veritasium_closest_2024}.
+The first section borrows from the derivations of Chapter 6 and 7 of  \cite{thornton_classical_nodate} and Chapter 5 of  \cite{cline_variational_2017}. These sources are a good first introduction to the subject with simple mathematics.
 
-There are an abundance of sources for classical mechanics. We can personally recommend the video series at \cite{ross_lagranges_nodate}, which covers this material in a more suitable manner to engineering contexts.
+The most useful book for further study (and one I have read with much scrutiny in constructing these chapters), is \cite{goldstein_classical_2008}. This book is most definitely a graduate level treatment of the subject, but is extremely thorough and goes deep into many topics which have not been discussed here for the sake of brevity. Much knowledge is expected of the reader, so I find this book best for further study only after consulting some other sources first.
+
+There are an abundance of video sources for classical mechanics. A good conceptual video overview of this topic can be found at \cite{veritasium_closest_2024}. This video contains little math, but is quite good for understanding the reasoning behind the formulation. I can personally recommend the video series at \cite{ross_lagranges_nodate}, which covers this material in a more suitable manner to engineering contexts and is quite easy to follow along with.
 
 \section{Practice Problems}
 \begin{enumerate}
@@ -3274,7 +3338,7 @@ So, we have a way to write any arbitrary exponential. We can then use this expon
 $$\exp:\mathfrak{g}\rightarrow G$$
 As we have noted before, this is useful because we can do operations on $\mathfrak{g}$, which is generally simpler to describe since it is a vector space, and then use the exponential map to put this back on to the manifold!
 
-\subsection{Computation of Matrix Exponentials}
+\subsection{Computation of Matrix Exponentials}\label{sec: computation of matrix exp}
 The most important elements to exponentiate in our use cases will be matrices, as they are very important to all of the subject matter discussed heretofore and in the future.
 
 There are several ways to approach the matrix exponential, with each having their own advantages in approach. We will start with the simplest to construct and move to more complex (although sometimes better!) approaches.
@@ -3679,7 +3743,7 @@ We noted in the beginning of this chapter that \gls{lie theory} was originally d
 \begin{example}[Matrix Differential Equations]
     Since we have been studying matrix groups, let us consider the class of first order matrix differential equations. We see these systems frequently in control theory so it is good to study them here.
     $$\dot{x}=Ax$$
-    Where $A$ is an $n{\times}n$ matrix with constant coefficents and $x$ and $\dot{x}$ are $n{\times}1$ vectors. We can find the solution of this equation through seperation and integration. We start by performing the seperation of variables:
+    Where $A$ is an $n{\times}n$ matrix with constant coefficents and $x$ and $\dot{x}$ are $n{\times}1$ vectors. We can find the solution of this equation through separation and integration. We start by performing the seperation of variables:
     $$\frac{dx}{x}=Adt$$
     We can this integrate this equation to find the solution.
     $$\int_{x_0}^x{\frac{dx}{x}}=\int_{t_0}^t{Adt}$$
@@ -3865,10 +3929,10 @@ $$\frac{d^2x^i}{d\lambda^2}+\Gamma_{mn}^i\frac{dx^m}{d\lambda}\frac{dx^n}{d\lamb
 \section{Quantum Mechanics}
 Quantum Mechanics is famous for being extraordinarily counterintuitive and difficult. Many of the founders of quantum mechanics found the theory so obtuse as to call it impossible to intuit. Luckily, our exploration of the topic will remain at a higher level, where we can gain some appreciation of the topic without delving into these deep ravines in the theory.
 
-There are, without a doubt, two experiments that are the prototypical representations of the quantum theory. These two experiments, involving the photoelectric effect and the wave-particle nature of light, will help us to understand quantum mechanics at a high level.
+There are, without a doubt, two experiments that are foundational in understanding quantum theory. These two experiments, involving the photoelectric effect and the wave-particle nature of light, will help us to understand quantum mechanics at a high level.
 
 \subsection{The Photoelectric Effect}
-\subsection{Young's Experiment}
+\subsection{Young's Double Slit Experiment}
 
 \section{Field Theories}
 
@@ -4154,7 +4218,7 @@ This conversion of a differential equation to an algebraic equation, combined wi
 I find this explanation especially enlightening on this topic, although others may prefer the more conventional approach to this topic. As such, I have included some resources that cover the \gls{laplace transform} in the more conventional manner.
 
 \section{Eigenfunction of Derivatives}
-\Glspl{eigenfunction} are in essence, the building blocks of the solutions for equations. When we have a linear operator, such as an integral or derivative, there must exist a function that when acted upon by this operator, is unchanged by the operator aside from being scaled. This is precisely what we mean when we define something as an \gls{eigenfunction}. I find the etymology of this word especially useful in this case. Eigen, in German, is a word meaning 'self' or 'own'. So, any time we see something, such as an eigenvalue or \gls{eigenfunction}, it is a quantity for which it in some way produces itself. We define the eigenfunction as follows:
+\Glspl{eigenfunction} are in essence, the building blocks of the solutions for equations. When we have a linear operator, such as an integral or derivative, there must exist a function that when acted upon by this operator, is unchanged by the operator aside from being scaled. This is precisely what we mean when we define something as an \gls{eigenfunction}. I find the etymology of this word especially useful in this case. Eigen, in German, is a word meaning `self' or `own'. So, any time we see something, such as an eigenvalue or \gls{eigenfunction}, it is a quantity for which it in some way produces itself. We define the eigenfunction as follows:
 $$Df=\lambda f$$
 Where $D$ is some operator, $f$ is a function, and $\lambda$ is an eigenvalue. In the context of differential equations, where the derivative operator is especially prevalent, we find such a function especially useful.
 
@@ -4381,13 +4445,88 @@ We can show this quite easily by considering the possible cases for a linear dif
 Because the exponential is so robust, we would find it especially useful to define 
  
  So, we can project our function onto the basis vectors defined by $e^{st}$. Doing so, we have the Laplace Transform:
-\begin{gather}
+\begin{gather}\label{eq:laplace transform}
     \color{blue}\boxed{\color{black}f(t)\cdot e^{st}=\int_0^\infty{f(t)e^{-st}}}\\
     \color{blue}\mathrm{Laplace \ Transform}
 \end{gather}
 The Laplace transform will prove extraordinarily useful for analyzing \gls{lti} systems. We may refer to the Laplace transform of a function $f(t)$ by $\mathcal{L}\left\{f(t)\right\}$. We generally denote this Laplace transform in shorthand as $$\mathcal{L}\left\{f(t)\right\}\Rightarrow F(s)$$
 It is typical to denote the transformation both by a chance of variable from $t$ to $s$ as well as from a lowercase function, such as $f$, to an upper case one, $F$. I note that the Laplace transform has transformed our function from one in the time domain, $t$, to one in the $s$-domain! This $s$-domain has some very unique properties which come as a result of intentionally choosing the exponential function as our basis. The properties important to our study of control theory will be explored in the following section.
 \subsection{Properties of the Laplace Transform}\label{sec:properties of laplace transform}
+
+There are many properties of the Laplace transform. We are not concerned with deriving all of these, although most are quite easy to prove simply by plugging them into \eqautoref{eq:laplace transform}. A list of the commonly used Laplace transforms can be found at \cite{dawkins_differential_nodate}. The derivations for most of these are just manipulations of the integral, so I will not cover them unless they are particulary insightful.
+
+Here, I want to cover a few of the most useful properties for understanding control theory. Of course, all of the transforms are useful in their own right, and many of them come up in problems. For that reason, I recommend the reader is at least comfortable with manipulating equations in the $s$-domain, and converting back and forth. This skill just comes with practice. I have included a few practice problems at the end of this section if you want to practice these transformations.
+
+That being said, let us begin by covering some of the most useful Laplace transforms, which are listed below:
+\begin{itemize}
+    \item Exponential function
+    \item Sinusoid
+    \item Step Function
+    \item Delta Function
+    \item Derivatives
+    \item Integrals
+\end{itemize}
+\subsubsection{Exponential Functions}
+Exponential functions, as previously mentioned, are quite common in differential equations and control theory. For this reason, we start with these.
+
+Finding the Laplace Transform for the exponential function is quite easy, actually! We consider the general exponential function $e^{at}$, and plug into \eqautoref{eq:laplace transform}:
+$$\int_0^\infty{e^{at}e^{-st}}dt$$
+We can combine the two exponentials in this equation to get:
+$$\int_0^\infty{e^{t(a-s)}}dt$$
+Upon the integration of this equation, we have
+$$\left .\frac{e^{t(a-s)}}{a-s}\right|_0^\infty=\lim_{t\rightarrow\infty}\frac{e^{(a-s)t}}{a-s}-\frac{1}{a-s}$$
+In the case that $\Re s>a$, then the first term evaluates to $0$ as the exponential has a negative exponent. We are thus left with:
+$$\mathcal{L}\left\{e^{at}\right\}=\frac{1}{s-a}$$
+Since we know that exponentials with positive values for $a$ diverge to infinity for positive $t$, and those with negative values for $a$ converge to zero, we can find the stability of a system based on the sign of $s-a$! When the sign is negative, $s-2$ -- for example -- the exponential is stable. When it is positive, $s+2$ for example, it is unstable. We will further explore these concepts, but it is something worth noting now!
+
+\subsubsection{Sinusoids}
+From the exponentials, we are only a short step from the sinusoidal functions. Since the two functions are closely related, it is quite simple to develop appropriate transforms of the sinusoids using the Euler equation:
+$$e^{ix}=\cos x+i\sin x$$
+From here, it is easy to prove that the $\sin(at)$ function has a Laplace transform:
+$$\mathcal{L}\left\{\sin(at)\right\}=\frac{a}{s^2+a^2}$$
+and that $\cos(at)$ function has a Laplace transform:
+$$\mathcal{L}\left\{\cos(at)\right\}=\frac{s}{s^2+a^2}$$
+It is interested to note, that if we consider values of $s$ that are purely imaginary, that is $s=i\omega$, these formulas simplify a bit. For $\sin$, we have the following:
+$$\sin(at)=\frac{a}{a^2-\omega^2}$$
+When we plug in a frequency, $\omega$, that is the same as the frequency of the sine wave, we divide by zero! This division by zero is what we call a \textit{pole} in the complex plane. We typically represent these with an `x' marker in the complex plane, as shown in \autoref{fig: sine wave}.
+
+\begin{figure}
+    \centering
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da6143378059913305] 
+\draw    (330,60) -- (330,220) ;
+%Straight Lines [id:da32627873590921797] 
+\draw    (410,140) -- (250,140) ;
+%Straight Lines [id:da37253286393851626] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (330,100) ;
+\draw [shift={(330,100)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da11664231471930675] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (330,180) ;
+\draw [shift={(330,180)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+
+% Text Node
+\draw (348,52.4) node [anchor=north west][inner sep=0.75pt]    {$\mathbb{C}^{2}$};
+% Text Node
+\draw (340,92) node [anchor=north west][inner sep=0.75pt]    {$a$};
+% Text Node
+\draw (323,40.4) node [anchor=north west][inner sep=0.75pt]    {$\omega $};
+% Text Node
+\draw (414,134) node [anchor=north west][inner sep=0.75pt]    {$\sigma $};
+% Text Node
+\draw (338,172) node [anchor=north west][inner sep=0.75pt]    {$-a$};
+
+\end{tikzpicture}
+    
+    \caption{Complex Plane Representation of Sine Wave}
+    \label{fig: sine wave}
+\end{figure}
+This plot, which we call a pole-zero plot, tells us a lot of information about the system. Here, it tells us that the function $\sin(at)$ has zeros that are purely imaginary. That means that they will oscillate, without decaying or growing, forever. The same is true of cosine, since the denominator of the equation is the same.
 
 
 \subsection{The Lebesgue Integral and Measure}
@@ -4456,21 +4595,430 @@ So, we can see that in the Laplace domain, all of the information of the system 
 
 \subsection{The Impulse Response}
 
+\section{Linear Systems}
+Since linear systems are our object of study for now, we should include some more information on linear systems and how we can manipulate them! Linear systems are quite nice to work with and we have lots of theory developed to work with them.
 
+The standard linear system, as we have seen before, is of form:
+$$\dot{x}=Ax$$
+This equation is really saying that we can represent the derivative of the state, $x$, with linear combinations of the state itself. As an example, we may have the system:
+$$\begin{bmatrix}
+    \dot{x}_1\\\dot{x}_2
+\end{bmatrix}=\begin{bmatrix}
+    0&1\\1&2
+\end{bmatrix}\begin{bmatrix}
+    x_1\\x_2
+\end{bmatrix}$$
+So long as the coefficients of $A$ are scalar values, the system is linear. These values may be time varying, variables, or anything else, but as long as they are not nonlinear functions of $x$, the system is linear.
+
+\subsection{From Continuous to Discrete Time}
+It is all well and good to describe our systems as continuous, but that is almost never what we measure! In most cases, the measurements that we get are discrete. As a result, we need to understand how the system changes over a finite interval of time, $\Delta t$. In a finite interval of time, we express these equations not as standard differential equations, but rather as \textit{difference} equations. The analogous difference equation to $\dot{x}=Ax$ is:
+$$x_{k+1}=\Phi x_k$$
+From this equation we can see some obvious similarities to the continuous time case. In fact, $\Phi$ is a matrix of the same size. Reader's who have read the section on \autoref{chap:lie theory} should be able to connect this to what we have already learned there! We can relate the continuous nature of $A$ to the discrete nature of $\Phi$ with a matrix exponential. The derivation using calculus is also shown there, so I recommend reading \autoref{sec:lie theory relation to differential equations} for more information.
+
+In short, we can relate $\Phi$ and $A$ through the following equation:
+$$\Phi=e^{A\Delta t}$$
+The matrix $\Phi$ is called the discrete state transition matrix, and $A$ is sometimes called the continuous transition matrix in analogy. The relationship between these two and the implications from \gls{lie theory} will be important for understanding the relationships of stability that are coming next!
 
 \section{Stability}
 One key criteria in control theory is studying the stability of a system. Simply stated, the stability of a system describes the tendency of a system to either return to an equilibrium position. Systems that are stable tend to return to equilibrium, and those that are unstable tend to grow in magnitude. The main objective of control theory is to build a controller, typically denoted $u$, which can either enhance the stability of a system or turn an unstable system into one that is stable.
 
 In control theory, there are several notions of stability. As you become more advanced in your studies, different notions of stability will become important in different contexts. However, we should establish a baseline notion of stability for linear systems.
 
+We have seen before the pole-zero plots, where we can represent the locations of the poles or zeros of a function in $\mathbb{C}^2$ space.
+
+We have previously seen the case of the pure sinusoid while discussing transfer functions. Now, we can explore some more general cases to understand stability. Consider the pole-zero plot shown in \autoref{fig:pole zero}.
+\begin{figure}[ht]
+    \centering
 
 
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da6143378059913305] 
+\draw    (330,60) -- (330,220) ;
+%Straight Lines [id:da32627873590921797] 
+\draw    (410,140) -- (250,140) ;
+%Straight Lines [id:da37253286393851626] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (350,100) ;
+\draw [shift={(350,100)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da11664231471930675] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (350,180) ;
+\draw [shift={(350,180)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+
+% Text Node
+\draw (348,52.4) node [anchor=north west][inner sep=0.75pt]    {$\mathbb{C}^{2}$};
+% Text Node
+\draw (323,40.4) node [anchor=north west][inner sep=0.75pt]    {$\omega $};
+% Text Node
+\draw (414,130.4) node [anchor=north west][inner sep=0.75pt]    {$\sigma $};
+
+
+\end{tikzpicture}
+    
+    \caption{General Pole-Zero Plot}
+    \label{fig:pole zero}
+\end{figure}
+Here, the function has poles at $s=\sigma\pm i\omega$ in the $s$-domain. From our discussion of the Laplace transform, this means that the behavior of the system in the time domain can be represented by taking $e^{st}$, which gives
+$$f(t)=e^{(\sigma\pm i\omega)t}=e^{\sigma t}e^{i\omega t}$$
+We have previously shown that $e^{i\omega t}$ always has a magnitude of 1 and simply represents rotation in the complex plane. As a result, the magnitude of $f(t)$ is purely dictated by the term $e^{\sigma t}$.
+
+We know that for $t>0$, $e^{\sigma t}$ will grow unbounded for $\sigma >0$ and will converge to $0$ for $\sigma < 0$. These values for $\sigma$ then, dictate the stability of our system. In the pole-zero diagram, we can represent this diagrammatically as shown in \autoref{fig:pole zero stability}:
+\begin{figure}
+    \centering
+% Pattern Info
+ 
+\tikzset{
+pattern size/.store in=\mcSize, 
+pattern size = 5pt,
+pattern thickness/.store in=\mcThickness, 
+pattern thickness = 0.3pt,
+pattern radius/.store in=\mcRadius, 
+pattern radius = 1pt}
+\makeatletter
+\pgfutil@ifundefined{pgf@pattern@name@_9yu0p9uwl}{
+\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_9yu0p9uwl}
+{\pgfqpoint{0pt}{0pt}}
+{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{
+\pgfsetcolor{\tikz@pattern@color}
+\pgfsetlinewidth{\mcThickness}
+\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+\pgfusepath{stroke}
+}}
+\makeatother
+
+% Pattern Info
+ 
+\tikzset{
+pattern size/.store in=\mcSize, 
+pattern size = 5pt,
+pattern thickness/.store in=\mcThickness, 
+pattern thickness = 0.3pt,
+pattern radius/.store in=\mcRadius, 
+pattern radius = 1pt}
+\makeatletter
+\pgfutil@ifundefined{pgf@pattern@name@_pm1rnvitx}{
+\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_pm1rnvitx}
+{\pgfqpoint{0pt}{-\mcThickness}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{
+\pgfsetcolor{\tikz@pattern@color}
+\pgfsetlinewidth{\mcThickness}
+\pgfpathmoveto{\pgfqpoint{0pt}{\mcSize}}
+\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{-\mcThickness}}
+\pgfusepath{stroke}
+}}
+\makeatother
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Rectangle [id:dp6154325357400674] 
+\draw  [draw opacity=0][pattern=_9yu0p9uwl,pattern size=6pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 74; green, 144; blue, 226}] (261,90) -- (340,90) -- (340,250) -- (261,250) -- cycle ;
+%Shape: Rectangle [id:dp04797856148304802] 
+\draw  [draw opacity=0][pattern=_pm1rnvitx,pattern size=6pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 218; green, 44; blue, 0}] (340,90) -- (419,90) -- (419,250) -- (340,250) -- cycle ;
+%Straight Lines [id:da511814457639373] 
+\draw    (340,90) -- (340,250) ;
+%Straight Lines [id:da5970664610164672] 
+\draw    (420,170) -- (260,170) ;
+
+% Text Node
+\draw (333,70.4) node [anchor=north west][inner sep=0.75pt]    {$\omega $};
+% Text Node
+\draw (424,160.4) node [anchor=north west][inner sep=0.75pt]    {$\sigma $};
+% Text Node
+\draw (278,72.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$stable$};
+% Text Node
+\draw (353,72.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$unstable$};
+
+
+\end{tikzpicture}
+    \caption{Stability Criteria on Pole Zero Plot}
+    \label{fig:pole zero stability}
+\end{figure}
+If we know the poles then, it is quite easy to determine the stability. Where do the values of the poles come from, though?
+
+It turns out that we can determine the values of the poles by examining the eigenvalues of the $A$ matrix. To see why this is the case, we again consider the basic system
+$$\dot{x}=Ax$$
+Which we know has a solution
+$$x(t)=e^{At}x_0$$
+Supposing that $x_0$ has non-zero values, the $e^{At}$ matrix will determine the time evolution of the matrix. As we have previously discussed in \autoref{sec: computation of matrix exp}, we can perform a decomposition of the matrix to find the solution of the matrix exponential $e^{At}$ as $$e^{At}=Pe^{Dt}P^{-1}$$
+We know that this decomposition is the result of the eigenvalue decomposition of the problem, where the eigenvalues are contained in the diagonal entries of $D$.
+
+It is fairly evident that the magnitude of the system is determined by the values of $D$, the eigenvalues! If all of the values of $D$ are negative, the system will tend towards zero. This is exactly the same as what we have seen with poles. This leads us to the important conclusion:
+\textbf{The eigenvalues of $\textbf{A}$ determine the stability of the system.}
+
+Of course, we have discussed that $A$ is only defined for discrete time 
+
+\subsection{Stability in discrete time}
+Having described the stability of a system in continuous time, we can move on to the case of a system in discrete time. 
+\subsubsection{The standard description}
+
+\subsubsection{A geometric description}
+
+% not quite sure on a few points of this description, I haven't seen it anywhere else and it's something I've come up with. May work on this a bit. Let me know if you spot any flaws in the logic.
+
+We know that the matrices $A$ and $\Phi$ are related by the matrix exponential, so we may be able to use some tools from \gls{lie theory} to develop an idea of stability in the discrete time case!
+
+First, we consider the continuous case and select an appropriate representation of the group. Since we use the complex numbers, $\mathbb{C}^2$, in the pole-zero representation, we can aptly choose $U(1)$ as our group description. We know the identity element of $U(1)$ to have a slope of $i$, that is, a perfectly straight vertical line. This matches the standard representation, where a vertical line divides the stable and unstable sections of the plane (as shown in \autoref{fig:pole zero vert line}):
+\begin{figure}[ht]
+    \centering
+
+
+% Pattern Info
+ 
+\tikzset{
+pattern size/.store in=\mcSize, 
+pattern size = 5pt,
+pattern thickness/.store in=\mcThickness, 
+pattern thickness = 0.3pt,
+pattern radius/.store in=\mcRadius, 
+pattern radius = 1pt}
+\makeatletter
+\pgfutil@ifundefined{pgf@pattern@name@_7t0mu7xw6}{
+\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_7t0mu7xw6}
+{\pgfqpoint{0pt}{0pt}}
+{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{
+\pgfsetcolor{\tikz@pattern@color}
+\pgfsetlinewidth{\mcThickness}
+\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+\pgfusepath{stroke}
+}}
+\makeatother
+
+% Pattern Info
+ 
+\tikzset{
+pattern size/.store in=\mcSize, 
+pattern size = 5pt,
+pattern thickness/.store in=\mcThickness, 
+pattern thickness = 0.3pt,
+pattern radius/.store in=\mcRadius, 
+pattern radius = 1pt}
+\makeatletter
+\pgfutil@ifundefined{pgf@pattern@name@_3nxo7mw0k}{
+\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_3nxo7mw0k}
+{\pgfqpoint{0pt}{-\mcThickness}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{
+\pgfsetcolor{\tikz@pattern@color}
+\pgfsetlinewidth{\mcThickness}
+\pgfpathmoveto{\pgfqpoint{0pt}{\mcSize}}
+\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{-\mcThickness}}
+\pgfusepath{stroke}
+}}
+\makeatother
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Rectangle [id:dp6154325357400674] 
+\draw  [draw opacity=0][pattern=_7t0mu7xw6,pattern size=6pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 74; green, 144; blue, 226}] (261,110) -- (340,110) -- (340,230) -- (261,230) -- cycle ;
+%Shape: Rectangle [id:dp04797856148304802] 
+\draw  [draw opacity=0][pattern=_3nxo7mw0k,pattern size=6pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 218; green, 44; blue, 0}] (340,110) -- (419,110) -- (419,230) -- (340,230) -- cycle ;
+%Straight Lines [id:da511814457639373] 
+\draw    (340,90) -- (340,250) ;
+%Straight Lines [id:da5970664610164672] 
+\draw    (420,170) -- (260,170) ;
+%Straight Lines [id:da2729913447330866] 
+\draw [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][line width=2.25]    (340,170) -- (340,105) ;
+\draw [shift={(340,100)}, rotate = 90] [fill={rgb, 255:red, 126; green, 211; blue, 33 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (14.29,-6.86) -- (0,0) -- (14.29,6.86) -- cycle    ;
+
+% Text Node
+\draw (333,70.4) node [anchor=north west][inner sep=0.75pt]    {$\omega $};
+% Text Node
+\draw (424,160.4) node [anchor=north west][inner sep=0.75pt]    {$\sigma $};
+% Text Node
+\draw (347,93.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,opacity=1 ]  {$i\omega $};
+
+
+\end{tikzpicture}
+
+    \caption{$i\omega$ in the Pole-Zero plot}
+    \label{fig:pole zero vert line}
+\end{figure}
+Now, we can apply some of the concepts from \gls{lie theory} to transform to the discrete time case. We map from the continuous transformation onto the discrete time transformation with the matrix exponential. In this case, the solution mirrors the previously seen circle group. Upon computing the matrix exponential, the vector $i\omega$ `wraps' around to form a circle with radius 1. As a result, we have a new description of stability for the discrete time systems:
+\begin{figure}
+    \centering
+    
+
+% Pattern Info
+ 
+\tikzset{
+pattern size/.store in=\mcSize, 
+pattern size = 5pt,
+pattern thickness/.store in=\mcThickness, 
+pattern thickness = 0.3pt,
+pattern radius/.store in=\mcRadius, 
+pattern radius = 1pt}
+\makeatletter
+\pgfutil@ifundefined{pgf@pattern@name@_miqjhtmrv}{
+\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_miqjhtmrv}
+{\pgfqpoint{0pt}{0pt}}
+{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{
+\pgfsetcolor{\tikz@pattern@color}
+\pgfsetlinewidth{\mcThickness}
+\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+\pgfusepath{stroke}
+}}
+\makeatother
+
+% Pattern Info
+ 
+\tikzset{
+pattern size/.store in=\mcSize, 
+pattern size = 5pt,
+pattern thickness/.store in=\mcThickness, 
+pattern thickness = 0.3pt,
+pattern radius/.store in=\mcRadius, 
+pattern radius = 1pt}
+\makeatletter
+\pgfutil@ifundefined{pgf@pattern@name@_h9cixp1j4}{
+\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_h9cixp1j4}
+{\pgfqpoint{0pt}{0pt}}
+{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{
+\pgfsetcolor{\tikz@pattern@color}
+\pgfsetlinewidth{\mcThickness}
+\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+\pgfusepath{stroke}
+}}
+\makeatother
+
+% Pattern Info
+ 
+\tikzset{
+pattern size/.store in=\mcSize, 
+pattern size = 5pt,
+pattern thickness/.store in=\mcThickness, 
+pattern thickness = 0.3pt,
+pattern radius/.store in=\mcRadius, 
+pattern radius = 1pt}
+\makeatletter
+\pgfutil@ifundefined{pgf@pattern@name@_rwk4yvb69}{
+\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_rwk4yvb69}
+{\pgfqpoint{0pt}{-\mcThickness}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{
+\pgfsetcolor{\tikz@pattern@color}
+\pgfsetlinewidth{\mcThickness}
+\pgfpathmoveto{\pgfqpoint{0pt}{\mcSize}}
+\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{-\mcThickness}}
+\pgfusepath{stroke}
+}}
+\makeatother
+
+% Pattern Info
+ 
+\tikzset{
+pattern size/.store in=\mcSize, 
+pattern size = 5pt,
+pattern thickness/.store in=\mcThickness, 
+pattern thickness = 0.3pt,
+pattern radius/.store in=\mcRadius, 
+pattern radius = 1pt}
+\makeatletter
+\pgfutil@ifundefined{pgf@pattern@name@_rczg42uwp}{
+\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_rczg42uwp}
+{\pgfqpoint{0pt}{0pt}}
+{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{
+\pgfsetcolor{\tikz@pattern@color}
+\pgfsetlinewidth{\mcThickness}
+\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+\pgfusepath{stroke}
+}}
+\makeatother
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Rectangle [id:dp1744199542761371] 
+\draw  [draw opacity=0][pattern=_miqjhtmrv,pattern size=6pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 218; green, 44; blue, 0}] (420,92) -- (580,92) -- (580,250) -- (420,250) -- cycle ;
+%Shape: Rectangle [id:dp6154325357400674] 
+\draw  [draw opacity=0][pattern=_h9cixp1j4,pattern size=6pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 74; green, 144; blue, 226}] (114,110) -- (193,110) -- (193,230) -- (114,230) -- cycle ;
+%Shape: Rectangle [id:dp04797856148304802] 
+\draw  [draw opacity=0][pattern=_rwk4yvb69,pattern size=6pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 218; green, 44; blue, 0}] (193,110) -- (272,110) -- (272,230) -- (193,230) -- cycle ;
+%Straight Lines [id:da511814457639373] 
+\draw    (193,90) -- (193,250) ;
+%Straight Lines [id:da5970664610164672] 
+\draw    (273,170) -- (113,170) ;
+%Straight Lines [id:da2729913447330866] 
+\draw [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][line width=2.25]    (193,170) -- (193,105) ;
+\draw [shift={(193,100)}, rotate = 90] [fill={rgb, 255:red, 126; green, 211; blue, 33 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (14.29,-6.86) -- (0,0) -- (14.29,6.86) -- cycle    ;
+%Straight Lines [id:da04429504737429202] 
+\draw    (300,170) -- (408,170) ;
+\draw [shift={(410,170)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Shape: Circle [id:dp6222466622268316] 
+\draw  [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][pattern=_rczg42uwp,pattern size=6pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 74; green, 144; blue, 226}][line width=1.5]  (455.25,172) .. controls (455.25,147.29) and (475.29,127.25) .. (500,127.25) .. controls (524.71,127.25) and (544.75,147.29) .. (544.75,172) .. controls (544.75,196.71) and (524.71,216.75) .. (500,216.75) .. controls (475.29,216.75) and (455.25,196.71) .. (455.25,172) -- cycle ;
+%Straight Lines [id:da7634487804262589] 
+\draw    (500,92) -- (500,252) ;
+%Straight Lines [id:da6047584523418486] 
+\draw    (580,172) -- (420,172) ;
+
+% Text Node
+\draw (186,70.4) node [anchor=north west][inner sep=0.75pt]    {$\omega $};
+% Text Node
+\draw (277,160.4) node [anchor=north west][inner sep=0.75pt]    {$\sigma $};
+% Text Node
+\draw (200,93.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,opacity=1 ]  {$i\omega $};
+
+
+\end{tikzpicture}
+
+    \caption{Transformation from continuous to discrete stability}
+    \label{fig:continuous to discrete stability}
+\end{figure}
+Any eigenvalue which is contained within the unit circle will be stable, and anything outside will be unstable. As we can see, our representation with \gls{lie theory} lends itself perfectly showcasing this!
+\section{Controllability}
+Now that we are quite familiar with linear systems and how we characterize their stability, we can move to discussing how we can control such systems. As we have seen, we can understand the stability of a system by examining the eigenvalues of the matrix $A$ for the linear system $\dot{x}=Ax$. When we consider adding control, the system becomes a bit more complex. We now have:
+$$\dot{x}=Ax+Bu$$
+Where $B$ is a matrix describing the relationships of the control inputs and $u$ is the control input itself.
+
+To see how this lends itself to changing the eigenvalues of the system, we can consider a simple controller -- one which simply takes the current state, $x$, multiplied by some constant as its input.
+
+From this description, we have a control system where $u=-kx$. Upon plugging in $u$, we have
+$$\dot{x}=Ax-Bkx$$
+We can factor our $x$, which returns our system to a very similar form to $\dot{x}=Ax$:
+$$\dot{x}=(A-Bk)x$$
+We can see that the eigenvalues of $A-Bk$ are now what we consider! With careful selection of $B$ and $k$, we may be able to make any unstable eigenvalues stable!
+
+We can solidify these ideas with some exact definitions. We consider a system to be controllable if:
+\begin{itemize}
+    \item It is possible to go from any one state, $x$, to another state $x'$ in the space $\mathbb{R}^n$
+    \item We can choose to place the eigenvalues of the system anywhere in $\mathbb{C}^2$.
+\end{itemize}
+
+It turns out that these are the only two conditions that we need to satisfy for controllability of a linear system.
 
 \section{Bode Plots}
 
 \section{Nyquist Plots}
 
 \section{State Space Representation}
+
+\section{Useful MATLAB Commands}
+MATLAB has many features which are great for control systems. I have com
 
 
 \chapter{Optimal Estimation}
@@ -4512,11 +5060,159 @@ After our discussion on optimal estimation, we are only a short distance from de
 
 
 \chapter{The Inverted Pendulum}
+The inverted pendulum is a classic problem in control theory, and for good reason! It demonstrates all of the basics of control theory, from derivation of \glspl{eom}, system linearization, and control design. With this problem, we can show a definitive example of many of the previous topics of discussion with a real application.
+
+At the end of this chapter, we will apply this controller to a real inverted pendulum system that I have built. My hope is that this will help demonstrate some of the practical parts of the implementation into a real world system.
+
+\begin{figure}
+    \centering
+    \includesvg[width=\linewidth]{}
+    \caption{Caption}
+    \label{fig:enter-label}
+\end{figure}
+
+\section{Equations of Motion}
+For any control system, we must understand the dynamics of the system that we want to control. For the simple inverted pendulum, this is quite easy to derive using energy mechanics.
+
+Here, I will choose to use the \gls{Lagrangian} approach in the derivation, although the \gls{Hamiltonian} or Newtonian approach can also be taken. For this particular system, the \gls{Lagrangian} approach is quite simple and requires less knowledge of the forces acting on the system, which can become quite complicated! 
+
+\subsubsection{Lagrangian Formulation}
+
+We will consider a simple version of the pendulum-cart system, as shown in \autoref{fig:Pendulum Cart}.
+
+\begin{figure}[ht]
+    \centering
+
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Rectangle [id:dp1823165404229382] 
+\draw   (244.27,180) .. controls (244.27,174.48) and (248.75,170) .. (254.27,170) -- (374.27,170) .. controls (379.8,170) and (384.27,174.48) .. (384.27,180) -- (384.27,219.09) .. controls (384.27,224.61) and (379.8,229.09) .. (374.27,229.09) -- (254.27,229.09) .. controls (248.75,229.09) and (244.27,224.61) .. (244.27,219.09) -- cycle ;
+%Straight Lines [id:da7877170508964265] 
+\draw    (270,70) -- (314.27,199.55) ;
+\draw [shift={(314.27,199.55)}, rotate = 71.13] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 4.69, y radius= 4.69]   ;
+\draw [shift={(270,70)}, rotate = 71.13] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 4.69, y radius= 4.69]   ;
+%Straight Lines [id:da5998055377665403] 
+\draw    (363.64,200) -- (437,200) ;
+\draw [shift={(440,200)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Shape: Arc [id:dp2580429075144265] 
+\draw  [draw opacity=0] (287.33,119.03) .. controls (295.78,116.12) and (304.84,114.55) .. (314.27,114.55) -- (314.27,197.27) -- cycle ; \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (290.27,118.08) .. controls (297.87,115.78) and (305.93,114.55) .. (314.27,114.55) ; \draw [shift={(314.27,114.55)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.03) -- (0,-5.03)   ; \draw [shift={(287.33,119.03)}, rotate = 341] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.04,-3.86) -- (0,0) -- (8.04,3.86) -- cycle    ;
+%Shape: Circle [id:dp15264344475000924] 
+\draw   (260,239) .. controls (260,233.48) and (264.48,229) .. (270,229) .. controls (275.52,229) and (280,233.48) .. (280,239) .. controls (280,244.52) and (275.52,249) .. (270,249) .. controls (264.48,249) and (260,244.52) .. (260,239) -- cycle ;
+%Shape: Circle [id:dp05286140767854186] 
+\draw   (350,239) .. controls (350,233.48) and (354.48,229) .. (360,229) .. controls (365.52,229) and (370,233.48) .. (370,239) .. controls (370,244.52) and (365.52,249) .. (360,249) .. controls (354.48,249) and (350,244.52) .. (350,239) -- cycle ;
+%Straight Lines [id:da14376683390655187] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (160,200) -- (230,200) ;
+
+% Text Node
+\draw (445,187.4) node [anchor=north west][inner sep=0.75pt]    {$\dot{x}$};
+% Text Node
+\draw (297,92.4) node [anchor=north west][inner sep=0.75pt]  [font=\normalsize,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$\theta $};
+% Text Node
+\draw (107,190.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$V=0$};
+% Text Node
+\draw (314.27,205.95) node [anchor=north] [inner sep=0.75pt]    {$M$};
+% Text Node
+\draw (252,52.4) node [anchor=north] [inner sep=0.75pt]    {$m$};
+% Text Node
+\draw (261,132.4) node [anchor=north west][inner sep=0.75pt]  {$l$};
+
+
+\end{tikzpicture}
+
+
+    \caption{Pendulum-Cart System}
+    \label{fig:Pendulum Cart}
+\end{figure}
+In this depiction, we will make quite a few simplifying assumptions, although some of these excluded dynamics can quite easily be recovered with a little effort:
+\begin{itemize}
+    \item The pendulum arm is assumed to originate at the center of mass of the cart.
+    \item Friction and damping in the system is neglected
+    \item The reference for the potential energy is placed at the center of mass of the cart.
+\end{itemize}
+
+With these assumptions in place, we can apply the methods of \gls{Lagrangian} mechanics to derive the \glspl{eom} of the system. 
+
+Starting with the \gls{Lagrangian} itself, we first define the generalized coordinates to use. In this case, the selection of $x$ and $\theta$ is quite obvious, as these two provide a minimal and simple realization of the system.
+
+Since the motion of the system is non-obvious, it is best to employ the generalized equation for the kinetic energy in the derivation:
+$$T=\frac{1}{2}\sum_im_i\left(\sum_j\frac{\partial\vec{r}_i}{\partial q_j}\dot{q}_j+\frac{\partial \vec{r}_i}{\partial t}\right)^2$$
+There are two masses in the system, so the sum over $i$ includes both. We define the kinetic energy of the system as the sum of the kinetic energies of the cart ($i=1)$ and the pendulum ($i=2$). For the cart, only linear motion is permitted, so the kinetic energy is:
+$$T_{cart}=\frac{1}{2}M\dot{x}^2$$
+For the pendulum arm, both translational and rotational motion is permitted, so the total kinetic energy is more complicated. We will employ the formula above to find the kinetic energy in this case, considering only $i=2$ since $i=1$ has just been solved:
+$$T_{pend}=\frac{1}{2}m\left(\sum_j\frac{\partial\vec{r}_2}{\partial q_j}\dot{q}_j+\frac{\partial \vec{r}_2}{\partial t}\right)^2$$
+The vector $\vec{r}_2$ is expressed in terms of the two generalized coordinates, which gives 
+$$\vec{r}_2=(x-l\sin\theta)\hat{\imath}+(l\cos\theta)\hat{\jmath}$$
+One `trick' we can do in the computation that is sometimes simpler is to unexpand the chain rule and express the kinetic energy as:
+$$T_{pend}=\frac{1}{2}m|\dot{r}_2|^2$$
+Computing the value of $\dot{r}_2$ (remembering the implicit chain rule, now that we are not explicitely writing it), we have:
+$$\dot{r}_2=(\dot{x}-l\cos\theta\dot{\theta})\hat{\imath}+(l\sin\theta\dot{\theta})\hat{\jmath}$$
+Performing the norm-square of $\dot{r}_2$ is the same as the dot product, so we square each element:
+$$T_{pend}=\frac{1}{2}m\left[(\dot{x}-l\cos\theta\dot{\theta})^2+(l\sin\theta\dot{\theta})^2\right]$$
+Importantly, the computation of this gives a cross term from the expansion of the first term, which we may have missed otherwise. Altogether, $T_{pend}$ is:
+$$T_{pend}=\frac{1}{2}m\dot{x}^2+\frac{1}{2}ml^2\dot{\theta}^2-ml\cos\theta\dot\theta\dot{x}$$
+We can identify that the term  $\frac{1}{2}ml^2$ can be replaced by the moment of inertia, $I$. Finally, summing the two values of $i$ gives us the following kinetic energy for the system:
+$$T_{cart}+T_{pend}=\frac{1}{2}\left[\left(M+m\right)\dot{x}^2+I\dot{\theta}^2\right]-ml\cos\theta\dot{\theta}\dot{x}$$
+
+The potential is quite easy. For the cart, no potential exists because we have defined the potential at the center of mass to be $0$. For the arm, the potential is dependent on the angle, with the relationship given by:
+$$V_{pend}=mgl\cos{\theta}$$
+Altogether, this gives a \gls{Lagrangian} of the system as:
+$$L=\frac{1}{2}\left[\left(M+m\right)\dot{x}^2+I\dot{\theta}^2\right]-ml\cos\theta\dot{\theta}\dot{x}-mgl\cos{\theta}$$
+From here, we simply apply the Euler-Lagrange equations in both the $x$ and $\theta$ component directions.
+\subsubsection{EOM Derivation}
+Starting with the $x$-direction, we can directly apply the Euler-Lagrange equation with a generalized force to find the solution:
+$$\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{x}}\right)=\frac{\partial L}{\partial x}+F$$
+Since $x$ itself has no presence in the equation,  $x$ is a cyclic coordinate in the solution. This directly implies linear momentum in the system is conserved by Noether's Theorem when no actuating forces are present. Additionally, this implies the RHS of the equation must be $F$ only. Considering the LHS then, we have:
+$$\frac{d}{dt}\left(\frac{\partial}{\partial \dot{x}}\frac{1}{2}\left[\left(M+m\right)\dot{x}^2+I\dot{\theta}^2\right]-ml\cos\theta\dot{\theta}\dot{x}-mgl\cos{\theta}\right)$$
+This simplifies quite quickly upon evaluation of the partial derivative to:
+$$\frac{d}{dt}\left[\left(M+m\right)\dot{x}-ml\cos\theta\dot\theta\right]=F$$
+Which is quite simply:
+$$(M+m)\ddot{x}-ml\cos\theta\ddot{\theta}+ml\sin\theta\dot{\theta}^2=F$$
+Next, we consider the $\theta$ component, which is quite a bit simpler. There is no generalized force in this component direction, so the result is:
+$$\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{\theta}}\right)=\frac{\partial L}{\partial \theta}$$
+Starting again with the partial derivatives, we get the following (this time, there is no cyclic coordinate in $\theta$, implying angular momentum is \textit{not} conserved):
+$$\frac{d}{dt}\left(I\dot{\theta}-ml\cos\theta\dot{x}\right)=ml\sin\theta\dot{\theta}\dot{x}+mgl\sin\theta$$
+Once again, computation of the total derivative is quite simple and gives the following:
+$$I\ddot{\theta}+ml\sin\theta\dot{\theta}\dot{x}-ml\cos\theta\ddot{x}=ml\sin\theta\dot{\theta}\dot{x}+mgl\sin\theta$$
+Seeing that the $ml\sin\theta\dot{\theta}\dot{x}$ terms cancel, we are left with:
+$$I\ddot{\theta}-ml\cos\theta\ddot{x}-mgl\sin\theta=0$$
+Altogether, the full non-linear dynamics are described by:
+\begin{gather}
+\color{blue}\boxed{\color{black}
+\begin{array}{c}
+     (M+m)\ddot{x}-ml\cos\theta\ddot{\theta}+ml\sin\theta\dot{\theta}^2=F \\I\ddot{\theta}-ml\cos\theta\ddot{x}-mgl\sin\theta=0
+\end{array}
+}
+  \\\color{blue}\mathrm{Inverted \ Pendulum \ EOMs}  
+\end{gather}
+\section{Linearization}
+Linearizing the system is the next apparent step, as this will aid us in building a linear system. First, we must find the fixed points of the system. To find the fixed points of the system, we consider values of $x$ and $\theta$ such that the first derivatives are zero at that point. We also consider $F=0$, since we can produce an arbitrary $F$ to stabilize the system (as we will later do). It is for that reason we must consider $F=0$ when considering stable points of the system.
+
+Since $x$ is not directly present in either equation, we are free to select any value of $x$ to produce a stable system. The physical interpretation is that the system can be stable for any horizontal position, which satisfies our intuition about the system. Considering $\theta$, 
+
+since all of the non-linear terms are trigonometric. First, we can find the fixed points of the system.
+
+
+
+\section{LQR Control}
+
+\section{Real Implementation}
 
 
 \chapter{Controls in Aerospace}
-%maybe take out
+Aerospace systems use controls in many applications. Often, aerospace control systems are quite complex and are much more demanding than other control systems due to the large non-nonlinearities in the dynamics and other challenges. As a result, controlling aerospace vehicles remains as one of the most challenging aspects of control theory. I devote this chapter to a broad overview of different types of aerospace control systems and the methods by which they are controlled.
 
+\section{Trajectory Optimization and Control}
+
+
+\section{Aircraft Autopilot}
+
+\section{Active Stabilization}
+%maybe take out
 
 
 \chapter{Basics of Non-Linear Control}
@@ -4527,6 +5223,7 @@ After our discussion on optimal estimation, we are only a short distance from de
 \chapter{Trajectory Optimization}
 
 \chapter{Flight Dynamics and Control}
+To bring everything in this series full circle at last, let us end by discussing the control methods that are used in flight dynamics and control systems.
 
 \newpage
 \chapter*{The End!}
