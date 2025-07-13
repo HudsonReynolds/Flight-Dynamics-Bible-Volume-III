@@ -993,8 +993,12 @@ It turns out that these are the only two conditions that we need to satisfy for 
 The core idea behind the Bode plot is to understand how a transfer function behaviors over the range of all frequencies, and plot that behavior. Before we can do that, however, we need some more context about transfer functions.
 
 One relationship of transfer functions that we have not mentioned yet is that when a sinusoid is input into the transfer function, the output must also be a sinusoid of the same frequency!
-
-
+\begin{figure}[ht]
+    \centering
+    \includesvg[width=0.75\linewidth]{Images/SinusoidInOut.svg}
+    \caption{Sinusoid Input Output Relationship}
+    \label{fig:sinInOut}
+\end{figure}
 
 
 \section{Nyquist Plots}
@@ -1383,6 +1387,21 @@ As has been previously noted, the controllability of the system is dependent on 
 
 
 \section{Real Implementation}
+To begin the discussion of the real implementation of the inverted pendulum, we must discuss the hardware used, as that directly ties into how we build our state space model and what assumptions that we can use in the design.
+
+I should note that I am presenting this \textit{after} presenting the theory of the system, but in practice, these are often developed alongside each other. The hardware will dictate some facts about the control system, especially under certain budget, size, and power constraints.
+\subsection{Physical Design}
+The physical design of the pendulum is quite important to understand which dynamical phenomena are important for our modeling. A technical drawing of the pendulum is shown in 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Images/InvertedPendulum.pdf}
+    \caption{Caption}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{}
+
 
 \newpage
 \printendnotes
