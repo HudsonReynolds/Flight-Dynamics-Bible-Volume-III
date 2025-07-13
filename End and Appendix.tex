@@ -1,0 +1,69 @@
+\chapter*{The End!}
+And so, you have finished all three volumes of the Flight Dynamics Bible! This is quite the accomplishment. Over the course of three volumes, you have read over 500 pages of content, representing over 80,000 words and 2,500 equations.
+
+Preston and I hope that this series has been beneficial to you and furthered your knowledge of flight dynamics and all other subject enclosed. Of course, this reading is only the beginning of your journey. From here, there are many avenues that you can explore - be that \gls{gnc}, avionics, robotics, physics, or otherwise.
+
+My hope is that the reader have derived from these books some useful intuition for these complex topics and are inspired to further research. There is a vast amount of knowledge to be gained, and so much fundamental beauty in studying the math and physics of the natural world. I will leave you with one final quote as you continue your journey. 
+
+\begin{chapquote}{Yo-Yo Ma}
+``The worst thing you can do is say to yourself, `I want to be just like somebody else.' You have to absorb knowledge from someone else, but ultimately you have to find your own voice.''
+\end{chapquote}
+
+If you have any suggestions for improvements to these books, please message me on slack @HudsonReynolds or reach out by email at HudsonJ.Reynolds@gmail.com. Thank you for reading.
+
+\chapter{Appendix}
+
+\section{Code}
+\subsection{Geodesics of a Sphere}
+\lstinputlisting[style=Matlab-editor, caption=Sphere Geodesic]{Scripts/SphereGeodesic.m}\label{script:Geodesic}
+
+\subsection{Quantum Derivation of the Mirror} \label{sec: Quantum Deriv Mirror}
+\lstinputlisting[style=Matlab-editor, caption=QED Mirror]{Scripts/Mirror.m}\label{script:Mirror}
+
+\section{Brachistrochrone Extras (Delete maybe)}
+From Brachistochrone section:
+
+Next, we can express this velocity as a infinitesimal element of the arc-length traversed over an infinitesimal time span. This is more simply stated mathematically:
+$$v=\dfrac{ds}{dt}$$
+Now, we can use these two relations to formulate an integral for the time. Taking the two and setting them in an equality:
+$$\frac{ds}{dt}=\sqrt{2gx}$$
+Performing seperation of variables and writing the integral, with the assumption that $t=\frac{s}{v}$ and that the initial conditions are zero:
+$$\sqrt{2g}T=\int_{t_1}^{t_2}\frac{\sqrt{\dot{x}^2+\dot{y}^2}}{\sqrt{x}}$$
+
+
+\section{Proofs}
+\subsection{Equivalence of Newtonian and Lagrangian Mechanics}\label{equiv newt and lang}
+
+\begin{proof}
+We start with Lagrange's equations in rectilinear coordinates $x_i=x,y,z$:
+
+$$\frac{\partial L}{\partial x_i}-\frac{d}{dt}\frac{\partial L}{\partial \dot{x}_i}=0 $$
+
+We know that the \gls{Lagrangian} is given as $L=T-U$, so we can express the Euler-Lagrange equations as:
+
+$$\frac{\partial (T-U)}{\partial x_i}-\frac{d}{dt}\frac{\partial (T-U)}{\partial \dot{x}_i}=0$$
+
+We know that the translational kinetic energy is a function of the velocity only, so $\frac{\partial T}{\partial x_i}=0$. A \gls{conservative} potential is a function of the position only, so $\frac{\partial U}{\partial \dot{x}_i}=0$. This simplifies the \gls{euler lagrange} to:
+$$-\frac{\partial U}{\partial x_i}=\frac{d}{dt}\frac{\partial T}{\partial \dot{x}_i}$$
+For a \gls{conservative} system, $-\frac{\partial U}{\partial x_i}=F_i$, because the force is the gradient of the potential function.
+
+We know the kinetic energy is given as $\frac{1}{2}m\dot{x}^2$. The derivative with respect to the velocity $\dot{x}$ is $m\dot{x}_i$. Taking the time derivative, we have $\frac{d}{dt}(m\dot{x}_i)=m\ddot{x}_i$ in the case of constant mass (or more generally,  $\frac{d}{dt}(m\dot{x}_i)=\dot{p}_i$).
+
+So, we have $F=m\ddot{x}_i$.
+
+\end{proof}
+\begin{corollary}
+    From the proof, we can also see that the validity is dependent on the choice of rectangular coordinates. 
+
+    It can further be shown that the Newtonian derivation must be performed in an inertial frame.
+\end{corollary}
+
+
+\section{Code}
+This section contains lengthier segments of example code from either the 6-\gls{dof} itself or a proof/example relating to it. Refer to the section numbers to find the appropriate implementation of each code segment.
+
+%\lstinputlisting[style=Matlab-editor, caption = Lorenz Attractor]{6DoF Explanation Scripts/Lorenz Attractor/LorenzAttractor.m}\label{code:Lorenz}
+
+\setglossarystyle{altlist}
+\printglossary[title=Special Terms, toctitle = Special Terms]
+\printbibliography[heading=bibintoc, title={References}]
