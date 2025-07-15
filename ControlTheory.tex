@@ -6,21 +6,23 @@
 \
 Control theory is a vast subject which is to vast to cover in its entirety in one book. Similar to Volume I, then, I will cover this subject mostly in it's applicability to our application with rocket modeling and a few select aerospace applications.
 
-An introduction to control theory as a whole is essential to understanding aerospace applications. This section will cover \gls{lti} systems and the usage of the Laplace transform and transfer functions in analyzing these systems. Linear systems are quite simple to model mathematically because they exhibit useful properties such as superposition. 
+An introduction to control theory as a whole is essential to understanding aerospace applications. This section will cover \gls{lti} systems and the usage of the \gls{laplace transform} and transfer functions in analyzing these systems. Linear systems are quite simple to model mathematically because they exhibit useful properties such as superposition. For this reason, linear models are studied quite extensively.
 
-Next, I choose to discuss some aspects of optimal control. This ties in to our discussion of the calculus of variations. This section will include some discussion of Kalman filtering and some parts of optimal control in aerospace applications. 
+Next, I choose to discuss some aspects of optimal estimation and control. This has deep ties to our discussion of the calculus of variations. This section will include some discussion of Kalman filtering and some parts of optimal control in aerospace applications, such as LQR controllers. 
 
-Of course, nearly all systems are non-linear to some degree. Thus, it is prudent to cover some examples where we need to implement non-linear control schemes. Non-linear systems will be discussed in brief at the end of the chapter. Non-linear systems, in general, are hard to generalize mathematically, so I take the approach of mostly covering linear dynamics. Then, we use simulation to fine tune the linear model. Non-linear dynamics are easily simulated in MATLAB, which we have shown extensively in Volume I and Volume II. Our main goal here, then, is to show some examples of modifying linear systems to suit non-linear models.
+Of course, nearly all systems are non-linear to some degree. Thus, it is prudent to cover some examples where we need to model non-linear systems. Non-linear systems will be discussed in brief at the end of the chapter. Non-linear systems, in general, are hard to generalize mathematically, so I take the approach of performing linear analysis for the system. Then, we use simulation to fine tune the linear model. Non-linear dynamics are easily simulated in MATLAB, which we have shown extensively in Volume I and Volume II. This is the common method by which non-linear systems are dealt with.
+
+Finally, a full example of an inverted pendulum control scheme and physical implementation is given. This example should help to tie together some of the previously discussed concepts in a real world example and demonstrate physical implementation.
 
 \chapter{Introduction to Control Theory}
-Control theory, at the fundamental level, is about understanding how a system reacts to inputs and outputs. Because this definition is so broad, we can apply control theory to a vast number of things -- even many that you may not normally think of as control theory. Classic examples of control theory include the cruise control in a car or the moving control surfaces of an aircraft to change its trajectory. However, even mundane things are control systems. The knob on your toaster than controls how long it cooks is a control system!
+Control theory, at the fundamental level, is about understanding how a system reacts to inputs and outputs. Because this definition is so broad, we can apply control theory to a vast number of things -- even many that you may not normally think of as control theory. Classic examples of control theory include the cruise control in a car or the moving control surfaces of an aircraft to change its trajectory. However, even mundane things are control systems. The knob on your toaster than dictates how long it cooks is a control system!
 
-The point is that at the current time, this definition is quite broad. So, we need to narrow it down and focus on the types of systems that we want to analyze here. 
+As we can see, this definition is quite broad. So, we need to narrow it down and focus on the types of systems that we want to analyze here. We can classify systems into several main categories for futher analysis.
 
 \section{Classifications of Control Systems}
 There are several characteristics that determine the classification of a control system. First and foremost is the distinction between an open-loop system and a closed-loop system, which we must first discuss before making any other distinctions.
 \subsubsection{Open-Loop Control}
-An open loop system is one that does a predetermined outcome based on some input. You can think of this like a "if/else" statement in code. "If" the input is `this', do this certain output. If the system begins to stray from the desired value, there is no way to detect this. The system simply keeps doing the same thing no matter what happens after the input. It's like trying to trying to walk around your house just based on the layout! It may work sometimes, but other times you will step on your cat or run into a wall. We would draw a system like this as shown in \autoref{fig:Open Loop Controller}.
+An open loop system is one that does a predetermined outcome based on some input. You can think of this like a "if/else" statement in code. "If" the input is `this', do this certain output. If the system begins to stray from the desired value, there is no way to detect this. The system simply keeps doing the same thing no matter what happens after the input. It's like trying to trying to walk around your house with your eyes closed! It may work sometimes, but other times you will step on your cat or run into a wall. We would draw a system like this as shown in \autoref{fig:Open Loop Controller}.
 
 \begin{figure}[ht]
     \centering
@@ -146,12 +148,12 @@ We can alleviate the problems of the open-loop system by introducing \textit{fee
 
 This diagram indicates the key components of a closed-loop system. We have many components from the open-loop system again, such as the controller and the system. Now, we add a sensor, which senses the final output $y$. The $+/-$ element takes the difference between the input $r$ and the sensor measurement to generate an error, $e$. This error is now what feeds the controller. Typically, the goal of the closed-loop system is to configure the controller such that the error eventually goes to zero. In a well defined system, we can reduce this error to zero even when the system is subjected to disturbances, $d$!
 
-We can take the analogy of walking through your house to demonstrate the key difference with the closed-loop system. Now, you have your eyes (the sensor) to aid you in walking through your house. This makes it much easier and you can account for disturbance events now. We can thus see that closed-loop systems are preferable in most applications. As a result, the rest of this book will put its emphasis on closed-loop system design.
+We can take the analogy of walking through your house to demonstrate the key difference with the closed-loop system. Now, you have your eyes (the sensor) to aid you in walking through your house. This makes it much easier and you can account for disturbance events now. If your cat walks across the hall, you can make some adjustment to your path. We can see that closed-loop systems are preferable in most complex applications. As a result, the rest of this book will put its emphasis on closed-loop system design.
 
 \subsection{Features of Closed-Loop Systems}
 Within closed-loop control systems (sometimes called feedback control systems), there are several further distinctions that can be made. We can classify systems as either \textit{linear} or \textit{non-linear}, and \textit{time invariant} or \textit{time varying}.
 
-A system can have either of these attributes. For example, a system can be time varying, but also linear. A system cannot however, be both linear and non-linear, as these are mutually exclusive. In the next section we will discuss exactly what we mean by each of these terms
+A system can have either of these attributes. For example, a system can be time varying, but also linear. A system cannot however, be both linear and non-linear, or both  as these are mutually exclusive. In the next section we will discuss exactly what we mean by each of these terms
 
 \subsubsection{Linear Systems}
 Linear systems are best thought of in the following way: If we have one solution to the equation, and another solution to the equation, we can add them and get another valid solution. That is to say, in the more technical language, that a linear mapping exists. In control theory and other engineering and physics disciplines, this property is often referred to as \textit{superposition}.
@@ -185,7 +187,7 @@ In fact, most of the theory of classical control theory is based around these si
 
 \chapter{The Laplace Domain}
 
-We start our exploration of linear control theory by exploring the \gls{laplace transform}. The \gls{laplace transform} is an integral transform, much like the \textit{Fourier Transform}. We find the Laplace transform of special use for its applications in solving linear differential equations. The \gls{laplace transform} is especially useful because it converts a linear differential equation into an algebraic equation. This is especially useful because we are very well versed in solving algebraic equations!
+We start our exploration of linear control theory by exploring the \gls{laplace transform}. The \gls{laplace transform} is an integral transform, much like the \textit{Fourier Transform}. We find the \gls{laplace transform} of special use for its applications in solving linear differential equations. The \gls{laplace transform} is especially useful because it converts a linear differential equation into an algebraic equation. This is especially useful because we are very well versed in solving algebraic equations!
 
 This conversion of a differential equation to an algebraic equation, combined with a bit of practice, is enough to effectively use the \gls{laplace transform}. However, it doesn't give us an appreciation of \textit{what} the \gls{laplace transform} actually is. Here, I want to present an alternative impetus for the \gls{laplace transform} that is often not taught in introductory differential equations, by analyzing the \glspl{eigenfunction} of the derivative operator. I hope this explanation will be useful both to those learning the subject for the first time and to those learning the subject again. I will admit, however, this explanation will be most useful to those who have at least seen the \gls{laplace transform} before.
 
@@ -405,6 +407,8 @@ For now, we are only concerned with the case where $p=2$, which we call the Eucl
 All of this formalism leads us to the final important realization, which we call the $L^2$ space -- $L$ for Lebesgue and $2$ for the 2-norm. In an $L^2$ space defined over the range $(0,\tau)$, we write the inner product as:
 $$a(t)\cdot b(t)=\frac{1}{\tau}\int_0^\tau{a(t)\overline{b(t)}}dt$$
 I should note that the addition of $\frac{1}{\tau}$ is not strictly necessary to make this an inner product. Instead, it is there as a `normalization' factor because it is often helpful to include it.
+\subsection{Example Inner Product Spaces}
+To solidify the idea of the inner product space, we should consider several inner product spaces that we see quite frequently. After this, we will consider the inner product that leads us to the \gls{laplace transform}.
 
 \section{The Laplace Transform}
 We can now return to the example of the exponential functions, $e^{at}$. We have previously seen that these exponential functions are key in describing the solutions to differential equations. To further extend this definition, we can consider values of $a$ which are complex. We generally denote such complex values as $s$, which gives us the general function: $e^{st}$. This function contains all of the possible behaviors of a linear differential equation.
@@ -418,20 +422,20 @@ We can show this quite easily by considering the possible cases for a linear dif
 
 Because the exponential is so robust, we would find it especially useful to define 
  
- So, we can project our function onto the basis vectors defined by $e^{st}$. Doing so, we have the Laplace Transform:
+ So, we can project our function onto the basis vectors defined by $e^{st}$. Doing so, we have the \gls{laplace transform}:
 \begin{gather}\label{eq:laplace transform}
     \color{blue}\boxed{\color{black}f(t)\cdot e^{st}=\int_0^\infty{f(t)e^{-st}}}\\
     \color{blue}\mathrm{Laplace \ Transform}
 \end{gather}
-The Laplace transform will prove extraordinarily useful for analyzing \gls{lti} systems. We may refer to the Laplace transform of a function $f(t)$ by $\mathcal{L}\left\{f(t)\right\}$. We generally denote this Laplace transform in shorthand as $$\mathcal{L}\left\{f(t)\right\}\Rightarrow F(s)$$
-It is typical to denote the transformation both by a chance of variable from $t$ to $s$ as well as from a lowercase function, such as $f$, to an upper case one, $F$. I note that the Laplace transform has transformed our function from one in the time domain, $t$, to one in the $s$-domain! This $s$-domain has some very unique properties which come as a result of intentionally choosing the exponential function as our basis. The properties important to our study of control theory will be explored in the following section.
+The \gls{laplace transform} will prove extraordinarily useful for analyzing \gls{lti} systems. We may refer to the \gls{laplace transform} of a function $f(t)$ by $\mathcal{L}\left\{f(t)\right\}$. We generally denote this \gls{laplace transform} in shorthand as $$\mathcal{L}\left\{f(t)\right\}\Rightarrow F(s)$$
+It is typical to denote the transformation both by a chance of variable from $t$ to $s$ as well as from a lowercase function, such as $f$, to an upper case one, $F$. I note that the \gls{laplace transform} has transformed our function from one in the time domain, $t$, to one in the $s$-domain! This $s$-domain has some very unique properties which come as a result of intentionally choosing the exponential function as our basis. The properties important to our study of control theory will be explored in the following section.
 \subsection{Properties of the Laplace Transform}\label{sec:properties of laplace transform}
 
-There are many properties of the Laplace transform. We are not concerned with deriving all of these, although most are quite easy to prove simply by plugging them into \eqautoref{eq:laplace transform}. A list of the commonly used Laplace transforms can be found at \cite{dawkins_differential_nodate}. The derivations for most of these are just manipulations of the integral, so I will not cover them unless they are particulary insightful.
+There are many properties of the \gls{laplace transform}. We are not concerned with deriving all of these, although most are quite easy to prove simply by plugging them into \eqautoref{eq:laplace transform}. A list of the commonly used \glspl{laplace transform} can be found at \cite{dawkins_differential_nodate}. The derivations for most of these are just manipulations of the integral, so I will not cover them unless they are particulary insightful.
 
 Here, I want to cover a few of the most useful properties for understanding control theory. Of course, all of the transforms are useful in their own right, and many of them come up in problems. For that reason, I recommend the reader is at least comfortable with manipulating equations in the $s$-domain, and converting back and forth. This skill just comes with practice. I have included a few practice problems at the end of this section if you want to practice these transformations.
 
-That being said, let us begin by covering some of the most useful Laplace transforms, which are listed below:
+That being said, let us begin by covering some of the most useful \glspl{laplace transform}, which are listed below:
 \begin{itemize}
     \item Exponential function
     \item Sinusoid
@@ -443,7 +447,7 @@ That being said, let us begin by covering some of the most useful Laplace transf
 \subsubsection{Exponential Functions}
 Exponential functions, as previously mentioned, are quite common in differential equations and control theory. For this reason, we start with these.
 
-Finding the Laplace Transform for the exponential function is quite easy, actually! We consider the general exponential function $e^{at}$, and plug into \eqautoref{eq:laplace transform}:
+Finding the \gls{laplace transform} for the exponential function is quite easy, actually! We consider the general exponential function $e^{at}$, and plug into \eqautoref{eq:laplace transform}:
 $$\int_0^\infty{e^{at}e^{-st}}dt$$
 We can combine the two exponentials in this equation to get:
 $$\int_0^\infty{e^{t(a-s)}}dt$$
@@ -456,9 +460,9 @@ Since we know that exponentials with positive values for $a$ diverge to infinity
 \subsubsection{Sinusoids}
 From the exponentials, we are only a short step from the sinusoidal functions. Since the two functions are closely related, it is quite simple to develop appropriate transforms of the sinusoids using the Euler equation:
 $$e^{ix}=\cos x+i\sin x$$
-From here, it is easy to prove that the $\sin(at)$ function has a Laplace transform:
+From here, it is easy to prove that the $\sin(at)$ function has a \gls{laplace transform}:
 $$\mathcal{L}\left\{\sin(at)\right\}=\frac{a}{s^2+a^2}$$
-and that $\cos(at)$ function has a Laplace transform:
+and that $\cos(at)$ function has a \gls{laplace transform}:
 $$\mathcal{L}\left\{\cos(at)\right\}=\frac{s}{s^2+a^2}$$
 It is interested to note, that if we consider values of $s$ that are purely imaginary, that is $s=i\omega$, these formulas simplify a bit. For $\sin$, we have the following:
 $$\sin(at)=\frac{a}{a^2-\omega^2}$$
@@ -507,14 +511,14 @@ The step function has a value of $0$ until time $t=0$, after which it attains a 
 
 The unit step function can also have a time offset, which is the same as a usual function, where the offset is to the right is given by the value $c$ and the form of the step function is $1^+(t-c)$ or ${1_c}^+(t)$
 
-We can apply the integral transform on ${1_c}^+(t)$, which effectively removes any portion of the integral before time $t$. The Laplace transform of the step function gives:
+We can apply the integral transform on ${1_c}^+(t)$, which effectively removes any portion of the integral before time $t$. The \gls{laplace transform} of the step function gives:
 
 $$\mathcal{L}\left\{{1_c}^+(t)\right\}=\frac{e^{-cs}}{s}$$
-The unit step function often multiplies other functions as well. The Laplace transform in this case is given by:
+The unit step function often multiplies other functions as well. The \gls{laplace transform} in this case is given by:
 $$\mathcal{L}\left\{{1_c}^+(t)f(t-c)\right\}=e^{-cs}F(s)$$
 Or as is more often the case:
 $$\mathcal{L}\left\{{1_c}^+(t)f(t)\right\}=e^{-cs}\mathcal{L}\left\{f(t+c)\right\}$$
-These equations can easily be derived from the integral expression of the Laplace transform which has previously been shown
+These equations can easily be derived from the integral expression of the \gls{laplace transform} which has previously been shown
 \chapter{Linear Time Invariant Systems}
 
 \Gls{lti} systems are the simplest systems to describe, so we will start here. These systems will be the basis of almost every other control scheme that we describe. Since we can find exact solutions to \gls{lti} systems, we can apply the theories that we study here in many other types of control systems, whether they are non-linear or time varying.
@@ -551,7 +555,7 @@ We can perform a substitution with $\sigma=t-\tau$, which simplifies the integra
 $$\mathcal{L}\{(u*g)(t)\}=\int_0^\infty{\left(\int_0^\infty{}u(\tau)g(\sigma)d\tau\right)}e^{-s(\sigma+\tau)}d\sigma$$
 Since $\tau$ is a constant, we can see that $dt=d\sigma$. This allows us to separate the integral into two components:
 $$\mathcal{L}\{(u*g)(t)\}=\int_0^\infty g(\sigma)e^{-s\sigma}d\sigma{\int_0^\infty{}u(\tau)e^{-s\tau}}d\tau$$
-We can see that these two integrations are simply the integrals for the Laplace transform of $g$ and $u$! This gives us the very important result that:
+We can see that these two integrations are simply the integrals for the \gls{laplace transform} of $g$ and $u$! This gives us the very important result that:
 $$\mathcal{L}\{(u*g)(t)\}=U(s)G(s)$$
 The result of this is that we can write the input output relationships in the Laplace domain very simply -- it is simply a multiplication. Considering our original function:
 $$u(t)*g(t)=y(t)$$
@@ -563,11 +567,11 @@ $$G(s)=\frac{Y(s)}{U(s)}$$
 \subsubsection{Why does this work?}
 Although I have shown the mathematics which show that the convolution reduces to multiplication in the Laplace domain, I find it quite helpful to examine why this holds from a physical point of view.
 
-We can remember from \autoref{sec:properties of laplace transform} that the Laplace transform gives us quite simple representations of derivatives and integrals as multiplication and division by $s$. As a result, we can quite easily express equations of motion in the Laplace domain. For example, we can consider the \gls{eom} for a mass spring damper:
+We can remember from \autoref{sec:properties of laplace transform} that the \gls{laplace transform} gives us quite simple representations of derivatives and integrals as multiplication and division by $s$. As a result, we can quite easily express equations of motion in the Laplace domain. For example, we can consider the \gls{eom} for a mass spring damper:
 $$m\ddot{y}(t)+c\dot{y}(t)+ky(t)=u(t)$$
 Expressed in the Laplace domain (assuming that the initial conditions are $0$, which is the usual condition for transfer functions):
 $$Y(s)\left[ms^2+cs+k\right]=U(s)$$
-It is in this equation that the insight behind the Laplace transform can be discovered. If we compare to the previous example, we had $Y(s)G(s)=U(s)$. It is exactly the \gls{eom} of the system that determines the input and output mapping!
+It is in this equation that the insight behind the \gls{laplace transform} can be discovered. If we compare to the previous example, we had $Y(s)G(s)=U(s)$. It is exactly the \gls{eom} of the system that determines the input and output mapping!
 
 So, we can see that in the Laplace domain, all of the information of the system dynamics is directly captured in the transfer function. We can therefore, know what the position, velocity, or acceleration are for any value $s$. The tradeoff, of course, is that we lose information on the temporal component, $t$, during the transformation. However, we still find it extremely useful to have this `global view' of the function in the Laplace domain! When we need to consider the temporal aspects of the system, we can either revert to the time domain or use some other tools to understand the temporal nature of the transfer function.
 
@@ -638,7 +642,7 @@ We have previously seen the case of the pure sinusoid while discussing transfer 
     \caption{General Pole-Zero Plot}
     \label{fig:pole zero}
 \end{figure}
-Here, the function has poles at $s=\sigma\pm i\omega$ in the $s$-domain. From our discussion of the Laplace transform, this means that the behavior of the system in the time domain can be represented by taking $e^{st}$, which gives
+Here, the function has poles at $s=\sigma\pm i\omega$ in the $s$-domain. From our discussion of the \gls{laplace transform}, this means that the behavior of the system in the time domain can be represented by taking $e^{st}$, which gives
 $$f(t)=e^{(\sigma\pm i\omega)t}=e^{\sigma t}e^{i\omega t}$$
 We have previously shown that $e^{i\omega t}$ always has a magnitude of 1 and simply represents rotation in the complex plane. As a result, the magnitude of $f(t)$ is purely dictated by the term $e^{\sigma t}$.
 
@@ -989,6 +993,9 @@ We can solidify these ideas with some exact definitions. We consider a system to
 
 It turns out that these are the only two conditions that we need to satisfy for controllability of a linear system. Still, we need to develop an exact criteria that tells us about 
 
+\section{State Space Representation}
+
+
 \section{Bode Plots}
 The core idea behind the Bode plot is to understand how a transfer function behaviors over the range of all frequencies, and plot that behavior. Before we can do that, however, we need some more context about transfer functions.
 
@@ -999,17 +1006,37 @@ One relationship of transfer functions that we have not mentioned yet is that wh
     \caption{Sinusoid Input Output Relationship}
     \label{fig:sinInOut}
 \end{figure}
+We can see this quite readily by considering the operations that we can perform on a sine wave in a linear system. We can:
+\begin{enumerate}
+    \item Multiply by a constant, $a$
+    \item Add or subtract another sine wave
+    \item Integrate the sine wave
+    \item Differentiate the sine wave
+\end{enumerate}
+The operations above are the only operations we can perform, because any other type of input will violate the zero-input zero-output quality of the transfer function.
 
+We can see that applying any of these operations will yield another sine wave, with the only possible variation being the phase and amplitude of the wave!
 
+\begin{exercise}
+    Show that all four identities must return a sine wave as a result. You may need to use some trigonometric identities to prove the addition of sine waves.
+\end{exercise}
+
+We call the change in the amplitude of the input sine wave the gain, and the change in the phase is simply the phase. The convention is that the a negative phase
+
+So, with these tools, we can compute the gain and phase that result from inputting a sine wave into a transfer function.
 \section{Nyquist Plots}
 
-\section{State Space Representation}
+\section{Nichols Chart}
+
 
 \section{Useful MATLAB Commands}
 MATLAB has many features which are great for control systems. I have com
 
 \chapter{Optimality}
-The subjects of both optimal estimation and optimal control lie on the foundations of optimality. I devote a chapter here to studying the various types of optimality that are relavant to our discussion here. The later parts of this chapter will derive much from our earlier work in the calculus of variations, \gls{Lagrangian} mechanics, and \gls{Hamiltonian} mechanics.
+The subjects of both optimal estimation and optimal control lie on the foundations of optimality. I devote a chapter here to studying the various types of optimality that are relevant to our discussion here. The later parts of this chapter will derive much from our earlier work in the calculus of variations, \gls{Lagrangian} mechanics, and \gls{Hamiltonian} mechanics.
+
+\subsubsection{What is Optimality?}
+Before we get into any mathematical analysis, I should explain exactly what is meant by optimality. An optimal solution is one which 
 
 \section{Least Squares Estimation}
 To start our discussion of optimal, we should first consider a quite simple case of optimality, which is the case of producing a least squares estimate. The solution to this problem will introduce us to the realm of optimal control.
@@ -1095,6 +1122,20 @@ The other part of the Kalman Filter is that we need measurements, and more impor
 \section{The Average and Low Pass Filter}
 
 \section{The Kalman Filter}
+Our previous discussions on the best fit linear model and other filters have set us up to finally discuss the Kalman Filter. The Kalman Filter is a linear filter which provides the best possible estimate for a linear system.
+
+The best possible estimate of a state in a system is \textit{unbiased}, \textit{minimum variance}, and \textit{consistent}. An unbiased estimator has the property that the expected value from the sensor is the same as the true value. This effectively means that the sensor is accurate, although it may not provide particularly precise measurements. The second quality is that of minimum variance. This is effectively the criteria of optimality, in that no other estimator can estimate the variance better than the minimum variance system. Finally, a consistent estimator converges to the true value of the state.
+
+It is important to note that there is a subtle distinction between a consistent and an unbiased estimator. A consistent estimator may converge at $t\rightarrow\infty$ to the true value of $\textbf{x}$, but at any time prior its estimate does not agree with the true value. This can be seen quite evidently in 
+
+\begin{figure}
+    \centering
+    \includesvg[width=0.75\linewidth]{}
+    \caption{Caption}
+    \label{fig:enter-label}
+\end{figure}
+
+
 
 \begin{example}[The 1D Radar Problem (Gelb)]
 Do this shit later lmao
@@ -1107,7 +1148,12 @@ Do this shit later lmao
 \subsection{The Unscented Kalman Filter}
 
 \chapter{Optimal Control}
-After our discussion on optimal estimation, we are only a short distance from developing a good theory of optimal control.
+After our discussion on optimal estimation, we are only a short distance from developing a good theory of optimal control. 
+
+Because some of the theory in this chapter is quite dense, I have restructured this chapter slightly. An intuitive explanation of optimal controllers is discussed first, alongside the MATLAB implementation, and then the theory is discussed in the later portion of the chapter. I have done this so that the reader can more intuitively grasp some of the reasons why the mathematical formulation is structured in the way that it is.
+
+\subsection{LQR Control}
+\gls{lqr} control is a type of control which minimizes a quadratic cost function. 
 
 \section{Hamilton-Jacobi-Bellman Equation}
 To begin the formulation of the problem, we consider a problem with (in the general case) non-linear dynamics. As we have seen before, non-linear dynamics can be represented in the form:
@@ -1120,6 +1166,8 @@ Of course, our goal in this problem is to find a solution that is optimal. To do
 $$J^*=\int_{t_0}^T{L[\textbf{x}^*(\tau),u^*(\tau),\tau]d\tau}+S[\textbf{x}^*(T)]$$
 Notably, the future state of $\textbf{x}(t)$ is only dependent on the initial condition $\textbf{x}_0$  and the control input. Thus, all future states are decided by the initial state and the optimal control input $u^*$.
 
+We can alternatively represent this minimization problem as:
+$$J^*=\min$$
 
 
 
@@ -1349,7 +1397,7 @@ So that the full state space formulation is given by:
 \end{bmatrix}
 \end{gather}
 \subsubsection{Transfer Function}
-The transfer function for the linearized system is also quite plain to express (in fact, we cannot write the transfer function for a non-linear system). We start by considering the Laplace transform of \eqautoref{eq:linear pend}:
+The transfer function for the linearized system is also quite plain to express (in fact, we cannot write the transfer function for a non-linear system). We start by considering the \gls{laplace transform} of \eqautoref{eq:linear pend}:
 \begin{align}
     (M+m)s^2X(s)-mls^2\Theta(s)=F(s)\\
     Is^2\Theta(s)-mls^2X(s)-mgl\Theta(s)=0
@@ -1384,22 +1432,54 @@ As has been previously noted, the controllability of the system is dependent on 
 % to do
 
 \section{LQR Control}
-
+For the pendulum, an \gls{lqr} controller is chosen. Since the system has full state feedback, the \gls{lqr} controller works well for the control system 
 
 \section{Real Implementation}
 To begin the discussion of the real implementation of the inverted pendulum, we must discuss the hardware used, as that directly ties into how we build our state space model and what assumptions that we can use in the design.
 
 I should note that I am presenting this \textit{after} presenting the theory of the system, but in practice, these are often developed alongside each other. The hardware will dictate some facts about the control system, especially under certain budget, size, and power constraints.
 \subsection{Physical Design}
-The physical design of the pendulum is quite important to understand which dynamical phenomena are important for our modeling. A technical drawing of the pendulum is shown in 
+The physical design of the pendulum is quite important to understand which dynamical phenomena are important for our modeling. Additionally, the physical components will dictate features of the system observability and place limitations on the control scheme. A technical drawing of the pendulum is shown in \autoref{fig:pend schem}.
 
-\begin{figure}
+\begin{figure}[ht]
     \centering
-    \includegraphics[width=0.5\linewidth]{Images/InvertedPendulum.pdf}
-    \caption{Caption}
-    \label{fig:enter-label}
+    \includegraphics[width=\linewidth]{Images/InvertedPendulumSchematic.pdf}
+    \caption{Inverted Pendulum Schematic}
+    \label{fig:pend schem}
 \end{figure}
+\subsubsection{Rotary Encoder}
+In cross section A-A, the rotary encoder can be seen. The rotary encoder is one of the most imporant components in the design as the angle measurement of the arm is very important in understanding the dynamics of the system. The particular model used here can be found at \cite{noauthor_yuecoom_nodate}.
 
+This rotary encoder is a hall effect sensor, so it is contactless. The sensor has 12-bit precision and can measure angles to a precision of $0.088\degree$ as a result. This type of sensor has much less sensor noise than a common potentiometer and also produces less resistance to rotation. This reduction in drag helps the pendulum arm rotate more freely. For this project, I have mounted the pendulum arm directly onto the end of the sensor. However, for heavier loads, it may be wise to place the load on a bearing instead of the sensor itself.
+
+Another important feature of the rotary encoder is the sensor linearity. For this model, the sensor linearity is 0.3\% of the full scale, which means that the maximum deviation from the true output is less than 0.3\% of $360\degree$, or less than $1.08\degree$.
+
+\subsubsection{Arm}
+The design of the physical arm is also quite important to the development of a control model for the pendulum. For a pendulum undergoing small oscillations, the period is given by 
+$$T=2\pi\sqrt{\frac{l}{g}}$$
+From this relation, we can see that increasing the length will increase the period and make the system easier to control. Of course, this is quite different for the inverted case since the fixed point is unstable. However, this still gives a heuristic for how long the pendulum will take to fall.
+
+If we want to be more precise, we may take the linear equations of motion in \eqautoref{eq:linear pend} and assume that the acceleration $\ddot{x}$ is 0:
+$$I\ddot{\theta}=mgl\theta$$
+The exact moment of inertia of the system may change, but the moment of inertia must always have units of $ml^2$. If we let $I=Cml^2$, then:
+$$\ddot{\theta}=\frac{g}{Cl}\theta$$
+We can see that for small angles, the acceleration of the pendulum away from the equilibrium position is inversely related to the length of the pendulum and the moment of inertia, $C$. For this reason, it is quite easy to balance a broom vertically, but balancing a pencil is almost impossible!
+
+For our system then, we should choose values that make controlling the system possible without extraordinarily fast electronics or microcontrollers. At the same time, the arm should be easily carried around and not so large as to require a huge motor to move it. A length of around $0.5\ \mathrm{m}$ is a good compromise between the two. Assuming the arm has a moment of inertia that is the same as a thin rod, $\frac{1}{3}ml^2$, then the acceleration is around $6.3 \ \mathrm{rad/s^2}$ for an angle of  $5\degree$. After this point, nonlinear effects become quite prevalent and the analysis breaks down. Of course, smaller angles will exhibit rotational accelerations which are smaller in direct linear relation with the angle.
+
+For further investigation, we can consider the linear acceleration that would be required to restore $\ddot{\theta}$ to 0 as a first approximation of the required linear acceleration required of the system. This can be done using \eqautoref{eq:theta double dot pend} and plugging in $\ddot{\theta}$ as $6.3 \ \mathrm{rad/s}$ and $\theta$ as $5\degree$:
+$$\ddot{x}=l\ddot\theta-g\theta\approx1.72 \ \mathrm{m/s^2}$$
+We can think of these conditions as a worst possible case, where the cart needs to accelerate rapidly to compensate for a large angular error. Ideally, the control system will maintain an angle less that $5\degree$. In this case, the system needs to have the capability of acceleration up to $1.72 \ \mathrm{m/s^2}$.
+
+\subsubsection{Motor Selection}
+The selection of the driving motor is quite a nuanced and complicated choice, with a large variety of motor types and selections available on the market. There are many types of motors, but for most projects in robotics and \gls{gnc}, the predominant types are: 
+\begin{enumerate}
+    \item Stepper motors
+    \item DC motors
+    \item Servo motors
+\end{enumerate}
+
+Generally, stepper motors and servo motors have very good positional control while DC motors have very good speed control. There are overlaps between the technologies, especially as stepper and servo motors become more common and better methods for driving them are developed. 
 \subsection{}
 
 
