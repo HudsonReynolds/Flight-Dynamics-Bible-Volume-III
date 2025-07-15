@@ -1,18 +1,35 @@
 clear all, close all, clc
 
-m = 1;
-M = 5;
-L = 2;
-g = -10;
-d = 1;
+m = .1; % mass of the pendulum arm
+M = .25; % mass of the cart
+L = .16; % length of pendulum arm
+g = -9.8; % gravity
+d = .1; % damping coefficent
+I = (1/3) * m * L^2; % Moment of inertia for the pendulum
 
-K = [-2.4,-8.75,158,65];
-%K = [-1,-2.8,100,60];
+% define the denominator
+delta = I * (M+m) - (m*L)^2;
 
-ref = [1;0;pi;0];
+
+A = [0 1 0 0;0 0 (m*L)^2*-g/delta 0; 0 0 0 1;0 0 m*L*(M*-g+m*-g)/delta 0];
+
+B = [0; I/delta;0;m*L/delta];
+
+C = [1 0 0 0;0 0 1 0];
+
+
+% Define the state-space representation
+sys = ss(A, B, C, 0);
+
+Q = eye(4).*[10;1;1;1];
+
+K = lqr(sys,Q,1);
+
+% define the reference point to end up at
+ref = [0;0;pi;0];
 
 tspan = 0:.1:10;
-y0 = [0; -1; pi; 1];
+y0 = [0; -.5; pi; .5];
 [t,y] = ode45(@(t,y)pendcart(y,m,M,L,g,d,-K*(y-ref)),tspan,y0);
 
 for k=1:length(t)
