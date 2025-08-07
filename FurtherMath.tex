@@ -487,7 +487,6 @@ Since all of the partial derivatives are non-zero and there must be at least two
 This is all that we will say about manifold structure for now. When studying matrix \gls{lie group}, there are some special conditions that are required to show that they are manifolds, but we will only discuss \glspl{lie group} that are well behaved here and we can assume this holds. The interested reader can look into the cited sources for more information.
 
 \section{Lie Algebras}
-
 Let us again start with a visualization of the Lie Algebra to contextualize our discussion. Using the same manifold that we showed previously in \autoref{fig:Lie Group}, we can visualize the Lie algebra as follows:
 \begin{figure}[ht]
     \centering
@@ -584,11 +583,24 @@ For a \gls{lie algebra}, we must have the following properties for the Lie brack
 \begin{itemize}
     \item It is bilinear (definition above)
     \item It is alternating, $[x,x]=0 \quad \forall x\in \mathfrak{g}$
-    \item It is skew-symmetric, meaning that $[x,y]=-[y,x] \ \forall x\forall y$
-    \item It satisfies the Jacobi Identity, which states that: $[x,[y,z]]+[y,[z,x]]+[z,[x,y]]=0$.
+    \item It is antisymmetric, meaning that $[x,y]=-[y,x] \ \forall x, y$
+    \item It satisfies the Jacobi Identity, which states that: $[x,[y,z]]+[y,[z,x]]+[z,[x,y]]=0$.\endnote{Readers of Volume II should find there properties very similar to the properties of the wedge product. The \gls{lie algebra} and the Grassman algebra over which the wedge product is defined are very similar.}
 \end{itemize}
 
-I should note that the property of being alternating and being skew-symmetric are the same. In the future, it will suffice to show only one. Right now, this definition likely has no meaning to the reader. Let us consider the cross product as an example familiar to the reader:
+I should note that the property of being alternating and being skew-symmetric are the same.\endnote{\begin{proof}
+    This can be proven by considering the identity from both directions to show equivalence. Both directions must be considered to show that the link is bijective. Starting with the antisymmetric property, we can substitute $y=x$. This gives us:
+$$[x,x]=-[x,x]$$
+The solution of which must be 0, since no other value satisfies this equality. 
+
+From the other direction, we assume the alternating form $[x,x]=0 \ \forall x$. This can be equivalently applied on the expression:
+$$[x+y,x+y]=0$$
+The lie bracket is bilinear, so the terms can be expanded as follows:
+$$[x,x]+[x,y]+[y,x]+[y,y]=0$$
+From the assumption of the alternating form, $[x,x]$ and $[y,y]=0$. Thus,
+$$[x,y]=-[y,x]$$
+\end{proof}} In the future, it will suffice to show only one. Right now, this definition likely has no meaning to the reader. Let us consider the cross product as an example familiar to the reader:
+
+
 
 \begin{example}[The cross product as a Lie bracket]
     We can start with the properties that we assumed for the \gls{lie algebra}. Taking the Lie bracket operation to be the cross product, that is: $[x,y]=x\times y$, it is easy to show that all of the properties are satisfied.
@@ -699,7 +711,7 @@ The next method will likely be familiar to students of linear algebra. This meth
     An $n{\times}n$ matrix $A$ is diagonalizable if and only if $A$ has $n$ linearly independent eigenvectors.
 \end{theorem}
 
-When we satisfy these criteria, we can write the matrix $A$ as $A=PDP^{-1}$.\endnote{You may see this decomposition as either $A=PDP^{-1}$ or $A=P^{-1}DP$. This distinction depends on how you choose to represent $P$. I choose to use the notation that allows users to use write the given equations in MATLAB and have it work directly.} This becomes useful when computing the matrix exponential. Why exactly is this useful if we now have more terms?
+When we satisfy these criteria, we can write the matrix $A$ as $A=PDP^{-1}$.\endnote{You may see this decomposition as either $A=PDP^{-1}$ or $A=P^{-1}DP$. This distinction depends on how you choose to represent $P$. I choose to use the notation that allows users to use write the given equations in MATLAB directly. This is also the standard notation in most modern textbooks.} This becomes useful when computing the matrix exponential. Why exactly is this useful if we now have more terms?
 
 \begin{example}[$A^2$ for diagonalizable matrices]
     We can take the example of $A^2$ for a general matrix $A$ with the decomposition $A=PDP^{-1}$ to show the usefulness. 
@@ -730,7 +742,7 @@ $$\sum_{n=0}^{\infty}\frac{1}{n!}D^n=\begin{bmatrix}
 \end{bmatrix}=e^D$$
 So we have a quite simple way to express the matrix exponential for diagonalizable matrices:
 $$e^A=Pe^DP^{-1}$$
-\begin{exercise}[Show $e^{tr(A)}=\det\left(e^A\right)$]
+\begin{exercise}[Show $e^{tr(A)}=\det\left(e^A\right)$]\label{exer:trace det}
     To ensure that you understand this method of computing the matrix exponential, show that $e^{tr(A)}=\det\left(e^A\right)$ for the matrix: $$A=\begin{bmatrix}
         4&1\\2&5
     \end{bmatrix}$$
@@ -935,7 +947,7 @@ We have recovered a rotation matrix as a result! This is a very exciting result.
 \printendnotes
 
 \chapter{The Implications of Lie Theory}
-After laying out some fundamentals of \gls{lie theory}, we can start applying it to actual problems we encounter to see how we can use it in aerospace and physics applications. These applications, especially in physics, are very numerous. Here, we will focus on the applications which are especially important to rotations, differential equations, and control theory.
+After laying out some fundamentals of \gls{lie theory}, we can start applying it to actual problems we encounter to see how we can use it in aerospace and physics applications. These applications, especially in physics, are very numerous. Here, we will focus on the applications which are especially important to rotations, differential equations, and control theory. 
 
 \section{Rotations}
 We've started to discuss rotations with the circle group, but we will now expand that to include information on more general rotations and some of the other attributes.
@@ -1034,10 +1046,29 @@ From here, the $\mathbb{I}$ matrices cancel, and we are left with the relationsh
     \color{blue}\boxed{\color{black}A^T=-A}\\
     \color{blue}\mathrm{Skew \ Symmetry}
 \end{gather}
-This relationship is called \textit{skew symmetry}, and it is the fundamental property of infinitesimal rotations (or the \glspl{lie algebra} of rotations, put another way). One notable feature of skew symmetric matrices is that the diagonal must be zero for the property to hold. 
+This relationship is called \textit{skew symmetry}, and it is the fundamental property of infinitesimal rotations (or the \glspl{lie algebra} of rotations, put another way). One notable feature of skew symmetric matrices is that the diagonal must be zero for the property to hold. We call the \gls{lie algebra} for which this condition holds $\mathfrak{so}(n)$.
 
-What about the condition on the determinant?
-We call the \gls{lie algebra} for which this condition holds $\mathfrak{so}(n)$.
+We can use the condition on the determinant of the \gls{lie group} to get more information about the \gls{lie algebra}. We know that the determinant of $SO(n)$ must be 1. Therefore, we may have a condition for the $\mathfrak{so}(n)$ \gls{lie algebra} that arises from this. We can use the previously established fact that the trace is related to the matrix exponential determinant (see \autoref{exer:trace det} for more information):
+$$e^{tr(A)}=\det\left(e^A\right)$$
+The matrix $A$ is the \gls{lie algebra}, and thus $e^A$ is the exponential map, such that $e^A$ is the \gls{lie group}. We have previously determined that the $SO(3)$ \gls{lie group} must have determinant 1, so the equation is:
+$$e^{tr(A)}=1$$
+Solving the equation by taking the logarithm of both sides, we have:
+$$tr(A)=0$$
+This condition implies that all of the elements of the diagonal must add to zero! A matrix with such a property is called traceless. Using the other criteria that $A^T=-A$, each diagonal entry of this matrix must be 0.
+
+The \gls{lie algebra} of the rotation groups appears quite often in engineering and physics. Anytime an infinitesimal rotation must be described a skew symmetric matrix is often associated with it! One example you may remember is the quaternion integration equation from Volume I:
+$$\dot{\textbf{q}}=\frac{1}{2}\begin{bmatrix}
+        0&-\omega_x&-\omega_y&-\omega_z\\
+        \omega_x&0&\omega_z&-\omega_y\\
+        \omega_y&-\omega_z&0&\omega_x\\
+        \omega_z&\omega_y&-\omega_x&0
+    \end{bmatrix}\vec{q}$$
+As we can see, this matrix has the properties of the \gls{lie algebra} of rotations! It is skew-symmetric and has a trace of 0.
+
+\subsubsection{The Cross Product and Euler Vector}
+
+Having described the form of the rotation group and the rotation algebra in the context of \gls{lie theory}, we can move on to describing these elements in the more familiar context.
+
 
 
 One of the simplest cases in showcasing the relationship between the \gls{lie group} and the \gls{lie algebra} is the rotation.
@@ -1051,8 +1082,30 @@ $$A=\begin{bmatrix}
 
 We can use the \gls{exponential map} to go from the \gls{lie group} to the \gls{lie algebra}. For matrices, we use the matrix exponential as the \gls{exponential map}. Performing the exponentiation, we have that $e^{A}$ is a rotation matrix.
 
-\section{Beyond Rotations}
-Until now, we have not discussed complex-valued matrices. However, these find use in physics quite often and we can even parameterize the quaternions in terms of complex matrices. We will now explore these complex matrices to gain an understanding of more complex matrix transformations, which are beyond the 3-D rotations we have discussed so far.
+\subsubsection{Visualization of SO(3) Rotations}
+
+
+\subsection{Revisiting the BKE}
+We can use \gls{lie theory} in order to describe the \gls{bke} in another way. 
+Explain the \gls{bke} in terms of \gls{lie theory}.
+
+\section{Complex Rotations and Spinors}
+Until now, we have not discussed complex-valued matrices. However, these find use in physics quite often and we can even parameterize the quaternions in terms of complex matrices. We will now explore these complex matrices to gain an understanding of more complex matrix transformations, which are beyond the 3-D rotations we have discussed so far. These ideas will help us relate the quaternions to rotations and understand how $SU(2)$ and $SO(3)$ space are linked!
+
+This section summarizes some of the ideas that are presented in the \cite{eigenchris_spinors_nodate} playlist of videos.
+
+We may start by considering the 
+
+
+
+
+\section{Physics Applications of Lie Theory}
+
+\subsection{Quantum Mechanics}
+\color{red} All quantum mechanical operators are elements of lie algebras! \color{black}
+
+\subsection{Spinors}
+
 
 
 \section{Relation to Differential Equations}\label{sec:lie theory relation to differential equations}
@@ -1182,9 +1235,6 @@ Given a general function, it is expected that there will likely be multiple mini
 $$\gamma\xrightarrow{T}\gamma'$$
 When we have a continuous symmetry between these two, there is no difference in the action! So $S[\gamma]=S[\gamma']$.
 
-\section{From Complex Numbers to Quaternions and Beyond: The Cayley-Dickson Construction}
-Prolly not do this lmao. Maybe in Vol II?
-
 \section{The Limitations of Lie Theory}
 A fundamental understanding of the mathematics that relate groups and algebras is quite interesting, but ultimately, our goal in engineering is to be able to control a system which is not mathematically ideal. We will have disturbances and random behaviors and noisy sensors in all of our real systems. Do these non-idealities make \gls{lie theory} useless for us? Of course not, but it does impose limitations of the extent to which we can use it.
 
@@ -1223,39 +1273,6 @@ Although MATLAB does not have built-in functions for these integrators, scripts 
 
 The best use case for these algorithms is for systems with a \gls{Hamiltonian} or \gls{Lagrangian} description that need to be integrated over a long time span. Because these integrators conserve energy, they will better preserve the characteristics of these systems over long times as compared to RK integrators.
 
-
-\chapter{Further Applications}\label{chap:further applications}
-I may, at some point, devote an entire book to the study of modern physics and the application of variational calculus, energy methods, and \gls{lie theory} there. Since that is yet to be done, I choose to devote this chapter to some of the applications of these mechanics in the more broad realm of physics outside of the studies in aerospace. This chapter will focus on high-level overviews rather than in-depth discussion of mathematics. Some sufficient mathematics which will suffice in the study of most undergraduate physics has already been detailed in \autoref{chap:lie theory}, so I will not go to great depths in this chapter.
-
-This chapter is primarily for those readers interested in this subject matter and is not necessary for understanding the rest of the book. I do think, however, that a good engineer should explore domains outside the strict confines of their field, as they will often gain greater appreciation of their own subject matter in doing so.
-
-From our study of \gls{lie theory}, the study of differentiable manifolds naturally arises as another area of study. So, I devote this first section to a brief overview of differential geometry. In fields such as geometric control, we also see this being used.
-
-To supplement the information in this chapter, I have found that \cite{hirvonen_profound_nodate} has some quite readable and good articles on many of these topics. There are, of course, many other sources which are good for deep dives into any of these concepts.
-
-\chapter{Differential Geometry Introduction}
-The subject of differential geometry was lightly touched upon in \autoref{ex:geodesic}, where we considered the shortest path on a spherical surface. Differential geometry is a field of study that is concerned with the study of smooth manifolds - which essentially means that it is an object which `looks' like a vector space when viewed closely. This is, of course, a loose definition that is not completely rigorous.
-
-In \autoref{ex:geodesic}, we showed this property on the sphere, but differential geometry allows us to study any manifold, so long as it is smooth!
-
-We can think of a manifold as anything which we can continuously parameterize. So, our 3D rotations that we parameterize with Euler angles or quaternions are also elements of a manifold. We also see that manifolds are also useful in \gls{Lagrangian} and \gls{Hamiltonian} mechanics in the form of \textit{symplectic manifolds}.
-
-So, this is a field of study that touches upon many of the mathematical concepts that we encounter in the study of dynamics and control theory. While not strictly necessarily, a preliminary understanding of manifolds will prove useful for further study. Moreover, those readers interested in physics will find many uses for the topics of discussion here.
-
-\subsection{The Metric Tensor}
-
-\subsection{Distances}
-We can generalize the concept of the Euclidean distance, which we typically define as
-$$s=\sqrt{x^2+y^2}$$
-
-In a generic metric space, we can define this as
-$$s=\int_a^b\sqrt{g_{ij}\frac{dx^i}{d\lambda}\frac{dx^j}{d\lambda}}d\lambda$$
-\subsubsection{Applying Euler-Lagrange}
-We notice that the form of the equation for the arc-length matches the form of a functional in \gls{Lagrangian} mechanics! We can apply the Euler-Lagrange equation to get a general equation for the geodesic on any surface!
-
-$$\frac{d^2x^i}{d\lambda^2}+\Gamma_{mn}^i\frac{dx^m}{d\lambda}\frac{dx^n}{d\lambda}=0$$
-
-
 \chapter{The Lebesgue Integral and Measure}
 
 \begin{chapquote}{Andrew Lewis}
@@ -1264,24 +1281,10 @@ $$\frac{d^2x^i}{d\lambda^2}+\Gamma_{mn}^i\frac{dx^m}{d\lambda}\frac{dx^n}{d\lamb
 
 In the interest of keeping \autoref{part:control theory} free of too much strictly mathematical content, I have devised this chapter which contains much of the math which is foundational in classical control theory.
 
-
 For the reader interested in the mathematics behind inner product spaces, I have included some supplemental information on the Lebesgue integral, which is the mathematical construction that is used to rigorously define inner product spaces.
 
-\chapter{Further Physics}
-% might cut
-\section{Special Relativity}
 
-\section{General Relativity}
 
-\section{Quantum Mechanics}
-Quantum Mechanics is famous for being extraordinarily counterintuitive and difficult. Many of the founders of quantum mechanics found the theory so obtuse as to call it impossible to intuit. Luckily, our exploration of the topic will remain at a higher level, where we can gain some appreciation of the topic without delving into these deep ravines in the theory.
-
-There are, without a doubt, two experiments that are foundational in understanding quantum theory. These two experiments, involving the photoelectric effect and the wave-particle nature of light, will help us to understand quantum mechanics at a high level.
-
-\color{red} All quantum mechanical operators are elements of lie algebras! \color{black}
-
-\subsection{The Photoelectric Effect}
-\subsection{Young's Double Slit Experiment}
 
 \section{Field Theories}
 

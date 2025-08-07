@@ -1,0 +1,64 @@
+\part{Advanced Topics in Controls}\label{part: advanced topics}
+\begin{chapquote}{Claude Shannon}
+    ``Mathematics is the tool specially suited for dealing with abstract concepts of any kind and there is no limit to its power in this field.''
+\end{chapquote}
+
+\newpage
+
+\chapter*{Outline}
+
+\color{red} This section is to be finished after the initial release of this volume. My apologies to any readers with particular interest in the methods of geometric control and differential geometry.\color{black}
+
+In this final portion of the book, I will describe the methods of controls which are much beyond the standard coursework of a typical curriculum in engineering. This section will hold the information related to differential geometry, and it's application in the fields of geometric control.
+
+This section is intended to live outside the scope of the rest of the book, such that the reader may stop their reading at the end of \autoref{part:control theory} and have gained all the necessary knowledge for a working understanding of control theory and energy mechanics. However, for those who want to dive deeply into the subject matter, this part will build off the rest of the book and dive into the study of highly advanced control theory and techniques. This section may be thought of as akin to \autoref{part: further math}, but an additional emphasis will be placed on the relation of the ideas here in the context of control theory.
+
+This part is primarily for those readers interested in this subject matter and is not necessary for understanding the rest of the book. I do think, however, that a good engineer should explore domains outside the strict confines of their field, as they will often gain greater appreciation of their own subject matter in doing so.
+
+From our study of \gls{lie theory}, the study of differentiable manifolds naturally arises as another area of study. So, I devote this first section to a brief overview of differential geometry. In fields such as geometric control, differential geometry plays a crucial part. The study of differential geometry should provide a satisfying unification of the ideas of Clifford algebras, \gls{lie theory}, and inner product spaces. It is truly one of the most profound mathematical generalizations of the ideas found in physics and engineering.
+
+To supplement the information in this chapter, I have found that \cite{hirvonen_profound_nodate} has some quite readable and good articles on many of these topics. There are, of course, many other sources which are good for deep dives into any of these concepts.
+
+\chapter{Tensor Operations}
+Before we dive into differential geometry or any of the related topics, we must first have a good understanding of tensors and their operations.
+
+\chapter{Differential Geometry}
+Differential geometry is a field of study that is concerned with the study of smooth manifolds - which essentially means that it is an object which `looks' like a vector space when viewed closely. The subject of differential geometry was lightly touched upon in \autoref{ex:geodesic}, where we considered the shortest path on a spherical surface. In \autoref{ex:geodesic}, we showed this property on the sphere, but differential geometry allows us to study any manifold, so long as it is smooth! 
+
+As we have seen, smooth manifolds are quite important to \gls{lie theory}, and many other applications as well. It is thus sagacious to devote a chapter to a study of differential geometry. We find that many physical systems can be described by the methods of differential geometry.
+
+We can think of a manifold as anything which we can continuously parameterize. So, our 3D rotations that we parameterize with Euler angles or quaternions are also elements of a manifold. We also see that manifolds are also useful in \gls{Lagrangian} and \gls{Hamiltonian} mechanics in the form of \textit{symplectic manifolds}.
+
+So, this is a field of study that touches upon many of the mathematical concepts that we encounter in the study of dynamics and control theory. While not strictly necessarily, a preliminary understanding of manifolds will prove useful for further study. Moreover, those readers interested in physics will find many uses for the topics of discussion here.
+
+This chapter will take an approach closer to physics rather than pure math, as the math requires knowledge of topology and analysis which are well outside the scope of this book and the expected knowledge of the target audience. However, useful information and a working knowledge of the subject can be gained nonetheless from a slightly less -- but still informative -- approach to the subject.
+
+\section{Invariance, Covariance \& Contravariance }
+
+
+\subsection{The Metric Tensor}
+The concept of a metric is of upmost importance to differential geometry. A metric space is a set with a notion of a distance.
+
+The most typical metric space is the Euclidean $\mathbb{R}^2$ space. The distance in this space is perhaps the most famous distance formula to exist:
+$$s=\sqrt{x^2+y^2}$$
+
+\subsection{Distances}
+We can generalize the concept of the Euclidean distance, which we typically define as
+$$s=\sqrt{x^2+y^2}$$
+In a generic metric space, we can define this as
+$$s=\int_a^b\sqrt{g_{ij}\frac{dx^i}{d\lambda}\frac{dx^j}{d\lambda}}d\lambda$$
+\subsubsection{Applying Euler-Lagrange}
+We notice that the form of the equation for the arc-length matches the form of a functional in \gls{Lagrangian} mechanics! We can apply the Euler-Lagrange equation to get a general equation for the geodesic on any surface!
+
+$$\frac{d^2x^i}{d\lambda^2}+\Gamma_{mn}^i\frac{dx^m}{d\lambda}\frac{dx^n}{d\lambda}=0$$
+
+\section{The Lie Derivative}
+
+
+
+
+\section{Special Relativity}
+
+\section{General Relativity}
+
+
