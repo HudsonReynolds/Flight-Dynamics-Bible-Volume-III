@@ -6,6 +6,7 @@
 \documentclass[12pt]{report}
 \usepackage[letterpaper, total={6in, 8in}]{geometry}
 \usepackage[T1]{fontenc}
+\usepackage{booktabs}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{tikz}
@@ -13,6 +14,7 @@
 \usetikzlibrary{patterns}
 \usetikzlibrary{shadows.blur}
 \usetikzlibrary{shapes}
+\usepackage[RPvoltages, siunitx]{circuitikz}
 \usepackage{indentfirst}
 \usepackage{mathdots}
 \usepackage{amssymb}
@@ -87,12 +89,15 @@
 \renewcommand{\subsectionautorefname}
 {subsection}
 \newcommand{\exampleautorefname}{Example}
+\newcommand{\exerciseautorefname}{Exercise}
+
 
 \usepackage[bf,small,hypcap=true]{caption}
 
 \usepackage{xcolor}
 
 \definecolor{linkgreen}{rgb}{0.117,0.67,0.24}
+\definecolor{maroon}{rgb}{0.5,0.1,0.1}
 \definecolor{refRed}{rgb}{0.443,0.0588,0.0392}
 \definecolor{Maroon}{rgb}{0.749,0.047,0.09}
 
@@ -325,6 +330,7 @@
 \include{EnergyMech}
 \include{FurtherMath}
 \include{ControlTheory}
+\include{AdvancedTopics}
 \include{End and Appendix}
 
 \end{document}

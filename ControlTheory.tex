@@ -8,7 +8,7 @@ Control theory is a vast subject which is to vast to cover in its entirety in on
 
 An introduction to control theory as a whole is essential to understanding aerospace applications. This section will cover \gls{lti} systems and the usage of the \gls{laplace transform} and transfer functions in analyzing these systems. Linear systems are quite simple to model mathematically because they exhibit useful properties such as superposition. For this reason, linear models are studied quite extensively.
 
-Next, I choose to discuss some aspects of optimal estimation and control. This has deep ties to our discussion of the calculus of variations. This section will include some discussion of Kalman filtering and some parts of optimal control in aerospace applications, such as LQR controllers. 
+Next, I choose to discuss some aspects of optimal estimation and control. This has deep ties to our discussion of the calculus of variations. This section will include some discussion of Kalman filtering and some parts of optimal control in aerospace applications, such as \gls{lqr} controllers. 
 
 Of course, nearly all systems are non-linear to some degree. Thus, it is prudent to cover some examples where we need to model non-linear systems. Non-linear systems will be discussed in brief at the end of the chapter. Non-linear systems, in general, are hard to generalize mathematically, so I take the approach of performing linear analysis for the system. Then, we use simulation to fine tune the linear model. Non-linear dynamics are easily simulated in MATLAB, which we have shown extensively in Volume I and Volume II. This is the common method by which non-linear systems are dealt with.
 
@@ -17,7 +17,7 @@ Finally, a full example of an inverted pendulum control scheme and physical impl
 \chapter{Introduction to Control Theory}
 Control theory, at the fundamental level, is about understanding how a system reacts to inputs and outputs. Because this definition is so broad, we can apply control theory to a vast number of things -- even many that you may not normally think of as control theory. Classic examples of control theory include the cruise control in a car or the moving control surfaces of an aircraft to change its trajectory. However, even mundane things are control systems. The knob on your toaster than dictates how long it cooks is a control system!
 
-As we can see, this definition is quite broad. So, we need to narrow it down and focus on the types of systems that we want to analyze here. We can classify systems into several main categories for futher analysis.
+As we can see, this definition is quite broad. So, we need to narrow it down and focus on the types of systems that we want to analyze here. We can classify systems into several main categories for further analysis.
 
 \section{Classifications of Control Systems}
 There are several characteristics that determine the classification of a control system. First and foremost is the distinction between an open-loop system and a closed-loop system, which we must first discuss before making any other distinctions.
@@ -410,6 +410,13 @@ I should note that the addition of $\frac{1}{\tau}$ is not strictly necessary to
 \subsection{Example Inner Product Spaces}
 To solidify the idea of the inner product space, we should consider several inner product spaces that we see quite frequently. After this, we will consider the inner product that leads us to the \gls{laplace transform}.
 
+\subsubsection{Fourier Series}
+
+\subsubsection{Legendre Polynomials}
+
+\subsubsection{Hilbert Spaces}
+
+
 \section{The Laplace Transform}
 We can now return to the example of the exponential functions, $e^{at}$. We have previously seen that these exponential functions are key in describing the solutions to differential equations. To further extend this definition, we can consider values of $a$ which are complex. We generally denote such complex values as $s$, which gives us the general function: $e^{st}$. This function contains all of the possible behaviors of a linear differential equation.
 
@@ -518,7 +525,27 @@ The unit step function often multiplies other functions as well. The \gls{laplac
 $$\mathcal{L}\left\{{1_c}^+(t)f(t-c)\right\}=e^{-cs}F(s)$$
 Or as is more often the case:
 $$\mathcal{L}\left\{{1_c}^+(t)f(t)\right\}=e^{-cs}\mathcal{L}\left\{f(t+c)\right\}$$
-These equations can easily be derived from the integral expression of the \gls{laplace transform} which has previously been shown
+These equations can easily be derived from the integral expression of the \gls{laplace transform} which has previously been shown.
+
+\subsubsection{Delta Function}
+The delta function is not a traditional function, but rather a distribution with all of the power concentrated in one infinitesimal amount of time. The delta function can be thought of as an instantaneous `ring' or impulse which is sent into the system. The function is defined as follows:
+\begin{gather}
+    \delta(t)=\begin{cases}
+        0,\quad x\neq0\\
+        \infty,\quad x=0
+    \end{cases}
+\end{gather}
+With an additional condition that the total integral of the function is 1:
+$$\int_{-\infty}^{\infty}\delta(t)dt=1$$
+Another useful property of the Dirac delta function is that when multiplying with another function, the integral is simply:
+$$\int_{-\infty}^{\infty}f(t)\delta(t)dt=f(0)$$
+We can use this property to find the \gls{laplace transform} of the Dirac delta function:
+$$\int_{-\infty}^{\infty}e^{-st}\delta(t)dt=e^{-0}=1$$
+As can be seen, the Dirac delta has the very helpful feature that it acts as a multiplicative identity in the Laplace domain. This property is very useful and will be important later.
+
+\subsection{The Laplace Transform Method of Matrix Exponentials}
+In the prior sections of the text, there has been much emphasis on the importance of computing matrix exponentials. Using the \gls{laplace transform}, we have another method by which the matrix exponential can be computed. This method is of particular interest in control theory applications.
+
 \chapter{Linear Time Invariant Systems}
 
 \Gls{lti} systems are the simplest systems to describe, so we will start here. These systems will be the basis of almost every other control scheme that we describe. Since we can find exact solutions to \gls{lti} systems, we can apply the theories that we study here in many other types of control systems, whether they are non-linear or time varying.
@@ -575,7 +602,10 @@ It is in this equation that the insight behind the \gls{laplace transform} can b
 
 So, we can see that in the Laplace domain, all of the information of the system dynamics is directly captured in the transfer function. We can therefore, know what the position, velocity, or acceleration are for any value $s$. The tradeoff, of course, is that we lose information on the temporal component, $t$, during the transformation. However, we still find it extremely useful to have this `global view' of the function in the Laplace domain! When we need to consider the temporal aspects of the system, we can either revert to the time domain or use some other tools to understand the temporal nature of the transfer function.
 
-\subsection{The Impulse Response}
+\subsection{Impulse Response}
+
+\subsection{Step Response}
+
 
 \section{Linear Systems}
 Since linear systems are our object of study for now, we should include some more information on linear systems and how we can manipulate them! Linear systems are quite nice to work with and we have lots of theory developed to work with them.
@@ -993,14 +1023,16 @@ We can solidify these ideas with some exact definitions. We consider a system to
 
 It turns out that these are the only two conditions that we need to satisfy for controllability of a linear system. Still, we need to develop an exact criteria that tells us about 
 
+\section{Observability}
+
 \section{State Space Representation}
 
 
 \section{Bode Plots}
-The core idea behind the Bode plot is to understand how a transfer function behaviors over the range of all frequencies, and plot that behavior. Before we can do that, however, we need some more context about transfer functions.
+The core idea behind the Bode plot is to understand how a transfer function behaves over the range of all frequencies, and plot that behavior. Before we can do that, however, we need more context about transfer functions.
 
-One relationship of transfer functions that we have not mentioned yet is that when a sinusoid is input into the transfer function, the output must also be a sinusoid of the same frequency!
-\begin{figure}[ht]
+One relationship of transfer functions that we have not mentioned yet is that when a sinusoid is input into the transfer function, the output at steady state must also be a sinusoid of the same frequency!
+\begin{figure}[H]
     \centering
     \includesvg[width=0.75\linewidth]{Images/SinusoidInOut.svg}
     \caption{Sinusoid Input Output Relationship}
@@ -1013,92 +1045,229 @@ We can see this quite readily by considering the operations that we can perform 
     \item Integrate the sine wave
     \item Differentiate the sine wave
 \end{enumerate}
-The operations above are the only operations we can perform, because any other type of input will violate the zero-input zero-output quality of the transfer function.
 
-We can see that applying any of these operations will yield another sine wave, with the only possible variation being the phase and amplitude of the wave!
+The operations above are the only operations we can perform, because any other type of input will violate the zero-input zero-output quality of the transfer function and the system is therefore nonlinear. These operations, in effect, are the only operations that preserve linearity of the system.
+
+It is possible to show that applying any of these operations (or any combination of them) will yield another sine wave, with the only possible variation being the phase and amplitude of the wave!
+
+\begin{example}[Addition of sine waves]
+    Here, I will show one example with the addition of sine waves. We may start with two arbitrary waves, say:\begin{gather}
+        \sin(2x)\\
+        2\cos(2x)
+    \end{gather}
+    Importantly, these sine waves must have the same frequency, but the phase and the amplitude may be whatever we desire. We add these sine waves to get:
+$$ \sin(2x)+2\cos(2x)$$
+It is not obvious that this should give a sinusoidal output, but it can be shown that the result must be a sinusoid through the application of the following trigonometric identity:
+$$a\sin x+b\cos x=\sqrt{a^2+b^2}\sin\left[x+\arctan\left(\frac{b}{a}\right)\right]$$
+Applying this formula to our scenario, we see that the resulting sine wave is:
+$$\sqrt{3}\sin(2x+1.107)$$
+We can directly see that as a result of this addition, we get a new sine wave with the same frequency, but an additional gain and phase shift:
+\[
+\underbrace{\color{red}\sqrt{3}}_{\color{red}\text{gain}}\color{black}\sin\left(2x + \underbrace{\color{blue}1.107}_{\color{blue}\text{phase}}\color{black}\right)
+\]
+\end{example}
 
 \begin{exercise}
-    Show that all four identities must return a sine wave as a result. You may need to use some trigonometric identities to prove the addition of sine waves.
+    Show that the other three identities must return a sine wave of the same frequency as a result. The remaining three identites are:
+    \begin{enumerate}
+        \item Multiplication by a constant
+        \item Integration of a sine wave
+        \item Differentiation of a sine wave
+    \end{enumerate}
+
+    Show that these properties hold for an arbitrary sine wave
 \end{exercise}
 
-We call the change in the amplitude of the input sine wave the gain, and the change in the phase is simply the phase. The convention is that the a negative phase
+We call the change in the amplitude of the input sine wave the gain, and the change in the phase is the phase shift. The convention is that the a negative phase
 
-So, with these tools, we can compute the gain and phase that result from inputting a sine wave into a transfer function.
+So, with these tools, we can compute the gain and phase that result from inputting a sine wave into a transfer function at a given frequency.
+
+$$\textrm{dB}=20\log\frac{A}{A_0}$$
+
 \section{Nyquist Plots}
 
 \section{Nichols Chart}
 
 
 \section{Useful MATLAB Commands}
-MATLAB has many features which are great for control systems. I have com
+MATLAB has many features which are great for control systems. I have compiled several of the most useful commands for the subjects discussed here. Some of these are mentioned throughout the preceding chapters, but have been compiled here for convenience. For more information about specifics of each command, refer to the mathworks documentation.
+
+\begin{itemize}
+    \item "tf(num,den)" - create a transfer function with a numerator and denominator defined by row vectors of coefficients
+    \item "step(tf)" - view the step response of the system
+\end{itemize}
+
+\chapter{Basic Control Methods}
+This chapter will cover a class of basic control schemes which can easily be developed with little additional theory. These controllers include the \gls{pid} controller and the pole placement controller. These represent some of the basic controllers which are often used in preliminary design or as a first attempt for the system.
+
+Additionally, some criteria for evaluation of control systems will also be developed, building off of the knowledge gained in the development of the linear time invariant system.
+
+\section{Step Response}
+
+\section{First Order Systems}
+
+\section{Second Order System}
+
+\section{PID Control}
+The \gls{pid} controller is likely the most popular method for controlling a system. The \gls{pid} controller is simple, easily understandable, and has been widely studied due to its early adoption. The \gls{pid} controller is also quite common because it often requires no knowledge of the system dynamics to set up. Often, the \gls{pid} gains can be found manually through experimentation and requires little analysis.
+
+To motivate the \gls{pid} controller, we may consider a `naive' approach to developing a controller. Say we want to develop a cruise control system for a car, which is a classic control system problem. We can represent the control system with a block diagram as shown in \autoref{fig:cruise cont}:
+
+\begin{figure}
+    \centering
+
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Flowchart: Process [id:dp09201642540641108] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (220,130) -- (340,130) -- (340,170) -- (220,170) -- cycle ;
+%Flowchart: Process [id:dp2324513721050836] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (390,130) -- (470,130) -- (470,170) -- (390,170) -- cycle ;
+%Straight Lines [id:da986938021625412] 
+\draw    (340,150) -- (387,150) ;
+\draw [shift={(390,150)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da32309733042460087] 
+\draw    (470,150) -- (490,150) ;
+%Straight Lines [id:da5257263581405386] 
+\draw    (100,150) -- (147,150) ;
+\draw [shift={(150,150)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Flowchart: Process [id:dp40423180863818065] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (280,190) -- (380,190) -- (380,230) -- (280,230) -- cycle ;
+%Straight Lines [id:da8433445481130736] 
+\draw    (490,150) -- (490,210) ;
+%Straight Lines [id:da6201157924625239] 
+\draw    (490,210) -- (383,210) ;
+\draw [shift={(380,210)}, rotate = 360] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Shape: Circle [id:dp6982979650547556] 
+\draw   (150,150) .. controls (150,141.72) and (156.72,135) .. (165,135) .. controls (173.28,135) and (180,141.72) .. (180,150) .. controls (180,158.28) and (173.28,165) .. (165,165) .. controls (156.72,165) and (150,158.28) .. (150,150) -- cycle ;
+%Straight Lines [id:da3784982728571281] 
+\draw    (165,210) -- (165,168) ;
+\draw [shift={(165,165)}, rotate = 90] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da039616156747358744] 
+\draw    (165,210) -- (280,210) ;
+%Straight Lines [id:da012524656230649689] 
+\draw    (180,150) -- (217,150) ;
+\draw [shift={(220,150)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da6331709894001729] 
+\draw    (430,80) -- (430,127) ;
+\draw [shift={(430,130)}, rotate = 270] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (280,150) node   [align=left] {Throttle Control};
+% Text Node
+\draw (430,150) node   [align=left] {Car};
+% Text Node
+\draw (125,146.6) node [anchor=south] [inner sep=0.75pt]    {$r$};
+% Text Node
+\draw (365,146.6) node [anchor=south] [inner sep=0.75pt]    {$u$};
+% Text Node
+\draw (223,227.6) node [anchor=south] [inner sep=0.75pt]    {$y$};
+% Text Node
+\draw (330,210) node   [align=left] {Speedometer};
+% Text Node
+\draw (151,148) node [anchor=west] [inner sep=0.75pt]  [font=\scriptsize]  {$+$};
+% Text Node
+\draw (160,157.5) node [anchor=west] [inner sep=0.75pt]  [font=\scriptsize]  {$-$};
+% Text Node
+\draw (432,102) node [anchor=west] [inner sep=0.75pt]    {$d$};
+% Text Node
+\draw (200,146.6) node [anchor=south] [inner sep=0.75pt]    {$e$};
+
+\end{tikzpicture}
+
+    \caption{Cruise control controller}
+    \label{fig:cruise cont}
+\end{figure}
+
+The setup shown here takes some commanded reference speed $r$, and compares it to some measured speed $y$ from the speedometer. The difference between the two is denoted $e$. This error signal is then used in the throttle controller to command the control signal, $u$.
+
+Possibility the simplest choice for the throttle command is simply for the throttle command to be proportional to the current error in the system. That way, we apply a large throttle command when the error is large, and it decreases in proportion with the error signal.
+
+
+
+\section{Pole Placement Control}
+
 
 \chapter{Optimality}
-The subjects of both optimal estimation and optimal control lie on the foundations of optimality. I devote a chapter here to studying the various types of optimality that are relevant to our discussion here. The later parts of this chapter will derive much from our earlier work in the calculus of variations, \gls{Lagrangian} mechanics, and \gls{Hamiltonian} mechanics.
+The subjects of both optimal estimation and optimal control lie on the foundations of optimality. I devote a chapter here to studying the various types of optimality that are relevant to our discussion here. The later parts of this chapter will derive much from our earlier work in the calculus of variations, \gls{Lagrangian} mechanics, and \gls{Hamiltonian} mechanics which were discussed in \autoref{part: energy mech}.
 
 \subsubsection{What is Optimality?}
 Before we get into any mathematical analysis, I should explain exactly what is meant by optimality. An optimal solution is one which 
 
-\section{Least Squares Estimation}
+\section{Least Squares Estimation}\label{sec:least squares}
 To start our discussion of optimal, we should first consider a quite simple case of optimality, which is the case of producing a least squares estimate. The solution to this problem will introduce us to the realm of optimal control.
 
-In a linear system, the statement of this problem is fairly straightforward. Given a vector of measurements, $\textbf{y}$, we desire a solution $A\textbf{x}$ which minimizes the difference between the two. We formulate this as:
-$$\left||\textbf{y}-A\textbf{x}_{opt}\right||\leq||y-Ax||\quad \forall \textbf{x} \in \mathbb{C}^n$$
-That is, we seek a solution for which the norm of the quantity $\textbf{y}-A\textbf{x}_{opt}$ cannot be made smaller by any other selection of $\textbf{x}$. Stated another way, the problem is to find the minimization:
-$$d=\min{||\textbf{y}-A\textbf{x}||:\textbf{x} \in \mathbb{C}^n}$$
-I should note here that in this problem, the values of $\textbf{y}$ and $A$ are known, we simply want to find a value of $\textbf{x}$ that results in a minimization of the system.
+Before we begin, it is best to discuss the players in the least squares estimation, $\textbf{z}$, $H$, and $\textbf{x}$. We can use these together to form the following equation:
+$$\textbf{z}=H\textbf{x}$$
+It is often the case that the measurements, $\textbf{z}$ are not the same size as the vector $\textbf{x}$. If we consider $\textbf{z}\in\mathbb{R}^m$ and $\textbf{x}\in\mathbb{R}^n$,  $H$ is a matrix which maps from $\mathbb{R}^m$ to $\mathbb{R}^n$. This system is representative of a general linear system of equations, which are all scalars equations of the form:
+$$y=mx+b$$
+Of course, real systems are not always perfectly linear, so the equation in reality look something like:
+$$\textbf{z}=H\textbf{x}+e$$
+The goal of the least squares estimation is to find the value of $\textbf{x}$ that best fits the measurements of the system and therefore minimizes $e$. The statement of this problem is fairly straightforward. Given $\textbf{z}$, we desire a solution $H\textbf{x}$ which minimizes their difference, $e$. We formulate this as:
+$$\left||\textbf{z}-H\textbf{x}_{opt}\right||\leq||\textbf{z}-H\textbf{x}||\quad \forall \textbf{x} \in \mathbb{C}^n$$
+That is, we seek a solution for which the norm of the quantity $\textbf{z}-H\textbf{x}_{opt}$ cannot be made smaller by any other selection of $\textbf{x}$. Stated another way, the problem is to find the minimization:
+$$d=\min{||\textbf{z}-H\textbf{x}||:\textbf{x} \in \mathbb{C}^n}$$
+I should note here that in this problem, the values of $\textbf{z}$ and $H$ are known, we simply want to find a value of $\textbf{x}$ that results in a minimization of the system.
 
 Students of linear algebra may think this problem is quite easy to solve at first glance. The minimization will just be the solution that exists when solving the equation:
-$$\textbf{y}=A\textbf{x}$$
+$$\textbf{z}=H\textbf{x}$$
 To find $\textbf{x}$, we simply left multiply both sides of the equation of $A^{-1}$to get:
-$$A^{-1}\textbf{y}=\textbf{x}$$
-This is a classical result in linear algebra, but it is in fact not the solution we are seeking here! This solution will only hold in the case that $A$ is a square, invertible matrix, which is not the case in many of the problems that we want to analyze. As a result, we need to construct a more general method for finding the minimization of the equation.
+$$H^{-1}\textbf{z}=\textbf{x}$$
+This is a classical result in linear algebra, but it is in fact not the solution we are seeking here! This solution will only hold in the case that $H$ is a square, invertible matrix, which is not the case in many of the problems that we want to analyze. As a result, we need to construct a more general method for finding the minimization of the equation.
 
 There are many ways to approach this derivation, but a full derivation from the ground up is outside the scope of this book. Some information may be found in the video lecture series found at \cite{brunton_singular_nodate}.
 
 \subsubsection{The least squares method}
-Let us return to the problem of minimizing $\textbf{y}-A\textbf{x}$. Now that we are not assuming square matrices, it is good to define the dimensions of each vector exactly. We consider $\textbf{y}$ a column vector of dimension $m\times1$. We have previously stated that $\textbf{x}$ is an $n\times1$ vector. To match the dimensions of $\textbf{y}$, $A$ must be of dimension $m\times n$.
+Let us return to the problem of minimizing $\textbf{z}-H\textbf{x}$. Now that we are not assuming square matrices, it is good to define the dimensions of each vector exactly. We consider $\textbf{z}$ a column vector of dimension $m\times1$. We have previously stated that $\textbf{x}$ is an $n\times1$ vector. To match the dimensions of $\textbf{z}$, $H$ must be of dimension $m\times n$.
 
-Since the vectors we have defined can have any size, there are three possible cases. When $m>n$, $A$ is a `tall' matrix. In the case of a tall matrix, the dimension of $\textbf{y}$ is greater than the dimension of $\textbf{x}$. In this case, there is no linear combination of $\textbf{x}$ that can determine $\textbf{y}$ fully. The best we can do is choose a value of $\textbf{x}$ that gets us as close as possible. This is the case known as the \textit{overdetermined} case. This case is the typical least squares problem -- there are lots of data points, and we want to find a straight line that is as close as possible to representing their behavior.
+Since the vectors we have defined can have any size, there are three possible cases. When $m>n$, $H$ is a `tall' matrix. In the case of a tall matrix, the dimension of $\textbf{z}$ is greater than the dimension of $\textbf{x}$. In this case, there is no linear combination of $\textbf{x}$ that can determine $\textbf{z}$ fully. The best we can do is choose a value of $\textbf{x}$ that gets us as close as possible. This is the case known as the \textit{overdetermined} case. This case is the typical least squares problem -- there are lots of data points, and we want to find a straight line that is as close as possible to representing their behavior.
 
-On the opposite end, when $m<n$, $A$ is a `short' matrix. In this case, the exact opposite is true. There are many possible combinations of $\textbf{x}$ that give $\textbf{y}$, so an infinite number of solutions exist. This case is called the \textit{underdetermined} case. You may intuitive think of this as trying to fit a line to a single point. There are an infinite number of lines passing through that point, so the line is underdetermined!
+On the opposite end, when $m<n$, $H$ is a `short' matrix. In this case, the exact opposite is true. There are many possible combinations of $\textbf{x}$ that give $\textbf{z}$, so an infinite number of solutions exist. This case is called the \textit{underdetermined} case. You may intuitive think of this as trying to fit a line to a single point. There are an infinite number of lines passing through that point, so the line is underdetermined!
 
 Of course, there is the case where $m=n$ which is heavily studied in linear algebra classes. Readers should be familiar with these solutions and how they relate to the above cases. Keeping with the analogy, this case corresponds to fitting a line to two points.
 
-We can put aside the two different cases briefly while we determine the solution to our minimization problem. We can see from the matrix multiplication that the result of $\textbf{y}-A\textbf{x}$ is an $m\times1$ vector. To minimize this, we need to first convert this quantity to a scalar value. Of course, we can do that with the inner product, defining our scalar value as:
-$$J=(\textbf{y}-A\textbf{x})^T(\textbf{y}-A\textbf{x})$$
+We can put aside the two different cases briefly while we determine the solution to our minimization problem. We can see from the matrix multiplication that the result of $\textbf{z}-H\textbf{x}$ is an $m\times1$ vector. To minimize this, we need to first convert this quantity to a scalar value. Of course, we can do that with the inner product, defining our scalar value as:
+\begin{equation}\label{eq:least squares start}
+    J=(\textbf{z}-H\textbf{x})^T(\textbf{z}-H\textbf{x})
+\end{equation}
 From here, the minimization is simply an application of calculus. We define the minimization as the point where the gradient of $J$ with respect to $\textbf{x}$ is zero, or:
 $$\frac{\partial J}{\partial \textbf{x}}=0$$
 We can apply this expression to the right hand side of the equation:
-$$\frac{\partial}{\partial \textbf{x}}\left[(\textbf{y}-A\textbf{x})^T(\textbf{y}-A\textbf{x})\right]=0$$
+$$\frac{\partial}{\partial \textbf{x}}\left[(\textbf{z}-H\textbf{x})^T(\textbf{z}-H\textbf{x})\right]=0$$
 The transpose can first be expanded by the usual rule that $(AB)^T=B^TA^T$:
-$$\frac{\partial}{\partial \textbf{x}}\left[(\textbf{y}^T-\textbf{x}^TA^T)(\textbf{y}-A\textbf{x})\right]=0$$
+$$\frac{\partial}{\partial \textbf{x}}\left[(\textbf{z}^T-\textbf{x}^TH^T)(\textbf{z}-H\textbf{x})\right]=0$$
 Multiplying out the terms:
-$$\frac{\partial}{\partial \textbf{x}}\left[\textbf{y}^T\textbf{y}-\textbf{y}^TA\textbf{x}-\textbf{x}^TA^T\textbf{y}+\textbf{x}^TA^TA\textbf{x}\right]=0$$
-We can notice that the middle terms, $\textbf{y}^TA\textbf{x}$ and $\textbf{x}^TA^T\textbf{y}$ are transpositions of each other. Since these terms are scalar (you can show this quite easily by analyzing their dimensions), the transposition operation means these terms are identical. As such, another simplification can be made by combining these terms.
-$$\frac{\partial}{\partial \textbf{x}}\left[\textbf{y}^T\textbf{y}-2\textbf{x}^TA^T\textbf{y}+\textbf{x}^TA^TA\textbf{x}\right]=0$$
-You should notice that this form looks quite similar to the expansion of $(ax+b)^2$, and that is no coincidence! In fact, we call such terms quadratic. The form of $\textbf{y}^T\textbf{y}$ is in fact a matrix equivalent to $y^2$. 
+$$\frac{\partial}{\partial \textbf{x}}\left[\textbf{z}^T\textbf{z}-\textbf{z}^TH\textbf{x}-\textbf{x}^TH^T\textbf{z}+\textbf{x}^TH^TH\textbf{x}\right]=0$$
+We can notice that the middle terms, $\textbf{z}^TH\textbf{x}$ and $\textbf{x}^TH^T\textbf{z}$ are transpositions of each other. Since these terms are scalar (you can show this quite easily by analyzing their dimensions), the transposition operation means these terms are identical. As such, another simplification can be made by combining these terms.
+$$\frac{\partial}{\partial \textbf{x}}\left[\textbf{z}^T\textbf{z}-2\textbf{x}^TH^T\textbf{z}+\textbf{x}^TH^TH\textbf{x}\right]=0$$
+You should notice that this form looks quite similar to the expansion of $(ax+b)^2$, and that is no coincidence! In fact, we call such terms quadratic. The form of $\textbf{z}^T\textbf{z}$ is in fact a matrix equivalent to $z^2$. 
 
-Our next step is to evaluate the partial derivative, which is quite similar to the standard methods in multivariate calculus. Since we can consider expressions such at $\textbf{x}^T\textbf{x}$ to be quadratic, its derivative is given by $2\textbf{x}$. More rigorous definitions can be found, but the result holds nonetheless. Finally, we can perform the computation to get:
-$$-2A^T\textbf{y}+2A^TA\textbf{x}=0$$
+Our next step is to evaluate the partial derivative, which is quite similar to the standard methods in multivariate calculus. Since we can consider expressions such at $\textbf{x}^T\textbf{x}$ to be quadratic, its derivative is given by $2\textbf{x}$. More rigorous derivations of this fact can be found, but the result holds nonetheless. Finally, we can perform the computation to get:
+$$-2H^T\textbf{z}+2H^TH\textbf{x}=0$$
 Which can be rearranged to:
-$$A^TA\textbf{x}=A^T\textbf{y}$$
+$$H^TH\textbf{x}=H^T\textbf{z}$$
 Solving for $\textbf{x}$, we arrive at the final result:
-$$\textbf{x}=(A^TA)^{-1}A^T\textbf{y}$$
-The term $(A^TA)^{-1}A^T$ is the \textit{pseudoinverse} of $A$, since it effectively does the same as $A^{-1}$ did in the case of the square matrix. One thing to note is that we could have either chosen $\textbf{y}^TA\textbf{x}$ or $\textbf{x}^TA^T\textbf{y}$ as the middle term to choose. Choosing one over the other changes the answer slightly. This is related to the underdetermined vs overdetermined case, which have slightly different pseudo-inverses!
+$$\textbf{\^x}=(H^TH)^{-1}H^T\textbf{z}$$
+A `$\hat{\ \ \ }$' is added to $\textbf{x}$ to denote that this value of $\textbf{x}$ is not exact, but rather the best estimate of the value of $\textbf{x}$ that can be attained from the system. 
+
+The term $(H^TH)^{-1}H^T$ is the \textit{\gls{pseudoinverse}} of $H$, since it effectively does the same as $H^{-1}$ did in the case of the square matrix. One thing to note is that we could have either chosen $\textbf{z}^TH\textbf{x}$ or $\textbf{x}^TH^T\textbf{z}$ as the middle term, since both were identical scalars. Choosing one over the other changes the answer slightly. This is related to the underdetermined vs overdetermined case, which have slightly different \glspl{pseudoinverse}! The two cases of the \glspl{pseudoinverse} are shown for a general matrix $A$:
 
 $$\begin{array}{rc}
      \mathrm{underdetermined:} & A^\#=A^T(AA^T)^{-1} \\
      \mathrm{overdetermined:} & A^\#=(A^TA)^{-1}A^T
 \end{array}$$
 \begin{exercise}
-    It can be shown that these pseudo-inverses are identical to the standard matrix inverse in the case of a square matrix. You may consider the property that $(AB)^{-1}=B^{-1}A^{-1}$ to show this. 
+    It can be shown that these glspl{pseudoinverse} are identical to the standard matrix inverse in the case of an invertible square matrix. You may consider the property that $(AB)^{-1}=B^{-1}A^{-1}$ to show this. 
 \end{exercise}
 Least squares estimation has given us some of the mathematical tools that we will need when considering optimal estimation in the more general sense.
 
 Before we continue, lets stop briefly to consider the results of the least squares estimation. By considering the smallest inner product, we are effectively minimizing the 2-norm of the system. Along the way, we found that this corresponded to a quadratic matrix quantity.
 
-We considered kinetic energy as one of the prototypical examples of a quadratic system. In fact, this analogy with kinetic energy is quite apt, as it turns out that minimizing the 2-nrom often corresponds to minimization of the energy! As we dive further into optimal estimation and control, this will be an important concept to keep in mind.
-
+We considered kinetic energy as one of the prototypical examples of a quadratic system. In fact, this analogy with kinetic energy is quite apt, as it turns out that minimizing the 2-norm often corresponds to minimization of the energy! As we dive further into optimal estimation and control, this will be an important concept to keep in mind.
 
 \chapter{Optimal Estimation}
 Optimal estimation is a subject that is concerned with finding estimates of some or all of the states in a system in a way that we consider to be optimal. If we have a system output that we measure directly with a sensor, why do we need to estimate it?
@@ -1107,75 +1276,585 @@ There are two main reasons to apply estimation. First, no true sensor is perfect
 
 The second reason is that we can use estimation to gain an understanding of states that we cannot directly observe. This is very useful for us in many applications! For example, if we are flying our rocket, there is no instrument that we can use to measure our drag coefficient, $C_D$. However, we can apply optimal estimation to get a very good estimate of the $C_D$ nonetheless.
 
-The most common way to perform optimal estimation is with the Kalman Filter. We will see later than the Kalman Filter is the optimal linear filter.
+The most common way to perform optimal estimation is with the Kalman Filter. We will see later than the Kalman Filter is the optimal linear filter. As with control systems, understanding the theory of the linear systems will be useful even as we extend our scope to non-linear systems. As such, a large portion of this chapter is devoted to understanding the Kalman filter and applying it to both linear and non-linear systems.
 
-Let us start by looking at a few more examples where the Kalman Filter is useful. Say, for example, we want to measure the temperature of a rocket engine exhaust. We have a physical constraint on the system that any thermometer will melt under the heat of a rocket engine. What can we do then?
+I will motivate the discussion by looking at a few examples to gain a practical understanding of the Kalman filter. Say, for example, we want to measure the temperature of a rocket engine exhaust. We have a physical constraint on the system that any thermometer will melt under the heat of a rocket engine. What can we do then?
 
 We can put a thermometer on the outside of the engine and measure the temperature there. If we know the metal the engine is made of and some properties of our cooling system, we can construct a pretty good model of what the heat transfer across the engine will look like. In other words, we build a model that tells us what we should expect. Of course, we can also correlate this with some other sensors, say a barometer to measure some aspects of temperature that are tied to the pressure reading.
 
 These two examples touch on some key aspects of the Kalman Filter. Firstly, we need a good model of our system for a Kalman Filter to work. This is because the Kalman Filter effectively acts as a real time numerical integrator! We have to update our model in real time to help us model the system behavior.
 
-The other part of the Kalman Filter is that we need measurements, and more importantly, we need to understand how those measurements are related to each other.
+The other part of the Kalman Filter is that we need measurements, and more importantly, we need to understand how those measurements are related to each other. This need to understand measurements is the role of statistics in the Kalman filter.
+
+Lastly, I want to note that for any estimator, the state in question must be observable for any estimator to work. If the state has no observability, there is no observer that can possibly give information about that state!
 
 \section{What is Filtering?}
 
 \section{The Average and Low Pass Filter}
 
+
+\section{Some Preliminary Statistics}
+Estimators are founded on the assumption that there is some noise in our system. Naturally, noise is a signal that cannot be quantitatively analyzed directly (otherwise it wouldn't be noise, we would just measure it directly). Noise comes from many sources, be they thermal, conversion processes, or of another origin. For many reasons, modeling noise in real time systems can be quite difficult. Often, it is the case that we model noise in the system simply as a random fluctuation in the system. We can quantify such randomness in the form of a random variable.
+
+The use of random variables in our systems to model noise allows us to apply the toolset of probability and statistics to analyze systems. Statistics has many tools to analyze systems of random variables which will be very useful in the development of the optimal estimator. To understand the mathematics of optimal estimators then, we need to briefly discuss some of the statistical methods that are used.
+
+The reader has likely seen many of these statistical ideas, but they may not have been presented in the case of continuous variables. In such cases, it may be good to try and show how you can recover the discrete case from what is shown here!
+
+\subsubsection{Probability Distributions}
+
+We start this by discussing the probability distribution function, $F(x)$. For a variable, $X$, the probability distribution function specifies the likelihood that $X$ will have a value less than $x$. This is otherwise written:
+$$F(x)=\Pr(X\leq x)$$
+More often, the probability density is the criteria of interest. The \gls{pdf} gives the likelihood that an infinitesimal portion attains a certain value. This is defined as:
+$$f(x)=\frac{dF(x)}{dx}$$
+The defining relationship for probability is that the probability must tend to $1$ as $x$ tends to infinity, as there must be a $100\%$ probability of the random variable being less than $\infty$! This relationship can be written as:
+$$F(\infty)=\int_{-\infty}^\infty{f(x)dx}=1$$
+
+\subsubsection{Mean and Standard Deviation}
+Using this definition, the expectation value of a random variable can be found from the \gls{pdf}. This is accomplished in much the same way that we go about computing the location of a distributed force, or more precisely the first moment of a variable. The expectation is given by multiplying the value $x$ by the probability density at that point. Integrating over the whole region, we have:
+$$E[X]=\int_{-\infty}^\infty{xf(x)dx}$$
+This expectation value is also the mean value of $X$. In some sense it is the average of all the values of the distribution.
+
+The expectation value is helpful, but it gives no indication of the spread of the data. To quantify this, we should consider the distance that each data point is from the mean value, $E[X]$. In the integral, we write this:
+$$\int_{-\infty}^\infty{(x-E[X])^2f(x)dx}$$
+Here, we square the value of $(x-E[X])$ because both positive and negative differences from the mean should increase the variance. Squared values are also easier to accommodate than absolute value functions in most cases, as we can easily differentiate them. Absolute value functions often have points of non-differentiability that make them hard to work with.
+
+Expanding the binomial in the integrand, we have:
+$$\int_{-\infty}^\infty{(x^2-2xE[X]+E[X]^2)f(x)dx}$$
+Taking each component individually, we have:
+$$\int_{-\infty}^\infty{x^2f(x)dx}$$
+Which is known as the second moment of $X$, which is defined as $E[X^2]$. Moving on to the next component, we have 
+$$\int_{-\infty}^\infty{-2xE[X]f(x)dx}$$
+The $E[X]$ can be treated as a constant, since it simply represents the mean value of $X$. Thus, the integral evaluates to
+$$-2E[X]E[X]=-2E[X]^2$$
+Finally, the last component can be treated as a constant as well, giving $E[X]^2$ as a final result. Combining all of the expressions, we have:
+$$\sigma^2=E[X^2]-E[X]^2$$
+This quantity, denoted $\sigma$, is the standard deviation of the random variable $X$. More often in the study of optimal estimation, the quantity $\sigma^2$ is used, which is called the variance.
+
+\subsubsection{Covariance and Correlations}
+Studying single variable random variables is adequate for simple systems, but more complex systems often involve multiple random variables. When multiple variables are involved, there is no guarantee that they are independent from one another. That is, there may exist some non-zero correlation between two random variables.
+
+The reason that covariance is important in our study is that a lot of variables in our state vector are very likely to be correlated. Take, for example, position and velocity. A higher velocity means that we expect the position measurements to change quite rapidly, while a low velocity implies that the position measurements will change quite slowly. These variables are quite obviously linked and we need a good way to describe this relationship using statistics. Understanding the link between multiple variables can allow us to understand things about other variables from a single measurement, since the two variables are related!
+
+The covariance is derived in much the same way as the standard variance equation. Here, we consider the product of the deviations from a random variable $X$ and $Y$ from their means:
+$$E[(X-E[X])(Y-E[Y])]$$
+Notice that because that a product between the two variables exists, the covariance can be negative or positive, unlike the variance which can only be positive. The interpretation is that a positive covariance means that when one random variable increases, the other one also increases. For a negative covariance, 
+
+In much the same way as before, the covariance -- $P$ -- can be found as:
+$$P=E[XY]-E[X]E[Y]$$
+\subsubsection{Covariance as Inner Product}
+The covariance has some interesting properties which make it behave quite similarly to the inner product. Firstly $\textrm{Cov}(X,Y)=\textrm{Cov}(Y,X)$. That is, the covariance is a symmetric operation.
+
+These properties are useful because we can apply our understanding of inner products on the covariance operation. As an example, if $X$ and $Y$ are known to be orthogonal sets of data, then their covariance is indeed 0.
+
+
+
 \section{The Kalman Filter}
-Our previous discussions on the best fit linear model and other filters have set us up to finally discuss the Kalman Filter. The Kalman Filter is a linear filter which provides the best possible estimate for a linear system.
+Our previous discussions on the best fit linear model and other filters have set us up to finally discuss the Kalman filter. The Kalman filter is a linear filter which provides the best possible estimate for a linear system. There are several ways to derive the Kalman filter, but I believe the most natural for us will be the approach most aligned with the least squares estimation and akin to variational calculus.
+
+\section{Criteria of Optimality}
 
 The best possible estimate of a state in a system is \textit{unbiased}, \textit{minimum variance}, and \textit{consistent}. An unbiased estimator has the property that the expected value from the sensor is the same as the true value. This effectively means that the sensor is accurate, although it may not provide particularly precise measurements. The second quality is that of minimum variance. This is effectively the criteria of optimality, in that no other estimator can estimate the variance better than the minimum variance system. Finally, a consistent estimator converges to the true value of the state.
 
-It is important to note that there is a subtle distinction between a consistent and an unbiased estimator. A consistent estimator may converge at $t\rightarrow\infty$ to the true value of $\textbf{x}$, but at any time prior its estimate does not agree with the true value. This can be seen quite evidently in 
+It is important to note that there is a subtle distinction between a consistent and an unbiased estimator. A consistent estimator may converge at $t\rightarrow\infty$ to the true value of $\textbf{x}$, but at any time prior its estimate does not agree with the true value. This can be seen quite evidently in \autoref{fig:consist est}.
 
-\begin{figure}
+\begin{figure}[ht]
     \centering
-    \includesvg[width=0.75\linewidth]{}
-    \caption{Caption}
-    \label{fig:enter-label}
+    \includesvg[width=0.75\linewidth]{Images/Consistency_of_estimator}
+    \caption{A consistent but biased estimator \cite{stpasha_consistent_nodate}}
+    \label{fig:consist est}
 \end{figure}
+As can be seen, an estimator can converge to the true value while having estimates of the state that are not centered around the true mean!
+
+Having defined the notion of optimality and the constraints of the system, we can proceed with the derivation of the Kalman filter. We assume that the measurements, $\textbf{z}$, of the system are equivalent to the true value, $\textbf{x}$, plus some random measurement error $\textbf{v}$. 
+$$\textbf{z}=H\textbf{x}+\textbf{v}$$
+From the criteria that we have described above, in order to be unbiased and consistent, $\textbf{v}$ must have zero mean. Additionally, $\textbf{v}$ is assumed to take the form of the normal distribution in the Kalman filter, as this distribution has useful properties that make it amenable to mathematical force. Normally distributed variables appear quite commonly in statistical systems. Additionally, the autocorrelation function of any random process can be equivalently represented by the autocorrelation of a gaussian process. Systems of random variables also exhibit normal distributions as a result of the central limit theorem.
+
+All of this is to say that it is quite a well founded assumption to assume a normal distribution for $\textbf{v}$. In fact, the use of the normal distribution is so common that it is given a special notation:
+$$\textbf{v}\sim\mathcal{N}(m,P)$$
+This notation means that $\textbf{v}$ is a normally distributed random vector with a mean of $m$ and a \textit{covariance} of $P$. This is more general that a one-dimensional normal distribution, since it is being applied on a whole vector of data. 
+
+In the Kalman filter, we have explicit need for an unbiased estimator, so the mean of the random variable $\textbf{v}$ must be 0. This does not mean that the measurements of the system must be zero, but the noise itself must be! The noise of the system then is represented by 
+$$\textbf{v}\sim\mathcal{N}(0,P)$$
+As we have stated before, the goal of optimal estimation is to `see past' this noise and observe the state of $\textbf{x}$ itself! In our least squares estimation, we have already determined how we can find the value of $\textbf{x}$ from such a system optimally (refer to \autoref{sec:least squares}):
+$$\textbf{\^x}=(H^TH)^{-1}H^T\textbf{z}$$
+Again, it should be noted that $\textbf{\^x}$ is the estimate of the state, not the actual value of the state itself. However, using the least squares method provides the optimal estimate of the state, as we have seen previously. 
+
+In the Kalman filter, we typically want to attach a weighting to each measurement, which dictates the quality of the measurement. This matrix which denotes the quality of the estimate is typically denoted as $R$. The matrix $R$ is commonly used to contain the covariances of the measurements, which is related to the measurement noise. The matrix $R$ is of the form:
+$$R=\begin{bmatrix}
+    \textrm{Var}(X_1) &\textrm{Cov}(X_2,Y_1)&\cdots&\textrm{Cov}(X_m,Y_1)\\
+    \textrm{Cov}(X_1,Y_2)& \textrm{Var}(X_2)&\cdots&\textrm{Cov}(X_m,Y_2)\\
+    \vdots&\vdots&\ddots&\vdots\\
+    \textrm{Cov}(X_1,Y_m)&\textrm{Cov}(X_2,Y_m)&\cdots&\textrm{Var}(X_m)
+\end{bmatrix}$$
+The dimension of $R$ is the same as the dimension of the measurements, $m$, so $R$ is $m\times m$. Often, this matrix is diagonal or close to diagonal because measurements are typically uncorrelated in physical systems. As a result, $R$ can often be modeled well as a diagonal matrix:
+$$R=\begin{bmatrix}
+    \textrm{Var}(X_1) &0&\cdots&0\\
+   0& \textrm{Var}(X_2)&\cdots&0\\
+    \vdots&\vdots&\ddots&\vdots\\
+    0&0&\cdots&\textrm{Var}(X_m)
+\end{bmatrix}$$
+Because $R$ models the covariance of each random variable in the system, when placing a weighting on the variables, we take the inverse of $R$, since a low covariance means that the measurement has less noise and should be trusted more. Because $R$ is often diagonal, the computation of the inverse is straightforward. In the case of weighted measurements, the least squares measurement cost function from \eqautoref{eq:least squares start} can be modified to include the weighting, $R^{-1}$:
+$$J=(\textbf{z}-H\textbf{x})^TR^{-1}(\textbf{z}-H\textbf{x})$$
+
+Solving in the same manner as in \autoref{sec:least squares}, we arrive at the following for the least squares estimation with a weighting on the measurements:
+$$\textbf{\^x}=(H^TR^{-1}H)^{-1}H^TR^{-1}\textbf{z}$$
+With an optimal estimate for $\textbf{x}$ in hand, we are ready to begin mechanizing this as a filter that we can run to get real results from!
+\section{Building the Kalman Filter}
+We can begin the Kalman filter by considering a state vector $\textbf{x}$ of the system. It is easiest and more practically applicable to derive the Kalman filter for the discrete time case first, and then describe the limiting behavior if we desire a continuous filter. Since most of our measurements are discrete in modern digital systems, it is often preferable to use the discrete time equations.
+
+The Kalman filter is divided into two steps. The first two equations define the relationships for the time update of the Kalman filter. This is the update to the state vector and other quantities based on the dynamics of the system.
+
+The other step is the measurement update, which refines the state vector and other quantities based on the received measurements from the system.
+
+\subsection{Time Update Equations}
+
+\subsubsection{State Propagation}
+To start, we simply propagate our state vector through time using the description of the dynamics of the system. The continuous dynamics of the system are described in the $A$ matrix of the state space representation. Ignoring the control input momentarily, we can describe our dynamics with:
+$$\dot{\textbf{x}}=A\textbf{x}$$
+Since we seek a discrete solution, we can apply the tools of \gls{lie theory} and differential calculus to get the state transition matrix, $\Phi$. From here, we build a difference equation:
+$$\textbf{x}_{k}=\Phi_{k-1}\textbf{x}_{k-1}$$
+Where $\Phi=e^{A\Delta t}$. For a linear time invariant system, $\Phi$ is a constant matrix and the subscript is not required. Often, however, the Kalman filter is applied to systems which are non-linear or time varying (or both), so the subscript will be included.
+
+At a high level, we can think of $\Phi$ as a `prediction' matrix, which tells us what we predict the state will look like at the next time step. It takes in all the current elements of $\textbf{x}$, and tells us what it thinks will happen.
+ 
+In our model of the Kalman filter, our dynamics modeling is not perfect. To account for the dynamics which is not modeled, we can introduce a variable which represents random disturbances to the system, called $\textbf{w}$. This vector $\textbf{w}$ is multiplied by a matrix $\Gamma$ by standard convection. These two terms create what is known as \textit{process noise} in the system, which is a type of noise related to limitations in understanding the dynamics of the system or process. Adding the process noise to the difference equation gives:
+$$\textbf{x}_{k}=\Phi_{k-1}\textbf{x}_{k-1}+\Gamma_{k-1}\textbf{w}_{k-1}$$
+It is often the case that $\Gamma$ is simply an identity matrix. In the following section and hereafter, $\Gamma$ will be the identity and thus not included in the equations unless otherwise specified. Applying this simplification gives:
+$$\textbf{x}_{k}=\Phi_{k-1}\textbf{x}_{k-1}+\textbf{w}_{k-1}$$
+Note that $\textbf{w}$ is a white noise, with a mean value of zero, the same as the other noises in the Kalman filter.
+
+\subsubsection{Covariance Update}
+We have previously discussed the idea of covariance as it relates to random variables. In the case of the Kalman filter, it is useful to create a covariance matrix which describes the uncertainty in the state vector. First, we define the error in the state vector, which is given by:
+$$\textbf{\~x}\equiv{\textbf{\^x}}-\textbf{x}$$
+The covariance of this error vector is useful for describing the uncertainty of each state of the system. This covariance is described by the expectation value of the outer product of $\textbf{\~x}$ with itself:
+$$P=E\left[\textbf{\~x}\textbf{\~x}^T\right]$$
+This is similar to our previous definition, as it is quadratic in form. To update the covariance between different steps, we can write the difference equation and solve it:
+$$P_k=E\left[\textbf{\~x}_k{\textbf{\~x}_k}^T\right]$$
+For  $\textbf{\~x}_k$, we can plug in the state propagation equation that we derived in the previous section\endnote{In this derivation, the notation has been changed slightly, as $k$ is replaced by $k+1$. This is simply done for notational convenience in this section to keep the equations from becoming excessively long. In future sections, the more standard notation is used.}:
+$$\textbf{\~x}_{k+1}=\Phi_{k}\textbf{\~x}_{k}+\textbf{w}_{k}$$
+We can then multiply the expression together:
+$$P_k=E\left[\left(\Phi_{k}\textbf{\~x}_{k}+\textbf{w}_{k}\right)\left(\Phi_{k}\textbf{\~x}_{k}+\textbf{w}_{k}\right)^T\right]$$
+Expanding the product and multiplying:
+$$P_{k+1}=E\left[\Phi_{k}\textbf{\~x}_{k}{\textbf{\~x}_{k}}^T{\Phi_{k}}^T+\Phi_{k}\textbf{\~x}_{k}{\textbf{w}_{k}}^T+{\textbf{w}_{k}}{\textbf{\~x}_{k}}^T{\Phi_{k}}^T+\textbf{w}_k{\textbf{w}_k}^T\right]$$
+Since $\textbf{\~x}_{k}$ and $\textbf{w}_k$ are uncorrelated, the expectation value of their product should be zero. We can reach this conclusion either through probabilistic reasoning or by considering the relationship of the covariance to the inner product, and seeing that $\textbf{\~x}_{k}$ and $\textbf{w}_k$ are orthogonal. This orthogonality removes the two middle terms, leaving us with:
+$$P_{k+1}=E\left[\Phi_{k}\textbf{\~x}_{k}{\textbf{\~x}_{k}}^T{\Phi_{k}}^T+\textbf{w}_k{\textbf{w}_k}^T\right]$$
+Further, we have exactly defined $P_k=E\left[\textbf{\~x}_k{\textbf{\~x}_k}^T\right]$, so we can reduce that term as well:
+$$P_{k+1}=\Phi_{k}P_k{\Phi_{k}}^T+E\left[\textbf{w}_k{\textbf{w}_k}^T\right]$$
+We notice that the last term follows the same form as the first. We can write this variable as another matrix, which is denoted $Q_k$. This matrix describes the discrete process noise and is similar to the previously described $R$ matrix. Altogether, the covariance update due to the new dynamics is given by:
+$$P_{k+1}=\Phi_{k}P_k{\Phi_{k}}^T+Q_k$$
+\begin{example}[Position and Velocity]
+For this example, lets consider a simple system with a state vector comprising of only two elements -- position and velocity in one dimension. We must first construct the state transition by first formulating the continuous dynamics of the system. We assume that the system is not accelerating for simplicity:
+$$\begin{bmatrix}
+    v\\a
+\end{bmatrix}=\begin{bmatrix}
+    0&1\\0&0
+\end{bmatrix}\begin{bmatrix}
+    p\\v
+\end{bmatrix}$$
+We can then compute $\Phi$ using the matrix exponential, $e^{A\Delta t}$, which gives:
+$$\Phi=\begin{bmatrix}
+    1&\Delta t\\0&1
+\end{bmatrix}$$
+We can now simply apply the equations of the time update to the system:
+\begin{gather}
+    \textbf{x}_{k}=\Phi_{k-1}\textbf{x}_{k-1}+\textbf{w}_{k-1}\\
+    P_{k}=\Phi_{k-1}P_{k-1}{\Phi_{k-1}}^T+Q_{k-1}
+\end{gather}
+To give some definite structure to the example, we will consider an initial condition on $\textbf{x}_{k-1}$ and $P_{k-1}$:
+\begin{align}
+        \textbf{x}_{k-1}&=\begin{bmatrix}
+            0&5
+        \end{bmatrix}^T\\
+    P_{k-1}&=\begin{bmatrix}
+        1&0\\0&1
+    \end{bmatrix}
+\end{align}
+We also consider $\Delta t=1$ and that the process noise is zero for now. When we apply the equations, we see that the state vector is updated to give:
+$$\textbf{x}_k=\begin{bmatrix}
+    1&1\\0&1
+\end{bmatrix}\begin{bmatrix}
+            0\\5
+        \end{bmatrix}=\begin{bmatrix}
+            5\\5
+        \end{bmatrix}$$
+As expected, after 1 second, the position has now increased by 5 and the velocity is the same. The covariance update is a bit more interesting:
+$$P_k=\begin{bmatrix}
+    1&1\\0&1
+\end{bmatrix}\begin{bmatrix}
+    1&0\\0&1
+\end{bmatrix}\begin{bmatrix}
+    1&0\\1&1
+\end{bmatrix}=\begin{bmatrix}
+    2&1\\1&1
+\end{bmatrix}$$
+As we can see, the covariance update is not quite as simple. Not only has the covariance of the position increased, but there is now coupling between the position and the velocity, as represented by the off diagonal terms of the matrix! An interesting implication of this is that measurement of the position only will allow us to get an indirect measurement of the velocity.
+
+As a side note, this is one reason why GPS measurements are extraordinarily powerful. Position updates often have coupling with velocity, acceleration, and orientation in dynamical systems. Getting a position update from a GPS measurement can allow us to get estimates for all of these states!
+
+This modeling allows us to get an interesting visualization of the time update in the Kalman filter. We can construct a plot in state space to visualize both the position and velocity, as well as their covariances, which is shown in \autoref{fig:Kalman Time Update}:
+
+\begin{figure}[H]
+
+\centering
+    
 
 
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Axis 2D [id:dp5459576253225696] 
+\draw  (180,230.15) -- (440,230.15)(210.07,40) -- (210.07,238) (433,225.15) -- (440,230.15) -- (433,235.15) (205.07,47) -- (210.07,40) -- (215.07,47) (230.07,225.15) -- (230.07,235.15)(250.07,225.15) -- (250.07,235.15)(270.07,225.15) -- (270.07,235.15)(290.07,225.15) -- (290.07,235.15)(310.07,225.15) -- (310.07,235.15)(330.07,225.15) -- (330.07,235.15)(350.07,225.15) -- (350.07,235.15)(370.07,225.15) -- (370.07,235.15)(390.07,225.15) -- (390.07,235.15)(410.07,225.15) -- (410.07,235.15)(190.07,225.15) -- (190.07,235.15)(205.07,210.15) -- (215.07,210.15)(205.07,190.15) -- (215.07,190.15)(205.07,170.15) -- (215.07,170.15)(205.07,150.15) -- (215.07,150.15)(205.07,130.15) -- (215.07,130.15)(205.07,110.15) -- (215.07,110.15)(205.07,90.15) -- (215.07,90.15)(205.07,70.15) -- (215.07,70.15) ;
+\draw   (237.07,242.15) node[anchor=east, scale=0.75]{1} (257.07,242.15) node[anchor=east, scale=0.75]{2} (277.07,242.15) node[anchor=east, scale=0.75]{3} (297.07,242.15) node[anchor=east, scale=0.75]{4} (317.07,242.15) node[anchor=east, scale=0.75]{5} (337.07,242.15) node[anchor=east, scale=0.75]{6} (357.07,242.15) node[anchor=east, scale=0.75]{7} (377.07,242.15) node[anchor=east, scale=0.75]{8} (397.07,242.15) node[anchor=east, scale=0.75]{9} (417.07,242.15) node[anchor=east, scale=0.75]{10} (197.07,242.15) node[anchor=east, scale=0.75]{-1} (207.07,210.15) node[anchor=east, scale=0.75]{1} (207.07,190.15) node[anchor=east, scale=0.75]{2} (207.07,170.15) node[anchor=east, scale=0.75]{3} (207.07,150.15) node[anchor=east, scale=0.75]{4} (207.07,130.15) node[anchor=east, scale=0.75]{5} (207.07,110.15) node[anchor=east, scale=0.75]{6} (207.07,90.15) node[anchor=east, scale=0.75]{7} (207.07,70.15) node[anchor=east, scale=0.75]{8} ;
+%Shape: Ellipse [id:dp9699291265749778] 
+\draw  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][dash pattern={on 4.5pt off 4.5pt}] (190,130) .. controls (190,118.95) and (198.95,110) .. (210,110) .. controls (221.05,110) and (230,118.95) .. (230,130) .. controls (230,141.05) and (221.05,150) .. (210,150) .. controls (198.95,150) and (190,141.05) .. (190,130) -- cycle ;
+%Shape: Ellipse [id:dp2897766336658041] 
+\draw  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][dash pattern={on 4.5pt off 4.5pt}] (267.19,155.83) .. controls (264.33,151.1) and (281.19,135.7) .. (304.83,121.44) .. controls (328.48,107.17) and (349.96,99.44) .. (352.81,104.17) .. controls (355.67,108.9) and (338.81,124.3) .. (315.17,138.56) .. controls (291.52,152.83) and (270.04,160.56) .. (267.19,155.83) -- cycle ;
+%Straight Lines [id:da46953353944392573] 
+\draw    (220,180) -- (297,180) ;
+\draw [shift={(300,180)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da7890742663040001] 
+\draw    (310,130) ;
+\draw [shift={(310,130)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+%Straight Lines [id:da6149283693612637] 
+\draw    (210,130) ;
+\draw [shift={(210,130)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+
+% Text Node
+\draw (281,252.4) node [anchor=north west][inner sep=0.75pt]    {$Position$};
+% Text Node
+\draw (152.4,159) node [anchor=north west][inner sep=0.75pt]  [rotate=-270]  {$Velocity$};
+% Text Node
+\draw (258,182.4) node [anchor=north] [inner sep=0.75pt]    {$\Phi $};
+% Text Node
+\draw (360,92.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$1\sigma $};
+
+
+\end{tikzpicture}
+
+    \caption{Time Update of Kalman Filter}
+    \label{fig:Kalman Time Update}
+\end{figure} 
+\end{example}
+
+\subsection{Measurement Update Equations}
+One of the reasons for the development of the Kalman filter was because we cannot make perfect estimates of the state vector. Because this is the case, we include measurements of the states to make better estimates of them. The Kalman filter applies these measurements in an optimal manner in order to get the best estimate of the true nature of the system.
+
+Measurements have uncertainties associated with them, so it makes sense for us to consider the accuracy of the measurement as compared to the accuracy of the state vector. Luckily, we have described both the measurement and the state vector uncertainties using the covariance!
+
+Before we begin with the mathematics, I will describe a bit about the system we are modeling, which will make our lives a bit easier in conceptualizing the problem. Our situation is quite similar to the least squares estimate, as we want to extract an optimal estimate from some measurements. Our measurements are called $\textbf{z}$, which are of the form:
+$$\textbf{z}=\begin{bmatrix}
+    z_1\\z_2\\z_3\\\vdots\\z_m
+\end{bmatrix}$$
+Note that each element is not the same measurement at a different time, but rather a measurement of a different quantity. We are free to measure as many quantities of the system as we like. The number of measurements in the system is described by the value $m$.
+
+The vector $\textbf{x}$ is the familiar state vector, which has length $n$. Sometimes, our state vector is not in the same units as the measurements, or we only measure a few of the quantities from $\textbf{x}$ in the measurements. For this reason, we include $H$ that ensures that $\textbf{z}$ and $\textbf{x}$ are of the same size and units. $H$ must therefore be of size $m\times n$.
+
+\subsubsection{State Measurement Update}
+
+Our goal is to update the state estimate using the measurements, but apply some weighting to the measurement update based on the relative certainties of the state estimate and the measurements. We may write this as:
+\begin{equation}\label{eq:meas update state}
+    \textbf{\^x}^+=\textbf{\^x}^-+K\left[\textbf{z}-H\textbf{\^x}^-\right]
+\end{equation}
+This formula has introduced some new notation in the form of the `$-$' and `$+$'. These imply whether we are considering the state vector before or after the measurement, respectively. These are sometimes called the \textit{a priori} and \textit{a posteriori} estimates. This phrasing is less clunky when talking or writing, so I will continue with the \textit{a priori} and \textit{a posteriori} terminology.
+
+We can reason through the formula to really understand what it is saying. Written out, the formula is telling us that the updated state vector should be the prior state vector, plus some gain $K$ multiplied by the measurement difference. This measurement difference, $\textbf{z}-H\textbf{\^x}^-$, describes the difference between the measured state and the state vector. This quantity, $\textbf{z}-H\textbf{\^x}^-$, is called the innovation of the Kalman filter.
+
+\subsubsection{Kalman Gain}
+
+We can intuitively construct a formula for $K$, the Kalman gain, by considering a few scenarios. In the case where the dynamics modeling is perfect, there is no process noise needed in the system. In this case, $\textbf{\^x}^+$should be exactly equal to $\textbf{\^x}^-$, because our dynamics will tell us exactly what it should be! We can conclude that in the limit as $R\rightarrow\infty$, the Kalman gain should go to zero.
+
+At the other extreme, when we trust our measurements much more than our dynamics, we should rely on the measurements completely, and the Kalman gain should be 1. We can set up a formula that gives us exactly this:
+$$K=\frac{P}{P+R}$$
+We can see that this matches exactly with what we predicted! In the case that the measurements are very poor, the measurement covariance, $R$, increased to infinity, and the Kalman gain is 0. In the other extreme, where the understand the dynamics very poorly, $P\gg R$ and the Kalman gain is indeed 1!
+
+Since these quantities are matrices, we need to slightly reformulate the equation to ensure that the sizes of the matrices are all cooperative with each other. We can use the matrix $H$ to do so, since it converts from $\mathbb{R}^n$ to $\mathbb{R}^m$. 
+
+We can find the dimensions of the other matrices quite easily, since they are strictly defined by the equations that we have already set up. Using \autoref{eq:meas update state}, we can analyze the dimensions of each matrix to see that $K$ must have dimension $n\times m$, which is shown below.
+\begin{gather}
+        \color{maroon}\textbf{\^x}^+\color{black}=\color{maroon}\textbf{\^x}^-\color{black}+\color{blue}K
+        \color{black}\color{linkgreen}\left[\textbf{z}-H\textbf{\^x}^-\right]\\
+        \color{maroon}n\times1\color{black}=\color{maroon}n\times1\color{black}+\color{blue}n\times m\color{black}\cdot\color{linkgreen} m\times 1
+\end{gather}
+The matrices for each have been color coded to show each respective matrix. Selecting $K$ to have size $n\times m$ makes the matrix equation valid. Returning to the equation for the Kalman gain, we have found:
+$$K=\frac{P}{P+R}$$
+Which must not work, as the matrices have incompatible signs currently!
+$$n\times m=\frac{n\times n}{n\times n+m\times m}$$
+The division is really a matrix inverse, as there is no division operation for matrices. As a result, the resulting matrix on the bottom had better be square so that an inverse is possible! This means we can either choose the size to be $n\times n$, or $m\times m$. We have the matrix $H$ which can perform conversions from a size of $n$ to a size of $m$ as we have currently seen.
+
+If you try a few different combinations, you can convince yourself that there is only a single one that works (try it!), which is:
+$$K=PH^T[HPH^T+R]^{-1}$$
+Such that the inverse has size $m\times m$ and the top a size of $n\times m$. The matrix inverse does not change the size of the matrix, so the result is that $K$ is also of size $n\times m$, which is exactly the result that we desire!
+
+This equation is exactly the equation for the Kalman gain, which has been derived with little mathematics aside from an understanding of matrix multiplication rules and a bit of intuition.
+
+\subsubsection{Covariance Measurement Update}
+There is one final equation to derive, which updates the covariance of the state vector based on the measurement update. We intuitively expect that a measurement will allow us to be more certain of our current state, and thus reduce the covariance by some degree. Having established the other relationships in the problem, the covariance update is simply some mathematical juggling to find an answer. We start by taking the equation for the state measurement update:
+\begin{equation}
+    \textbf{\^x}^+=\textbf{\^x}^-+K\left[\textbf{z}-H\textbf{\^x}^-\right]
+\end{equation}
+We also have the relationship for $\textbf{z}$, which was part of the definition of the Kalman filter:
+$$\textbf{z}=H\textbf{x}+\textbf{v}$$
+Finally, as one last variable to substitute, we can rewrite the state estimate $\textbf{\^x}$ as:
+$$\textbf{\^x}=\textbf{x}+\textbf{\~x}$$
+All of these can be plugged in to the state measurement update equation to give:
+$$\textbf{x}^++\textbf{\~x}^+=\textbf{x}^-+\textbf{\~x}^-+K\left[H\textbf{\^x}^-+\textbf{v}-H\textbf{\^x}^-\right]$$
+It is obvious that $H\textbf{\^x}^-$ can be removed from the equation, leading to the considerable simplification:
+$$\textbf{x}^++\textbf{\~x}^+=\textbf{x}^-+\textbf{\~x}^-+K\textbf{v}$$
+From here we appear to be stuck. Luckily, there is some hope! Kalman has shown in his original paper (which can be found at \cite{basar_new_2001}) that the optimal estimator is not only linear, but is only a function of the prior estimate, $\textbf{x}^-$. In the technical lingo, the Kalman filter is a \textit{Markov process}, which just means that the future condition of the filter is only dependent on the current condition. The fact that the Kalman filter is a Markov process is very nice for implementing it on physical or software systems, as we only need to store the prior estimate. Otherwise, our filter would grow in size with time.
+
+The fact that the Kalman filter is a Markov process gives us some hope for simplifying $\textbf{x}^+$ and $\textbf{x}^-$ in our equation into something more workable! We know the Kalman filter is linear, so we may assume a linear form that relates $\textbf{x}^+$ to $\textbf{x}^-$:
+$$\textbf{x}^+=K'\textbf{x}^-+K\textbf{z}$$
+That is to say, that $\textbf{x}^+$ is some linear combination of the prior state, $\textbf{x}^-$ and the measurement $\textbf{z}$.
+
+
+\subsubsection{A more exact derivation of $K$}
+Although the previous derivation of the Kalman gain is good  for our intuitive understanding, we have left out some of the mathematical certainty which is required to ensure optimality. For example, how are we sure that the Kalman gain that we attained is optimal in all cases? In the extreme cases we had mentioned, we are surely correct! However, one example where we could see where our derivation failing is considering a case where both the measurements and the dynamics have about the same quality. Our intuitive analysis tells us that some portion of both $R$ and $P$ should contribute to the final Kalman gain, but the optimal proportion of each is unknown. It is therefore prudent to consider a more mathematically sound approach to verify our previous result.
+
+In our motivation of the Kalman filter, our goal was to find the estimator which minimizes the error of the prediction. This means that the value of $K$ that we select should minimize the total length of the error estimate vector. Otherwise, the selection is not optimal -- there exists another filter with a smaller error estimate!\endnote{The criteria of an unbiased and consistent estimator must also hold, but those are upheld by considering zero mean gaussian noise in the system. It is also implied (though not explicity stated here, for simplicity), that $\textbf{v}$ and $\textbf{x}$ are uncorrelated, and thus their covariance is zero. This is a required assumption for the prior derivations. See \cite{gelb_applied_1974} Chapter 4 for more information.}
+
+For the optimization, we consider the cost function to be:
+$$J=E\left[{\textbf{\~x}^+}^TS{\textbf{\~x}^+}\right]$$
+Or that the norm of the error vector multiplied by some weighting ($S$) should be minimized. It can be shown that the weighting $S$ has no impact on the result (detailed in endnote). \endnote{We can see from the dimensions of the problem that ${\textbf{\~x}^+}^TS{\textbf{\~x}^+}$ will  be a scalar value. For a scalar, $\mathrm{tr}(a)=a$. It is also known that $\mathrm{tr}(AB)=\mathrm{tr}(BA)$. The result is that $E\left[{\textbf{\~x}^+}^TS{\textbf{\~x}^+}\right]=E\left[\mathrm{tr}(S{\textbf{\~x}^+}^T{\textbf{\~x}^+})\right]$. From here, it can see be seen that the selection of $S$ has no bearing on the minimization.}
+
+
+
+% some other stuff in between
+Together, these equations are the discrete Kalman filter:
+\begin{gather}
+\color{blue}\boxed{\color{black}
+    \begin{align}
+    \textbf{x}_k&=\Phi_k\textbf{x}_{k-1}+\textbf{w}_{k-1},\quad \textbf{w}_k\sim\mathcal{N}(0,Q_k)\\
+    \textbf{z}_k&=H_k\textbf{x}_k+\textbf{v}_k,\quad \textbf{v}_k\sim\mathcal{N}(0,R_k)\\
+    \textbf{x}_k^-&=\Phi_{k-1}\textbf{x}_{k-1}^+\\
+    P_k^-&=\Phi_{k-1}P_{k-1}^+\Phi_{k-1}^T+Q_{k-1}\\
+    \textbf{x}_k^+&=\textbf{x}_k^-+K_k[\textbf{z}_k-H_k\textbf{x}_k^-]\\
+    P_k^+&=[I-K_kH_k]P_k^-\\
+    K_k&=P_k^-H_k^T[H_kP_k^-H_k^T+R_k]^{-1}
+\end{align}
+}\\
+\color{blue}\mathrm{Kalman  \ Filter}
+\end{gather}
+
+
+\subsection{Intuitions of the Kalman Filter}
+Although we have constructed equations and detailed the mathematical background of the Kalman filter, our intuitions about the system may not be very strong. Quite often, a Kalman filter requires fair amount of debugging and tuning to work appropriately for a system. For this reason, a good intuition about the filter is as important, if not more important than understanding the mathematics of the Kalman filter.
+
+\subsection{Square Root Kalman Filter}
+
+
+\section{Further Reading}
+\cite{gelb_applied_1974}
+\cite{noauthor_how_2015}
+
+
+
+
+\chapter{Extensions of Kalman Filtering}
+
+In the development of the optimal estimator which resulted in the Kalman filter, we have made quite a few assumptions, some of which are quite limiting to its use. First and foremost is the assumption that our system must be linear. This, as it turns out, is the most egregious of the assumptions in the Kalman filter which most different approaches seek to resolve. There are several methods by which this can be resolved, each of which generates a variation of the Kalman filter with greater applicability to nonlinear systems.
+
+There are other methods by which the state estimation can be achieved that are not related to the Kalman filter
+
+\section{The Extended Kalman Filter}
 
 \begin{example}[The 1D Radar Problem (Gelb)]
 Do this shit later lmao
 \end{example}
 
-\section{Extensions of Kalman Filtering}
 
-\subsection{The Extended Kalman Filter}
+\section{Multiplicative Kalman Filter}
+The multiplicative Kalman filter is a special variety of the Kalman filter which is appropriate for systems which are non-linear but have a manifold description which is easily classified in terms of their \gls{lie algebra}. Often, rotations use the multiplicative Kalman filter because they fit this description exactly.
 
-\subsection{The Unscented Kalman Filter}
+To see why we need the multiplicative Kalman filter, let us consider the problem of estimating the quaternion representation of the attitude of a vehicle. Our measurement update may look like:
+$$\textbf{q}^+=\textbf{q}^-+K[\textbf{z}-H\textbf{q}^-]$$
+One problem that can immediately be seen with this approach is that there is no enforcement of the quaternion magnitude. If the attitude errors are quite large, this can be quite a problem, and the enforcement of the quaternion magnitude needs to be performed elsewhere. This leads to the quaternion error update being less optimal than it otherwise would be.
+
+One solution to counter this is to introduce a \textit{multiplicative} approach to the Kalman filter. Such an approach would maintain the quaternion magnitude constraint and prove useful in other parameterizations of the attitude representation.
+
+\section{The Unscented Kalman Filter}
+The unscented Kalman filter is a further extension of the extended Kalman filter which is particularly useful in modeling systems which are highly non-linear in nature. The basic idea of the 
+
+\section{Other Filtering Methods}
+
+\subsection{Particle Filter}
+
+\newpage
+\printendnotes
 
 \chapter{Optimal Control}
 After our discussion on optimal estimation, we are only a short distance from developing a good theory of optimal control. 
 
-Because some of the theory in this chapter is quite dense, I have restructured this chapter slightly. An intuitive explanation of optimal controllers is discussed first, alongside the MATLAB implementation, and then the theory is discussed in the later portion of the chapter. I have done this so that the reader can more intuitively grasp some of the reasons why the mathematical formulation is structured in the way that it is.
+Because some of the theory in this chapter is quite dense, I have changed the order of this chapter. An intuitive explanation of optimal controllers is discussed first, alongside the MATLAB implementation. After this, the theory behind optimal control is discussed. I have done this so that the reader can more intuitively grasp the structure of the mathematical formulation.
 
-\subsection{LQR Control}
-\gls{lqr} control is a type of control which minimizes a quadratic cost function. 
+All formulations of optimal control arise from the optimization of some cost function associated with the control problem. These controllers are often regulatory in nature, rather than being tracking algorithms. The most famous among these formulations is the \gls{lqr} controller, which will be the first optimal controller that is discussed here.
 
-\section{Hamilton-Jacobi-Bellman Equation}
-To begin the formulation of the problem, we consider a problem with (in the general case) non-linear dynamics. As we have seen before, non-linear dynamics can be represented in the form:
+\section{LQR Control}
+\Gls{lqr} control is a type of optimal control that is particularly well studied and used. Because of its wide use and simple interpretation, we should start our journey with optimal control here. \Gls{lqr} has come to use because it is easy to change the controller properties, it is quite intuitive, and it guarantees good phase and gain margins for the system. 
+
+The \gls{lqr} control scheme is based on the principles of optimality that we have discussed in \autoref{part: energy mech}. The \gls{lqr} controller is the optimal controller for a linear system. This is the reason that the \gls{lqr} controller is called `linear'. The \gls{lqr} controller also employs a quadratic cost function, which we will see when we derive the mathematical model of the system.
+
+\subsection{LQR Intuitively}
+The \gls{lqr} control scheme is quite simple at its base. It has two weighting functions, $Q$ and $R$, which describe the weighting on the state and the weighting on the controller effort, respectively. $Q$ and $R$ determine the optimality conditions of the system.
+
+\begin{example}{The simplest LQR}
+    We can create a simple example to showcase \gls{lqr} control. Let's say you are shopping online for some M4 bolts that you need to build your new control system gadget. You look around and you find the following options as shown in \autoref{tab:LQR explained}:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|cl}
+         Vendor&   Shipping Cost&Shipping Time\\\midrule
+         McMasterCarr& 
+     \$35&1 day\\
+ Amazon& \$2&3 day\\
+ AliExpress& Free&2 weeks
+ \end{tabular}
+    \caption{Shipping Time and Cost comparison}
+    \label{tab:LQR explained}
+\end{table}
+
+Depending on your needs, one vendor may be better than another. If you really need to get the bolts by tomorrow, you'd be willing to pay really high shipping costs for McMasterCarr! Conversely, if want to minimize cost, AliExpress will be the optimal choice for you. Mathematically, we can represent this system with a `cost' function, $J$:
+$$J=Q\cdot\mathrm{cost}+R\cdot\mathrm{time}$$
+Depending on the selections of $Q$ and $R$, a different vendor will be the optimal one for you! If $Q$ is high, then there is a high cost associated with the shipping, and we should choose AliExpress to minimize this quantity.
+\end{example}
+
+The selection of $Q$ and $R$ is one of the most important things to keep in mind about \gls{lqr} control. Even if the controller is mathematically optimal, you still need to carefully consider the values of $Q$ and $R$ to make sure it meets your needs!
+
+This is another reason to choose \gls{lqr}, as is that it allows for \gls{mimo} systems to be controlled more easily. In larger systems, it may be hard to fine tune the placement of the poles by hand, and changing the poles to guarantee good stability margins for a system can be quite non-intuitive. \Gls{lqr} controllers offer a solution to this dilemma by instead shifting the emphasis to selection of $Q$ and $R$ instead.
+
+With this basic picture of the \gls{lqr} controller, we can begin formulating the controller in the more general context. We assign $Q$ to be a weighting on the state $\textbf{x}$ and $R$ to be a weighting on the control input $\textbf{u}$.
+
+Since the values of $\textbf{x}$ and $\textbf{u}$ may take on negative values, it is best to take the square of their values in order to always get a positive result. Otherwise, negative values may give us a controller that has a negative cost. As such, we define the cost function in the following way:
+$$J=\int_0^\infty(\textbf{x}^TQ\textbf{x}+\textbf{u}^TR\textbf{u})dt$$
+We can recognize the quantities $\textbf{x}^T\textbf{x}$ and $\textbf{u}^T\textbf{u}$ as the matrix quadratic forms of these variables. Again, this is done to ensure that the cost function is always positive and the accumulated cost is real valued and positive (so long as $Q$ and $R$ and positive semi-definite matrices). Additionally, quadratic functions always have an absolute minimum value, which will guarantee that the \gls{lqr} controller can attain a minimization.
+
+\subsection{Using LQR Control}
+Before we get to the derivation of the \gls{lqr} controller in the next section, I want to show the practical implementation of the \gls{lqr} controller for state space system. I will use a \gls{lqr} controller again in the development of the inverted pendulum in \autoref{chap:inverted pendulum}.
+
+We start with a state space model of the system, which is of the form:
+\begin{align}
+\dot{\textbf{x}}=A\textbf{x}+B\textbf{u}\\
+\textbf{y}=C\textbf{x}+D\textbf{u}
+\end{align}
+If we have a system that is stabilizable and has fully observable states, then we are free to readily apply \gls{lqr} control on the system. Since the \gls{lqr} controller relies on full state observability, $C$ is simply an identity matrix and $\textbf{y}=\textbf{x}$. That is, the output of the system is simply the same as the state vector. In this case, the controller is only dependent on $A$ and $B$, which dictate the controllability of the system.
+
+In MATLAB, we can solve the \gls{lqr} problem by using the command "lqr(A,B,Q,R)". By default, this command will output a $1\times n$ vector $K$, which represents the control gain. The resulting control action is the product $u=-Kx$.
+
+\begin{example}[Reaction Control LQR]
+    A very good demonstration of the \gls{lqr} controller comes from reaction control systems. These systems often need to balance control input to minimize fuel loses while still maintaining high orientation accuracy. For this reason, LQR controllers are fairly well suited to this application. A small reaction control system using a \gls{lqr} controller is demonstrated here.
+\end{example}
+
+
+\subsection{Hamilton-Jacobi-Bellman Equation}
+To begin the mathematical formulation of the problem, we consider a problem with (in the general case) non-linear dynamics. As we have seen before, non-linear dynamics can be represented in the form:
 $$\dot{\textbf{x}}=f(\textbf{x},u,t),\quad \textbf{x}(t_0)=\textbf{x}_0$$
 We can develop some notion of optimality in this system by considering a functional which defines a `cost' for the system. This cost is defined by the system \gls{Lagrangian}, as well as a terminal cost, denoted $S$. Altogether, the total cost function is:
-$$J=\int_{t_0}^T{L[\textbf{x}(\tau),u(\tau),\tau]d\tau}+S[\textbf{x}(T)]$$
+$$J=\int_{t_0}^T{L(\textbf{x}(\tau),u(\tau),\tau)d\tau}+S(\textbf{x}(T))$$
 This looks very similar to the problems we have previously encountered in the calculus of variations, but there is a term $u(\tau)$ that is present which we cannot appropriately solve for with our currently developed methods.
 
-Of course, our goal in this problem is to find a solution that is optimal. To do so, we must define some notation for the optimal solution. The optimal control vector is defined as $u^*$. When $u^*$ is applied on the non-linear system, it produces the optimal state vector, denoted $\textbf{x}^*$. To be clear, an optimal solution is one which minimizes the functional $J$. When an optimal control vector and state vector are present, the function $J$ attains a minimum value, which will be denoted $J^*$. Altogether, an optimal solution is of the form:
-$$J^*=\int_{t_0}^T{L[\textbf{x}^*(\tau),u^*(\tau),\tau]d\tau}+S[\textbf{x}^*(T)]$$
-Notably, the future state of $\textbf{x}(t)$ is only dependent on the initial condition $\textbf{x}_0$  and the control input. Thus, all future states are decided by the initial state and the optimal control input $u^*$.
+Of course, our goal in this problem is to find a solution that is optimal. To do so, we must define some notation for the optimal solution. 
+The optimal control vector is defined as $u^*$. We define $u^*$ as the control vector that is necessary to minimize the functional over the whole range of $t_0\leq t\leq T$. When $u^*$ is applied on the non-linear system, it produces the optimal state vector, denoted $\textbf{x}^*$.
 
-We can alternatively represent this minimization problem as:
-$$J^*=\min$$
+To be clear, an optimal solution is one which minimizes the functional $J$. When an optimal control vector and state vector are present, the function $J$ attains a minimum value, which will be denoted $J^*$. Altogether, an optimal solution is of the form:
+$$J^*=\int_{t_0}^T{L[(\textbf{x}^*(\tau),u^*(\tau),\tau)d\tau}+S(\textbf{x}^*(T))$$
+In general, the value of the functional may be defined as:
+$$J=J(\textbf{x}(t_0),u(t),t_0)=
+\int_{t_0}^T{L(\textbf{x},u,\tau)d\tau}+S(\textbf{x}(T))$$
+Of course, we want to find the minimum value of this functional by selecting the appropriate function for $u$, which is the optimal control policy. This may be written:
+$$J^*(\textbf{x},t)=\min_{u[t_0,T]}\left[
+\int_{t_0}^T{L(\textbf{x},u,\tau)d\tau}+S(\textbf{x}(T))\right]$$
+
+The key insight is that we can break up the first integral into different domains, say from time $t_0$ to $t_1$ and $t_1$ to $T$ and the statement is still identical:
+$$J^*(\textbf{x},t)=\min_{u[t_0,t_1]}\min_{u[t_1,T]}\left[
+\int_{t_0}^{t_1}{L(\textbf{x},u,\tau)d\tau}+\int_{t_1}^{T}{L(\textbf{x},u,\tau)d\tau}+S(\textbf{x}(T))\right]$$
+
+Any number of subdivisions is allowed, so long as the union of all the subintervals covers the whole domain of $[t_0,T]$. Notably, the future state of $\textbf{x}(t)$ is only dependent on the initial condition $\textbf{x}_0$  and the control input. The whole solution is uniquely determined by the initial conditions, control input and the dynamics of the system! You may think about this in the context of an ordinary differential equation. To define a trajectory, we must solve the differential equation generally (akin to understanding the dynamics) and then choose an initial condition to travel along. The control input is another factor in this problem which allows us to `steer' from an initial condition to an optimal path along the differential equation trajectory. 
+
+The big takeaway is that to find the optimal control solution, we only need to consider the initial conditions value of $\textbf{x}$ and the rest of the problem is dictated as a result of this. Take a minute to consider this, as this is the key idea behind understanding \gls{lqr}. Using this idea, we can reformat the cost function into two pieces -- an initial condition part, and the rest of the trajectory, both of which should be minimized.
+$$J^*(\textbf{x},t)=\min_{u[t_0,t_1]}\left[
+\int_{t_0}^{t_1}{L(\textbf{x},u,\tau)d\tau}+\min_{u[t_1,T]}\int_{t_1}^{T}{L(\textbf{x},u,\tau)d\tau}+S(\textbf{x}(T))\right]$$
+This right hand side quantity:
+$$\min_{u[t_1,T]}\int_{t_1}^{T}{L(\textbf{x},u,\tau)d\tau}+S(\textbf{x}(T))$$
+can be replaced by $J^*(\textbf{x}_1,t_1)$ for the reason previously discussed.
+$$J^*(\textbf{x},t)=\min_{u[t_0,t_1]}\left[
+\int_{t_0}^{t_1}{L(\textbf{x},u,\tau)d\tau}+J^*(\textbf{x}_1,t_1)\right]$$
+Now, we want to find the limiting behavior of the function as the difference between $t_0$ and $t_1$ becomes small. Applying this until $\Delta t$ is infinitesimal will give the optimal control policy, $u^*$. To do this, we redefine $t_1$ as $t_0+\Delta t$:
+$$J^*(\textbf{x},t)=\min_{u[t_0,t_0+\Delta t]}\left[
+\int_{t_0}^{t_0+\Delta t}{L(\textbf{x},u,\tau)d\tau}+J^*(\textbf{x}(t_0+\Delta t),t+\Delta t)\right]$$
+
+We may begin simplifying terms of the system to arrive at an answer. We consider the first integral:
+$$\int_{t_0}^{t_0+\Delta t}{L(\textbf{x},u,\tau)d\tau}$$
+Considering the limiting behavior will be identical to the Riemann sum, the solution will look like the value at $L(\textbf{x},u,\tau)$ multiplied by the integration length, $\Delta t$:
+$$L(\textbf{x},u,\tau)\Delta t$$
+We can expand the term $J^*(\textbf{x}(t_0+\Delta t),t_0+\Delta t)$ using a similar idea. We will only consider the first order derivative of $J^*$ as higher order terms are unimportant as $\Delta t\rightarrow0$. The process is shown graphically in \autoref{fig:J star}:\endnote{Note that this representation only shows the spatial dimension and not the temporal dimension as well for simplicity. For a full picture, imagine the time evolution fo the $J^*$ function extending into 3-dimensional space. It then becomes apparent why we must also take the partial derivative with respect to time. The full picture is even more complex, as the state \textbf{x} is typically more than a single dimension}
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Curve Lines [id:da8012449531711278] 
+\draw    (160,217.06) .. controls (301.58,273.28) and (371.01,-1.58) .. (470.8,116.3) ;
+%Straight Lines [id:da18205623463104004] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (318.71,155.56) -- (392.32,80) ;
+\draw [shift={(355.52,117.78)}, rotate = 314.25] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(318.71,155.56)}, rotate = 314.25] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da9534125190612921] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (318.71,170.68) -- (352.52,170.68) ;
+\draw [shift={(355.52,170.68)}, rotate = 180] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+
+% Text Node
+\draw (480.9,102.88) node [anchor=north west][inner sep=0.75pt]    {$J^{*}$};
+% Text Node
+\draw (337.11,174.08) node [anchor=north] [inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$\Delta x$};
+% Text Node
+\draw (282,142.4) node [anchor=north] [inner sep=0.75pt]  [font=\small,color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$J^{*}( x,t_{0})$};
+% Text Node
+\draw (350.5,61.4) node [anchor=north] [inner sep=0.75pt]  [font=\small,color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$\frac{\partial J^{*}( x,t_{0})}{\partial x}$};
+
+
+\end{tikzpicture}
+    
+    \caption{Taylor Expansion of $J^*$}
+    \label{fig:J star}
+\end{figure}
+
+First, we consider the value at the current state $(\textbf{x},t_0)$, which can simply be written:
+$$J^*(\textbf{x},t_0)$$
+Next, we consider the spatial and time derivatives of $J^*$, which will allow us to compute the new value after a shift of $\Delta t$. First considering the derivative with respect to time:
+$$\frac{\partial J^*(\textbf{x},t_0)}{\partial t}$$
+This must be multiplied by the time delta to give the change over the course of $\Delta t$:
+$$\frac{\partial J^*(\textbf{x},t_0)}{\partial t}\Delta t$$
+The derivative with respect to $\textbf{x}$ is more complicated, since $\textbf{x}$ is a vector of size $n \times 1$. The gradient operator is typically also a column vector of size $n\times1$, so it must be transposed to be compatible with matrix multiplication by $\textbf{x}$. The first order value is thus given by:
+$$\left(\frac{\partial J^*(\textbf{x},t_0)}{\partial \textbf{x}}\right)^T\Delta \textbf{x}$$
+Putting all of the pieces together, we have:
+$$J^*(\textbf{x},t_0)=\min_{u[t_0,t_0+\Delta t]}\left[L(\textbf{x},u,\tau)\Delta t+J^*(\textbf{x},t_0)+\left(\frac{\partial J^*(\textbf{x},t_0)}{\partial \textbf{x}}\right)^T\Delta \textbf{x}+\frac{\partial J^*(\textbf{x},t_0)}{\partial t}\Delta t\right]$$
+This is a considerable simplification, as there are no longer any integrals present. There is a $J^*(\textbf{x},t_0)$ present on both sides of the equation, so it can be subtracted. Finally, $\Delta t$ can be divided through the equation.
+$$0=\min_{u[t_0,t_0+\Delta t]}\left[L(\textbf{x},u,\tau)+\left(\frac{\partial J^*(\textbf{x},t_0)}{\partial \textbf{x}}\right)^T\frac{\Delta \textbf{x}}{\Delta t}+\frac{\partial J^*(\textbf{x},t_0)}{\partial t}\right]$$
+At this point, we may perform a Legendre transform to make this equation amenable to further changes. Such a transformation will allow us to effectively remove the derivative and express it in terms of a Hamiltonian!
+
+
+\section{LQG Control}
+Linear quadratic guassian lmao
+
+\section{LQI Control}
+
+Throw an integral on there for tracking shit
 
 
 
+\section{Other Optimal Control Problems}
+The \gls{lqr} controller is one case where the optimal control problem has an analytical solution. Sometimes the solution to this equation must be evaluated numerically, but there still exists a closed form solution to the problem. However, in the more general case of the optimal controllers, there is not always a closed form solution to the minimization of the functional. 
+
+\subsection{Gradient Descent}
+
+\subsection{Stochastic Methods}
 
 
 
-
-\chapter{The Inverted Pendulum}
+\chapter{The Inverted Pendulum}\label{chap:inverted pendulum}
 The inverted pendulum is a classic problem in control theory, and for good reason! It demonstrates all of the basics of control theory, from derivation of \glspl{eom}, system linearization, and control design. With this problem, we can show a definitive example of many of the previous topics of discussion with a real application.
 
 \begin{figure}[H]
@@ -1432,7 +2111,11 @@ As has been previously noted, the controllability of the system is dependent on 
 % to do
 
 \section{LQR Control}
-For the pendulum, an \gls{lqr} controller is chosen. Since the system has full state feedback, the \gls{lqr} controller works well for the control system 
+For the pendulum, an \gls{lqr} controller is chosen. Why choose a \gls{lqr} controller over a simpler controller such as \gls{pid}?
+
+The main reason to do so is because we want to control both the position and the angle of the pendulum. Since our track has a limited length, we need to force the $x$ position back towards 0. This is perfect for the \gls{lqr} controller, which is naturally a \gls{mimo} controller. If we were to use \gls{pid} for the control, we would need two seperate controllers, one which controls the angle, and another which controls the position. The fact that \gls{pid} is \gls{siso} only is one of the big drawbacks of \gls{pid} control scheme!
+
+The selection of the \gls{lqr} controller does introduce some additional design criteria. First and foremost, the \gls{lqr} controller requires that the system has full state feedback.
 
 \section{Real Implementation}
 To begin the discussion of the real implementation of the inverted pendulum, we must discuss the hardware used, as that directly ties into how we build our state space model and what assumptions that we can use in the design.
@@ -1441,12 +2124,19 @@ I should note that I am presenting this \textit{after} presenting the theory of 
 \subsection{Physical Design}
 The physical design of the pendulum is quite important to understand which dynamical phenomena are important for our modeling. Additionally, the physical components will dictate features of the system observability and place limitations on the control scheme. A technical drawing of the pendulum is shown in \autoref{fig:pend schem}.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Images/InvertedPendulumSchematic.pdf}
     \caption{Inverted Pendulum Schematic}
     \label{fig:pend schem}
 \end{figure}
+A breakdown of the components in the pendulum is done below, considering both the electronics and mechanical systems which will inform the control system design.
+
+\subsubsection{Mechanical Considerations}
+The mechanics of the inverted pendulum and cart are fairly simple. The main consideration is the selection of the length of the rails, and ensuring that the friction and mass of the cart are as low as possible. In this design, rails of the SBR16 specification were selected, although many other types of rail systems may be used. Some other types of linear rails and bearings may permit a lower mass cart, which is desirable.
+
+Another important criteria is the selection of the belt drive and pulley system, which will dictate the conversion between RPM and linear speed for the system. A larger diameter pulley will result in higher linear speeds for a given RPM, but will also require more torque. The belt drive system here uses a GT2 belt with 20 tooth pulleys. Other pulley diameters may be used if more precise control or higher speed output is desirable for the given application.
+
 \subsubsection{Rotary Encoder}
 In cross section A-A, the rotary encoder can be seen. The rotary encoder is one of the most imporant components in the design as the angle measurement of the arm is very important in understanding the dynamics of the system. The particular model used here can be found at \cite{noauthor_yuecoom_nodate}.
 
@@ -1479,9 +2169,329 @@ The selection of the driving motor is quite a nuanced and complicated choice, wi
     \item Servo motors
 \end{enumerate}
 
-Generally, stepper motors and servo motors have very good positional control while DC motors have very good speed control. There are overlaps between the technologies, especially as stepper and servo motors become more common and better methods for driving them are developed. 
-\subsection{}
+The selection of each motor also involved careful selection of electronics to drive each motor, so the selection must be made carefully. Below, I present some guidelines for use cases for both stepper and DC motors and appropriate electronics to go with each.
 
+\subsubsection{Steppers}
+Generally, stepper motors and servo motors have very good positioning control while DC motors have very good speed control. There are overlaps between the technologies, especially as stepper and servo motors become more common and better methods for driving them are developed. Many of the issues with position control with a DC motor can be overcome by attaching an encoder to the motor to measure the position. Methods for adjusting the RPM and position of DC motors can often be achieved using \gls{pid} controllers.
+
+The main reason not to choose a stepper motor in this context is that stepper motors require a step command to be sent for each step of the motor. The typical NEMA 17 motor has 200 steps per revolution. For smooth operation, most modern drivers for stepper motors require 4-8 \textit{microsteps}, which must also be commanded by the microcontroller. As a result, each revolution of the stepper motor may require up to 3200 commands!
+
+In the event that the motor needs to rotate at several rotations per second (corresponding to $\sim100 \  \mathrm{mm/s}$ speed for a typical diameter belt drive), the number of commands sent may exceed the computing speed of the microcontroller or leave it with little overhead for other operations. For example, the popular Arduino Uno has a clock speed of 16Mhz. Each step requires multiple internal calculations, and only around 4000 steps can be sent every second. It can be seen that the motor can only achieve a little over $1 \mathrm{\ rps}$, far too slow of a response for an inverted pendulum!
+
+Other microcontrollers such as the ESP32 can get around this issue, as they have much faster clock speeds and two cores -- meaning they can perform computations for motor controller on one core and other computations on another core. These chips can be a good option, but face some other limitations. They are typically more difficult to program than an Arduino Uno / Nano and have some other limitations, like worse analog signal pins. 
+
+Although the analog signal pins on the ESP32 chips are 12-bit resolution and the Arduino Uno chips are 10-bit, they face limitations in other ways. Generally, ESP32 analog pins suffer from non-linearity and deadzones, as well as fairly high noise. Additionally, these signal pins can only accept 3.3V inputs whereas the Arduino can accept 5V inputs.
+
+
+\subsubsection{Servo Motors}
+Servo motors are another option, but these can be quite expensive. For this reason alone, I have not considered servo motors seriously for this project.
+
+\subsubsection{DC Motors}
+DC motors are the final major option. DC motors operate quite differently to stepper motors, in that they run at a constant RPM when given a DC voltage input. As a result, DC motors face the opposite problem to stepper motors - they have good speed control but positional control can be more difficult.
+
+In this project, the tradeoff for higher speed is worthwhile, and positional control can be regained fairly easily through careful design of the motor control system. For DC motors, RPM control is usually achieved with \gls{pwm}. \Gls{pwm} effectively controls the RPM by very rapidly changing the duration for which the motor is turned on. This is advantageous over changing the input voltage, as electronic characteristics of the system can change with differing voltage. Additionally, most voltage sources are constant voltage or cannot change voltages extremely quickly.
+
+The principle of \gls{pwm} is to use a constant voltage and change the effective amplitude of the signal on average, as shown in \autoref{fig:pwm}.
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da37450572503117363] 
+\draw    (100,130) -- (120,130) ;
+%Straight Lines [id:da7323318640251014] 
+\draw    (100,130) -- (100,240) ;
+%Straight Lines [id:da1252336596290442] 
+\draw    (120,130) -- (120,240) ;
+%Straight Lines [id:da3773535073411981] 
+\draw    (120,240) -- (160,240) ;
+%Straight Lines [id:da20870084265827527] 
+\draw    (160,130) -- (180,130) ;
+%Straight Lines [id:da2813587021958138] 
+\draw    (160,130) -- (160,240) ;
+%Straight Lines [id:da509428294567959] 
+\draw    (180,130) -- (180,240) ;
+%Straight Lines [id:da3684360907767923] 
+\draw    (180,240) -- (220,240) ;
+%Straight Lines [id:da8436273762111676] 
+\draw    (220,130) -- (260,130) ;
+%Straight Lines [id:da21845202617269166] 
+\draw    (220,130) -- (220,240) ;
+%Straight Lines [id:da4633918827590262] 
+\draw    (260,130) -- (260,240) ;
+%Straight Lines [id:da8964845880277049] 
+\draw    (260,240) -- (280,240) ;
+%Straight Lines [id:da2005707870676403] 
+\draw    (280,130) -- (300,130) ;
+%Straight Lines [id:da12573232900267373] 
+\draw    (280,130) -- (280,240) ;
+%Straight Lines [id:da4554511501371119] 
+\draw    (300,130) -- (300,240) ;
+%Straight Lines [id:da0740745338558565] 
+\draw    (300,240) -- (340,240) ;
+%Straight Lines [id:da5383836956811012] 
+\draw    (340,130) -- (400,130) ;
+%Straight Lines [id:da030754226447927135] 
+\draw    (340,130) -- (340,240) ;
+%Straight Lines [id:da28147089210249054] 
+\draw    (400,130) -- (400,240) ;
+%Straight Lines [id:da8364533675885975] 
+\draw    (400,130) -- (440,130) ;
+%Straight Lines [id:da653074338830008] 
+\draw    (400,130) -- (400,240) ;
+%Straight Lines [id:da21222926404491116] 
+\draw    (440,130) -- (440,240) ;
+%Straight Lines [id:da43469497724497785] 
+\draw    (440,240) -- (460,240) ;
+%Straight Lines [id:da27909048307495965] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (100,260) -- (160,260) ;
+\draw [shift={(160,260)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)(10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+\draw [shift={(100,260)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)(10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da5933914723976027] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (160,260) -- (220,260) ;
+\draw [shift={(220,260)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)(10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+\draw [shift={(160,260)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)(10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da7253500193703607] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (220,260) -- (280,260) ;
+\draw [shift={(280,260)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)(10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+\draw [shift={(220,260)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)(10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da9542681695033238] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (280,260) -- (340,260) ;
+\draw [shift={(340,260)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)(10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+\draw [shift={(280,260)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)(10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da1514603741651026] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (340,260) -- (400,260) ;
+\draw [shift={(400,260)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)(10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+\draw [shift={(340,260)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)(10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da7494645599136815] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (400,260) -- (460,260) ;
+\draw [shift={(460,260)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)(10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+\draw [shift={(400,260)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)(10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Curve Lines [id:da09794532071820783] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (100,220) .. controls (189.23,219.05) and (174.77,215.95) .. (240,200) .. controls (305.23,184.05) and (368.23,208.05) .. (460,140) ;
+
+% Text Node
+\draw (130,269.4) node [anchor=north] [inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$Period$};
+% Text Node
+\draw (466,129.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$avg.\ power$};
+
+\end{tikzpicture}
+
+    \caption{Pulse Width Modulation Visual}
+    \label{fig:pwm}
+\end{figure}
+
+\section{Motor Control Algorithms}
+No matter what type of motor is selected for use, a control algorithm must be developed for the control of the motor itself, separate from the control of the overall system. The action of the motor controller is to match the desired RPM, position, or torque of the system quickly and accurately to facilitate good control of the system. At a high level, the control system for a DC motor will look like \autoref{fig:dc motor controller}:
+
+\begin{figure}
+    \centering
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Flowchart: Process [id:dp4083062669705493] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (220,130) -- (300,130) -- (300,170) -- (220,170) -- cycle ;
+%Flowchart: Process [id:dp7176923014407074] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (360,130) -- (440,130) -- (440,170) -- (360,170) -- cycle ;
+%Straight Lines [id:da7872115144137771] 
+\draw    (300,150) -- (357,150) ;
+\draw [shift={(360,150)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da6962065446356057] 
+\draw    (440,150) -- (497,150) ;
+\draw [shift={(500,150)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da7394890428771211] 
+\draw    (100,150) -- (147,150) ;
+\draw [shift={(150,150)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Flowchart: Process [id:dp8311908981055321] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (260,190) -- (360,190) -- (360,230) -- (260,230) -- cycle ;
+%Straight Lines [id:da799256410638905] 
+\draw    (450,150) -- (450,210) ;
+%Straight Lines [id:da3431019163397425] 
+\draw    (450,210) -- (363,210) ;
+\draw [shift={(360,210)}, rotate = 360] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Shape: Circle [id:dp2745941889127239] 
+\draw   (150,150) .. controls (150,141.72) and (156.72,135) .. (165,135) .. controls (173.28,135) and (180,141.72) .. (180,150) .. controls (180,158.28) and (173.28,165) .. (165,165) .. controls (156.72,165) and (150,158.28) .. (150,150) -- cycle ;
+%Straight Lines [id:da517382267392099] 
+\draw    (165,210) -- (165,168) ;
+\draw [shift={(165,165)}, rotate = 90] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da24863642236992634] 
+\draw    (165,210) -- (260,210) ;
+%Straight Lines [id:da7137782715695976] 
+\draw    (180,150) -- (217,150) ;
+\draw [shift={(220,150)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da9418326504220698] 
+\draw    (400,80) -- (400,127) ;
+\draw [shift={(400,130)}, rotate = 270] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (260,150) node   [align=left] {Controller};
+% Text Node
+\draw (400,150) node   [align=left] {Motor};
+% Text Node
+\draw (125,146.6) node [anchor=south] [inner sep=0.75pt]    {$r$};
+% Text Node
+\draw (330,144.6) node [anchor=south] [inner sep=0.75pt]    {$u$};
+% Text Node
+\draw (470,144.6) node [anchor=south] [inner sep=0.75pt]    {$y$};
+% Text Node
+\draw (310,210) node   [align=left] {Measurement};
+% Text Node
+\draw (151,148) node [anchor=west] [inner sep=0.75pt]  [font=\scriptsize]  {$+$};
+% Text Node
+\draw (160,157.5) node [anchor=west] [inner sep=0.75pt]  [font=\scriptsize]  {$-$};
+% Text Node
+\draw (402,102) node [anchor=west] [inner sep=0.75pt]    {$d$};
+% Text Node
+\draw (200,146.6) node [anchor=south] [inner sep=0.75pt]    {$e$};
+
+\end{tikzpicture}
+
+    \caption{High level DC motor control system}
+    \label{fig:dc motor controller}
+\end{figure}
+
+For DC motor control, \gls{pid} controllers are quite common. Other control algorithms may be implemented, such as \gls{lqr}, but their implementation has been discussed elsewhere in this text quite thoroughly. \Gls{pid} control is quite popular in such applications for it's widespread use, easy tunability, and simple application in the time-domain. To implement a \gls{pid} loop for a real world system, there are several factors that must be considered:
+\begin{enumerate}
+    \item Sensor noise and data dropouts
+    \item Motor modeling
+    \item \gls{pid} gains
+\end{enumerate}
+
+Here, I will detail the methods of implementation that have been done for this system. More than anything, this is to give a taste of what can be done for such a system, and is not representative of the full scope of choices that can be made. Each control system will have its own challenges that must be overcome! 
+
+\subsection{Noise and Data Dropouts}
+Noisy data is quite common in real world sensors, especially those found in low cost electronics. This is especially prevalent when the derivative of a signal must be computed. One repercussion of computing the derivative of a signal is that high frequency components of the signal (where most of the noise resides) are amplified.\endnote{This can be seen by considering a signal that is decomposed into its Fourier series:
+$$f(t)=\sum_{k=-\infty}^{\infty}a_ke^{ik\omega_0t}$$
+Taking the time derivative of the signal yields:
+$$\frac{df(t)}{dt}=i\omega_0\sum_{k=-\infty}^{\infty}ka_ke^{ik\omega_0t}$$
+Application of Parseval's formula gives that:
+$$\frac{1}{\tau}\int_0^\tau\left|\frac{df(t)}{dt}\right|^2dt={\omega_0}^2\sum_{k=-\infty}^{\infty}|ka_k|^2$$
+Which makes it evident that the power in the higher frequencies of the signal has been amplified as compared to the original signal} 
+
+Another problem that occurs with real world signals is data dropouts. Dropouts can be quite common for some sensors, such as the encoders of DC motors. One way to deal with data dropouts is to include some logic that checks the difference in the signal output. If the difference is greater than some expected threshold, the data is disregarded. An example of such a code for implementation into MATLAB or Simulink is shown below:
+\begin{lstlisting}[style=Matlab-editor]
+function filtered = filterEncoder(currVal)
+
+persistent prevVal
+
+% Initialize on first call
+if isempty(prevVal)
+    prevVal = currVal;
+end
+
+% Dropout detection
+threshold = 200;  % Adjust based on your system
+
+if abs(currVal - prevVal) > threshold
+    % Bad reading: keep previous good value
+    filtered = prevVal;
+else
+    % Good reading: update and pass through
+    filtered = currVal;
+    prevVal = currVal;
+end
+\end{lstlisting}
+
+A "persistent" variable is one which maintains its value across multiple function calls. Depending on the type of dropouts, more advanced approaches may need to be taken.
+
+Dealing with noise is often done through the application of a low-pass filter or a moving average filter. These filters induce some delay in the signal, but signal delay is often preferable to noisy data. Either of these filters can be added in Simulink.
+
+\subsection{Motor Modeling}
+Motor modeling is one major challenge when creating a system for control. Quite often, cheap motors will not have a datasheet associated with them and the motor parameters and modeling must be figured out by the end-user. Luckily, many of these important parameters can be experimentally determined and estimated to an acceptable level of precision. Here, I will discuss three main types of controllers for the DC motor. These are:
+\begin{enumerate}
+    \item Position Control
+    \item Speed Control
+    \item Torque Control
+\end{enumerate}
+Many textbooks discuss information on position and speed control, but little is said of torque control! Torque control is actually quite important in our application with the inverted pendulum, since our input is a force! It is necessary to understand the torque output of the motor in our modeling for adequate control of the system.
+
+\subsubsection{Motor Modeling from first principles}
+The DC motor can fundamentally be understood as a circuit. Here, the properties of the magnetic field and the internal nature of the DC motor are not considered. There are many sources, such as \cite{golnaraghi_automatic_2017,evans_dc_2020,sabin_civil_engineering_dc_2014} which describe the mechanical design and electromagnetic effects of the DC motor. The circuit of the DC motor is quite simple and is shown in \autoref{fig:dc motor circuit}.
+
+\begin{figure}[ht]
+    \centering
+\usetikzlibrary{shapes.geometric}
+\begin{tikzpicture}
+	% Paths, nodes and wires:
+	\node[shape=rectangle, draw, line width=1pt, inner sep=0, minimum width=0.318cm, minimum height=0.288cm] at (6, 2.93){};
+	\draw (1, 4) to[american voltage source] (1, 1);
+	\draw (1, 4) to[cute inductor] (6, 4);
+	\node[shape=rectangle, draw, line width=1pt, inner sep=0, minimum width=0.318cm, minimum height=0.288cm] at (6, 2.07){};
+	\node[shape=ellipse, fill={rgb,255:red,255;green,255;blue,255}, draw, line width=1pt, inner sep=0, minimum width=0.825cm, minimum height=0.825cm] at (6, 2.5){};
+	\draw (6, 4) -| (6, 3.092);
+	\draw (6, 1.908) -| (6, 1);
+	\draw (6, 1) |- (1, 1);
+\end{tikzpicture}
+    
+    \caption{DC Motor Circuit}
+    \label{fig:dc motor circuit}
+\end{figure}
+
+The DC motor operates through the generation of a magnetic field and a current carrying conductor in the motor. The interaction of these magnetic fields and electric currents induces a torque:
+$$\tau=Ki\phi$$
+And as the motor increases in speed there is a voltage produced which resists motion due to Lenz' Law:
+$$e=K\phi\omega$$
+
+$$\frac{\tau(s)}{V(s)}=\frac{k_i(Js+b)}{(Js+b)(Ls+R)+k_ik_m}$$
+
+
+\subsection{PID Gains}
+There are several approaches which can be used to arrive at appropriate \gls{pid} gains for the system. These vary in complexity and the application of one approach over the other will depend on the system. At the most basic level, the \gls{pid} gains can be achieved experimentally without modeling of the system dynamics using methods such as Ziegler-Nichols and Cohen-Coon methods. There approaches are heuristic in nature in that they select \gls{pid} gains which have been shown to work in experiments and are a good rule of thumb.
+
+Beyond this, modeling of the system dynamics is required for further analysis. System dynamics can be derived in several ways, either starting from first principles of the system or from equations which are known to describe DC motor dynamics. Further still, approaches exist to experimentally determine the transfer function and frequency response of a system and use this as a model. All of these approaches are valid. In this section, all of these approaches will be considered and shown to yield similar results.
+
+\subsubsection{ZN and Cohen-Coon PID Methods}
+I will start this section by considering the simplest methods of \gls{pid} tuning. For many systems, such methods are perfectly fine and are quite practical. As will be seen, using these methods yields a perfectly usable \gls{pid}.
+
+The Zeigler-Nichols methods and the Cohen-Coon methods are methods that find the gains of the system through simple equation relations. The relationships for the Ziegler-Nichols Method are given in \autoref{tab:ZN tuning}.
+
+\begin{table}[ht]
+\centering
+\caption{Ziegler–Nichols Method Tuning Parameters}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Control Type} & \( K_p \) & \( K_i \) & \( K_d \) \\
+\midrule
+P & \( 0.5K_u \) & -- & -- \\
+PI & \( 0.45K_u \) & \( 0.54K_u / T_u \) & -- \\
+PD & \( 0.8K_u \) & -- & \( 0.10K_u T_u \) \\
+Classic PID & \( 0.6K_u \) & \( 1.2K_u / T_u \) & \( 0.075K_u T_u \) \\
+Pessen Integral Rule & \( 0.7K_u \) & \( 1.75K_u / T_u \) & \( 0.105K_u T_u \) \\
+Some Overshoot & \( 0.33\overline{K}_u \) & \( 0.66K_u / T_u \) & \( 0.11K_u T_u \) \\
+No Overshoot & \( 0.20K_u \) & \( 0.40K_u / T_u \) & \( 0.066K_u T_u \) \\
+\bottomrule
+\end{tabular}
+\label{tab:ZN tuning}
+
+\end{table}
+In the ZN tuning method, a steady state value is commanded with a controller with only proportional gain, P. The gain is slowly increased at this steady state condition until oscillations about the steady state condition begin to appear. The gain at which this occurs is the gain $K_u$. The frequency of the oscillation is $T_u$.
+
+After these values are determined, the table is then used to determine appropriate \gls{pid} gains based on the type of controller and the desired system behavior. 
+
+\begin{example}[ZN Tuning of DC motor]
+
+    
+\end{example}
+
+\subsubsection{Encoder Modeling}
+Encoders are devices that measure the linear or rotational motion. Incremental encoders, which measure `ticks' of a rotation or movement are the most common type are are employed on the inverted pendulum for capturing the true speed of the motor, as well as it's position.
+
+Since a DC motor may rotate in either direction, it is impossible to tell the direction of rotation with a single measurement. There is no possible distinction between forward and backward rotation simply by measuring the number of clicks. For this reason, most encoders employ two channels. These sensors are often placed $90\degree$ apart which results in a quadrature layout. In this type of layout, there are 4 pulses which are sent for each cycle.
+
+\begin{example}[RPM measurement from encoder output]
+    To determine the RPM of a motor from encoder reading outputs, we first need to determine the number of pulses that are sent for each revolution of the motor. This number of \gls{ppr} of the encoder should be included in the datasheet of the encoder. If it is not, it is possible to determine this value by setting a fixed RPM (say 60 RPM) and changing the value of the \gls{ppr} until the shaft rotates at a true 60 RPM. When the motor is using quadrature encoding, the value of the \gls{ppr} may need to be multiplied by 4.
+
+    Consider a motor with a 18.8x gear reduction and an encoder with 16 \gls{ppr} with quadrature encoding. The pulses of the encoder are measured at $100 \ \mathrm{Hz}$. We can derive the RPM of the motor through the following formula:
+$$\frac{\mathrm{\# \ pulses}}{4\cdot18.8\cdot\mathrm{PPR}} \cdot \frac{60}{\Delta t}$$
+The value for the quadrature encoding and the motor gear ratio can be included in the value of the \gls{ppr} if desired.
+\end{example}
 
 \newpage
 \printendnotes
@@ -1499,7 +2509,7 @@ Aerospace systems use controls in many applications. Often, aerospace control sy
 %maybe take out
 
 
-\chapter{Basics of Non-Linear Control}
+\chapter{Non-Linear Control}
 \section{Perturbation Theory}
 \section{Lyapunov}
 \section{Lie Theory}
