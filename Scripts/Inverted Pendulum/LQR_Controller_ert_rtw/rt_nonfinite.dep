@@ -1,0 +1,17 @@
+rt_nonfinite.o: \
+ C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/rt_nonfinite.c \
+ C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/rtGetNaN.h \
+ C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/rt_nonfinite.h \
+ C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/rtwtypes.h \
+ C:/PROGRA~1/MATLAB/R2025a/extern/include/tmwtypes.h \
+ C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/rtGetInf.h
+
+C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/rtGetNaN.h:
+
+C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/rt_nonfinite.h:
+
+C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/rtwtypes.h:
+
+C:/PROGRA~1/MATLAB/R2025a/extern/include/tmwtypes.h:
+
+C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/rtGetInf.h:
