@@ -566,8 +566,12 @@ In the time domain, the relationship of the input and the output is quite compli
 \end{figure}
 The time history of the oscillation is shown on the right of \autoref{fig:msd solution}. If we want to know the transfer function at time $A$, it is quite hard to do! We would need information about all of the dynamics leading up to that event to understand the current system dynamics at point $A$. That is, even if we can measure the position at $A$, we don't have any information about the velocity or acceleration unless we have already been watching the system!
 
-One way to express this mathematically is with an operation called the convolution. We want to understand the input-output relationship of the force and the displacement of the mass. We describe the force input as $u(t)$ and the displacement output as $y(t)$. We should look for some intermediate function, $g(t)$, which maps $u(t)$ to $y(t)$. We can write this relationship as:
+To construct a mathematical description of the system, we want to understand the input-output relationship of the force and the displacement of the mass. We describe the force input as $u(t)$ and the displacement output as $y(t)$. We should look for some intermediate function, $g(t)$, which maps $u(t)$ to $y(t)$. We can write this relationship as:
 $$u(t)*g(t)=y(t)$$
+To figure out what this relationship should be, we should start by considering the simple case of the delta function:
+
+
+
 We can say that at point $A$, the current time is given as $\tau$. To find the relationship between $u(t)$ and $y(t)$, we have to consider all times prior to this time, $\tau$, which have influenced the dynamics!
 
 To do this, we construct an integral over the interval from $0$ to $t$ (if we are to consider $t=0$ as the start of the dynamics). Then, the impact of each time \textit{before} the current time $\tau$ must be considered! This gives the integral:
@@ -1270,6 +1274,11 @@ Before we continue, lets stop briefly to consider the results of the least squar
 We considered kinetic energy as one of the prototypical examples of a quadratic system. In fact, this analogy with kinetic energy is quite apt, as it turns out that minimizing the 2-norm often corresponds to minimization of the energy! As we dive further into optimal estimation and control, this will be an important concept to keep in mind.
 
 \chapter{Optimal Estimation}
+\begin{chapquote}{Kyoto Prize committee}
+The creator of modern control and system theory, Kalman theory, which was established in the early 1960s, brought a fundamental reformation to control engineering and since then laid the foundation for the rapid progress of modern control theory. 
+\end{chapquote}
+
+
 Optimal estimation is a subject that is concerned with finding estimates of some or all of the states in a system in a way that we consider to be optimal. If we have a system output that we measure directly with a sensor, why do we need to estimate it?
 
 There are two main reasons to apply estimation. First, no true sensor is perfect. There are always errors and uncertainties associated with any sensor. Optimal estimation provides us a way to reduce uncertainties in the most optimal way and get better estimates of the true state.
@@ -1280,7 +1289,9 @@ The most common way to perform optimal estimation is with the Kalman Filter. We 
 
 I will motivate the discussion by looking at a few examples to gain a practical understanding of the Kalman filter. Say, for example, we want to measure the temperature of a rocket engine exhaust. We have a physical constraint on the system that any thermometer will melt under the heat of a rocket engine. What can we do then?
 
-We can put a thermometer on the outside of the engine and measure the temperature there. If we know the metal the engine is made of and some properties of our cooling system, we can construct a pretty good model of what the heat transfer across the engine will look like. In other words, we build a model that tells us what we should expect. Of course, we can also correlate this with some other sensors, say a barometer to measure some aspects of temperature that are tied to the pressure reading.
+We can put a thermometer on the outside of the engine and measure the temperature there. If we know the metal the engine is made of and some properties of our cooling system, we can construct a pretty good model of what the heat transfer across the engine will look like. In other words, we build a model that tells us what we should expect. 
+
+Of course, we can also correlate this temperature with some other sensors, say a barometer, to measure aspects of temperature that are tied to the pressure reading. This type of analysis is commonly referred to as \textit{sensor fusion} and is another useful property of the Kalman Filter.
 
 These two examples touch on some key aspects of the Kalman Filter. Firstly, we need a good model of our system for a Kalman Filter to work. This is because the Kalman Filter effectively acts as a real time numerical integrator! We have to update our model in real time to help us model the system behavior.
 
@@ -1289,6 +1300,63 @@ The other part of the Kalman Filter is that we need measurements, and more impor
 Lastly, I want to note that for any estimator, the state in question must be observable for any estimator to work. If the state has no observability, there is no observer that can possibly give information about that state!
 
 \section{What is Filtering?}
+Before we dive deeply into the Kalman Filter itself, we should understand filtering and the other types of analysis we typically perform. Filtering is the estimation of a data point at the current time. A more technical definition might be:
+\begin{definition}[Filtering]
+    Filtering is the recursive estimation of parameters of interest, $\textbf{x}$ based on measurements $\textbf{y}$.
+\end{definition}
+Filtering, then, can be thought of as real-time estimation of parameters, using all of the current knowledge of the system to make a best estimate of what $\textbf{x}$ is.
+
+Notably, there are two other types of analysis that we can do: smoothing and prediction. A smoothing algorithm uses data from future times to make a prediction of $\textbf{x}$ at an earlier time. A predictor does the opposite, and attempts to make a best guess of $\textbf{x}$ at a future time given the current measurement data.
+
+\begin{figure}
+    \centering
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Rectangle [id:dp4331626883038564] 
+\draw   (140,120) -- (520,120) -- (520,150) -- (140,150) -- cycle ;
+%Shape: Rectangle [id:dp837454316770156] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (140,120) -- (290,120) -- (290,150) -- (140,150) -- cycle ;
+%Shape: Rectangle [id:dp8012731044569247] 
+\draw   (140,160) -- (520,160) -- (520,190) -- (140,190) -- cycle ;
+%Shape: Rectangle [id:dp9224085547394635] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (140,160) -- (340,160) -- (340,190) -- (140,190) -- cycle ;
+%Shape: Rectangle [id:dp9267874961996666] 
+\draw   (140,200) -- (520,200) -- (520,230) -- (140,230) -- cycle ;
+%Shape: Rectangle [id:dp3599207094201875] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (140,200) -- (420,200) -- (420,230) -- (140,230) -- cycle ;
+%Straight Lines [id:da29650593501848965] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (340,110) -- (340,240) ;
+%Straight Lines [id:da21956457908837723] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (140,110) -- (290,110) ;
+\draw [shift={(290,110)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)   ;
+\draw [shift={(140,110)}, rotate = 180] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (0,5.59) -- (0,-5.59)   ;
+
+% Text Node
+\draw (340,104.6) node [anchor=south] [inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$t_{k}$};
+% Text Node
+\draw (95,135) node   [align=left] {Prediction};
+% Text Node
+\draw (101,175) node   [align=left] {Filtering};
+% Text Node
+\draw (92,215) node   [align=left] {Smoothing};
+% Text Node
+\draw (215,103.6) node [anchor=south] [inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$y$};
+
+
+\end{tikzpicture}
+
+    
+    \caption{Prediction, Smoothing, and Filtering}
+    \label{fig:filter smooth}
+\end{figure}
+
+Smoothing and prediction will not be touched on here in great depth. For the most part, these algorithms are fairly simple extensions of the Kalman Filter that will be discussed in this section, and 
+
 
 \section{The Average and Low Pass Filter}
 
@@ -1602,21 +1670,21 @@ All of these can be plugged in to the state measurement update equation to give:
 $$\textbf{x}^++\textbf{\~x}^+=\textbf{x}^-+\textbf{\~x}^-+K\left[H\textbf{\^x}^-+\textbf{v}-H\textbf{\^x}^-\right]$$
 It is obvious that $H\textbf{\^x}^-$ can be removed from the equation, leading to the considerable simplification:
 $$\textbf{x}^++\textbf{\~x}^+=\textbf{x}^-+\textbf{\~x}^-+K\textbf{v}$$
-From here we appear to be stuck. Luckily, there is some hope! Kalman has shown in his original paper (which can be found at \cite{basar_new_2001}) that the optimal estimator is not only linear, but is only a function of the prior estimate, $\textbf{x}^-$. In the technical lingo, the Kalman filter is a \textit{Markov process}, which just means that the future condition of the filter is only dependent on the current condition. The fact that the Kalman filter is a Markov process is very nice for implementing it on physical or software systems, as we only need to store the prior estimate. Otherwise, our filter would grow in size with time.
+From here we appear to be stuck. Luckily, there is some hope! Kalman has shown in his original paper (which can be found at \cite{basar_new_2001}) that the optimal estimator is not only linear, but is a function of \textit{only} the prior estimate, $\textbf{x}^-$. In the technical lingo, the Kalman filter is a \textit{Markov process}, which just means that the future condition of the filter is only dependent on the current condition. The fact that the Kalman filter is a Markov process is very nice for implementing it on physical or software systems, as we only need to store the prior estimate. Otherwise, our filter would grow in size with time.
 
 The fact that the Kalman filter is a Markov process gives us some hope for simplifying $\textbf{x}^+$ and $\textbf{x}^-$ in our equation into something more workable! We know the Kalman filter is linear, so we may assume a linear form that relates $\textbf{x}^+$ to $\textbf{x}^-$:
 $$\textbf{x}^+=K'\textbf{x}^-+K\textbf{z}$$
-That is to say, that $\textbf{x}^+$ is some linear combination of the prior state, $\textbf{x}^-$ and the measurement $\textbf{z}$.
-
+That is to say, that $\textbf{x}^+$ is some linear combination of the prior state, $\textbf{x}^-$ and the measurement $\textbf{z}$. Our next step will be to determine the nature of $K$ and $K'$ that give an optimal estimate.
 
 \subsubsection{A more exact derivation of $K$}
-Although the previous derivation of the Kalman gain is good  for our intuitive understanding, we have left out some of the mathematical certainty which is required to ensure optimality. For example, how are we sure that the Kalman gain that we attained is optimal in all cases? In the extreme cases we had mentioned, we are surely correct! However, one example where we could see where our derivation failing is considering a case where both the measurements and the dynamics have about the same quality. Our intuitive analysis tells us that some portion of both $R$ and $P$ should contribute to the final Kalman gain, but the optimal proportion of each is unknown. It is therefore prudent to consider a more mathematically sound approach to verify our previous result.
+Although the previously given derivation of the Kalman gain is good for our intuitive understanding, we have left out some of the mathematical certainty which is required to ensure optimality. For example, how are we sure that the Kalman gain that we attained is optimal in all cases? In the extreme cases we had mentioned, we are surely correct! However, one example where we could see where our derivation failing is considering a case where both the measurements and the dynamics have about the same quality. Our intuitive analysis tells us that some portion of both $R$ and $P$ should contribute to the final Kalman gain, but the optimal proportion of each is unknown. It is therefore prudent to consider a more mathematically sound approach to verify our previous result.
 
 In our motivation of the Kalman filter, our goal was to find the estimator which minimizes the error of the prediction. This means that the value of $K$ that we select should minimize the total length of the error estimate vector. Otherwise, the selection is not optimal -- there exists another filter with a smaller error estimate!\endnote{The criteria of an unbiased and consistent estimator must also hold, but those are upheld by considering zero mean gaussian noise in the system. It is also implied (though not explicity stated here, for simplicity), that $\textbf{v}$ and $\textbf{x}$ are uncorrelated, and thus their covariance is zero. This is a required assumption for the prior derivations. See \cite{gelb_applied_1974} Chapter 4 for more information.}
 
 For the optimization, we consider the cost function to be:
 $$J=E\left[{\textbf{\~x}^+}^TS{\textbf{\~x}^+}\right]$$
-Or that the norm of the error vector multiplied by some weighting ($S$) should be minimized. It can be shown that the weighting $S$ has no impact on the result (detailed in endnote). \endnote{We can see from the dimensions of the problem that ${\textbf{\~x}^+}^TS{\textbf{\~x}^+}$ will  be a scalar value. For a scalar, $\mathrm{tr}(a)=a$. It is also known that $\mathrm{tr}(AB)=\mathrm{tr}(BA)$. The result is that $E\left[{\textbf{\~x}^+}^TS{\textbf{\~x}^+}\right]=E\left[\mathrm{tr}(S{\textbf{\~x}^+}^T{\textbf{\~x}^+})\right]$. From here, it can see be seen that the selection of $S$ has no bearing on the minimization.}
+Or that the norm of the error vector multiplied by some weighting ($S$) should be minimized. It can be shown that the weighting $S$ has no impact on the result (detailed in endnote). \endnote{We can see from the dimensions of the problem that ${\textbf{\~x}^+}^TS{\textbf{\~x}^+}$ will  be a scalar value. For a scalar, $\mathrm{tr}(a)=a$. It is also known that $\mathrm{tr}(AB)=\mathrm{tr}(BA)$. The result is that $E\left[{\textbf{\~x}^+}^TS{\textbf{\~x}^+}\right]=E\left[\mathrm{tr}(S{\textbf{\~x}^+}^T{\textbf{\~x}^+})\right]$. From here, it can see be seen that the selection of $S$ has no bearing on the minimization.} Because $S$ has no impact, the cost function can be simplified into the form:
+$$J=E\left[{\textbf{\~x}^+}^T{\textbf{\~x}^+}\right]$$
 
 
 
@@ -1637,11 +1705,14 @@ Together, these equations are the discrete Kalman filter:
 \color{blue}\mathrm{Kalman  \ Filter}
 \end{gather}
 
-
+\section{Practical Use of the Kalman Filter}
 \subsection{Intuitions of the Kalman Filter}
 Although we have constructed equations and detailed the mathematical background of the Kalman filter, our intuitions about the system may not be very strong. Quite often, a Kalman filter requires fair amount of debugging and tuning to work appropriately for a system. For this reason, a good intuition about the filter is as important, if not more important than understanding the mathematics of the Kalman filter.
 
 \subsection{Square Root Kalman Filter}
+
+\section{Kalman Filter Examples}
+
 
 
 \section{Further Reading}
@@ -1649,19 +1720,32 @@ Although we have constructed equations and detailed the mathematical background 
 \cite{noauthor_how_2015}
 
 
-
-
 \chapter{Extensions of Kalman Filtering}
+In the development of the optimal estimator which resulted in the Kalman filter, we have made quite a few assumptions, some of which are quite limiting to its use. First and foremost is the assumption that our system must be linear. This, as it turns out, is the most egregious of the assumptions in the Kalman filter which most different approaches seek to resolve. There are several methods by which this can be resolved, each of which generates a variation of the Kalman filter with greater applicability to nonlinear systems. 
 
-In the development of the optimal estimator which resulted in the Kalman filter, we have made quite a few assumptions, some of which are quite limiting to its use. First and foremost is the assumption that our system must be linear. This, as it turns out, is the most egregious of the assumptions in the Kalman filter which most different approaches seek to resolve. There are several methods by which this can be resolved, each of which generates a variation of the Kalman filter with greater applicability to nonlinear systems.
+There are quite a few options to choose here, each with certain benefits and drawbacks for certain applications. Recent work has tended to favor the \gls{ukf} (\cite{wan_unscented_2000, chadha_unscented_2019}), but to understand that approach we must first look at the \gls{ekf} and related approaches.
 
-There are other methods by which the state estimation can be achieved that are not related to the Kalman filter
+There are other methods by which the state estimation can be achieved that are not related to the Kalman filter, such as the particle filter. These will be discussed at the end of this chapter.
+
+Lastly, I want to provide real examples of each of these types of filters in MATLAB, as the practical application of these filters may differ quite heavily from their theoretical implementation. Although MATLAB has some built-in functionality for Kalman filtering, each situation -- particularly with the \gls{ekf} and \gls{ukf} -- can be quite unique and require a specialized implementation. It is best then, to understand code logic rather than being reliant on built-in functionality.
 
 \section{The Extended Kalman Filter}
 
+The \gls{ekf} is the first major extension of the Kalman filter.  In the \gls{ekf}, we 
+
+
 \begin{example}[The 1D Radar Problem (Gelb)]
-Do this shit later lmao
+Do this later
 \end{example}
+
+\section{Trajectory Linearization}
+One method that can be used that is less computationally expensive than the full \gls{ekf} is a method of `trajectory linearization'. This simplification may be used when we have prior information about the trajectory of the object. 
+
+In this approach, we first construct a reference trajectory and apply linearization about the reference trajectory. Then, at every point in time, the reference trajectory linearization can be used for the kalman filter.
+
+As an example, if we have some \gls{imu} data, we may propagate that data under the assumption that is perfect. This will give us a trajectory which is not perfect, but is good enough that it can inform our linearization model. We take a linearization at each point of this trajectory, and then we only have to match the result of the Kalman filter to this reference trajectory at each time.
+
+
 
 
 \section{Multiplicative Kalman Filter}
@@ -1864,9 +1948,9 @@ The inverted pendulum is a classic problem in control theory, and for good reaso
     \label{fig:inverted pend}
 \end{figure}
 
-At the end of this chapter, we will apply this controller to a real inverted pendulum system that I have built. My hope is that this will help demonstrate both the theory and practical application of the control theory concepts covered thus far.
+At the end of this chapter, we will apply this controller to a real inverted pendulum system that I have built. My hope is that this will help demonstrate both the theory and practical application of the control theory concepts covered thus far. Additionally, some practical control applications will be discussed, such as the speed and torque control of DC motors.
 
-\section{Equations of Motion}
+\section{Equations of Motion}\label{sec:pend eom}
 For any control system, we must understand the dynamics of the system that we want to control. For the simple inverted pendulum, this is quite easy to derive using energy mechanics.
 
 Here, I will choose to use the \gls{Lagrangian} approach in the derivation, although the \gls{Hamiltonian} or Newtonian approach can also be taken. For this particular system, the \gls{Lagrangian} approach is quite simple and requires less knowledge of the forces acting on the system, which can become quite complicated! 
@@ -1945,7 +2029,7 @@ The vector $\vec{r}_2$ is expressed in terms of the two generalized coordinates,
 $$\vec{r}_2=(x-l\sin\theta)\hat{\imath}+(l\cos\theta)\hat{\jmath}$$
 One `trick' we can do in the computation that is sometimes simpler is to unexpand the chain rule and express the kinetic energy as:
 $$T_{pend}=\frac{1}{2}m|\dot{r}_2|^2$$
-Computing the value of $\dot{r}_2$ (remembering the implicit chain rule, now that we are not explicitely writing it), we have:
+Computing the value of $\dot{r}_2$ (remembering the implicit chain rule, now that we are not explicitly writing it), we have:
 $$\dot{r}_2=(\dot{x}-l\cos\theta\dot{\theta})\hat{\imath}+(l\sin\theta\dot{\theta})\hat{\jmath}$$
 Performing the norm-square of $\dot{r}_2$ is the same as the dot product, so we square each element:
 $$T_{pend}=\frac{1}{2}m\left[(\dot{x}-l\cos\theta\dot{\theta})^2+(l\sin\theta\dot{\theta})^2\right]$$
@@ -2084,7 +2168,9 @@ The transfer function for the linearized system is also quite plain to express (
 The problem is mostly algebraic manipulation at this point to separate the system into equations which contain $X(s)$ and $\Theta(s)$ separately. This is accomplished by the usual means of solving for two variables. Doing so gives:
 $$\frac{\Theta(s)}{F(s)}=\frac{ml}{(M+m)[s^2(I-m^2l^2)-mgl]}$$
 $$\frac{X(s)}{F(s)}=\frac{s^2I-mgl}{s^2(M+m)(s^2I-s^2m^2l^2-mgl)}$$
-For the rest of this example, I will prefer to use the state space model rather than the transfer functions. In modern control theory, the state space is often the preferred method, so I will follow that convention in further discussion.
+
+These transfer functions are not particularly useful in this application, as they inheretly define \gls{siso} relationships. Because we want to control several aspects of the pendulum motion simultaneously (the angle, position, and their derivatives), the transfer functions are less useful. For the rest of this chapter, I will prefer to use the state space model rather than the transfer functions when discussing the system dynamics.
+
 \subsubsection{State Space with Damping}
 One assumption made earlier in the modeling of the system is that the system is frictionless. To improve the modeling to some degree, we can introduce a term with a dependence on the velocity and angular velocity. This model of friction is quite simply, but can easily be incorporated into the model. For a standard second-order system, it is quite typical to denote drag or damping with a term linearly dependent on the velocity -- that is, $c\dot{x}$. We can easily incorporate this in the state space model, denoting the damping on the cart $c$ and the damping on the pendulum as $d$:
 
@@ -2106,62 +2192,41 @@ One assumption made earlier in the modeling of the system is that the system is 
 \end{bmatrix}
 \end{gather}
 
+The inclusion of these terms is best left as an `engineering judgement`. If these terms can be well characterized or estimated, they should likely be included. They may, however, actually reduce the accuracy of the model. In my implementation, I have chosen to neglect these terms and have little issue doing so.
+
 \subsection{Controllability and Observability}
-As has been previously noted, the controllability of the system is dependent on $A$ and $B$ and the observability on $A$ and $C$. We can find the controllability and observability of the system quite easily through application of these formulas.
+As has been previously noted, the controllability of the system is dependent on $A$ and $B$ and the observability on $A$ and $C$. We can find the controllability and observability of the system quite easily through application of the previously mentioned formulas.
+
+The easiest method to do so is through the use of the MATLAB commands:
+% add matlab commands
+As we can see, the system is fully controllable and observable, which is good news! This means that a \gls{lqr} controller will work well in this application.
 % to do
 
 \section{LQR Control}
+\subsubsection{Why LQR?}
 For the pendulum, an \gls{lqr} controller is chosen. Why choose a \gls{lqr} controller over a simpler controller such as \gls{pid}?
 
-The main reason to do so is because we want to control both the position and the angle of the pendulum. Since our track has a limited length, we need to force the $x$ position back towards 0. This is perfect for the \gls{lqr} controller, which is naturally a \gls{mimo} controller. If we were to use \gls{pid} for the control, we would need two seperate controllers, one which controls the angle, and another which controls the position. The fact that \gls{pid} is \gls{siso} only is one of the big drawbacks of \gls{pid} control scheme!
+The main reason to do so is because we want to control both the position and the angle of the pendulum. Since our track has a limited length, we need to force the $x$ position back towards 0. This is perfect for the \gls{lqr} controller, which is naturally a \gls{mimo} controller. If we were to use \gls{pid} for the control, we would need two separate controllers, one which controls the angle, and another which controls the position. The fact that \gls{pid} is \gls{siso} only is one of the big drawbacks of \gls{pid} control scheme!
 
-The selection of the \gls{lqr} controller does introduce some additional design criteria. First and foremost, the \gls{lqr} controller requires that the system has full state feedback.
+One obvious drawback of the \gls{pid} implementation is that the two controllers will `fight' each other. One controller may decide that positioning the cart is more important than maintaining the upright angle, and the pendulum will fall over.
 
-\section{Real Implementation}
-To begin the discussion of the real implementation of the inverted pendulum, we must discuss the hardware used, as that directly ties into how we build our state space model and what assumptions that we can use in the design.
+A less obvious drawback is that the \gls{pid} controller is acting without the knowledge of the system dynamics. The consequence of this is that the \gls{pid} will only measure the angle, and apply a force in such a way to minimize this. However, without knowledge of the system dynamics, the PID controller would need very high gains to maintain control of the system. In a real system, large gains manifest themselves as excessively large control commands and instabilities. These are downsides which make the \gls{pid} controller a very poor choice for this application.
 
-I should note that I am presenting this \textit{after} presenting the theory of the system, but in practice, these are often developed alongside each other. The hardware will dictate some facts about the control system, especially under certain budget, size, and power constraints.
-\subsection{Physical Design}
-The physical design of the pendulum is quite important to understand which dynamical phenomena are important for our modeling. Additionally, the physical components will dictate features of the system observability and place limitations on the control scheme. A technical drawing of the pendulum is shown in \autoref{fig:pend schem}.
+All of this is to say that the choice of the \gls{lqr} controller is quite justified in this situation. The selection of the \gls{lqr} controller does introduce some additional design criteria. First and foremost, the \gls{lqr} controller requires that the system has knowledge of the full state. Since we have full observability in the system, this is not an issue. As we will see in the real implementation, however, some of these states which are very well observable in theory often have lots of noise or other challenges in their implementation.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{Images/InvertedPendulumSchematic.pdf}
-    \caption{Inverted Pendulum Schematic}
-    \label{fig:pend schem}
-\end{figure}
-A breakdown of the components in the pendulum is done below, considering both the electronics and mechanical systems which will inform the control system design.
+This noise can be dealt with in various ways, some of which will be explored later. One obvious option is to implement a Kalman filter for state estimation, but this can be computationally expensive for low end hardware such as the Arduino Uno.
 
-\subsubsection{Mechanical Considerations}
-The mechanics of the inverted pendulum and cart are fairly simple. The main consideration is the selection of the length of the rails, and ensuring that the friction and mass of the cart are as low as possible. In this design, rails of the SBR16 specification were selected, although many other types of rail systems may be used. Some other types of linear rails and bearings may permit a lower mass cart, which is desirable.
+\subsubsection{LQR Considerations}
 
-Another important criteria is the selection of the belt drive and pulley system, which will dictate the conversion between RPM and linear speed for the system. A larger diameter pulley will result in higher linear speeds for a given RPM, but will also require more torque. The belt drive system here uses a GT2 belt with 20 tooth pulleys. Other pulley diameters may be used if more precise control or higher speed output is desirable for the given application.
+The \gls{lqr} controller 
 
-\subsubsection{Rotary Encoder}
-In cross section A-A, the rotary encoder can be seen. The rotary encoder is one of the most imporant components in the design as the angle measurement of the arm is very important in understanding the dynamics of the system. The particular model used here can be found at \cite{noauthor_yuecoom_nodate}.
 
-This rotary encoder is a hall effect sensor, so it is contactless. The sensor has 12-bit precision and can measure angles to a precision of $0.088\degree$ as a result. This type of sensor has much less sensor noise than a common potentiometer and also produces less resistance to rotation. This reduction in drag helps the pendulum arm rotate more freely. For this project, I have mounted the pendulum arm directly onto the end of the sensor. However, for heavier loads, it may be wise to place the load on a bearing instead of the sensor itself.
+\section{Motor Control}
+Before we get into the real implementation of the pendulum, we must discuss the topic of motor control. The pendulum, and many other control systems that we would like to build, are reliant on motors of many types. This section will not be an exhaustive listing of all types of motor control, but should provide the reader enough knowledge to understand the benefits and downsides of several types of motors and the control of these systems.
 
-Another important feature of the rotary encoder is the sensor linearity. For this model, the sensor linearity is 0.3\% of the full scale, which means that the maximum deviation from the true output is less than 0.3\% of $360\degree$, or less than $1.08\degree$.
+This section will place a primary focus on the control of the DC motor, which finds common use in very many applications. Stepper motors and servo motors will also be discussed, but to a lesser extent. 
 
-\subsubsection{Arm}
-The design of the physical arm is also quite important to the development of a control model for the pendulum. For a pendulum undergoing small oscillations, the period is given by 
-$$T=2\pi\sqrt{\frac{l}{g}}$$
-From this relation, we can see that increasing the length will increase the period and make the system easier to control. Of course, this is quite different for the inverted case since the fixed point is unstable. However, this still gives a heuristic for how long the pendulum will take to fall.
-
-If we want to be more precise, we may take the linear equations of motion in \eqautoref{eq:linear pend} and assume that the acceleration $\ddot{x}$ is 0:
-$$I\ddot{\theta}=mgl\theta$$
-The exact moment of inertia of the system may change, but the moment of inertia must always have units of $ml^2$. If we let $I=Cml^2$, then:
-$$\ddot{\theta}=\frac{g}{Cl}\theta$$
-We can see that for small angles, the acceleration of the pendulum away from the equilibrium position is inversely related to the length of the pendulum and the moment of inertia, $C$. For this reason, it is quite easy to balance a broom vertically, but balancing a pencil is almost impossible!
-
-For our system then, we should choose values that make controlling the system possible without extraordinarily fast electronics or microcontrollers. At the same time, the arm should be easily carried around and not so large as to require a huge motor to move it. A length of around $0.5\ \mathrm{m}$ is a good compromise between the two. Assuming the arm has a moment of inertia that is the same as a thin rod, $\frac{1}{3}ml^2$, then the acceleration is around $6.3 \ \mathrm{rad/s^2}$ for an angle of  $5\degree$. After this point, nonlinear effects become quite prevalent and the analysis breaks down. Of course, smaller angles will exhibit rotational accelerations which are smaller in direct linear relation with the angle.
-
-For further investigation, we can consider the linear acceleration that would be required to restore $\ddot{\theta}$ to 0 as a first approximation of the required linear acceleration required of the system. This can be done using \eqautoref{eq:theta double dot pend} and plugging in $\ddot{\theta}$ as $6.3 \ \mathrm{rad/s}$ and $\theta$ as $5\degree$:
-$$\ddot{x}=l\ddot\theta-g\theta\approx1.72 \ \mathrm{m/s^2}$$
-We can think of these conditions as a worst possible case, where the cart needs to accelerate rapidly to compensate for a large angular error. Ideally, the control system will maintain an angle less that $5\degree$. In this case, the system needs to have the capability of acceleration up to $1.72 \ \mathrm{m/s^2}$.
-
-\subsubsection{Motor Selection}
+\subsection{Motor Selection}
 The selection of the driving motor is quite a nuanced and complicated choice, with a large variety of motor types and selections available on the market. There are many types of motors, but for most projects in robotics and \gls{gnc}, the predominant types are: 
 \begin{enumerate}
     \item Stepper motors
@@ -2178,18 +2243,18 @@ The main reason not to choose a stepper motor in this context is that stepper mo
 
 In the event that the motor needs to rotate at several rotations per second (corresponding to $\sim100 \  \mathrm{mm/s}$ speed for a typical diameter belt drive), the number of commands sent may exceed the computing speed of the microcontroller or leave it with little overhead for other operations. For example, the popular Arduino Uno has a clock speed of 16Mhz. Each step requires multiple internal calculations, and only around 4000 steps can be sent every second. It can be seen that the motor can only achieve a little over $1 \mathrm{\ rps}$, far too slow of a response for an inverted pendulum!
 
-Other microcontrollers such as the ESP32 can get around this issue, as they have much faster clock speeds and two cores -- meaning they can perform computations for motor controller on one core and other computations on another core. These chips can be a good option, but face some other limitations. They are typically more difficult to program than an Arduino Uno / Nano and have some other limitations, like worse analog signal pins. 
+Other microcontrollers such as the ESP32 can get around this issue, as they have much faster clock speeds and two cores -- meaning they can perform computations for motor controller on one core and other computations on another core. These chips can be a good option, but face some other limitations. They are typically more difficult to program than an Arduino Uno / Nano and have some other limitations, like worse analog signal pins.\endnote{Although the analog signal pins on the ESP32 chips are 12-bit resolution and the Arduino Uno chips are 10-bit, they face limitations in other ways. Generally, ESP32 analog pins suffer from non-linearity and deadzones, as well as fairly high noise. Additionally, these signal pins can only accept 3.3V inputs whereas the Arduino can accept 5V inputs.}
 
-Although the analog signal pins on the ESP32 chips are 12-bit resolution and the Arduino Uno chips are 10-bit, they face limitations in other ways. Generally, ESP32 analog pins suffer from non-linearity and deadzones, as well as fairly high noise. Additionally, these signal pins can only accept 3.3V inputs whereas the Arduino can accept 5V inputs.
-
+Of course, there are other options on the market for microcontrollers, but the Arduino Uno and ESP32 are some of the most common chipsets.
 
 \subsubsection{Servo Motors}
-Servo motors are another option, but these can be quite expensive. For this reason alone, I have not considered servo motors seriously for this project.
+Servo motors are another option for motor control. The servo motor is quite well suited for position control. Servos differ from the other two options in that they are closed loop motors by design. This can be understood by looking at the servo motor schematically:
+
 
 \subsubsection{DC Motors}
-DC motors are the final major option. DC motors operate quite differently to stepper motors, in that they run at a constant RPM when given a DC voltage input. As a result, DC motors face the opposite problem to stepper motors - they have good speed control but positional control can be more difficult.
+DC motors are the final option discussed here. DC motors operate quite differently to stepper motors, in that they run at a constant RPM when given a DC voltage input. As a result, DC motors face the opposite problem to stepper motors - they have good speed control but position control can be more difficult.
 
-In this project, the tradeoff for higher speed is worthwhile, and positional control can be regained fairly easily through careful design of the motor control system. For DC motors, RPM control is usually achieved with \gls{pwm}. \Gls{pwm} effectively controls the RPM by very rapidly changing the duration for which the motor is turned on. This is advantageous over changing the input voltage, as electronic characteristics of the system can change with differing voltage. Additionally, most voltage sources are constant voltage or cannot change voltages extremely quickly.
+In this project, the tradeoff for higher speed is worthwhile, and positional control can be regained fairly easily through careful design of the motor control system. For DC motors, RPM control is usually achieved with \gls{pwm}. \Gls{pwm} effectively controls the RPM by very rapidly changing the duration for which the motor is turned on. This is typically advantageous over changing the input voltage, as most voltage sources are constant voltage or cannot change voltages extremely quickly.
 
 The principle of \gls{pwm} is to use a constant voltage and change the effective amplitude of the signal on average, as shown in \autoref{fig:pwm}.
 \begin{figure}[ht]
@@ -2283,8 +2348,75 @@ The principle of \gls{pwm} is to use a constant voltage and change the effective
     \caption{Pulse Width Modulation Visual}
     \label{fig:pwm}
 \end{figure}
+\subsection{DC Motor Modeling}
+Motor modeling is one major challenge when creating a system for control. Quite often, cheap motors will not have a datasheet associated with them and the motor parameters and modeling must be figured out by the end-user. Luckily, many of these important parameters can be experimentally determined and estimated to an acceptable level of precision. Here, I will discuss three main types of controllers for the DC motor. These are:
+\begin{enumerate}
+    \item Position Control
+    \item Speed Control
+    \item Torque Control
+\end{enumerate}
+Many textbooks discuss information on position and speed control, but little is said of torque control! Torque control is actually quite important in our application with the inverted pendulum, since our input is a force! It is necessary to understand the torque output of the motor in our modeling for adequate control of the system.
 
-\section{Motor Control Algorithms}
+\subsubsection{Motor Modeling from first principles}
+The DC motor can fundamentally be understood as a circuit. Here, the properties of the magnetic field and the internal nature of the DC motor are not considered. There are many sources, such as \cite{golnaraghi_automatic_2017,evans_dc_2020,sabin_civil_engineering_dc_2014} which describe the mechanical design and electromagnetic effects of the DC motor. The circuit of the DC motor is quite simple and is shown in \autoref{fig:dc motor circuit}.
+
+\begin{figure}[ht]
+    \centering
+
+\begin{tikzpicture}
+	% Paths, nodes and wires:
+	\node[shape=rectangle, draw, line width=1pt, inner sep=0, minimum width=0.318cm, minimum height=0.288cm](Rect1) at (6, 2.93){} node[anchor=south east] at ([xshift=-0.12cm, yshift=0.12cm]Rect1.west){$+$};
+	\draw (1, 4) to[american voltage source, l_={$V$}, label distance=0.02cm] (1, 1);
+	\node[shape=rectangle, draw, line width=1pt, inner sep=0, minimum width=0.318cm, minimum height=0.288cm](Rect2) at (6, 2.07){} node[anchor=north east] at ([xshift=-0.12cm, yshift=-0.12cm]Rect2.west){$-$};
+	\node[shape=circle, fill={rgb,255:red,255;green,255;blue,255}, draw, line width=1pt, inner sep=0, minimum width=0.825cm](Ellipse1) at (6, 2.5){} node[anchor=east] at ([xshift=-0.12cm]Ellipse1.west){$e=k_e\omega$};
+	\draw (6, 4) -| (6, 3.092);
+	\draw (6, 1.908) -| (6, 1);
+	\draw (6, 1) |- (1, 1);
+	\draw (1, 4) to[american resistor, l={$R$}, label distance=0.02cm] (3.5, 4);
+	\draw (3.5, 4) to[cute inductor, l={$L$}, label distance=0.02cm] (6, 4);
+	\draw[-latex] (3, 4.5) -- (4, 4.5);
+	\node[shape=rectangle, inner sep=0, minimum width=0.965cm, minimum height=0.465cm](Rect3) at (3.5, 4.75){} node[anchor=center] at (Rect3.center){$i$};
+\end{tikzpicture}
+    
+    \caption{DC Motor Circuit}
+    \label{fig:dc motor circuit}
+\end{figure}
+This diagram shows the basic operation of the motor, but is adequate to create a model that works quite well and has been shown to agree with real motor dynamics. In this model, $V$ is the voltage of the power source, $R$ is the motor resistance, $L$ is the inductance, $i$ is the current, and $e$ is the back-emf of the motor.
+
+We will begin with by modeling the dynamics of the electrical system, which we may further build upon with the mechanical system dynamics. To construct differential equations for this circuit, we can employ Kirchhoff's Law such that $\sum V=0$.
+$$V-iR-L\frac{di}{dt}-e=0$$
+The back-emf of the motor is a function of the rotational speed of the motor, $\omega$, multiplied by a constant value $k_e$.
+$$V=iR+L\frac{di}{dt}+k_e\omega$$
+This is the governing differential equation of the electric circuit of the DC motor, which is a first order differential equation. We can convert this equation to the Laplace domain to develop a transfer function for the system:
+$$V(s) = (R+Ls)I(s)+k_e\omega(s)$$
+
+\subsubsection{Dynamics Modeling}
+Dynamics modeling is quite simple for the DC motor, as we need only consider that:
+$$\sum\tau=J\dot{\omega}$$
+Note that the typical use of $I$ for the moment of inertia here has been replaced with $J$ since $I$ is being used for current. The torque balance is given by taking the motor output torque, and subtracting the friction and disturbance torques on the system:
+$$\tau-b\omega-\tau_d=J\dot{\omega}$$
+Once again, this relationship can be rewritten in the Laplace domain:
+$$\tau(s)-b\omega(s)-\tau_d=Js\omega(s)$$
+
+\subsubsection{Speed Control}
+
+\subsubsection{Velocity Control}
+
+\subsubsection{Torque Control}
+The DC motor operates through the generation of a magnetic field and a current carrying conductor in the motor. The torque that is generated by a motor is a result of the Lorentz force. The interaction of these magnetic fields and electric currents induces a torque:
+$$\tau=k_ii$$
+And as the motor increases in speed there is a voltage produced which resists motion due to Lenz' Law:
+$$e=K\phi\omega$$
+
+When we use SI units, it turns out that $k_i$ and $k_m$ have different units, but are the exact same value. We can therefore replace these with the single motor constant, $k$.
+
+
+Finally, we arrive at the transfer function which relates torque and voltage.
+$$\frac{\tau(s)}{V(s)}=\frac{k_i(Js+b)}{(Js+b)(Ls+R)+k_ik_m}$$
+
+
+
+\subsection{Motor Control Algorithms}
 No matter what type of motor is selected for use, a control algorithm must be developed for the control of the motor itself, separate from the control of the overall system. The action of the motor controller is to match the desired RPM, position, or torque of the system quickly and accurately to facilitate good control of the system. At a high level, the control system for a DC motor will look like \autoref{fig:dc motor controller}:
 
 \begin{figure}
@@ -2357,92 +2489,11 @@ No matter what type of motor is selected for use, a control algorithm must be de
     \label{fig:dc motor controller}
 \end{figure}
 
-For DC motor control, \gls{pid} controllers are quite common. Other control algorithms may be implemented, such as \gls{lqr}, but their implementation has been discussed elsewhere in this text quite thoroughly. \Gls{pid} control is quite popular in such applications for it's widespread use, easy tunability, and simple application in the time-domain. To implement a \gls{pid} loop for a real world system, there are several factors that must be considered:
-\begin{enumerate}
-    \item Sensor noise and data dropouts
-    \item Motor modeling
-    \item \gls{pid} gains
-\end{enumerate}
+For DC motor control, \gls{pid} controllers are quite common. Other control algorithms may be implemented, such as \gls{lqr} or \gls{lqi}, but their implementation has been discussed elsewhere in this text quite thoroughly. \Gls{pid} control is quite popular in such applications for it's widespread use, easy tunability, and simple application in the time-domain.  Because the motor transfer functions are \gls{siso}, \gls{pid} is quite well suited for this application. For this reason, this section will detail the implementation of \gls{pid} for these motor controllers in several applications.
 
-Here, I will detail the methods of implementation that have been done for this system. More than anything, this is to give a taste of what can be done for such a system, and is not representative of the full scope of choices that can be made. Each control system will have its own challenges that must be overcome! 
+Here, I will detail the various methods by which \gls{pid} gains can be attained. An emphasis is placed on the \gls{pid} control of motor systems. More than anything, this is to give a taste of what can be done for such a system, and is not representative of the full scope of choices that can be made. Each control system will have its own challenges that must be overcome! 
 
-\subsection{Noise and Data Dropouts}
-Noisy data is quite common in real world sensors, especially those found in low cost electronics. This is especially prevalent when the derivative of a signal must be computed. One repercussion of computing the derivative of a signal is that high frequency components of the signal (where most of the noise resides) are amplified.\endnote{This can be seen by considering a signal that is decomposed into its Fourier series:
-$$f(t)=\sum_{k=-\infty}^{\infty}a_ke^{ik\omega_0t}$$
-Taking the time derivative of the signal yields:
-$$\frac{df(t)}{dt}=i\omega_0\sum_{k=-\infty}^{\infty}ka_ke^{ik\omega_0t}$$
-Application of Parseval's formula gives that:
-$$\frac{1}{\tau}\int_0^\tau\left|\frac{df(t)}{dt}\right|^2dt={\omega_0}^2\sum_{k=-\infty}^{\infty}|ka_k|^2$$
-Which makes it evident that the power in the higher frequencies of the signal has been amplified as compared to the original signal} 
-
-Another problem that occurs with real world signals is data dropouts. Dropouts can be quite common for some sensors, such as the encoders of DC motors. One way to deal with data dropouts is to include some logic that checks the difference in the signal output. If the difference is greater than some expected threshold, the data is disregarded. An example of such a code for implementation into MATLAB or Simulink is shown below:
-\begin{lstlisting}[style=Matlab-editor]
-function filtered = filterEncoder(currVal)
-
-persistent prevVal
-
-% Initialize on first call
-if isempty(prevVal)
-    prevVal = currVal;
-end
-
-% Dropout detection
-threshold = 200;  % Adjust based on your system
-
-if abs(currVal - prevVal) > threshold
-    % Bad reading: keep previous good value
-    filtered = prevVal;
-else
-    % Good reading: update and pass through
-    filtered = currVal;
-    prevVal = currVal;
-end
-\end{lstlisting}
-
-A "persistent" variable is one which maintains its value across multiple function calls. Depending on the type of dropouts, more advanced approaches may need to be taken.
-
-Dealing with noise is often done through the application of a low-pass filter or a moving average filter. These filters induce some delay in the signal, but signal delay is often preferable to noisy data. Either of these filters can be added in Simulink.
-
-\subsection{Motor Modeling}
-Motor modeling is one major challenge when creating a system for control. Quite often, cheap motors will not have a datasheet associated with them and the motor parameters and modeling must be figured out by the end-user. Luckily, many of these important parameters can be experimentally determined and estimated to an acceptable level of precision. Here, I will discuss three main types of controllers for the DC motor. These are:
-\begin{enumerate}
-    \item Position Control
-    \item Speed Control
-    \item Torque Control
-\end{enumerate}
-Many textbooks discuss information on position and speed control, but little is said of torque control! Torque control is actually quite important in our application with the inverted pendulum, since our input is a force! It is necessary to understand the torque output of the motor in our modeling for adequate control of the system.
-
-\subsubsection{Motor Modeling from first principles}
-The DC motor can fundamentally be understood as a circuit. Here, the properties of the magnetic field and the internal nature of the DC motor are not considered. There are many sources, such as \cite{golnaraghi_automatic_2017,evans_dc_2020,sabin_civil_engineering_dc_2014} which describe the mechanical design and electromagnetic effects of the DC motor. The circuit of the DC motor is quite simple and is shown in \autoref{fig:dc motor circuit}.
-
-\begin{figure}[ht]
-    \centering
-\usetikzlibrary{shapes.geometric}
-\begin{tikzpicture}
-	% Paths, nodes and wires:
-	\node[shape=rectangle, draw, line width=1pt, inner sep=0, minimum width=0.318cm, minimum height=0.288cm] at (6, 2.93){};
-	\draw (1, 4) to[american voltage source] (1, 1);
-	\draw (1, 4) to[cute inductor] (6, 4);
-	\node[shape=rectangle, draw, line width=1pt, inner sep=0, minimum width=0.318cm, minimum height=0.288cm] at (6, 2.07){};
-	\node[shape=ellipse, fill={rgb,255:red,255;green,255;blue,255}, draw, line width=1pt, inner sep=0, minimum width=0.825cm, minimum height=0.825cm] at (6, 2.5){};
-	\draw (6, 4) -| (6, 3.092);
-	\draw (6, 1.908) -| (6, 1);
-	\draw (6, 1) |- (1, 1);
-\end{tikzpicture}
-    
-    \caption{DC Motor Circuit}
-    \label{fig:dc motor circuit}
-\end{figure}
-
-The DC motor operates through the generation of a magnetic field and a current carrying conductor in the motor. The interaction of these magnetic fields and electric currents induces a torque:
-$$\tau=Ki\phi$$
-And as the motor increases in speed there is a voltage produced which resists motion due to Lenz' Law:
-$$e=K\phi\omega$$
-
-$$\frac{\tau(s)}{V(s)}=\frac{k_i(Js+b)}{(Js+b)(Ls+R)+k_ik_m}$$
-
-
-\subsection{PID Gains}
+\subsubsection{PID Gain Methods}
 There are several approaches which can be used to arrive at appropriate \gls{pid} gains for the system. These vary in complexity and the application of one approach over the other will depend on the system. At the most basic level, the \gls{pid} gains can be achieved experimentally without modeling of the system dynamics using methods such as Ziegler-Nichols and Cohen-Coon methods. There approaches are heuristic in nature in that they select \gls{pid} gains which have been shown to work in experiments and are a good rule of thumb.
 
 Beyond this, modeling of the system dynamics is required for further analysis. System dynamics can be derived in several ways, either starting from first principles of the system or from equations which are known to describe DC motor dynamics. Further still, approaches exist to experimentally determine the transfer function and frequency response of a system and use this as a model. All of these approaches are valid. In this section, all of these approaches will be considered and shown to yield similar results.
@@ -2493,6 +2544,107 @@ $$\frac{\mathrm{\# \ pulses}}{4\cdot18.8\cdot\mathrm{PPR}} \cdot \frac{60}{\Delt
 The value for the quadrature encoding and the motor gear ratio can be included in the value of the \gls{ppr} if desired.
 \end{example}
 
+\section{Simulation}\label{sec:sim}
+After we have developed appropriate models for all of the subsystems, full simulation of the system can allow us to validate these models and improve the control algorithm. 
+
+The core of the simulation is based on the non-linear dynamics which have been derived in \autoref{sec:pend eom}. All we need to do is to reduce these equations into a system of first order \glspl{ode}. The original equations of motion from \eqautoref{eq:inverted pend eom} have been reproduced here for convenience:
+\begin{gather}
+\begin{array}{c}
+     (M+m)\ddot{x}-ml\cos\theta\ddot{\theta}+ml\sin\theta\dot{\theta}^2=F \\I\ddot{\theta}-ml\cos\theta\ddot{x}-mgl\sin\theta=0
+\end{array}
+\end{gather}
+Following the standard method of reduction, these equations are turned into:
+\begin{gather}
+    \dot{x}=v\\
+    \dot{\theta}=\omega\\
+         (M+m)\dot{v}-ml\cos\theta\dot{\omega}+ml\sin\theta\omega^2=F \\I\dot{\omega}-ml\cos\theta\dot{v}-mgl\sin\theta=0
+\end{gather}
+
+\section{Real Implementation}
+To begin the discussion of the real implementation of the inverted pendulum, we must discuss the hardware used, as that directly ties into how we build our state space model and what assumptions that we can use in the design.
+
+I should note that I am presenting this \textit{after} presenting the theory of the system, but in practice, these are often developed alongside each other. The hardware will dictate some facts about the control system, especially under certain budget, size, and power constraints.
+
+On the converse, simulation and theory will provide some other constraints for the system. In practice, there is no clear distinction between a `simulation' phase of the design and a `building' phase. It is often the case with control systems that they inform each other and are very tightly coupled. 
+
+\subsection{Physical Design}
+The physical design of the pendulum is quite important to understand which dynamical phenomena are important for our modeling. Additionally, the physical components will dictate features of the system observability and place limitations on the control scheme. A technical drawing of the pendulum is shown in \autoref{fig:pend schem}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Images/InvertedPendulumSchematic.pdf}
+    \caption{Inverted Pendulum Schematic}
+    \label{fig:pend schem}
+\end{figure}
+A breakdown of the components in the pendulum is done below, considering both the electronics and mechanical systems which will inform the control system design.
+
+\subsubsection{Mechanical Considerations}
+The mechanics of the inverted pendulum and cart are fairly simple. The main consideration is the selection of the length of the rails, and ensuring that the friction and mass of the cart are as low as possible. In this design, rails of the SBR16 specification were selected, although many other types of rail systems may be used. Some other types of linear rails and bearings may permit a lower mass cart, which is desirable.
+
+Another important criteria is the selection of the belt drive and pulley system, which will dictate the conversion between RPM and linear speed for the system. A larger diameter pulley will result in higher linear speeds for a given RPM, but will also require more torque. The belt drive system here uses a GT2 belt with 20 tooth pulleys. Other pulley diameters may be used if more precise control or higher speed output is desirable for the given application.
+
+\subsubsection{Rotary Encoder}
+In cross section A-A, the rotary encoder can be seen. The rotary encoder is one of the most important components in the design as the angle measurement of the arm is very important in understanding the dynamics of the system. The particular model used here can be found at \cite{noauthor_yuecoom_nodate}.
+
+This rotary encoder is a hall effect sensor, so it is contactless. The sensor has 12-bit precision and can measure angles to a precision of $0.088\degree$ as a result. This type of sensor has much less sensor noise than a common potentiometer and also produces less resistance to rotation. This reduction in drag helps the pendulum arm rotate more freely. For this project, I have mounted the pendulum arm directly onto the end of the sensor. However, for heavier loads, it may be wise to place the load on a bearing instead of the sensor itself.
+
+Another important feature of the rotary encoder is the sensor linearity. For this model, the sensor linearity is 0.3\% of the full scale, which means that the maximum deviation from the true output is less than 0.3\% of $360\degree$, or less than $1.08\degree$.
+
+\subsubsection{Arm}
+The design of the physical arm is also quite important to the development of a control model for the pendulum. For a pendulum undergoing small oscillations, the period is given by 
+$$T=2\pi\sqrt{\frac{l}{g}}$$
+From this relation, we can see that increasing the length will increase the period and make the system easier to control. Of course, this is quite different for the inverted case since the fixed point is unstable. However, this still gives a heuristic for how long the pendulum will take to fall.
+
+If we want to be more precise, we may take the linear equations of motion in \eqautoref{eq:linear pend} and assume that the acceleration $\ddot{x}$ is 0:
+$$I\ddot{\theta}=mgl\theta$$
+The exact moment of inertia of the system may change, but the moment of inertia must always have units of $ml^2$. If we let $I=Cml^2$, then:
+$$\ddot{\theta}=\frac{g}{Cl}\theta$$
+We can see that for small angles, the acceleration of the pendulum away from the equilibrium position is inversely related to the length of the pendulum and the moment of inertia, $C$. For this reason, it is quite easy to balance a broom vertically, but balancing a pencil is almost impossible!
+
+For our system then, we should choose values that make controlling the system possible without extraordinarily fast electronics or microcontrollers. At the same time, the arm should be easily carried around and not so large as to require a huge motor to move it. A length of around $0.5\ \mathrm{m}$ is a good compromise between the two. Assuming the arm has a moment of inertia that is the same as a thin rod, $\frac{1}{3}ml^2$, then the acceleration is around $6.3 \ \mathrm{rad/s^2}$ for an angle of  $5\degree$. After this point, nonlinear effects become quite prevalent and the analysis breaks down. Of course, smaller angles will exhibit rotational accelerations which are smaller in direct linear relation with the angle.
+
+For further investigation, we can consider the linear acceleration that would be required to restore $\ddot{\theta}$ to 0 as a first approximation of the required linear acceleration required of the system. This can be done using \eqautoref{eq:theta double dot pend} and plugging in $\ddot{\theta}$ as $6.3 \ \mathrm{rad/s}$ and $\theta$ as $5\degree$:
+$$\ddot{x}=l\ddot\theta-g\theta\approx1.72 \ \mathrm{m/s^2}$$
+We can think of these conditions as a worst possible case, where the cart needs to accelerate rapidly to compensate for a large angular error. Ideally, the control system will maintain an angle less that $5\degree$. In this case, the system needs to have the capability of acceleration up to $1.72 \ \mathrm{m/s^2}$.
+
+While this analysis is non-perfect, it is at least a good heuristic for selecting an appropriate arm length for the pendulum. For further analysis of non-linear dynamics, simulation is often a good idea. Computing the non-linear dynamics using MATLAB/Simulink and providing the control algorithm can give a good idea of the amount of acceleration, peak velocity, and torque the system will need. All of these will be crucial to the selection of motor for the project. The set up of such a simulation has been described in \autoref{sec:sim}.
+\subsection{Noise and Data Dropouts}
+Noisy data is quite common in real world sensors, especially those found in low cost electronics. This is especially prevalent when the derivative of a signal must be computed. One repercussion of computing the derivative of a signal is that high frequency components of the signal (where most of the noise resides) are amplified.\endnote{This can be seen by considering a signal that is decomposed into its Fourier series:
+$$f(t)=\sum_{k=-\infty}^{\infty}a_ke^{ik\omega_0t}$$
+Taking the time derivative of the signal yields:
+$$\frac{df(t)}{dt}=i\omega_0\sum_{k=-\infty}^{\infty}ka_ke^{ik\omega_0t}$$
+Application of Parseval's formula gives that:
+$$\frac{1}{\tau}\int_0^\tau\left|\frac{df(t)}{dt}\right|^2dt={\omega_0}^2\sum_{k=-\infty}^{\infty}|ka_k|^2$$
+Which makes it evident that the power in the higher frequencies of the signal has been amplified as compared to the original signal} 
+
+Another problem that occurs with real world signals is data dropouts. Dropouts can be quite common for some sensors, such as the encoders of DC motors. One way to deal with data dropouts is to include some logic that checks the difference in the signal output. If the difference is greater than some expected threshold, the data is disregarded. An example of such a code for implementation into MATLAB or Simulink is shown below:
+\begin{lstlisting}[style=Matlab-editor]
+function filtered = filterEncoder(currVal)
+
+persistent prevVal
+
+% Initialize on first call
+if isempty(prevVal)
+    prevVal = currVal;
+end
+
+% Dropout detection
+threshold = 200;  % Adjust based on your system
+
+if abs(currVal - prevVal) > threshold
+    % Bad reading: keep previous good value
+    filtered = prevVal;
+else
+    % Good reading: update and pass through
+    filtered = currVal;
+    prevVal = currVal;
+end
+\end{lstlisting}
+
+A "persistent" variable is one which maintains its value across multiple function calls. Depending on the type of dropouts, more advanced approaches may need to be taken.
+
+Dealing with noise is often done through the application of a low-pass filter or a moving average filter. These filters induce some delay in the signal, but signal delay is often preferable to noisy data. Either of these filters can be added in Simulink.
+
 \newpage
 \printendnotes
 
@@ -2516,5 +2668,16 @@ Aerospace systems use controls in many applications. Often, aerospace control sy
 
 \chapter{Trajectory Optimization}
 
+
 \chapter{Flight Dynamics and Control}
 To bring everything in this series full circle at last, let us end by discussing the control methods that are used in flight dynamics and control systems.
+
+General gyroscope error compensation:
+$${\tilde\omega_x}=(1+S_x)\omega_x+M_y\omega_y+M_z\omega_z+B_f+B_{gx}a_x++B_{gz}a_z+B_{axz}a_ya_z+\mathcal{N}(0,\sigma_x)$$
+The term $B$ represents the bias terms with the subscripts denoting the sensitivity of the gyroscope due to accelerations. $S$ is the scale factor and $M$ are general parameters which model effects from orthogonal axes coupling. $\mathcal{N}$ represents a normally distributed variable of zero mean and with a standard deviation of $\sigma$.
+
+It is typical to ignore acceleration sensitivities in simplified models, which gives:
+$${\tilde\omega_x}=(1+S_x)\omega_x+M_y\omega_y+M_z\omega_z+B_f+\mathcal{N}(0,\sigma_x)$$
+Acceleration can be compensated in much the same way, giving:
+$${\tilde a_x}=(1+S_x)a_x+M_ya_y+M_za_z+B_f+\mathcal{N}(0,\sigma_x)$$
+These terms are often applied in the body frame of the accelerometer, and values of their estimate may require conversion from an inertial frame.
