@@ -1173,7 +1173,7 @@ Although we have discussed continuous symmetries quite a bit in our discussion o
 
 Before we get started, we should concretely define the terminology of the theorem. What exactly do we mean by a conserved quantity?
 
-A conserved quantity is simply one that does not change over time. When we say that energy is conserved, we mean that the energy of the system will be exactly the same if observed at $t=0\ \mathrm{s}$ or $t=100\ \mathrm{s}$. If we call our quantity of interest $X$, we can of course express this as:
+A conserved quantity is simply one that does not change over time. When we say that energy is conserved, we mean that the energy of the system will be exactly the same if observed at $t=0\ \mathrm{s}$ or $t=100\ \mathrm{s}$. If we call our quantity of interest $X$, we can express this as:
 $$\frac{dX}{dt}=0$$
 
 \subsection{Symmetries in Physics}
@@ -1254,7 +1254,10 @@ Because the \gls{Hamiltonian} equations are first order already, they are ready 
 
 A similar operation can be done to reduce the \gls{Lagrangian} to two first order equations, in a system known as a variational integrator.
 
-MATLAB has no built in functions for variational or \glspl{symplectic int}, so to implement them we need to discuss their properties in full. Our discussion will build off the mathematical discussion of the \gls{lie group}, so a thorough reading of \autoref{chap:lie theory} is recommended. We will use properties of the $SL(n)$ group as well as some new features.
+MATLAB has no built in functions for variational or \glspl{symplectic int}, so to implement them we need to discuss their properties in full. 
+
+\section{The Mathematical Background}
+Our discussion will build off the mathematical discussion of the \gls{lie group}, so a thorough reading of \autoref{chap:lie theory} is recommended. We will use properties of the $SL(n)$ group as well as some new features.
 
 We will construct a group called the \textit{Symplectic Linear Group} to do this. We define the group as follows:
 \begin{gather}
@@ -1266,6 +1269,9 @@ We will construct a group called the \textit{Symplectic Linear Group} to do this
 We can deconstruct the meaning of the line to be: The symplectic linear group is a group, such that set $\psi$, which is a subset of the general linear group $GL(2n,\mathbb{R})$, satisfies the property that $\psi^T\Omega\psi=\Omega$.
 
 Moreover, $Sp(2n)$ is a \gls{lie group}!
+
+
+\section{Implementation}
 
 
 \subsubsection{Use Case of Symplectic Integrators}
