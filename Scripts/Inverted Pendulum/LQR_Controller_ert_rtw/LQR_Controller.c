@@ -7,9 +7,9 @@
  *
  * Code generation for model "LQR_Controller".
  *
- * Model version              : 1.23
+ * Model version              : 1.58
  * Simulink Coder version : 25.1 (R2025a) 21-Nov-2024
- * C source code generated on : Tue Aug  5 21:08:16 2025
+ * C source code generated on : Sun Aug 24 15:48:43 2025
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -19,11 +19,11 @@
  */
 
 #include "LQR_Controller.h"
-#include "rtwtypes.h"
 #include "LQR_Controller_types.h"
-#include "LQR_Controller_private.h"
-#include <math.h>
+#include "rtwtypes.h"
 #include <string.h>
+#include <math.h>
+#include "LQR_Controller_private.h"
 #include "rt_nonfinite.h"
 
 /* Block signals (default storage) */
@@ -38,8 +38,6 @@ RT_MODEL_LQR_Controller_T *const LQR_Controller_M = &LQR_Controller_M_;
 
 /* Forward declaration for local functions */
 static void LQR_Controller_SystemCore_setup(dsp_simulink_MovingAverage_LQ_T *obj);
-
-/* Forward declaration for local functions */
 static void LQR_Controll_SystemCore_setup_p(dsp_simulink_MovingAverage_p_T *obj);
 static void rate_monotonic_scheduler(void);
 
@@ -53,6 +51,7 @@ void LQR_Controller_SetEventsForThisBaseStep(boolean_T *eventFlags)
 {
   /* Task runs when its counter is zero, computed via rtmStepTask macro */
   eventFlags[1] = ((boolean_T)rtmStepTask(LQR_Controller_M, 1));
+  eventFlags[2] = ((boolean_T)rtmStepTask(LQR_Controller_M, 2));
 }
 
 /*
@@ -72,17 +71,24 @@ static void rate_monotonic_scheduler(void)
    * will run, and false otherwise.
    */
 
-  /* tid 0 shares data with slower tid rate: 1 */
-  LQR_Controller_M->Timing.RateInteraction.TID0_1 =
-    (LQR_Controller_M->Timing.TaskCounters.TID[1] == 0);
+  /* tid 1 shares data with slower tid rate: 2 */
+  if (LQR_Controller_M->Timing.TaskCounters.TID[1] == 0) {
+    LQR_Controller_M->Timing.RateInteraction.TID1_2 =
+      (LQR_Controller_M->Timing.TaskCounters.TID[2] == 0);
+  }
 
   /* Compute which subrates run during the next base time step.  Subrates
    * are an integer multiple of the base rate counter.  Therefore, the subtask
    * counter is reset when it reaches its limit (zero means run).
    */
   (LQR_Controller_M->Timing.TaskCounters.TID[1])++;
-  if ((LQR_Controller_M->Timing.TaskCounters.TID[1]) > 1) {/* Sample time: [0.014s, 0.0s] */
+  if ((LQR_Controller_M->Timing.TaskCounters.TID[1]) > 1) {/* Sample time: [0.007s, 0.0s] */
     LQR_Controller_M->Timing.TaskCounters.TID[1] = 0;
+  }
+
+  (LQR_Controller_M->Timing.TaskCounters.TID[2])++;
+  if ((LQR_Controller_M->Timing.TaskCounters.TID[2]) > 3) {/* Sample time: [0.014s, 0.0s] */
+    LQR_Controller_M->Timing.TaskCounters.TID[2] = 0;
   }
 }
 
@@ -90,116 +96,28 @@ static void LQR_Controller_SystemCore_setup(dsp_simulink_MovingAverage_LQ_T *obj
 {
   obj->isInitialized = 1L;
 
-  /* Start for MATLABSystem: '<S9>/Moving Average' */
+  /* Start for MATLABSystem: '<S1>/Moving Average' */
   obj->NumChannels = 1L;
   obj->FrameLength = 1L;
   obj->pCumSum = 0.0;
-  obj->pCumSumRev[0] = 0.0;
-  obj->pCumSumRev[1] = 0.0;
-  obj->pCumSumRev[2] = 0.0;
+  memset(&obj->pCumSumRev[0], 0, 11U * sizeof(real_T));
   obj->pCumRevIndex = 1.0;
   obj->pModValueRev = 0.0;
   obj->isSetupComplete = true;
   obj->TunablePropsChanged = false;
 }
 
-/* System initialize for atomic system: */
-void LQR_Cont_MovingAverage_Init(DW_MovingAverage_LQR_Controll_T *localDW)
-{
-  /* InitializeConditions for MATLABSystem: '<S9>/Moving Average' */
-  localDW->obj.pCumSum = 0.0;
-  localDW->obj.pCumSumRev[0] = 0.0;
-  localDW->obj.pCumSumRev[1] = 0.0;
-  localDW->obj.pCumSumRev[2] = 0.0;
-  localDW->obj.pCumRevIndex = 1.0;
-  localDW->obj.pModValueRev = 0.0;
-}
-
-/* Start for atomic system: */
-void LQR_Con_MovingAverage_Start(DW_MovingAverage_LQR_Controll_T *localDW)
-{
-  /* Start for MATLABSystem: '<S9>/Moving Average' */
-  localDW->obj.isInitialized = 0L;
-  localDW->obj.NumChannels = -1L;
-  localDW->obj.FrameLength = -1L;
-  localDW->obj.matlabCodegenIsDeleted = false;
-  localDW->objisempty = true;
-  LQR_Controller_SystemCore_setup(&localDW->obj);
-}
-
-/* Output and update for atomic system: */
-void LQR_Controlle_MovingAverage(real_T rtu_0, B_MovingAverage_LQR_Controlle_T
-  *localB, DW_MovingAverage_LQR_Controll_T *localDW)
-{
-  real_T csum;
-  real_T cumRevIndex;
-  real_T z;
-
-  /* MATLABSystem: '<S9>/Moving Average' */
-  if (localDW->obj.TunablePropsChanged) {
-    localDW->obj.TunablePropsChanged = false;
-  }
-
-  z = 0.0;
-
-  /* MATLABSystem: '<S9>/Moving Average' */
-  localB->MovingAverage = 0.0;
-
-  /* MATLABSystem: '<S9>/Moving Average' */
-  csum = localDW->obj.pCumSum + rtu_0;
-  if (localDW->obj.pModValueRev == 0.0) {
-    z = localDW->obj.pCumSumRev[(int16_T)localDW->obj.pCumRevIndex - 1] + csum;
-  }
-
-  localDW->obj.pCumSumRev[(int16_T)localDW->obj.pCumRevIndex - 1] = rtu_0;
-  if (localDW->obj.pCumRevIndex != 3.0) {
-    cumRevIndex = localDW->obj.pCumRevIndex + 1.0;
-  } else {
-    cumRevIndex = 1.0;
-    csum = 0.0;
-    localDW->obj.pCumSumRev[1] += localDW->obj.pCumSumRev[2];
-    localDW->obj.pCumSumRev[0] += localDW->obj.pCumSumRev[1];
-  }
-
-  if (localDW->obj.pModValueRev == 0.0) {
-    /* MATLABSystem: '<S9>/Moving Average' */
-    localB->MovingAverage = z / 4.0;
-  }
-
-  localDW->obj.pCumSum = csum;
-  localDW->obj.pCumRevIndex = cumRevIndex;
-  if (localDW->obj.pModValueRev > 0.0) {
-    localDW->obj.pModValueRev--;
-  } else {
-    localDW->obj.pModValueRev = 0.0;
-  }
-}
-
-/* Termination for atomic system: */
-void LQR_Cont_MovingAverage_Term(DW_MovingAverage_LQR_Controll_T *localDW)
-{
-  /* Terminate for MATLABSystem: '<S9>/Moving Average' */
-  if (!localDW->obj.matlabCodegenIsDeleted) {
-    localDW->obj.matlabCodegenIsDeleted = true;
-    if ((localDW->obj.isInitialized == 1L) && localDW->obj.isSetupComplete) {
-      localDW->obj.NumChannels = -1L;
-      localDW->obj.FrameLength = -1L;
-    }
-  }
-
-  /* End of Terminate for MATLABSystem: '<S9>/Moving Average' */
-}
-
 static void LQR_Controll_SystemCore_setup_p(dsp_simulink_MovingAverage_p_T *obj)
 {
   obj->isInitialized = 1L;
 
-  /* Start for MATLABSystem: '<S1>/Moving Average' */
+  /* Start for MATLABSystem: '<S13>/Moving Average' */
   obj->NumChannels = 1L;
   obj->FrameLength = 1L;
   obj->pCumSum = 0.0;
   obj->pCumSumRev[0] = 0.0;
   obj->pCumSumRev[1] = 0.0;
+  obj->pCumSumRev[2] = 0.0;
   obj->pCumRevIndex = 1.0;
   obj->pModValueRev = 0.0;
   obj->isSetupComplete = true;
@@ -225,65 +143,106 @@ real_T rt_roundd_snf(real_T u)
 }
 
 /* Model step function for TID0 */
-void LQR_Controller_step0(void)        /* Sample time: [0.007s, 0.0s] */
+void LQR_Controller_step0(void)        /* Sample time: [0.0035s, 0.0s] */
 {
-  real_T Diff;
-  real_T rtb_PendulumAngle;
-  real_T rtb_TSamp;
-  real_T z;
-  int16_T cumRevIndex;
-  uint16_T b_varargout_1;
-  uint8_T tmp_0;
-  boolean_T tmp;
-
-  {                                    /* Sample time: [0.007s, 0.0s] */
+  {                                    /* Sample time: [0.0035s, 0.0s] */
     rate_monotonic_scheduler();
   }
+}
 
-  /* RateTransition generated from: '<Root>/State Vector' incorporates:
+/* Model step function for TID1 */
+void LQR_Controller_step1(void)        /* Sample time: [0.007s, 0.0s] */
+{
+  real_T Diff;
+  real_T csum;
+  real_T rtb_theta_cal;
+  real_T z;
+  uint32_T rtb_PendulumAngle;
+  int16_T rtb_mode;
+  uint16_T b_varargout_1;
+  uint8_T tmp_0;
+  boolean_T guard1;
+  boolean_T rtb_cal;
+  boolean_T tmp;
+
+  /* RateTransition: '<Root>/RT' incorporates:
    *  Concatenate: '<Root>/State Vector'
-   *  RateTransition generated from: '<S3>/Add2'
+   *  RateTransition generated from: '<S4>/Add2'
    */
-  tmp = LQR_Controller_M->Timing.RateInteraction.TID0_1;
+  tmp = LQR_Controller_M->Timing.RateInteraction.TID1_2;
   if (tmp) {
-    LQR_Controller_B.StateVector[0] =
-      LQR_Controller_DW.TmpRTBAtStateVectorInport1_Buff;
+    LQR_Controller_B.StateVector[0] = LQR_Controller_DW.RT_Buffer0;
 
-    /* RateTransition generated from: '<Root>/State Vector' incorporates:
+    /* RateTransition: '<Root>/RT1' incorporates:
      *  Concatenate: '<Root>/State Vector'
      */
-    LQR_Controller_B.StateVector[1] =
-      LQR_Controller_DW.TmpRTBAtStateVectorInport2_Buff;
+    LQR_Controller_B.StateVector[1] = LQR_Controller_DW.RT1_Buffer0;
   }
 
-  /* End of RateTransition generated from: '<Root>/State Vector' */
+  /* End of RateTransition: '<Root>/RT' */
 
-  /* MATLABSystem: '<S1>/Analog Input' */
-  LQR_Controller_DW.obj_h.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
+  /* MATLABSystem: '<S1>/Analog Input1' */
+  LQR_Controller_DW.obj_g.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
     MW_AnalogIn_GetHandle(14UL);
   MW_AnalogInSingle_ReadResult
-    (LQR_Controller_DW.obj_h.AnalogInDriverObj.MW_ANALOGIN_HANDLE,
+    (LQR_Controller_DW.obj_g.AnalogInDriverObj.MW_ANALOGIN_HANDLE,
      &b_varargout_1, MW_ANALOGIN_UINT16);
 
-  /* Sum: '<S1>/Add' incorporates:
-   *  Constant: '<S1>/Constant'
-   *  Gain: '<S1>/Volt2Rad'
-   *  MATLABSystem: '<S1>/Analog Input'
+  /* Gain: '<S1>/Volt2Rad1' incorporates:
+   *  MATLABSystem: '<S1>/Analog Input1'
    * */
-  rtb_PendulumAngle = (real_T)((uint32_T)LQR_Controller_P.Volt2Rad_Gain *
-    b_varargout_1) * 1.1920928955078125E-7 + LQR_Controller_P.Constant_Value;
+  rtb_PendulumAngle = (uint32_T)LQR_Controller_P.Volt2Rad1_Gain * b_varargout_1;
 
-  /* SampleTimeMath: '<S7>/TSamp'
+  /* MATLAB Function: '<S1>/MATLAB Function1' incorporates:
+   *  DataTypeConversion: '<S1>/Cast To Double'
+   *  Gain: '<S1>/Volt2Rad1'
+   */
+  guard1 = false;
+  if (!LQR_Controller_DW.calibrated) {
+    LQR_Controller_DW.sample_count++;
+
+    /* DataTypeConversion: '<S1>/Cast To Double' incorporates:
+     *  Gain: '<S1>/Volt2Rad1'
+     */
+    rtb_theta_cal = (real_T)rtb_PendulumAngle * 1.1920928955078125E-7;
+    LQR_Controller_DW.theta_sum += rtb_theta_cal;
+    if (LQR_Controller_DW.sample_count >= LQR_Controller_DW.N) {
+      LQR_Controller_DW.theta0 = LQR_Controller_DW.theta_sum /
+        LQR_Controller_DW.N;
+      LQR_Controller_DW.calibrated = true;
+      guard1 = true;
+    } else {
+      rtb_theta_cal += 1.5707963267948966;
+      rtb_cal = false;
+    }
+  } else {
+    guard1 = true;
+  }
+
+  if (guard1) {
+    rtb_theta_cal = ((real_T)rtb_PendulumAngle * 1.1920928955078125E-7 -
+                     LQR_Controller_DW.theta0) + 6.2831853071795862;
+    rtb_cal = true;
+  }
+
+  /* End of MATLAB Function: '<S1>/MATLAB Function1' */
+
+  /* SignalConversion generated from: '<Root>/State Vector' incorporates:
+   *  Concatenate: '<Root>/State Vector'
+   */
+  LQR_Controller_B.StateVector[2] = rtb_theta_cal;
+
+  /* SampleTimeMath: '<S6>/TSamp'
    *
-   * About '<S7>/TSamp':
+   * About '<S6>/TSamp':
    *  y = u * K where K = 1 / ( w * Ts )
    *   */
-  rtb_TSamp = rtb_PendulumAngle * LQR_Controller_P.TSamp_WtEt;
+  rtb_theta_cal *= LQR_Controller_P.TSamp_WtEt;
 
-  /* Sum: '<S7>/Diff' incorporates:
-   *  UnitDelay: '<S7>/UD'
+  /* Sum: '<S6>/Diff' incorporates:
+   *  UnitDelay: '<S6>/UD'
    */
-  Diff = rtb_TSamp - LQR_Controller_DW.UD_DSTATE;
+  Diff = rtb_theta_cal - LQR_Controller_DW.UD_DSTATE;
 
   /* MATLABSystem: '<S1>/Moving Average' */
   if (LQR_Controller_DW.obj.TunablePropsChanged) {
@@ -291,190 +250,187 @@ void LQR_Controller_step0(void)        /* Sample time: [0.007s, 0.0s] */
   }
 
   z = 0.0;
-  LQR_Controller_B.MovingAverage = 0.0;
-  LQR_Controller_B.csum = LQR_Controller_DW.obj.pCumSum + Diff;
+
+  /* Concatenate: '<Root>/State Vector' incorporates:
+   *  MATLABSystem: '<S1>/Moving Average'
+   *  SignalConversion generated from: '<S1>/Moving Average'
+   */
+  LQR_Controller_B.StateVector[3] = 0.0;
+
+  /* MATLABSystem: '<S1>/Moving Average' */
+  csum = LQR_Controller_DW.obj.pCumSum + Diff;
   if (LQR_Controller_DW.obj.pModValueRev == 0.0) {
     z = LQR_Controller_DW.obj.pCumSumRev[(int16_T)
-      LQR_Controller_DW.obj.pCumRevIndex - 1] + LQR_Controller_B.csum;
+      LQR_Controller_DW.obj.pCumRevIndex - 1] + csum;
   }
 
   LQR_Controller_DW.obj.pCumSumRev[(int16_T)LQR_Controller_DW.obj.pCumRevIndex -
     1] = Diff;
-  if (LQR_Controller_DW.obj.pCumRevIndex != 2.0) {
-    cumRevIndex = 2;
+  if (LQR_Controller_DW.obj.pCumRevIndex != 11.0) {
+    Diff = LQR_Controller_DW.obj.pCumRevIndex + 1.0;
   } else {
-    cumRevIndex = 1;
-    LQR_Controller_B.csum = 0.0;
-    LQR_Controller_DW.obj.pCumSumRev[0] += LQR_Controller_DW.obj.pCumSumRev[1];
+    Diff = 1.0;
+    csum = 0.0;
+    for (rtb_mode = 9; rtb_mode >= 0; rtb_mode--) {
+      LQR_Controller_DW.obj.pCumSumRev[rtb_mode] +=
+        LQR_Controller_DW.obj.pCumSumRev[rtb_mode + 1];
+    }
   }
 
   if (LQR_Controller_DW.obj.pModValueRev == 0.0) {
-    LQR_Controller_B.MovingAverage = z / 3.0;
+    /* Concatenate: '<Root>/State Vector' incorporates:
+     *  SignalConversion generated from: '<S1>/Moving Average'
+     */
+    LQR_Controller_B.StateVector[3] = z / 12.0;
   }
 
-  LQR_Controller_DW.obj.pCumSum = LQR_Controller_B.csum;
-  LQR_Controller_DW.obj.pCumRevIndex = cumRevIndex;
+  LQR_Controller_DW.obj.pCumSum = csum;
+  LQR_Controller_DW.obj.pCumRevIndex = Diff;
   if (LQR_Controller_DW.obj.pModValueRev > 0.0) {
     LQR_Controller_DW.obj.pModValueRev--;
   } else {
     LQR_Controller_DW.obj.pModValueRev = 0.0;
   }
 
-  /* RateTransition generated from: '<S3>/Add2' */
+  /* Constant: '<Root>/Constant4' */
+  LQR_Controller_B.SetPoint[0] = LQR_Controller_P.Constant4_Value;
+
+  /* Constant: '<Root>/Constant5' */
+  LQR_Controller_B.SetPoint[1] = LQR_Controller_P.Constant5_Value;
+
+  /* Constant: '<Root>/Constant3' */
+  LQR_Controller_B.SetPoint[2] = LQR_Controller_P.Constant3_Value;
+
+  /* Constant: '<Root>/Constant6' */
+  LQR_Controller_B.SetPoint[3] = LQR_Controller_P.Constant6_Value;
+
+  /* Sum: '<Root>/Sum' */
+  LQR_Controller_B.SetPoint[0] = LQR_Controller_B.StateVector[0] -
+    LQR_Controller_B.SetPoint[0];
+  LQR_Controller_B.SetPoint[1] = LQR_Controller_B.StateVector[1] -
+    LQR_Controller_B.SetPoint[1];
+  LQR_Controller_B.SetPoint[2] = LQR_Controller_B.StateVector[2] -
+    LQR_Controller_B.SetPoint[2];
+  LQR_Controller_B.SetPoint[3] = LQR_Controller_B.StateVector[3] -
+    LQR_Controller_B.SetPoint[3];
+
+  /* MATLAB Function: '<S2>/MATLAB Function' */
+  if (rtb_cal) {
+    if ((fabs(LQR_Controller_B.StateVector[2] - 3.1415926535897931) < 0.15) &&
+        (fabs(LQR_Controller_B.StateVector[3]) < 1.5)) {
+      rtb_mode = 1;
+    } else {
+      rtb_mode = 2;
+    }
+  } else {
+    rtb_mode = 3;
+  }
+
+  /* End of MATLAB Function: '<S2>/MATLAB Function' */
+
+  /* RateTransition generated from: '<S4>/Add2' */
   if (tmp) {
-    /* RateTransition generated from: '<S3>/Add2' */
+    /* RateTransition generated from: '<S4>/Add2' */
     LQR_Controller_B.TmpRTBAtAdd2Inport1 =
       LQR_Controller_DW.TmpRTBAtAdd2Inport1_Buffer0;
   }
 
-  /* Switch: '<Root>/Switch' incorporates:
-   *  Abs: '<Root>/Abs'
-   *  Constant: '<Root>/Constant1'
-   *  Constant: '<Root>/Constant3'
-   *  Constant: '<Root>/Constant4'
-   *  Constant: '<Root>/Constant5'
-   *  Constant: '<Root>/Constant6'
-   *  Constant: '<Root>/Pi'
-   *  Gain: '<Root>/Gain2'
-   *  Gain: '<Root>/LQR Gains'
-   *  Gain: '<S3>/Gain2'
-   *  Gain: '<S3>/Gain4'
-   *  Sum: '<Root>/Add'
-   *  Sum: '<Root>/Sum'
-   *  Sum: '<S3>/Add2'
-   */
-  if (fabs(rtb_PendulumAngle - LQR_Controller_P.Pi_Value) >
-      LQR_Controller_P.Switch_Threshold) {
-    rtb_PendulumAngle = LQR_Controller_P.Constant1_Value;
-  } else {
-    /* SignalConversion generated from: '<S1>/Moving Average' incorporates:
-     *  Concatenate: '<Root>/State Vector'
-     *  MATLABSystem: '<S1>/Moving Average'
+  /* SwitchCase: '<S2>/Switch Case' */
+  switch ((int32_T)rtb_mode) {
+   case 1L:
+    /* Outputs for IfAction SubSystem: '<S2>/LQR' incorporates:
+     *  ActionPort: '<S8>/Action Port'
      */
-    LQR_Controller_B.StateVector[3] = LQR_Controller_B.MovingAverage;
+    /* SignalConversion generated from: '<S8>/voltage' incorporates:
+     *  Gain: '<Root>/Gain2'
+     *  Gain: '<Root>/LQR Gains'
+     *  Gain: '<S4>/Gain2'
+     *  Gain: '<S4>/Gain4'
+     *  Sum: '<S4>/Add2'
+     */
+    z = ((((LQR_Controller_P.K[0] * LQR_Controller_B.SetPoint[0] +
+            LQR_Controller_P.K[1] * LQR_Controller_B.SetPoint[1]) +
+           LQR_Controller_P.K[2] * LQR_Controller_B.SetPoint[2]) +
+          LQR_Controller_P.K[3] * LQR_Controller_B.SetPoint[3]) *
+         LQR_Controller_P.Gain2_Gain * (LQR_Controller_P.R_motor *
+          LQR_Controller_P.r / LQR_Controller_P.k_motor) +
+         LQR_Controller_B.TmpRTBAtAdd2Inport1) * LQR_Controller_P.Gain4_Gain;
 
-    /* SignalConversion generated from: '<Root>/State Vector' incorporates:
-     *  Concatenate: '<Root>/State Vector'
+    /* End of Outputs for SubSystem: '<S2>/LQR' */
+    break;
+
+   case 2L:
+    /* Outputs for IfAction SubSystem: '<S2>/Swing Up' incorporates:
+     *  ActionPort: '<S10>/Action Port'
      */
-    LQR_Controller_B.StateVector[2] = rtb_PendulumAngle;
-    rtb_PendulumAngle = (((((LQR_Controller_B.StateVector[0] -
-      LQR_Controller_P.Constant4_Value) * LQR_Controller_P.K[0] +
-      (LQR_Controller_B.StateVector[1] - LQR_Controller_P.Constant5_Value) *
-      LQR_Controller_P.K[1]) + (LQR_Controller_B.StateVector[2] -
-      LQR_Controller_P.Constant3_Value) * LQR_Controller_P.K[2]) +
-                          (LQR_Controller_B.StateVector[3] -
-      LQR_Controller_P.Constant6_Value) * LQR_Controller_P.K[3]) *
-                         LQR_Controller_P.Gain2_Gain * (LQR_Controller_P.R_motor
-      * LQR_Controller_P.r / LQR_Controller_P.k_motor) +
-                         LQR_Controller_B.TmpRTBAtAdd2Inport1) *
-      LQR_Controller_P.Gain4_Gain;
+    /* MATLAB Function: '<S10>/MATLAB Function1' */
+    LQR_Controller_DW.thetaMax_not_empty = true;
+
+    /* SignalConversion generated from: '<S10>/Out1' incorporates:
+     *  MATLAB Function: '<S10>/MATLAB Function1'
+     */
+    z = 0.0;
+
+    /* End of Outputs for SubSystem: '<S2>/Swing Up' */
+    break;
+
+   default:
+    /* Outputs for IfAction SubSystem: '<S2>/Uncalibrated' incorporates:
+     *  ActionPort: '<S11>/Action Port'
+     */
+    /* SignalConversion generated from: '<S11>/In1' incorporates:
+     *  Constant: '<S2>/Constant1'
+     */
+    z = LQR_Controller_P.Constant1_Value;
+
+    /* End of Outputs for SubSystem: '<S2>/Uncalibrated' */
+    break;
   }
 
-  /* End of Switch: '<Root>/Switch' */
-  /* MATLAB Function: '<S2>/Select PWM Direction' */
-  if (rtb_PendulumAngle > 0.0) {
-    Diff = 0.0;
+  /* End of SwitchCase: '<S2>/Switch Case' */
+
+  /* Gain: '<S3>/Gain' */
+  z *= LQR_Controller_P.Gain_Gain;
+
+  /* MATLAB Function: '<S3>/Select PWM Direction' */
+  if (z > 0.0) {
+    csum = 0.0;
   } else {
-    Diff = -rtb_PendulumAngle;
-    rtb_PendulumAngle = 0.0;
+    csum = -z;
+    z = 0.0;
   }
 
-  /* End of MATLAB Function: '<S2>/Select PWM Direction' */
+  /* End of MATLAB Function: '<S3>/Select PWM Direction' */
 
-  /* MATLABSystem: '<S2>/PWM' */
+  /* MATLABSystem: '<S3>/PWM' */
   LQR_Controller_DW.obj_d.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(5UL);
 
-  /* Start for MATLABSystem: '<S2>/PWM' */
-  if (!(rtb_PendulumAngle <= 255.0)) {
-    rtb_PendulumAngle = 255.0;
+  /* Start for MATLABSystem: '<S3>/PWM' */
+  if (!(z <= 255.0)) {
+    z = 255.0;
   }
 
-  /* MATLABSystem: '<S2>/PWM' */
-  MW_PWM_SetDutyCycle(LQR_Controller_DW.obj_d.PWMDriverObj.MW_PWM_HANDLE,
-                      rtb_PendulumAngle);
+  /* MATLABSystem: '<S3>/PWM' */
+  MW_PWM_SetDutyCycle(LQR_Controller_DW.obj_d.PWMDriverObj.MW_PWM_HANDLE, z);
 
-  /* MATLABSystem: '<S2>/PWM1' */
+  /* MATLABSystem: '<S3>/PWM1' */
   LQR_Controller_DW.obj_e.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(6UL);
 
-  /* Start for MATLABSystem: '<S2>/PWM1' */
-  if (!(Diff <= 255.0)) {
-    Diff = 255.0;
+  /* Start for MATLABSystem: '<S3>/PWM1' */
+  if (!(csum <= 255.0)) {
+    csum = 255.0;
   }
 
-  /* MATLABSystem: '<S2>/PWM1' */
-  MW_PWM_SetDutyCycle(LQR_Controller_DW.obj_e.PWMDriverObj.MW_PWM_HANDLE, Diff);
-
-  /* MATLABSystem: '<S6>/Analog Input' */
-  LQR_Controller_DW.obj_l.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
-    MW_AnalogIn_GetHandle(15UL);
-  MW_AnalogInSingle_ReadResult
-    (LQR_Controller_DW.obj_l.AnalogInDriverObj.MW_ANALOGIN_HANDLE,
-     &b_varargout_1, MW_ANALOGIN_UINT16);
-
-  /* Sum: '<S6>/Bias' incorporates:
-   *  Constant: '<S6>/Constant2'
-   *  MATLABSystem: '<S6>/Analog Input'
-   * */
-  Diff = (real_T)b_varargout_1 - LQR_Controller_P.Constant2_Value;
-
-  /* DeadZone: '<S6>/Dead Zone1' */
-  if (Diff > LQR_Controller_P.DeadZone1_End) {
-    rtb_PendulumAngle = Diff - LQR_Controller_P.DeadZone1_End;
-  } else if (Diff >= LQR_Controller_P.DeadZone1_Start) {
-    rtb_PendulumAngle = 0.0;
-  } else {
-    rtb_PendulumAngle = Diff - LQR_Controller_P.DeadZone1_Start;
-  }
-
-  /* End of DeadZone: '<S6>/Dead Zone1' */
-
-  /* MATLABSystem: '<S6>/Analog Input1' */
-  LQR_Controller_DW.obj_a.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
-    MW_AnalogIn_GetHandle(16UL);
-  MW_AnalogInSingle_ReadResult
-    (LQR_Controller_DW.obj_a.AnalogInDriverObj.MW_ANALOGIN_HANDLE,
-     &b_varargout_1, MW_ANALOGIN_UINT16);
-
-  /* Sum: '<S6>/Bias1' incorporates:
-   *  Constant: '<S6>/Constant1'
-   *  MATLABSystem: '<S6>/Analog Input1'
-   * */
-  Diff = (real_T)b_varargout_1 - LQR_Controller_P.Constant1_Value_n;
-
-  /* DeadZone: '<S6>/Dead Zone' */
-  if (Diff > LQR_Controller_P.DeadZone_End) {
-    Diff -= LQR_Controller_P.DeadZone_End;
-  } else if (Diff >= LQR_Controller_P.DeadZone_Start) {
-    Diff = 0.0;
-  } else {
-    Diff -= LQR_Controller_P.DeadZone_Start;
-  }
-
-  /* End of DeadZone: '<S6>/Dead Zone' */
-
-  /* MATLAB Function: '<S6>/MATLAB Function' */
-  if (rtb_PendulumAngle > 0.0) {
-    Diff = -rtb_PendulumAngle;
-  } else if (!(Diff > 0.0)) {
-    Diff = 0.0;
-  }
-
-  /* Gain: '<S6>/Voltage to Current' incorporates:
-   *  Gain: '<S6>/Analog to Voltage'
-   *  MATLAB Function: '<S6>/MATLAB Function'
-   */
-  LQR_Controller_B.VoltagetoCurrent = LQR_Controller_P.AnalogtoVoltage_Gain *
-    Diff * LQR_Controller_P.VoltagetoCurrent_Gain;
-  LQR_Controlle_MovingAverage(LQR_Controller_B.VoltagetoCurrent,
-    &LQR_Controller_B.MovingAverage_pn, &LQR_Controller_DW.MovingAverage_pn);
+  /* MATLABSystem: '<S3>/PWM1' */
+  MW_PWM_SetDutyCycle(LQR_Controller_DW.obj_e.PWMDriverObj.MW_PWM_HANDLE, csum);
 
   /* MATLABSystem: '<S5>/Digital Output1' incorporates:
    *  Constant: '<S5>/Constant2'
    */
-  rtb_PendulumAngle = rt_roundd_snf(LQR_Controller_P.Constant2_Value_i);
-  if (rtb_PendulumAngle < 256.0) {
-    if (rtb_PendulumAngle >= 0.0) {
-      tmp_0 = (uint8_T)rtb_PendulumAngle;
+  z = rt_roundd_snf(LQR_Controller_P.Constant2_Value);
+  if (z < 256.0) {
+    if (z >= 0.0) {
+      tmp_0 = (uint8_T)z;
     } else {
       tmp_0 = 0U;
     }
@@ -486,13 +442,10 @@ void LQR_Controller_step0(void)        /* Sample time: [0.007s, 0.0s] */
 
   /* End of MATLABSystem: '<S5>/Digital Output1' */
 
-  /* MATLABSystem: '<S5>/Digital Output2' incorporates:
-   *  Constant: '<S5>/Constant2'
-   */
-  rtb_PendulumAngle = rt_roundd_snf(LQR_Controller_P.Constant2_Value_i);
-  if (rtb_PendulumAngle < 256.0) {
-    if (rtb_PendulumAngle >= 0.0) {
-      tmp_0 = (uint8_T)rtb_PendulumAngle;
+  /* MATLABSystem: '<S5>/Digital Output2' */
+  if (z < 256.0) {
+    if (z >= 0.0) {
+      tmp_0 = (uint8_T)z;
     } else {
       tmp_0 = 0U;
     }
@@ -504,32 +457,30 @@ void LQR_Controller_step0(void)        /* Sample time: [0.007s, 0.0s] */
 
   /* End of MATLABSystem: '<S5>/Digital Output2' */
 
-  /* Update for UnitDelay: '<S7>/UD' */
-  LQR_Controller_DW.UD_DSTATE = rtb_TSamp;
+  /* Update for UnitDelay: '<S6>/UD' */
+  LQR_Controller_DW.UD_DSTATE = rtb_theta_cal;
 }
 
-/* Model step function for TID1 */
-void LQR_Controller_step1(void)        /* Sample time: [0.014s, 0.0s] */
+/* Model step function for TID2 */
+void LQR_Controller_step2(void)        /* Sample time: [0.014s, 0.0s] */
 {
+  real_T csum;
+  real_T cumRevIndex;
   real_T rtb_Gain1;
-  real_T rtb_radstoms;
+  real_T z;
   int32_T qY;
   int32_T rtb_Encoder;
 
-  /* RateTransition generated from: '<Root>/State Vector' */
-  LQR_Controller_DW.TmpRTBAtStateVectorInport1_Buff =
-    LQR_Controller_DW.PositionIntegration_DSTATE;
-
-  /* MATLABSystem: '<S9>/Encoder' */
-  if (LQR_Controller_DW.obj_lf.TunablePropsChanged) {
-    LQR_Controller_DW.obj_lf.TunablePropsChanged = false;
+  /* MATLABSystem: '<S13>/Encoder' */
+  if (LQR_Controller_DW.obj_l.TunablePropsChanged) {
+    LQR_Controller_DW.obj_l.TunablePropsChanged = false;
   }
 
-  MW_EncoderRead(LQR_Controller_DW.obj_lf.Index, &rtb_Encoder);
-  MW_EncoderReset(LQR_Controller_DW.obj_lf.Index);
+  MW_EncoderRead(LQR_Controller_DW.obj_l.Index, &rtb_Encoder);
+  MW_EncoderReset(LQR_Controller_DW.obj_l.Index);
 
-  /* End of MATLABSystem: '<S9>/Encoder' */
-  /* MATLAB Function: '<S9>/Filter for data dropouts' */
+  /* End of MATLABSystem: '<S13>/Encoder' */
+  /* MATLAB Function: '<S13>/Filter for data dropouts' */
   if (!LQR_Controller_DW.prevVal_not_empty) {
     LQR_Controller_DW.prevVal = rtb_Encoder;
     LQR_Controller_DW.prevVal_not_empty = true;
@@ -573,45 +524,88 @@ void LQR_Controller_step1(void)        /* Sample time: [0.014s, 0.0s] */
     }
   }
 
-  /* End of MATLAB Function: '<S9>/Filter for data dropouts' */
+  /* End of MATLAB Function: '<S13>/Filter for data dropouts' */
 
-  /* DataTypeConversion: '<S9>/Data Type Conversion' incorporates:
-   *  Gain: '<S9>/Ticks to RPM'
-   */
-  LQR_Controller_B.DataTypeConversion = (real_T)((int64_T)
-    LQR_Controller_P.TickstoRPM_Gain * rtb_Encoder) * 1.862645149230957E-9;
-  LQR_Controlle_MovingAverage(LQR_Controller_B.DataTypeConversion,
-    &LQR_Controller_B.MovingAverage_p, &LQR_Controller_DW.MovingAverage_p);
+  /* MATLABSystem: '<S13>/Moving Average' */
+  if (LQR_Controller_DW.obj_m.TunablePropsChanged) {
+    LQR_Controller_DW.obj_m.TunablePropsChanged = false;
+  }
 
-  /* Gain: '<S2>/rad//s to m//s' incorporates:
-   *  Gain: '<S2>/RPM to rad//s'
+  z = 0.0;
+  rtb_Gain1 = 0.0;
+
+  /* DataTypeConversion: '<S13>/Data Type Conversion' incorporates:
+   *  Gain: '<S13>/Ticks to RPM'
    */
-  rtb_radstoms = LQR_Controller_P.RPMtorads_Gain *
-    LQR_Controller_B.MovingAverage_p.MovingAverage *
+  cumRevIndex = (real_T)((int64_T)LQR_Controller_P.TickstoRPM_Gain * rtb_Encoder)
+    * 7.4505805969238281E-9;
+
+  /* MATLABSystem: '<S13>/Moving Average' incorporates:
+   *  DataTypeConversion: '<S13>/Data Type Conversion'
+   */
+  csum = cumRevIndex + LQR_Controller_DW.obj_m.pCumSum;
+  if (LQR_Controller_DW.obj_m.pModValueRev == 0.0) {
+    z = LQR_Controller_DW.obj_m.pCumSumRev[(int16_T)
+      LQR_Controller_DW.obj_m.pCumRevIndex - 1] + csum;
+  }
+
+  LQR_Controller_DW.obj_m.pCumSumRev[(int16_T)
+    LQR_Controller_DW.obj_m.pCumRevIndex - 1] = cumRevIndex;
+  if (LQR_Controller_DW.obj_m.pCumRevIndex != 3.0) {
+    cumRevIndex = LQR_Controller_DW.obj_m.pCumRevIndex + 1.0;
+  } else {
+    cumRevIndex = 1.0;
+    csum = 0.0;
+    LQR_Controller_DW.obj_m.pCumSumRev[1] += LQR_Controller_DW.obj_m.pCumSumRev
+      [2];
+    LQR_Controller_DW.obj_m.pCumSumRev[0] += LQR_Controller_DW.obj_m.pCumSumRev
+      [1];
+  }
+
+  if (LQR_Controller_DW.obj_m.pModValueRev == 0.0) {
+    rtb_Gain1 = z / 4.0;
+  }
+
+  LQR_Controller_DW.obj_m.pCumSum = csum;
+  LQR_Controller_DW.obj_m.pCumRevIndex = cumRevIndex;
+  if (LQR_Controller_DW.obj_m.pModValueRev > 0.0) {
+    LQR_Controller_DW.obj_m.pModValueRev--;
+  } else {
+    LQR_Controller_DW.obj_m.pModValueRev = 0.0;
+  }
+
+  /* Gain: '<S3>/rad//s to m//s' incorporates:
+   *  Gain: '<S3>/RPM to rad//s'
+   *  MATLABSystem: '<S13>/Moving Average'
+   */
+  z = LQR_Controller_P.RPMtorads_Gain * rtb_Gain1 *
     LQR_Controller_P.radstoms_Gain;
 
-  /* Gain: '<S3>/Gain1' */
-  rtb_Gain1 = LQR_Controller_P.k_motor / LQR_Controller_P.r * rtb_radstoms;
+  /* Gain: '<S4>/Gain1' */
+  rtb_Gain1 = LQR_Controller_P.k_motor / LQR_Controller_P.r * z;
 
-  /* RateTransition generated from: '<S3>/Add2' */
+  /* RateTransition generated from: '<S4>/Add2' */
   LQR_Controller_DW.TmpRTBAtAdd2Inport1_Buffer0 = rtb_Gain1;
 
-  /* RateTransition generated from: '<Root>/State Vector' */
-  LQR_Controller_DW.TmpRTBAtStateVectorInport2_Buff = rtb_radstoms;
+  /* RateTransition: '<Root>/RT' */
+  LQR_Controller_DW.RT_Buffer0 = LQR_Controller_DW.PositionIntegration_DSTATE;
 
-  /* Update for DiscreteIntegrator: '<S2>/Position Integration' */
+  /* RateTransition: '<Root>/RT1' */
+  LQR_Controller_DW.RT1_Buffer0 = z;
+
+  /* Update for DiscreteIntegrator: '<S3>/Position Integration' */
   LQR_Controller_DW.PositionIntegration_DSTATE +=
-    LQR_Controller_P.PositionIntegration_gainval * rtb_radstoms;
+    LQR_Controller_P.PositionIntegration_gainval * z;
 
-  /* Update for DiscreteIntegrator: '<S2>/Position Integration' */
+  /* Update for DiscreteIntegrator: '<S3>/Position Integration' */
   if (LQR_Controller_DW.PositionIntegration_DSTATE >
       LQR_Controller_P.PositionIntegration_UpperSat) {
-    /* Update for DiscreteIntegrator: '<S2>/Position Integration' */
+    /* Update for DiscreteIntegrator: '<S3>/Position Integration' */
     LQR_Controller_DW.PositionIntegration_DSTATE =
       LQR_Controller_P.PositionIntegration_UpperSat;
   } else if (LQR_Controller_DW.PositionIntegration_DSTATE <
              LQR_Controller_P.PositionIntegration_LowerSat) {
-    /* Update for DiscreteIntegrator: '<S2>/Position Integration' */
+    /* Update for DiscreteIntegrator: '<S3>/Position Integration' */
     LQR_Controller_DW.PositionIntegration_DSTATE =
       LQR_Controller_P.PositionIntegration_LowerSat;
   }
@@ -637,68 +631,49 @@ void LQR_Controller_initialize(void)
   (void) memset((void *)&LQR_Controller_DW, 0,
                 sizeof(DW_LQR_Controller_T));
 
-  /* Start for RateTransition generated from: '<Root>/State Vector' incorporates:
+  /* Start for RateTransition: '<Root>/RT' incorporates:
    *  Concatenate: '<Root>/State Vector'
    */
-  LQR_Controller_B.StateVector[0] =
-    LQR_Controller_P.TmpRTBAtStateVectorInport1_Init;
+  LQR_Controller_B.StateVector[0] = LQR_Controller_P.RT_InitialCondition;
 
-  /* Start for RateTransition generated from: '<Root>/State Vector' incorporates:
+  /* Start for RateTransition: '<Root>/RT1' incorporates:
    *  Concatenate: '<Root>/State Vector'
    */
-  LQR_Controller_B.StateVector[1] =
-    LQR_Controller_P.TmpRTBAtStateVectorInport2_Init;
+  LQR_Controller_B.StateVector[1] = LQR_Controller_P.RT1_InitialCondition;
 
-  /* Start for MATLABSystem: '<S1>/Analog Input' */
-  LQR_Controller_DW.obj_h.matlabCodegenIsDeleted = false;
-  LQR_Controller_DW.objisempty_i = true;
-  LQR_Controller_DW.obj_h.isInitialized = 1L;
-  LQR_Controller_DW.obj_h.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
+  /* Start for MATLABSystem: '<S1>/Analog Input1' */
+  LQR_Controller_DW.obj_g.matlabCodegenIsDeleted = false;
+  LQR_Controller_DW.objisempty_b = true;
+  LQR_Controller_DW.obj_g.isInitialized = 1L;
+  LQR_Controller_DW.obj_g.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
     MW_AnalogInSingle_Open(14UL);
-  LQR_Controller_DW.obj_h.isSetupComplete = true;
+  LQR_Controller_DW.obj_g.isSetupComplete = true;
 
   /* Start for MATLABSystem: '<S1>/Moving Average' */
   LQR_Controller_DW.obj.isInitialized = 0L;
   LQR_Controller_DW.obj.NumChannels = -1L;
   LQR_Controller_DW.obj.FrameLength = -1L;
   LQR_Controller_DW.obj.matlabCodegenIsDeleted = false;
-  LQR_Controller_DW.objisempty_cu = true;
-  LQR_Controll_SystemCore_setup_p(&LQR_Controller_DW.obj);
+  LQR_Controller_DW.objisempty_mm = true;
+  LQR_Controller_SystemCore_setup(&LQR_Controller_DW.obj);
 
-  /* Start for RateTransition generated from: '<S3>/Add2' */
+  /* Start for RateTransition generated from: '<S4>/Add2' */
   LQR_Controller_B.TmpRTBAtAdd2Inport1 =
     LQR_Controller_P.TmpRTBAtAdd2Inport1_InitialCond;
 
-  /* Start for MATLABSystem: '<S2>/PWM' */
+  /* Start for MATLABSystem: '<S3>/PWM' */
   LQR_Controller_DW.obj_d.matlabCodegenIsDeleted = false;
   LQR_Controller_DW.objisempty_f = true;
   LQR_Controller_DW.obj_d.isInitialized = 1L;
   LQR_Controller_DW.obj_d.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_Open(5UL, 0.0, 0.0);
   LQR_Controller_DW.obj_d.isSetupComplete = true;
 
-  /* Start for MATLABSystem: '<S2>/PWM1' */
+  /* Start for MATLABSystem: '<S3>/PWM1' */
   LQR_Controller_DW.obj_e.matlabCodegenIsDeleted = false;
-  LQR_Controller_DW.objisempty_o = true;
+  LQR_Controller_DW.objisempty_og = true;
   LQR_Controller_DW.obj_e.isInitialized = 1L;
   LQR_Controller_DW.obj_e.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_Open(6UL, 0.0, 0.0);
   LQR_Controller_DW.obj_e.isSetupComplete = true;
-
-  /* Start for MATLABSystem: '<S6>/Analog Input' */
-  LQR_Controller_DW.obj_l.matlabCodegenIsDeleted = false;
-  LQR_Controller_DW.objisempty_c = true;
-  LQR_Controller_DW.obj_l.isInitialized = 1L;
-  LQR_Controller_DW.obj_l.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
-    MW_AnalogInSingle_Open(15UL);
-  LQR_Controller_DW.obj_l.isSetupComplete = true;
-
-  /* Start for MATLABSystem: '<S6>/Analog Input1' */
-  LQR_Controller_DW.obj_a.matlabCodegenIsDeleted = false;
-  LQR_Controller_DW.objisempty = true;
-  LQR_Controller_DW.obj_a.isInitialized = 1L;
-  LQR_Controller_DW.obj_a.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
-    MW_AnalogInSingle_Open(16UL);
-  LQR_Controller_DW.obj_a.isSetupComplete = true;
-  LQR_Con_MovingAverage_Start(&LQR_Controller_DW.MovingAverage_pn);
 
   /* Start for MATLABSystem: '<S5>/Digital Output1' */
   LQR_Controller_DW.obj_n.matlabCodegenIsDeleted = false;
@@ -708,74 +683,97 @@ void LQR_Controller_initialize(void)
   LQR_Controller_DW.obj_n.isSetupComplete = true;
 
   /* Start for MATLABSystem: '<S5>/Digital Output2' */
-  LQR_Controller_DW.obj_m.matlabCodegenIsDeleted = false;
-  LQR_Controller_DW.objisempty_d = true;
-  LQR_Controller_DW.obj_m.isInitialized = 1L;
+  LQR_Controller_DW.obj_mo.matlabCodegenIsDeleted = false;
+  LQR_Controller_DW.objisempty = true;
+  LQR_Controller_DW.obj_mo.isInitialized = 1L;
   digitalIOSetup(8, 1);
-  LQR_Controller_DW.obj_m.isSetupComplete = true;
+  LQR_Controller_DW.obj_mo.isSetupComplete = true;
 
-  /* Start for MATLABSystem: '<S9>/Encoder' */
-  LQR_Controller_DW.obj_lf.Index = 0U;
-  LQR_Controller_DW.obj_lf.matlabCodegenIsDeleted = false;
+  /* Start for MATLABSystem: '<S13>/Encoder' */
+  LQR_Controller_DW.obj_l.Index = 0U;
+  LQR_Controller_DW.obj_l.matlabCodegenIsDeleted = false;
   LQR_Controller_DW.objisempty_m = true;
-  LQR_Controller_DW.obj_lf.isSetupComplete = false;
-  LQR_Controller_DW.obj_lf.isInitialized = 1L;
-  MW_EncoderSetup(2UL, 3UL, &LQR_Controller_DW.obj_lf.Index);
-  LQR_Controller_DW.obj_lf.isSetupComplete = true;
-  LQR_Controller_DW.obj_lf.TunablePropsChanged = false;
-  LQR_Con_MovingAverage_Start(&LQR_Controller_DW.MovingAverage_p);
+  LQR_Controller_DW.obj_l.isSetupComplete = false;
+  LQR_Controller_DW.obj_l.isInitialized = 1L;
+  MW_EncoderSetup(2UL, 3UL, &LQR_Controller_DW.obj_l.Index);
+  LQR_Controller_DW.obj_l.isSetupComplete = true;
+  LQR_Controller_DW.obj_l.TunablePropsChanged = false;
 
-  /* InitializeConditions for RateTransition generated from: '<Root>/State Vector' */
-  LQR_Controller_DW.TmpRTBAtStateVectorInport1_Buff =
-    LQR_Controller_P.TmpRTBAtStateVectorInport1_Init;
+  /* Start for MATLABSystem: '<S13>/Moving Average' */
+  LQR_Controller_DW.obj_m.isInitialized = 0L;
+  LQR_Controller_DW.obj_m.NumChannels = -1L;
+  LQR_Controller_DW.obj_m.FrameLength = -1L;
+  LQR_Controller_DW.obj_m.matlabCodegenIsDeleted = false;
+  LQR_Controller_DW.objisempty_o = true;
+  LQR_Controll_SystemCore_setup_p(&LQR_Controller_DW.obj_m);
 
-  /* InitializeConditions for RateTransition generated from: '<Root>/State Vector' */
-  LQR_Controller_DW.TmpRTBAtStateVectorInport2_Buff =
-    LQR_Controller_P.TmpRTBAtStateVectorInport2_Init;
+  /* InitializeConditions for RateTransition: '<Root>/RT' */
+  LQR_Controller_DW.RT_Buffer0 = LQR_Controller_P.RT_InitialCondition;
 
-  /* InitializeConditions for UnitDelay: '<S7>/UD' */
-  LQR_Controller_DW.UD_DSTATE = LQR_Controller_P.DiscreteDerivative_ICPrevScaled;
+  /* InitializeConditions for RateTransition: '<Root>/RT1' */
+  LQR_Controller_DW.RT1_Buffer0 = LQR_Controller_P.RT1_InitialCondition;
 
-  /* InitializeConditions for RateTransition generated from: '<S3>/Add2' */
+  /* InitializeConditions for UnitDelay: '<S6>/UD' */
+  LQR_Controller_DW.UD_DSTATE = LQR_Controller_P.Derivative_ICPrevScaledInput;
+
+  /* InitializeConditions for RateTransition generated from: '<S4>/Add2' */
   LQR_Controller_DW.TmpRTBAtAdd2Inport1_Buffer0 =
     LQR_Controller_P.TmpRTBAtAdd2Inport1_InitialCond;
 
-  /* InitializeConditions for DiscreteIntegrator: '<S2>/Position Integration' */
+  /* InitializeConditions for DiscreteIntegrator: '<S3>/Position Integration' */
   LQR_Controller_DW.PositionIntegration_DSTATE =
     LQR_Controller_P.PositionIntegration_IC;
 
-  /* SystemInitialize for MATLAB Function: '<S9>/Filter for data dropouts' */
+  /* SystemInitialize for MATLAB Function: '<S1>/MATLAB Function1' */
+  LQR_Controller_DW.N = 250.0;
+  LQR_Controller_DW.sample_count = 0.0;
+  LQR_Controller_DW.theta_sum = 0.0;
+  LQR_Controller_DW.theta0 = 0.0;
+  LQR_Controller_DW.calibrated = false;
+
+  /* SystemInitialize for IfAction SubSystem: '<S2>/Swing Up' */
+  /* SystemInitialize for MATLAB Function: '<S10>/MATLAB Function1' */
+  LQR_Controller_DW.thetaMax_not_empty = false;
+
+  /* End of SystemInitialize for SubSystem: '<S2>/Swing Up' */
+
+  /* SystemInitialize for MATLAB Function: '<S13>/Filter for data dropouts' */
   LQR_Controller_DW.prevVal_not_empty = false;
 
   /* InitializeConditions for MATLABSystem: '<S1>/Moving Average' */
   LQR_Controller_DW.obj.pCumSum = 0.0;
-  LQR_Controller_DW.obj.pCumSumRev[0] = 0.0;
-  LQR_Controller_DW.obj.pCumSumRev[1] = 0.0;
+  memset(&LQR_Controller_DW.obj.pCumSumRev[0], 0, 11U * sizeof(real_T));
   LQR_Controller_DW.obj.pCumRevIndex = 1.0;
   LQR_Controller_DW.obj.pModValueRev = 0.0;
-  LQR_Cont_MovingAverage_Init(&LQR_Controller_DW.MovingAverage_pn);
 
-  /* InitializeConditions for MATLABSystem: '<S9>/Encoder' */
-  MW_EncoderReset(LQR_Controller_DW.obj_lf.Index);
-  LQR_Cont_MovingAverage_Init(&LQR_Controller_DW.MovingAverage_p);
+  /* InitializeConditions for MATLABSystem: '<S13>/Encoder' */
+  MW_EncoderReset(LQR_Controller_DW.obj_l.Index);
+
+  /* InitializeConditions for MATLABSystem: '<S13>/Moving Average' */
+  LQR_Controller_DW.obj_m.pCumSum = 0.0;
+  LQR_Controller_DW.obj_m.pCumSumRev[0] = 0.0;
+  LQR_Controller_DW.obj_m.pCumSumRev[1] = 0.0;
+  LQR_Controller_DW.obj_m.pCumSumRev[2] = 0.0;
+  LQR_Controller_DW.obj_m.pCumRevIndex = 1.0;
+  LQR_Controller_DW.obj_m.pModValueRev = 0.0;
 }
 
 /* Model terminate function */
 void LQR_Controller_terminate(void)
 {
-  /* Terminate for MATLABSystem: '<S1>/Analog Input' */
-  if (!LQR_Controller_DW.obj_h.matlabCodegenIsDeleted) {
-    LQR_Controller_DW.obj_h.matlabCodegenIsDeleted = true;
-    if ((LQR_Controller_DW.obj_h.isInitialized == 1L) &&
-        LQR_Controller_DW.obj_h.isSetupComplete) {
-      LQR_Controller_DW.obj_h.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
+  /* Terminate for MATLABSystem: '<S1>/Analog Input1' */
+  if (!LQR_Controller_DW.obj_g.matlabCodegenIsDeleted) {
+    LQR_Controller_DW.obj_g.matlabCodegenIsDeleted = true;
+    if ((LQR_Controller_DW.obj_g.isInitialized == 1L) &&
+        LQR_Controller_DW.obj_g.isSetupComplete) {
+      LQR_Controller_DW.obj_g.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
         MW_AnalogIn_GetHandle(14UL);
       MW_AnalogIn_Close
-        (LQR_Controller_DW.obj_h.AnalogInDriverObj.MW_ANALOGIN_HANDLE);
+        (LQR_Controller_DW.obj_g.AnalogInDriverObj.MW_ANALOGIN_HANDLE);
     }
   }
 
-  /* End of Terminate for MATLABSystem: '<S1>/Analog Input' */
+  /* End of Terminate for MATLABSystem: '<S1>/Analog Input1' */
 
   /* Terminate for MATLABSystem: '<S1>/Moving Average' */
   if (!LQR_Controller_DW.obj.matlabCodegenIsDeleted) {
@@ -789,7 +787,7 @@ void LQR_Controller_terminate(void)
 
   /* End of Terminate for MATLABSystem: '<S1>/Moving Average' */
 
-  /* Terminate for MATLABSystem: '<S2>/PWM' */
+  /* Terminate for MATLABSystem: '<S3>/PWM' */
   if (!LQR_Controller_DW.obj_d.matlabCodegenIsDeleted) {
     LQR_Controller_DW.obj_d.matlabCodegenIsDeleted = true;
     if ((LQR_Controller_DW.obj_d.isInitialized == 1L) &&
@@ -802,9 +800,9 @@ void LQR_Controller_terminate(void)
     }
   }
 
-  /* End of Terminate for MATLABSystem: '<S2>/PWM' */
+  /* End of Terminate for MATLABSystem: '<S3>/PWM' */
 
-  /* Terminate for MATLABSystem: '<S2>/PWM1' */
+  /* Terminate for MATLABSystem: '<S3>/PWM1' */
   if (!LQR_Controller_DW.obj_e.matlabCodegenIsDeleted) {
     LQR_Controller_DW.obj_e.matlabCodegenIsDeleted = true;
     if ((LQR_Controller_DW.obj_e.isInitialized == 1L) &&
@@ -817,36 +815,7 @@ void LQR_Controller_terminate(void)
     }
   }
 
-  /* End of Terminate for MATLABSystem: '<S2>/PWM1' */
-
-  /* Terminate for MATLABSystem: '<S6>/Analog Input' */
-  if (!LQR_Controller_DW.obj_l.matlabCodegenIsDeleted) {
-    LQR_Controller_DW.obj_l.matlabCodegenIsDeleted = true;
-    if ((LQR_Controller_DW.obj_l.isInitialized == 1L) &&
-        LQR_Controller_DW.obj_l.isSetupComplete) {
-      LQR_Controller_DW.obj_l.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
-        MW_AnalogIn_GetHandle(15UL);
-      MW_AnalogIn_Close
-        (LQR_Controller_DW.obj_l.AnalogInDriverObj.MW_ANALOGIN_HANDLE);
-    }
-  }
-
-  /* End of Terminate for MATLABSystem: '<S6>/Analog Input' */
-
-  /* Terminate for MATLABSystem: '<S6>/Analog Input1' */
-  if (!LQR_Controller_DW.obj_a.matlabCodegenIsDeleted) {
-    LQR_Controller_DW.obj_a.matlabCodegenIsDeleted = true;
-    if ((LQR_Controller_DW.obj_a.isInitialized == 1L) &&
-        LQR_Controller_DW.obj_a.isSetupComplete) {
-      LQR_Controller_DW.obj_a.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
-        MW_AnalogIn_GetHandle(16UL);
-      MW_AnalogIn_Close
-        (LQR_Controller_DW.obj_a.AnalogInDriverObj.MW_ANALOGIN_HANDLE);
-    }
-  }
-
-  /* End of Terminate for MATLABSystem: '<S6>/Analog Input1' */
-  LQR_Cont_MovingAverage_Term(&LQR_Controller_DW.MovingAverage_pn);
+  /* End of Terminate for MATLABSystem: '<S3>/PWM1' */
 
   /* Terminate for MATLABSystem: '<S5>/Digital Output1' */
   if (!LQR_Controller_DW.obj_n.matlabCodegenIsDeleted) {
@@ -856,21 +825,32 @@ void LQR_Controller_terminate(void)
   /* End of Terminate for MATLABSystem: '<S5>/Digital Output1' */
 
   /* Terminate for MATLABSystem: '<S5>/Digital Output2' */
-  if (!LQR_Controller_DW.obj_m.matlabCodegenIsDeleted) {
-    LQR_Controller_DW.obj_m.matlabCodegenIsDeleted = true;
+  if (!LQR_Controller_DW.obj_mo.matlabCodegenIsDeleted) {
+    LQR_Controller_DW.obj_mo.matlabCodegenIsDeleted = true;
   }
 
   /* End of Terminate for MATLABSystem: '<S5>/Digital Output2' */
 
-  /* Terminate for MATLABSystem: '<S9>/Encoder' */
-  if (!LQR_Controller_DW.obj_lf.matlabCodegenIsDeleted) {
-    LQR_Controller_DW.obj_lf.matlabCodegenIsDeleted = true;
-    if ((LQR_Controller_DW.obj_lf.isInitialized == 1L) &&
-        LQR_Controller_DW.obj_lf.isSetupComplete) {
+  /* Terminate for MATLABSystem: '<S13>/Encoder' */
+  if (!LQR_Controller_DW.obj_l.matlabCodegenIsDeleted) {
+    LQR_Controller_DW.obj_l.matlabCodegenIsDeleted = true;
+    if ((LQR_Controller_DW.obj_l.isInitialized == 1L) &&
+        LQR_Controller_DW.obj_l.isSetupComplete) {
       MW_EncoderRelease();
     }
   }
 
-  /* End of Terminate for MATLABSystem: '<S9>/Encoder' */
-  LQR_Cont_MovingAverage_Term(&LQR_Controller_DW.MovingAverage_p);
+  /* End of Terminate for MATLABSystem: '<S13>/Encoder' */
+
+  /* Terminate for MATLABSystem: '<S13>/Moving Average' */
+  if (!LQR_Controller_DW.obj_m.matlabCodegenIsDeleted) {
+    LQR_Controller_DW.obj_m.matlabCodegenIsDeleted = true;
+    if ((LQR_Controller_DW.obj_m.isInitialized == 1L) &&
+        LQR_Controller_DW.obj_m.isSetupComplete) {
+      LQR_Controller_DW.obj_m.NumChannels = -1L;
+      LQR_Controller_DW.obj_m.FrameLength = -1L;
+    }
+  }
+
+  /* End of Terminate for MATLABSystem: '<S13>/Moving Average' */
 }

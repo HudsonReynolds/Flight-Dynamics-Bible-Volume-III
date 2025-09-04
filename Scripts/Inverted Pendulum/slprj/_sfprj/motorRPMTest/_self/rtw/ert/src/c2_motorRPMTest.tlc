@@ -1,0 +1,107 @@
+%implements "chartSource" "C"
+%function ChartConfig(block, system) void
+  %createrecord chartConfiguration { ...
+          executeAtInitialization  0 ...
+  }
+  %return chartConfiguration
+%endfunction
+%function ChartDataMap(block, system) void
+  %createrecord ChartDataElements {\
+    NumChartData   12 \
+    ChartDataDefaults {\
+      RecordType   "ChartData"\
+      Dimensions   []\
+      IsTestPoint  0\
+    }\
+    ChartData {\
+      Name         "sfEvent"\
+      Description  "ActiveChartEvent"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "doneDoubleBufferReInit"\
+      Description  "DoubleBufferInitCheck"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "Phi"\
+      Description  "EmlPersistent"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "motorRPMTest:79:433-436"\
+      Dimensions   [4,4]\
+    }\
+    ChartData {\
+      Name         "Phi_not_empty"\
+      Description  "EmlPersistentSentinel"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "motorRPMTest:79:433-436"\
+    }\
+    ChartData {\
+      Name         "P"\
+      Description  "EmlPersistent"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "motorRPMTest:79:437-438"\
+      Dimensions   [4,4]\
+    }\
+    ChartData {\
+      Name         "P_not_empty"\
+      Description  "EmlPersistentSentinel"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "motorRPMTest:79:437-438"\
+    }\
+    ChartData {\
+      Name         "R"\
+      Description  "EmlPersistent"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "motorRPMTest:79:439-440"\
+      Dimensions   [2,2]\
+    }\
+    ChartData {\
+      Name         "R_not_empty"\
+      Description  "EmlPersistentSentinel"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "motorRPMTest:79:439-440"\
+    }\
+    ChartData {\
+      Name         "Q"\
+      Description  "EmlPersistent"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "motorRPMTest:79:441-442"\
+      Dimensions   [4,4]\
+    }\
+    ChartData {\
+      Name         "Q_not_empty"\
+      Description  "EmlPersistentSentinel"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "motorRPMTest:79:441-442"\
+    }\
+    ChartData {\
+      Name         "H"\
+      Description  "EmlPersistent"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "motorRPMTest:79:443-444"\
+      Dimensions   [2,4]\
+    }\
+    ChartData {\
+      Name         "H_not_empty"\
+      Description  "EmlPersistentSentinel"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "motorRPMTest:79:443-444"\
+    }\
+  }
+  %return ChartDataElements
+%endfunction

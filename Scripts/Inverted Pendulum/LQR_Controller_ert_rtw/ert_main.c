@@ -3,13 +3,14 @@
 #include "MW_target_hardware_resources.h"
 
 volatile int IsrOverrun = 0;
-boolean_T isRateRunning[2] = { 0, 0 };
+boolean_T isRateRunning[3] = { 0, 0, 0 };
 
-boolean_T need2runFlags[2] = { 0, 0 };
+boolean_T need2runFlags[3] = { 0, 0, 0 };
 
 void rt_OneStep(void)
 {
-  boolean_T eventFlags[2];
+  boolean_T eventFlags[3];
+  int_T i;
 
   /* Check base rate for overrun */
   if (isRateRunning[0]++) {
@@ -41,49 +42,59 @@ void rt_OneStep(void)
 #endif;
 
   isRateRunning[0]--;
-  if (eventFlags[1]) {
-    if (need2runFlags[1]++) {
-      IsrOverrun = 1;
-      need2runFlags[1]--;              /* allow future iterations to succeed*/
-      return;
+  for (i = 1; i < 3; i++) {
+    if (eventFlags[i]) {
+      if (need2runFlags[i]++) {
+        IsrOverrun = 1;
+        need2runFlags[i]--;            /* allow future iterations to succeed*/
+        break;
+      }
     }
   }
 
-  if (need2runFlags[1]) {
-    if (isRateRunning[1]) {
+  for (i = 1; i < 3; i++) {
+    if (isRateRunning[i]) {
       /* Yield to higher priority*/
       return;
     }
 
-    isRateRunning[1]++;
+    if (need2runFlags[i]) {
+      isRateRunning[i]++;
 
 #ifndef _MW_ARDUINO_LOOP_
 
-    sei();
+      sei();
 
 #endif;
 
-    /* Step the model for subrate "1" */
-    switch (1)
-    {
-     case 1 :
-      LQR_Controller_step1();
+      /* Step the model for subrate "i" */
+      switch (i)
+      {
+       case 1 :
+        LQR_Controller_step1();
 
-      /* Get model outputs here */
-      break;
+        /* Get model outputs here */
+        break;
 
-     default :
-      break;
+       case 2 :
+        LQR_Controller_step2();
+
+        /* Get model outputs here */
+        break;
+
+       default :
+        break;
+      }
+
+#ifndef _MW_ARDUINO_LOOP_
+
+      cli();
+
+#endif;
+
+      need2runFlags[i]--;
+      isRateRunning[i]--;
     }
-
-#ifndef _MW_ARDUINO_LOOP_
-
-    cli();
-
-#endif;
-
-    need2runFlags[1]--;
-    isRateRunning[1]--;
   }
 }
 
@@ -91,7 +102,7 @@ volatile boolean_T stopRequested;
 volatile boolean_T runModel;
 int main(void)
 {
-  float modelBaseRate = 0.007;
+  float modelBaseRate = 0.0035;
   float systemClock = 0;
 
   /* Initialize variables */

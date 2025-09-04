@@ -4,7 +4,7 @@
  * Code generation for Simulink model "LQR_Controller".
  *
  * Simulink Coder version                : 25.1 (R2025a) 21-Nov-2024
- * C source code generated on : Tue Aug  5 21:08:16 2025
+ * C source code generated on : Sun Aug 24 15:48:43 2025
  *
  * Note that the generated code is not dependent on this header file.
  * The file is used in cojuction with the automatic build procedure.

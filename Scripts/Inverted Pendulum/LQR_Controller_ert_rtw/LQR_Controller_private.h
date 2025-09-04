@@ -7,9 +7,9 @@
  *
  * Code generation for model "LQR_Controller".
  *
- * Model version              : 1.23
+ * Model version              : 1.58
  * Simulink Coder version : 25.1 (R2025a) 21-Nov-2024
- * C source code generated on : Tue Aug  5 21:08:16 2025
+ * C source code generated on : Sun Aug 24 15:48:43 2025
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -22,7 +22,6 @@
 #define LQR_Controller_private_h_
 #include "rtwtypes.h"
 #include "multiword_types.h"
-#include "LQR_Controller.h"
 #include "LQR_Controller_types.h"
 #include "rtw_continuous.h"
 #include "rtw_solver.h"
@@ -76,11 +75,5 @@ preprocessor word size checks.
 
 /* Skipping ulong_long/long_long check: insufficient preprocessor integer range. */
 extern real_T rt_roundd_snf(real_T u);
-extern void LQR_Cont_MovingAverage_Init(DW_MovingAverage_LQR_Controll_T *localDW);
-extern void LQR_Con_MovingAverage_Start(DW_MovingAverage_LQR_Controll_T *localDW);
-extern void LQR_Controlle_MovingAverage(real_T rtu_0,
-  B_MovingAverage_LQR_Controlle_T *localB, DW_MovingAverage_LQR_Controll_T
-  *localDW);
-extern void LQR_Cont_MovingAverage_Term(DW_MovingAverage_LQR_Controll_T *localDW);
 
 #endif                                 /* LQR_Controller_private_h_ */

@@ -36,7 +36,7 @@ A_aug = [A              B * alpha;
 
 B_aug = [zeros(4,1); 1/L_m];
 
-%% Define LQR cost (tune as needed)
+%% Define LQR cost
 Q = diag([100, 1, 100, 1, 0.1]);   % states: x, dx, theta, dtheta, i
 R_lqr = 0.01;                      % voltage penalty
 

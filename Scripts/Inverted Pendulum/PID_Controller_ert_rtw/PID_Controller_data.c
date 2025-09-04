@@ -7,9 +7,9 @@
  *
  * Code generation for model "PID_Controller".
  *
- * Model version              : 1.14
+ * Model version              : 1.17
  * Simulink Coder version : 25.1 (R2025a) 21-Nov-2024
- * C source code generated on : Sat Aug  2 16:28:32 2025
+ * C source code generated on : Sat Aug 16 20:01:33 2025
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -22,48 +22,43 @@
 
 /* Block parameters (default storage) */
 P_PID_Controller_T PID_Controller_P = {
-  /* Mask Parameter: PIDController_D
-   * Referenced by: '<S90>/Derivative Gain'
+  /* Mask Parameter: PIDController1_D
+   * Referenced by: '<S37>/Derivative Gain'
    */
   0.0,
 
-  /* Mask Parameter: PIDController_I
-   * Referenced by: '<S94>/Integral Gain'
-   */
-  0.0,
-
-  /* Mask Parameter: DiscreteDerivative_ICPrevScaled
-   * Referenced by: '<S6>/UD'
-   */
-  0.0,
-
-  /* Mask Parameter: PIDController_InitialConditionF
-   * Referenced by: '<S92>/Filter'
-   */
-  0.0,
-
-  /* Mask Parameter: PIDController_InitialConditio_f
-   * Referenced by: '<S97>/Integrator'
-   */
-  0.0,
-
-  /* Mask Parameter: PIDController_LowerSaturationLi
-   * Referenced by: '<S104>/Saturation'
-   */
-  -255.0,
-
-  /* Mask Parameter: PIDController_N
-   * Referenced by: '<S100>/Filter Coefficient'
-   */
-  100.0,
-
-  /* Mask Parameter: PIDController_P
-   * Referenced by: '<S102>/Proportional Gain'
+  /* Mask Parameter: PIDController1_I
+   * Referenced by: '<S41>/Integral Gain'
    */
   1.0,
 
-  /* Mask Parameter: PIDController_UpperSaturationLi
-   * Referenced by: '<S104>/Saturation'
+  /* Mask Parameter: PIDController1_InitialCondition
+   * Referenced by: '<S39>/Filter'
+   */
+  0.0,
+
+  /* Mask Parameter: PIDController1_InitialConditi_d
+   * Referenced by: '<S44>/Integrator'
+   */
+  0.0,
+
+  /* Mask Parameter: PIDController1_LowerSaturationL
+   * Referenced by: '<S51>/Saturation'
+   */
+  -255.0,
+
+  /* Mask Parameter: PIDController1_N
+   * Referenced by: '<S47>/Filter Coefficient'
+   */
+  100.0,
+
+  /* Mask Parameter: PIDController1_P
+   * Referenced by: '<S49>/Proportional Gain'
+   */
+  500.0,
+
+  /* Mask Parameter: PIDController1_UpperSaturationL
+   * Referenced by: '<S51>/Saturation'
    */
   255.0,
 
@@ -72,15 +67,20 @@ P_PID_Controller_T PID_Controller_P = {
    */
   0.0,
 
-  /* Expression: pi/2
-   * Referenced by: '<S1>/Constant'
+  /* Expression: [0.1358 0.1358]
+   * Referenced by: '<S1>/Low Pass Filter'
    */
-  1.5707963267948966,
+  { 0.1358, 0.1358 },
 
-  /* Computed Parameter: TSamp_WtEt
-   * Referenced by: '<S6>/TSamp'
+  /* Expression: [1 -0.7285]
+   * Referenced by: '<S1>/Low Pass Filter'
    */
-  50.0,
+  { 1.0, -0.7285 },
+
+  /* Expression: 0
+   * Referenced by: '<S1>/Low Pass Filter'
+   */
+  0.0,
 
   /* Expression: pi
    * Referenced by: '<Root>/Pi'
@@ -88,52 +88,37 @@ P_PID_Controller_T PID_Controller_P = {
   3.1415926535897931,
 
   /* Computed Parameter: Integrator_gainval
-   * Referenced by: '<S97>/Integrator'
+   * Referenced by: '<S44>/Integrator'
    */
-  0.02,
+  0.01,
 
   /* Computed Parameter: Filter_gainval
-   * Referenced by: '<S92>/Filter'
+   * Referenced by: '<S39>/Filter'
    */
-  0.02,
+  0.01,
 
   /* Expression: .3
    * Referenced by: '<Root>/Switch'
    */
   0.3,
 
-  /* Expression: pi/30
-   * Referenced by: '<S3>/RPM to rad//s'
+  /* Expression: -1
+   * Referenced by: '<S2>/Gain'
    */
-  0.10471975511965977,
-
-  /* Expression: 6.5/1000
-   * Referenced by: '<S3>/rad//s to m//s'
-   */
-  0.0065,
-
-  /* Computed Parameter: PositionIntegration_gainval
-   * Referenced by: '<S3>/Position Integration'
-   */
-  0.02,
-
-  /* Expression: 0
-   * Referenced by: '<S3>/Position Integration'
-   */
-  0.0,
+  -1.0,
 
   /* Expression: 1
-   * Referenced by: '<S5>/Constant2'
+   * Referenced by: '<S4>/Constant2'
    */
   1.0,
 
   /* Computed Parameter: TickstoRPM_Gain
-   * Referenced by: '<S8>/Ticks to RPM'
+   * Referenced by: '<S7>/Ticks to RPM'
    */
-  -1338607660L,
+  -1464193396L,
 
-  /* Computed Parameter: Volt2Rad_Gain
-   * Referenced by: '<S1>/Volt2Rad'
+  /* Computed Parameter: Volt2Rad1_Gain
+   * Referenced by: '<S1>/Volt2Rad1'
    */
   51522U
 };

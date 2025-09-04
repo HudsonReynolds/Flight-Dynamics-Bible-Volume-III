@@ -7,9 +7,9 @@
  *
  * Code generation for model "LQR_Controller".
  *
- * Model version              : 1.23
+ * Model version              : 1.58
  * Simulink Coder version : 25.1 (R2025a) 21-Nov-2024
- * C source code generated on : Tue Aug  5 21:08:16 2025
+ * C source code generated on : Sun Aug 24 15:48:43 2025
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -20,53 +20,10 @@
 
 #ifndef LQR_Controller_types_h_
 #define LQR_Controller_types_h_
-#include "rtwtypes.h"
 #include "MW_SVD.h"
-#ifndef struct_tag_BlgwLpgj2bjudmbmVKWwDE
-#define struct_tag_BlgwLpgj2bjudmbmVKWwDE
+#include "rtwtypes.h"
 
-struct tag_BlgwLpgj2bjudmbmVKWwDE
-{
-  uint32_T f1[8];
-};
-
-#endif                                 /* struct_tag_BlgwLpgj2bjudmbmVKWwDE */
-
-#ifndef typedef_cell_wrap_LQR_Controller_T
-#define typedef_cell_wrap_LQR_Controller_T
-
-typedef struct tag_BlgwLpgj2bjudmbmVKWwDE cell_wrap_LQR_Controller_T;
-
-#endif                                 /* typedef_cell_wrap_LQR_Controller_T */
-
-#ifndef struct_tag_JWcuUSYp0PvSKTyOAPxz7G
-#define struct_tag_JWcuUSYp0PvSKTyOAPxz7G
-
-struct tag_JWcuUSYp0PvSKTyOAPxz7G
-{
-  boolean_T matlabCodegenIsDeleted;
-  int32_T isInitialized;
-  boolean_T isSetupComplete;
-  boolean_T TunablePropsChanged;
-  cell_wrap_LQR_Controller_T inputVarSize;
-  int32_T NumChannels;
-  int32_T FrameLength;
-  real_T pCumSum;
-  real_T pCumSumRev[3];
-  real_T pCumRevIndex;
-  real_T pModValueRev;
-};
-
-#endif                                 /* struct_tag_JWcuUSYp0PvSKTyOAPxz7G */
-
-#ifndef typedef_dsp_simulink_MovingAverage_LQ_T
-#define typedef_dsp_simulink_MovingAverage_LQ_T
-
-typedef struct tag_JWcuUSYp0PvSKTyOAPxz7G dsp_simulink_MovingAverage_LQ_T;
-
-#endif                             /* typedef_dsp_simulink_MovingAverage_LQ_T */
-
-/* Custom Type definition for MATLABSystem: '<S6>/Analog Input1' */
+/* Custom Type definition for MATLABSystem: '<S3>/PWM1' */
 #include "MW_SVD.h"
 #ifndef struct_tag_pMPPJgn69ckPBhypf3vQzD
 #define struct_tag_pMPPJgn69ckPBhypf3vQzD
@@ -200,10 +157,27 @@ typedef struct tag_ldqgYDWP5Rq6U8J4ptL7cG codertarget_arduinobase_block_T;
 
 #endif                             /* typedef_codertarget_arduinobase_block_T */
 
-#ifndef struct_tag_RjXEw04ORPJfj9f3a8ZkO
-#define struct_tag_RjXEw04ORPJfj9f3a8ZkO
+#ifndef struct_tag_BlgwLpgj2bjudmbmVKWwDE
+#define struct_tag_BlgwLpgj2bjudmbmVKWwDE
 
-struct tag_RjXEw04ORPJfj9f3a8ZkO
+struct tag_BlgwLpgj2bjudmbmVKWwDE
+{
+  uint32_T f1[8];
+};
+
+#endif                                 /* struct_tag_BlgwLpgj2bjudmbmVKWwDE */
+
+#ifndef typedef_cell_wrap_LQR_Controller_T
+#define typedef_cell_wrap_LQR_Controller_T
+
+typedef struct tag_BlgwLpgj2bjudmbmVKWwDE cell_wrap_LQR_Controller_T;
+
+#endif                                 /* typedef_cell_wrap_LQR_Controller_T */
+
+#ifndef struct_tag_laADuevm1AHrIKTY1CrXlG
+#define struct_tag_laADuevm1AHrIKTY1CrXlG
+
+struct tag_laADuevm1AHrIKTY1CrXlG
 {
   boolean_T matlabCodegenIsDeleted;
   int32_T isInitialized;
@@ -213,17 +187,44 @@ struct tag_RjXEw04ORPJfj9f3a8ZkO
   int32_T NumChannels;
   int32_T FrameLength;
   real_T pCumSum;
-  real_T pCumSumRev[2];
+  real_T pCumSumRev[11];
   real_T pCumRevIndex;
   real_T pModValueRev;
 };
 
-#endif                                 /* struct_tag_RjXEw04ORPJfj9f3a8ZkO */
+#endif                                 /* struct_tag_laADuevm1AHrIKTY1CrXlG */
+
+#ifndef typedef_dsp_simulink_MovingAverage_LQ_T
+#define typedef_dsp_simulink_MovingAverage_LQ_T
+
+typedef struct tag_laADuevm1AHrIKTY1CrXlG dsp_simulink_MovingAverage_LQ_T;
+
+#endif                             /* typedef_dsp_simulink_MovingAverage_LQ_T */
+
+#ifndef struct_tag_JWcuUSYp0PvSKTyOAPxz7G
+#define struct_tag_JWcuUSYp0PvSKTyOAPxz7G
+
+struct tag_JWcuUSYp0PvSKTyOAPxz7G
+{
+  boolean_T matlabCodegenIsDeleted;
+  int32_T isInitialized;
+  boolean_T isSetupComplete;
+  boolean_T TunablePropsChanged;
+  cell_wrap_LQR_Controller_T inputVarSize;
+  int32_T NumChannels;
+  int32_T FrameLength;
+  real_T pCumSum;
+  real_T pCumSumRev[3];
+  real_T pCumRevIndex;
+  real_T pModValueRev;
+};
+
+#endif                                 /* struct_tag_JWcuUSYp0PvSKTyOAPxz7G */
 
 #ifndef typedef_dsp_simulink_MovingAverage_p_T
 #define typedef_dsp_simulink_MovingAverage_p_T
 
-typedef struct tag_RjXEw04ORPJfj9f3a8ZkO dsp_simulink_MovingAverage_p_T;
+typedef struct tag_JWcuUSYp0PvSKTyOAPxz7G dsp_simulink_MovingAverage_p_T;
 
 #endif                              /* typedef_dsp_simulink_MovingAverage_p_T */
 

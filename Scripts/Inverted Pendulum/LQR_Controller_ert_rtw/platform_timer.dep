@@ -27,6 +27,7 @@ platform_timer.o: \
  C:/ProgramData/MATLAB/SupportPackages/R2025a/toolbox/target/supportpackages/arduinobase/include/MW_arduino_digitalio.h \
  C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/LQR_Controller_types.h \
  C:/PROGRA~1/MATLAB/R2025a/toolbox/target/shared/svd/common/include/MW_SVD.h \
+ C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/rt_nonfinite.h \
  C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/MW_target_hardware_resources.h \
  C:/ProgramData/MATLAB/SupportPackages/R2025a/toolbox/target/supportpackages/arduinotarget/scheduler/include/arduinoAVRScheduler.h
 
@@ -83,6 +84,8 @@ C:/ProgramData/MATLAB/SupportPackages/R2025a/toolbox/target/supportpackages/ardu
 C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/LQR_Controller_types.h:
 
 C:/PROGRA~1/MATLAB/R2025a/toolbox/target/shared/svd/common/include/MW_SVD.h:
+
+C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/rt_nonfinite.h:
 
 C:/Users/Hudso/OneDrive/DOCUME~1/GitHub/FLIGHT~2/Scripts/INVERT~1/LQR_Controller_ert_rtw/MW_target_hardware_resources.h:
 

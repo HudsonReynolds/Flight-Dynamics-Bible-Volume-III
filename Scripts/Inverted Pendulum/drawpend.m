@@ -17,7 +17,7 @@ rectangle('Position',[x-W/2,y-H/2,W,H],'Curvature',.1,'FaceColor',[.5 0.5 1],'Li
 plot([x pendx],[y pendy],'k','LineWidth',2); % Draw pendulum
 rectangle('Position',[pendx-mr/2,pendy-mr/2,mr,mr],'Curvature',1,'FaceColor',[1 0.1 .1],'LineWidth',1.5);
 
-axis([-.3 .3 -.2 .3]);
+axis([-.25 .25 -.1 L*1.2]);
 axis equal
 %set(gcf,'Position',[100 100 1000 400])
 drawnow, hold off

@@ -7,9 +7,9 @@
  *
  * Code generation for model "PID_Controller".
  *
- * Model version              : 1.14
+ * Model version              : 1.17
  * Simulink Coder version : 25.1 (R2025a) 21-Nov-2024
- * C source code generated on : Sat Aug  2 16:28:32 2025
+ * C source code generated on : Sat Aug 16 20:01:33 2025
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -23,7 +23,7 @@
 #include "MW_SVD.h"
 #include "rtwtypes.h"
 
-/* Custom Type definition for MATLABSystem: '<S3>/PWM1' */
+/* Custom Type definition for MATLABSystem: '<S2>/PWM1' */
 #include "MW_SVD.h"
 #ifndef struct_tag_pMPPJgn69ckPBhypf3vQzD
 #define struct_tag_pMPPJgn69ckPBhypf3vQzD
@@ -174,10 +174,10 @@ typedef struct tag_BlgwLpgj2bjudmbmVKWwDE cell_wrap_PID_Controller_T;
 
 #endif                                 /* typedef_cell_wrap_PID_Controller_T */
 
-#ifndef struct_tag_RjXEw04ORPJfj9f3a8ZkO
-#define struct_tag_RjXEw04ORPJfj9f3a8ZkO
+#ifndef struct_tag_vTj0iqkGrgefKAHauMLzJD
+#define struct_tag_vTj0iqkGrgefKAHauMLzJD
 
-struct tag_RjXEw04ORPJfj9f3a8ZkO
+struct tag_vTj0iqkGrgefKAHauMLzJD
 {
   boolean_T matlabCodegenIsDeleted;
   int32_T isInitialized;
@@ -187,17 +187,17 @@ struct tag_RjXEw04ORPJfj9f3a8ZkO
   int32_T NumChannels;
   int32_T FrameLength;
   real_T pCumSum;
-  real_T pCumSumRev[2];
+  real_T pCumSumRev;
   real_T pCumRevIndex;
   real_T pModValueRev;
 };
 
-#endif                                 /* struct_tag_RjXEw04ORPJfj9f3a8ZkO */
+#endif                                 /* struct_tag_vTj0iqkGrgefKAHauMLzJD */
 
 #ifndef typedef_dsp_simulink_MovingAverage_PI_T
 #define typedef_dsp_simulink_MovingAverage_PI_T
 
-typedef struct tag_RjXEw04ORPJfj9f3a8ZkO dsp_simulink_MovingAverage_PI_T;
+typedef struct tag_vTj0iqkGrgefKAHauMLzJD dsp_simulink_MovingAverage_PI_T;
 
 #endif                             /* typedef_dsp_simulink_MovingAverage_PI_T */
 

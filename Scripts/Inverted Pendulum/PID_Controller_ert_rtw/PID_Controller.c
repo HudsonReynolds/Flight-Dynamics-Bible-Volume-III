@@ -7,9 +7,9 @@
  *
  * Code generation for model "PID_Controller".
  *
- * Model version              : 1.14
+ * Model version              : 1.17
  * Simulink Coder version : 25.1 (R2025a) 21-Nov-2024
- * C source code generated on : Sat Aug  2 16:28:32 2025
+ * C source code generated on : Sat Aug 16 20:01:33 2025
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -27,7 +27,7 @@
 #include <string.h>
 #include "rt_nonfinite.h"
 
-/* Named constants for MATLAB Function: '<S8>/Filter for data dropouts' */
+/* Named constants for MATLAB Function: '<S1>/MATLAB Function1' */
 #define PID_Controller_CALL_EVENT      (-1L)
 
 /* Block signals (default storage) */
@@ -195,12 +195,11 @@ static void PID_Controller_SystemCore_setup(dsp_simulink_MovingAverage_PI_T *obj
 {
   obj->isInitialized = 1L;
 
-  /* Start for MATLABSystem: '<S1>/Moving Average' */
+  /* Start for MATLABSystem: '<S1>/Moving Average1' */
   obj->NumChannels = 1L;
   obj->FrameLength = 1L;
   obj->pCumSum = 0.0;
-  obj->pCumSumRev[0] = 0.0;
-  obj->pCumSumRev[1] = 0.0;
+  obj->pCumSumRev = 0.0;
   obj->pCumRevIndex = 1.0;
   obj->pModValueRev = 0.0;
   obj->isSetupComplete = true;
@@ -211,7 +210,7 @@ static void PID_Controll_SystemCore_setup_k(dsp_simulink_MovingAverage_k_T *obj)
 {
   obj->isInitialized = 1L;
 
-  /* Start for MATLABSystem: '<S8>/Moving Average' */
+  /* Start for MATLABSystem: '<S7>/Moving Average' */
   obj->NumChannels = 1L;
   obj->FrameLength = 1L;
   obj->pCumSum = 0.0;
@@ -245,9 +244,216 @@ real_T rt_roundd_snf(real_T u)
 /* Model step function for TID0 */
 void PID_Controller_step0(void)        /* Sample time: [0.01s, 0.0s] */
 {
+  real_T negPWM;
+  real_T rtb_Add;
+  real_T rtb_FilterCoefficient;
+  real_T rtb_Gain;
+  real_T theta_cal;
+  uint32_T rtb_PendulumAngle;
+  uint16_T b_varargout_1;
+  uint8_T tmp;
+
   {                                    /* Sample time: [0.01s, 0.0s] */
     rate_monotonic_scheduler();
   }
+
+  /* MATLABSystem: '<S1>/Analog Input1' */
+  PID_Controller_DW.obj_j.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
+    MW_AnalogIn_GetHandle(14UL);
+  MW_AnalogInSingle_ReadResult
+    (PID_Controller_DW.obj_j.AnalogInDriverObj.MW_ANALOGIN_HANDLE,
+     &b_varargout_1, MW_ANALOGIN_UINT16);
+
+  /* Gain: '<S1>/Volt2Rad1' incorporates:
+   *  MATLABSystem: '<S1>/Analog Input1'
+   * */
+  rtb_PendulumAngle = (uint32_T)PID_Controller_P.Volt2Rad1_Gain * b_varargout_1;
+
+  /* MATLAB Function: '<S1>/MATLAB Function1' incorporates:
+   *  DataTypeConversion: '<S1>/Cast To Double'
+   *  Gain: '<S1>/Volt2Rad1'
+   */
+  PID_Controller_DW.sfEvent_m = PID_Controller_CALL_EVENT;
+  if (!PID_Controller_DW.calibrated) {
+    PID_Controller_DW.sample_count++;
+
+    /* DataTypeConversion: '<S1>/Cast To Double' incorporates:
+     *  Gain: '<S1>/Volt2Rad1'
+     */
+    theta_cal = (real_T)rtb_PendulumAngle * 1.1920928955078125E-7;
+    PID_Controller_DW.theta_sum += theta_cal;
+    if (PID_Controller_DW.sample_count >= PID_Controller_DW.N) {
+      PID_Controller_DW.theta0 = PID_Controller_DW.theta_sum /
+        PID_Controller_DW.N;
+      PID_Controller_DW.calibrated = true;
+      theta_cal = ((real_T)rtb_PendulumAngle * 1.1920928955078125E-7 -
+                   PID_Controller_DW.theta0) + 6.2831853071795862;
+    }
+  } else {
+    theta_cal = ((real_T)rtb_PendulumAngle * 1.1920928955078125E-7 -
+                 PID_Controller_DW.theta0) + 6.2831853071795862;
+  }
+
+  /* End of MATLAB Function: '<S1>/MATLAB Function1' */
+
+  /* DiscreteTransferFcn: '<S1>/Low Pass Filter' */
+  theta_cal = (theta_cal - PID_Controller_P.LowPassFilter_DenCoef[1L] *
+               PID_Controller_DW.LowPassFilter_states) /
+    PID_Controller_P.LowPassFilter_DenCoef[0];
+
+  /* Sum: '<Root>/Add' incorporates:
+   *  Constant: '<Root>/Pi'
+   *  DiscreteTransferFcn: '<S1>/Low Pass Filter'
+   */
+  rtb_Add = (PID_Controller_P.LowPassFilter_NumCoef[0] * theta_cal +
+             PID_Controller_P.LowPassFilter_NumCoef[1L] *
+             PID_Controller_DW.LowPassFilter_states) - PID_Controller_P.Pi_Value;
+
+  /* Gain: '<S47>/Filter Coefficient' incorporates:
+   *  DiscreteIntegrator: '<S39>/Filter'
+   *  Gain: '<S37>/Derivative Gain'
+   *  Sum: '<S39>/SumD'
+   */
+  rtb_FilterCoefficient = (PID_Controller_P.PIDController1_D * rtb_Add -
+    PID_Controller_DW.Filter_DSTATE) * PID_Controller_P.PIDController1_N;
+
+  /* Sum: '<S53>/Sum' incorporates:
+   *  DiscreteIntegrator: '<S44>/Integrator'
+   *  Gain: '<S49>/Proportional Gain'
+   */
+  PID_Controller_B.Saturation = (PID_Controller_P.PIDController1_P * rtb_Add +
+    PID_Controller_DW.Integrator_DSTATE) + rtb_FilterCoefficient;
+
+  /* Saturate: '<S51>/Saturation' */
+  if (PID_Controller_B.Saturation >
+      PID_Controller_P.PIDController1_UpperSaturationL) {
+    /* Sum: '<S53>/Sum' incorporates:
+     *  Saturate: '<S51>/Saturation'
+     */
+    PID_Controller_B.Saturation =
+      PID_Controller_P.PIDController1_UpperSaturationL;
+  } else if (PID_Controller_B.Saturation <
+             PID_Controller_P.PIDController1_LowerSaturationL) {
+    /* Sum: '<S53>/Sum' incorporates:
+     *  Saturate: '<S51>/Saturation'
+     */
+    PID_Controller_B.Saturation =
+      PID_Controller_P.PIDController1_LowerSaturationL;
+  }
+
+  /* End of Saturate: '<S51>/Saturation' */
+  /* Abs: '<Root>/Abs' */
+  PID_Controller_B.Abs = fabs(rtb_Add);
+
+  /* Switch: '<Root>/Switch' incorporates:
+   *  Constant: '<Root>/Constant1'
+   */
+  if (PID_Controller_B.Abs > PID_Controller_P.Switch_Threshold) {
+    rtb_Gain = PID_Controller_P.Constant1_Value;
+  } else {
+    rtb_Gain = PID_Controller_B.Saturation;
+  }
+
+  /* Gain: '<S2>/Gain' incorporates:
+   *  Switch: '<Root>/Switch'
+   */
+  rtb_Gain *= PID_Controller_P.Gain_Gain;
+
+  /* MATLAB Function: '<S2>/Select PWM Direction' */
+  PID_Controller_DW.sfEvent = PID_Controller_CALL_EVENT;
+  if (rtb_Gain > 0.0) {
+    negPWM = 0.0;
+  } else {
+    negPWM = -rtb_Gain;
+    rtb_Gain = 0.0;
+  }
+
+  /* End of MATLAB Function: '<S2>/Select PWM Direction' */
+
+  /* MATLABSystem: '<S2>/PWM' */
+  PID_Controller_DW.obj_o.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(5UL);
+
+  /* Start for MATLABSystem: '<S2>/PWM' */
+  if (!(rtb_Gain <= 255.0)) {
+    rtb_Gain = 255.0;
+  }
+
+  /* MATLABSystem: '<S2>/PWM' */
+  MW_PWM_SetDutyCycle(PID_Controller_DW.obj_o.PWMDriverObj.MW_PWM_HANDLE,
+                      rtb_Gain);
+
+  /* MATLABSystem: '<S2>/PWM1' */
+  PID_Controller_DW.obj_c.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(6UL);
+
+  /* Start for MATLABSystem: '<S2>/PWM1' */
+  if (!(negPWM <= 255.0)) {
+    negPWM = 255.0;
+  }
+
+  /* MATLABSystem: '<S2>/PWM1' */
+  MW_PWM_SetDutyCycle(PID_Controller_DW.obj_c.PWMDriverObj.MW_PWM_HANDLE, negPWM);
+
+  /* MATLABSystem: '<S1>/Moving Average1' */
+  if (PID_Controller_DW.obj_i.TunablePropsChanged) {
+    PID_Controller_DW.obj_i.TunablePropsChanged = false;
+  }
+
+  PID_Controller_DW.obj_i.pCumSum = 0.0;
+  PID_Controller_DW.obj_i.pCumSumRev = 0.0;
+  PID_Controller_DW.obj_i.pCumRevIndex = 1.0;
+  if (PID_Controller_DW.obj_i.pModValueRev > 0.0) {
+    PID_Controller_DW.obj_i.pModValueRev--;
+  } else {
+    PID_Controller_DW.obj_i.pModValueRev = 0.0;
+  }
+
+  /* End of MATLABSystem: '<S1>/Moving Average1' */
+
+  /* MATLABSystem: '<S4>/Digital Output1' incorporates:
+   *  Constant: '<S4>/Constant2'
+   */
+  rtb_Gain = rt_roundd_snf(PID_Controller_P.Constant2_Value);
+  if (rtb_Gain < 256.0) {
+    if (rtb_Gain >= 0.0) {
+      tmp = (uint8_T)rtb_Gain;
+    } else {
+      tmp = 0U;
+    }
+  } else {
+    tmp = MAX_uint8_T;
+  }
+
+  writeDigitalPin(7, tmp);
+
+  /* End of MATLABSystem: '<S4>/Digital Output1' */
+
+  /* MATLABSystem: '<S4>/Digital Output2' */
+  if (rtb_Gain < 256.0) {
+    if (rtb_Gain >= 0.0) {
+      tmp = (uint8_T)rtb_Gain;
+    } else {
+      tmp = 0U;
+    }
+  } else {
+    tmp = MAX_uint8_T;
+  }
+
+  writeDigitalPin(8, tmp);
+
+  /* End of MATLABSystem: '<S4>/Digital Output2' */
+
+  /* Update for DiscreteTransferFcn: '<S1>/Low Pass Filter' */
+  PID_Controller_DW.LowPassFilter_states = theta_cal;
+
+  /* Update for DiscreteIntegrator: '<S44>/Integrator' incorporates:
+   *  Gain: '<S41>/Integral Gain'
+   */
+  PID_Controller_DW.Integrator_DSTATE += PID_Controller_P.PIDController1_I *
+    rtb_Add * PID_Controller_P.Integrator_gainval;
+
+  /* Update for DiscreteIntegrator: '<S39>/Filter' */
+  PID_Controller_DW.Filter_DSTATE += PID_Controller_P.Filter_gainval *
+    rtb_FilterCoefficient;
 
   /* Update absolute time */
   /* The "clockTick0" counts the number of times the code of this task has
@@ -268,188 +474,24 @@ void PID_Controller_step0(void)        /* Sample time: [0.01s, 0.0s] */
 void PID_Controller_step1(void)        /* Sample time: [0.02s, 0.0s] */
 {
   int64m_T rtb_TickstoRPM;
-  real_T Diff;
-  real_T cumRevIndex_0;
-  real_T rtb_FilterCoefficient;
-  real_T rtb_TSamp;
+  real_T csum;
   int32_T qY;
   uint32_T tmp;
   uint32_T tmp_0;
-  int16_T cumRevIndex;
-  uint16_T b_varargout_1;
-  uint8_T tmp_1;
 
-  /* MATLABSystem: '<S1>/Analog Input' */
-  PID_Controller_DW.obj_h.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
-    MW_AnalogIn_GetHandle(14UL);
-  MW_AnalogInSingle_ReadResult
-    (PID_Controller_DW.obj_h.AnalogInDriverObj.MW_ANALOGIN_HANDLE,
-     &b_varargout_1, MW_ANALOGIN_UINT16);
-
-  /* Sum: '<S1>/Add' incorporates:
-   *  Constant: '<S1>/Constant'
-   *  Gain: '<S1>/Volt2Rad'
-   *  MATLABSystem: '<S1>/Analog Input'
-   * */
-  PID_Controller_B.PendulumAngle = (real_T)((uint32_T)
-    PID_Controller_P.Volt2Rad_Gain * b_varargout_1) * 1.1920928955078125E-7 +
-    PID_Controller_P.Constant_Value;
-
-  /* SampleTimeMath: '<S6>/TSamp'
-   *
-   * About '<S6>/TSamp':
-   *  y = u * K where K = 1 / ( w * Ts )
-   *   */
-  rtb_TSamp = PID_Controller_B.PendulumAngle * PID_Controller_P.TSamp_WtEt;
-
-  /* Sum: '<S6>/Diff' incorporates:
-   *  UnitDelay: '<S6>/UD'
-   */
-  Diff = rtb_TSamp - PID_Controller_DW.UD_DSTATE;
-
-  /* MATLABSystem: '<S1>/Moving Average' */
-  if (PID_Controller_DW.obj_i.TunablePropsChanged) {
-    PID_Controller_DW.obj_i.TunablePropsChanged = false;
+  /* MATLABSystem: '<S7>/Encoder' */
+  if (PID_Controller_DW.obj_a.TunablePropsChanged) {
+    PID_Controller_DW.obj_a.TunablePropsChanged = false;
   }
 
-  PID_Controller_B.z = 0.0;
+  /* MATLABSystem: '<S7>/Encoder' */
+  MW_EncoderRead(PID_Controller_DW.obj_a.Index, &PID_Controller_B.Encoder);
 
-  /* SignalConversion generated from: '<S1>/Moving Average' incorporates:
-   *  MATLABSystem: '<S1>/Moving Average'
-   */
-  PID_Controller_B.TmpMLSysMemLayoutBufferAtMoving = 0.0;
+  /* MATLABSystem: '<S7>/Encoder' */
+  MW_EncoderReset(PID_Controller_DW.obj_a.Index);
 
-  /* MATLABSystem: '<S1>/Moving Average' */
-  PID_Controller_B.csum = PID_Controller_DW.obj_i.pCumSum + Diff;
-  if (PID_Controller_DW.obj_i.pModValueRev == 0.0) {
-    PID_Controller_B.z = PID_Controller_DW.obj_i.pCumSumRev[(int16_T)
-      PID_Controller_DW.obj_i.pCumRevIndex - 1] + PID_Controller_B.csum;
-  }
-
-  PID_Controller_DW.obj_i.pCumSumRev[(int16_T)
-    PID_Controller_DW.obj_i.pCumRevIndex - 1] = Diff;
-  if (PID_Controller_DW.obj_i.pCumRevIndex != 2.0) {
-    cumRevIndex = 2;
-  } else {
-    cumRevIndex = 1;
-    PID_Controller_B.csum = 0.0;
-    PID_Controller_DW.obj_i.pCumSumRev[0] += PID_Controller_DW.obj_i.pCumSumRev
-      [1];
-  }
-
-  if (PID_Controller_DW.obj_i.pModValueRev == 0.0) {
-    /* SignalConversion generated from: '<S1>/Moving Average' */
-    PID_Controller_B.TmpMLSysMemLayoutBufferAtMoving = PID_Controller_B.z / 3.0;
-  }
-
-  PID_Controller_DW.obj_i.pCumSum = PID_Controller_B.csum;
-  PID_Controller_DW.obj_i.pCumRevIndex = cumRevIndex;
-  if (PID_Controller_DW.obj_i.pModValueRev > 0.0) {
-    PID_Controller_DW.obj_i.pModValueRev--;
-  } else {
-    PID_Controller_DW.obj_i.pModValueRev = 0.0;
-  }
-
-  /* Sum: '<Root>/Add' incorporates:
-   *  Constant: '<Root>/Pi'
-   */
-  Diff = PID_Controller_B.PendulumAngle - PID_Controller_P.Pi_Value;
-
-  /* Gain: '<S100>/Filter Coefficient' incorporates:
-   *  DiscreteIntegrator: '<S92>/Filter'
-   *  Gain: '<S90>/Derivative Gain'
-   *  Sum: '<S92>/SumD'
-   */
-  rtb_FilterCoefficient = (PID_Controller_P.PIDController_D * Diff -
-    PID_Controller_DW.Filter_DSTATE) * PID_Controller_P.PIDController_N;
-
-  /* Sum: '<S106>/Sum' incorporates:
-   *  DiscreteIntegrator: '<S97>/Integrator'
-   *  Gain: '<S102>/Proportional Gain'
-   */
-  PID_Controller_B.Saturation = (PID_Controller_P.PIDController_P * Diff +
-    PID_Controller_DW.Integrator_DSTATE) + rtb_FilterCoefficient;
-
-  /* Saturate: '<S104>/Saturation' */
-  if (PID_Controller_B.Saturation >
-      PID_Controller_P.PIDController_UpperSaturationLi) {
-    /* Sum: '<S106>/Sum' incorporates:
-     *  Saturate: '<S104>/Saturation'
-     */
-    PID_Controller_B.Saturation =
-      PID_Controller_P.PIDController_UpperSaturationLi;
-  } else if (PID_Controller_B.Saturation <
-             PID_Controller_P.PIDController_LowerSaturationLi) {
-    /* Sum: '<S106>/Sum' incorporates:
-     *  Saturate: '<S104>/Saturation'
-     */
-    PID_Controller_B.Saturation =
-      PID_Controller_P.PIDController_LowerSaturationLi;
-  }
-
-  /* End of Saturate: '<S104>/Saturation' */
-  /* Abs: '<Root>/Abs' */
-  PID_Controller_B.Abs = fabs(Diff);
-
-  /* Switch: '<Root>/Switch' incorporates:
-   *  Constant: '<Root>/Constant1'
-   */
-  if (PID_Controller_B.Abs > PID_Controller_P.Switch_Threshold) {
-    PID_Controller_B.z = PID_Controller_P.Constant1_Value;
-  } else {
-    PID_Controller_B.z = PID_Controller_B.Saturation;
-  }
-
-  /* End of Switch: '<Root>/Switch' */
-
-  /* MATLAB Function: '<S3>/Select PWM Direction' */
-  PID_Controller_DW.sfEvent = PID_Controller_CALL_EVENT;
-  if (PID_Controller_B.z > 0.0) {
-    PID_Controller_B.csum = 0.0;
-  } else {
-    PID_Controller_B.csum = -PID_Controller_B.z;
-    PID_Controller_B.z = 0.0;
-  }
-
-  /* End of MATLAB Function: '<S3>/Select PWM Direction' */
-
-  /* MATLABSystem: '<S3>/PWM' */
-  PID_Controller_DW.obj_d.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(5UL);
-
-  /* Start for MATLABSystem: '<S3>/PWM' */
-  if (!(PID_Controller_B.z <= 255.0)) {
-    PID_Controller_B.z = 255.0;
-  }
-
-  /* MATLABSystem: '<S3>/PWM' */
-  MW_PWM_SetDutyCycle(PID_Controller_DW.obj_d.PWMDriverObj.MW_PWM_HANDLE,
-                      PID_Controller_B.z);
-
-  /* MATLABSystem: '<S3>/PWM1' */
-  PID_Controller_DW.obj_e.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(6UL);
-
-  /* Start for MATLABSystem: '<S3>/PWM1' */
-  if (!(PID_Controller_B.csum <= 255.0)) {
-    PID_Controller_B.csum = 255.0;
-  }
-
-  /* MATLABSystem: '<S3>/PWM1' */
-  MW_PWM_SetDutyCycle(PID_Controller_DW.obj_e.PWMDriverObj.MW_PWM_HANDLE,
-                      PID_Controller_B.csum);
-
-  /* MATLABSystem: '<S8>/Encoder' */
-  if (PID_Controller_DW.obj_l.TunablePropsChanged) {
-    PID_Controller_DW.obj_l.TunablePropsChanged = false;
-  }
-
-  /* MATLABSystem: '<S8>/Encoder' */
-  MW_EncoderRead(PID_Controller_DW.obj_l.Index, &PID_Controller_B.Encoder);
-
-  /* MATLABSystem: '<S8>/Encoder' */
-  MW_EncoderReset(PID_Controller_DW.obj_l.Index);
-
-  /* MATLAB Function: '<S8>/Filter for data dropouts' */
-  PID_Controller_DW.sfEvent_e = PID_Controller_CALL_EVENT;
+  /* MATLAB Function: '<S7>/Filter for data dropouts' */
+  PID_Controller_DW.sfEvent_k = PID_Controller_CALL_EVENT;
   if (!PID_Controller_DW.prevVal_not_empty) {
     PID_Controller_DW.prevVal = PID_Controller_B.Encoder;
     PID_Controller_DW.prevVal_not_empty = true;
@@ -474,114 +516,57 @@ void PID_Controller_step1(void)        /* Sample time: [0.02s, 0.0s] */
   }
 
   if (qY <= 200L) {
-    PID_Controller_DW.prevVal = PID_Controller_B.Encoder;
+    if (PID_Controller_B.Encoder < 0L) {
+      if (PID_Controller_B.Encoder <= MIN_int32_T) {
+        qY = MAX_int32_T;
+      } else {
+        qY = -PID_Controller_B.Encoder;
+      }
+    } else {
+      qY = PID_Controller_B.Encoder;
+    }
+
+    if (qY <= 500L) {
+      PID_Controller_DW.prevVal = PID_Controller_B.Encoder;
+    }
   }
 
-  /* End of MATLAB Function: '<S8>/Filter for data dropouts' */
+  /* End of MATLAB Function: '<S7>/Filter for data dropouts' */
 
-  /* Gain: '<S8>/Ticks to RPM' */
+  /* Gain: '<S7>/Ticks to RPM' */
   tmp = (uint32_T)PID_Controller_P.TickstoRPM_Gain;
   tmp_0 = (uint32_T)PID_Controller_DW.prevVal;
   sMultiWordMul(&tmp, 1, &tmp_0, 1, &rtb_TickstoRPM.chunks[0U], 2);
 
-  /* MATLABSystem: '<S8>/Moving Average' */
+  /* MATLABSystem: '<S7>/Moving Average' incorporates:
+   *  DataTypeConversion: '<S7>/Data Type Conversion'
+   */
   if (PID_Controller_DW.obj.TunablePropsChanged) {
     PID_Controller_DW.obj.TunablePropsChanged = false;
   }
 
-  PID_Controller_B.z = 0.0;
-
-  /* MATLABSystem: '<S8>/Moving Average' */
-  PID_Controller_B.MovingAverage = 0.0;
-
-  /* MATLABSystem: '<S8>/Moving Average' incorporates:
-   *  DataTypeConversion: '<S8>/Data Type Conversion'
-   */
-  PID_Controller_B.csum = sMultiWord2Double(&rtb_TickstoRPM.chunks[0U], 2, 0) *
-    1.862645149230957E-9 + PID_Controller_DW.obj.pCumSum;
-  if (PID_Controller_DW.obj.pModValueRev == 0.0) {
-    PID_Controller_B.z = PID_Controller_DW.obj.pCumSumRev[(int16_T)
-      PID_Controller_DW.obj.pCumRevIndex - 1] + PID_Controller_B.csum;
-  }
-
+  csum = sMultiWord2Double(&rtb_TickstoRPM.chunks[0U], 2, 0) *
+    7.4505805969238281E-9 + PID_Controller_DW.obj.pCumSum;
   PID_Controller_DW.obj.pCumSumRev[(int16_T)PID_Controller_DW.obj.pCumRevIndex -
     1] = sMultiWord2Double(&rtb_TickstoRPM.chunks[0U], 2, 0) *
-    1.862645149230957E-9;
+    7.4505805969238281E-9;
   if (PID_Controller_DW.obj.pCumRevIndex != 3.0) {
-    cumRevIndex_0 = PID_Controller_DW.obj.pCumRevIndex + 1.0;
+    PID_Controller_DW.obj.pCumRevIndex++;
   } else {
-    cumRevIndex_0 = 1.0;
-    PID_Controller_B.csum = 0.0;
+    PID_Controller_DW.obj.pCumRevIndex = 1.0;
+    csum = 0.0;
     PID_Controller_DW.obj.pCumSumRev[1] += PID_Controller_DW.obj.pCumSumRev[2];
     PID_Controller_DW.obj.pCumSumRev[0] += PID_Controller_DW.obj.pCumSumRev[1];
   }
 
-  if (PID_Controller_DW.obj.pModValueRev == 0.0) {
-    /* MATLABSystem: '<S8>/Moving Average' */
-    PID_Controller_B.MovingAverage = PID_Controller_B.z / 4.0;
-  }
-
-  PID_Controller_DW.obj.pCumSum = PID_Controller_B.csum;
-  PID_Controller_DW.obj.pCumRevIndex = cumRevIndex_0;
+  PID_Controller_DW.obj.pCumSum = csum;
   if (PID_Controller_DW.obj.pModValueRev > 0.0) {
     PID_Controller_DW.obj.pModValueRev--;
   } else {
     PID_Controller_DW.obj.pModValueRev = 0.0;
   }
 
-  /* MATLABSystem: '<S5>/Digital Output1' incorporates:
-   *  Constant: '<S5>/Constant2'
-   */
-  PID_Controller_B.z = rt_roundd_snf(PID_Controller_P.Constant2_Value);
-  if (PID_Controller_B.z < 256.0) {
-    if (PID_Controller_B.z >= 0.0) {
-      tmp_1 = (uint8_T)PID_Controller_B.z;
-    } else {
-      tmp_1 = 0U;
-    }
-  } else {
-    tmp_1 = MAX_uint8_T;
-  }
-
-  writeDigitalPin(7, tmp_1);
-
-  /* End of MATLABSystem: '<S5>/Digital Output1' */
-
-  /* MATLABSystem: '<S5>/Digital Output2' */
-  if (PID_Controller_B.z < 256.0) {
-    if (PID_Controller_B.z >= 0.0) {
-      tmp_1 = (uint8_T)PID_Controller_B.z;
-    } else {
-      tmp_1 = 0U;
-    }
-  } else {
-    tmp_1 = MAX_uint8_T;
-  }
-
-  writeDigitalPin(8, tmp_1);
-
-  /* End of MATLABSystem: '<S5>/Digital Output2' */
-  /* Update for UnitDelay: '<S6>/UD' */
-  PID_Controller_DW.UD_DSTATE = rtb_TSamp;
-
-  /* Update for DiscreteIntegrator: '<S97>/Integrator' incorporates:
-   *  Gain: '<S94>/Integral Gain'
-   */
-  PID_Controller_DW.Integrator_DSTATE += PID_Controller_P.PIDController_I * Diff
-    * PID_Controller_P.Integrator_gainval;
-
-  /* Update for DiscreteIntegrator: '<S92>/Filter' */
-  PID_Controller_DW.Filter_DSTATE += PID_Controller_P.Filter_gainval *
-    rtb_FilterCoefficient;
-
-  /* Update for DiscreteIntegrator: '<S3>/Position Integration' incorporates:
-   *  Gain: '<S3>/RPM to rad//s'
-   *  Gain: '<S3>/rad//s to m//s'
-   */
-  PID_Controller_DW.PositionIntegration_DSTATE +=
-    PID_Controller_P.RPMtorads_Gain * PID_Controller_B.MovingAverage *
-    PID_Controller_P.radstoms_Gain *
-    PID_Controller_P.PositionIntegration_gainval;
+  /* End of MATLABSystem: '<S7>/Moving Average' */
 
   /* Update absolute time */
   /* The "clockTick1" counts the number of times the code of this task has
@@ -612,15 +597,15 @@ void PID_Controller_initialize(void)
   rtmSetTFinal(PID_Controller_M, -1);
 
   /* External mode info */
-  PID_Controller_M->Sizes.checksums[0] = (397075946U);
-  PID_Controller_M->Sizes.checksums[1] = (672643039U);
-  PID_Controller_M->Sizes.checksums[2] = (1141968893U);
-  PID_Controller_M->Sizes.checksums[3] = (4236111869U);
+  PID_Controller_M->Sizes.checksums[0] = (3176570211U);
+  PID_Controller_M->Sizes.checksums[1] = (1874537539U);
+  PID_Controller_M->Sizes.checksums[2] = (1646765576U);
+  PID_Controller_M->Sizes.checksums[3] = (2006834060U);
 
   {
     static const sysRanDType rtAlwaysEnabled = SUBSYS_RAN_BC_ENABLE;
     static RTWExtModeInfo rt_ExtModeInfo;
-    static const sysRanDType *systemRan[12];
+    static const sysRanDType *systemRan[13];
     PID_Controller_M->extModeInfo = (&rt_ExtModeInfo);
     rteiSetSubSystemActiveVectorAddresses(&rt_ExtModeInfo, systemRan);
     systemRan[0] = &rtAlwaysEnabled;
@@ -635,6 +620,7 @@ void PID_Controller_initialize(void)
     systemRan[9] = &rtAlwaysEnabled;
     systemRan[10] = &rtAlwaysEnabled;
     systemRan[11] = &rtAlwaysEnabled;
+    systemRan[12] = &rtAlwaysEnabled;
     rteiSetModelMappingInfoPtr(PID_Controller_M->extModeInfo,
       &PID_Controller_M->SpecialInfo.mappingInfo);
     rteiSetChecksumsPtr(PID_Controller_M->extModeInfo,
@@ -650,101 +636,110 @@ void PID_Controller_initialize(void)
   (void) memset((void *)&PID_Controller_DW, 0,
                 sizeof(DW_PID_Controller_T));
 
-  /* Start for MATLABSystem: '<S1>/Analog Input' */
-  PID_Controller_DW.obj_h.matlabCodegenIsDeleted = false;
-  PID_Controller_DW.objisempty_i = true;
-  PID_Controller_DW.obj_h.isInitialized = 1L;
-  PID_Controller_DW.obj_h.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
+  /* Start for MATLABSystem: '<S1>/Analog Input1' */
+  PID_Controller_DW.obj_j.matlabCodegenIsDeleted = false;
+  PID_Controller_DW.objisempty_ay = true;
+  PID_Controller_DW.obj_j.isInitialized = 1L;
+  PID_Controller_DW.obj_j.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
     MW_AnalogInSingle_Open(14UL);
-  PID_Controller_DW.obj_h.isSetupComplete = true;
+  PID_Controller_DW.obj_j.isSetupComplete = true;
 
-  /* Start for MATLABSystem: '<S1>/Moving Average' */
+  /* Start for MATLABSystem: '<S2>/PWM' */
+  PID_Controller_DW.obj_o.matlabCodegenIsDeleted = false;
+  PID_Controller_DW.objisempty_n = true;
+  PID_Controller_DW.obj_o.isInitialized = 1L;
+  PID_Controller_DW.obj_o.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_Open(5UL, 0.0, 0.0);
+  PID_Controller_DW.obj_o.isSetupComplete = true;
+
+  /* Start for MATLABSystem: '<S2>/PWM1' */
+  PID_Controller_DW.obj_c.matlabCodegenIsDeleted = false;
+  PID_Controller_DW.objisempty_c = true;
+  PID_Controller_DW.obj_c.isInitialized = 1L;
+  PID_Controller_DW.obj_c.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_Open(6UL, 0.0, 0.0);
+  PID_Controller_DW.obj_c.isSetupComplete = true;
+
+  /* Start for MATLABSystem: '<S1>/Moving Average1' */
   PID_Controller_DW.obj_i.isInitialized = 0L;
   PID_Controller_DW.obj_i.NumChannels = -1L;
   PID_Controller_DW.obj_i.FrameLength = -1L;
   PID_Controller_DW.obj_i.matlabCodegenIsDeleted = false;
-  PID_Controller_DW.objisempty_c = true;
+  PID_Controller_DW.objisempty_k = true;
   PID_Controller_SystemCore_setup(&PID_Controller_DW.obj_i);
 
-  /* Start for MATLABSystem: '<S3>/PWM' */
-  PID_Controller_DW.obj_d.matlabCodegenIsDeleted = false;
-  PID_Controller_DW.objisempty_f = true;
-  PID_Controller_DW.obj_d.isInitialized = 1L;
-  PID_Controller_DW.obj_d.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_Open(5UL, 0.0, 0.0);
-  PID_Controller_DW.obj_d.isSetupComplete = true;
+  /* Start for MATLABSystem: '<S4>/Digital Output1' */
+  PID_Controller_DW.obj_b.matlabCodegenIsDeleted = false;
+  PID_Controller_DW.objisempty_a = true;
+  PID_Controller_DW.obj_b.isInitialized = 1L;
+  digitalIOSetup(7, 1);
+  PID_Controller_DW.obj_b.isSetupComplete = true;
 
-  /* Start for MATLABSystem: '<S3>/PWM1' */
-  PID_Controller_DW.obj_e.matlabCodegenIsDeleted = false;
-  PID_Controller_DW.objisempty_og = true;
-  PID_Controller_DW.obj_e.isInitialized = 1L;
-  PID_Controller_DW.obj_e.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_Open(6UL, 0.0, 0.0);
-  PID_Controller_DW.obj_e.isSetupComplete = true;
+  /* Start for MATLABSystem: '<S4>/Digital Output2' */
+  PID_Controller_DW.obj_h.matlabCodegenIsDeleted = false;
+  PID_Controller_DW.objisempty = true;
+  PID_Controller_DW.obj_h.isInitialized = 1L;
+  digitalIOSetup(8, 1);
+  PID_Controller_DW.obj_h.isSetupComplete = true;
 
-  /* Start for MATLABSystem: '<S8>/Encoder' */
-  PID_Controller_DW.obj_l.Index = 0U;
-  PID_Controller_DW.obj_l.matlabCodegenIsDeleted = false;
-  PID_Controller_DW.objisempty_m = true;
-  PID_Controller_DW.obj_l.isSetupComplete = false;
-  PID_Controller_DW.obj_l.isInitialized = 1L;
-  MW_EncoderSetup(2UL, 3UL, &PID_Controller_DW.obj_l.Index);
-  PID_Controller_DW.obj_l.isSetupComplete = true;
-  PID_Controller_DW.obj_l.TunablePropsChanged = false;
+  /* Start for MATLABSystem: '<S7>/Encoder' */
+  PID_Controller_DW.obj_a.Index = 0U;
+  PID_Controller_DW.obj_a.matlabCodegenIsDeleted = false;
+  PID_Controller_DW.objisempty_g = true;
+  PID_Controller_DW.obj_a.isSetupComplete = false;
+  PID_Controller_DW.obj_a.isInitialized = 1L;
+  MW_EncoderSetup(2UL, 3UL, &PID_Controller_DW.obj_a.Index);
+  PID_Controller_DW.obj_a.isSetupComplete = true;
+  PID_Controller_DW.obj_a.TunablePropsChanged = false;
 
-  /* Start for MATLABSystem: '<S8>/Moving Average' */
+  /* Start for MATLABSystem: '<S7>/Moving Average' */
   PID_Controller_DW.obj.isInitialized = 0L;
   PID_Controller_DW.obj.NumChannels = -1L;
   PID_Controller_DW.obj.FrameLength = -1L;
   PID_Controller_DW.obj.matlabCodegenIsDeleted = false;
-  PID_Controller_DW.objisempty_o = true;
+  PID_Controller_DW.objisempty_f = true;
   PID_Controll_SystemCore_setup_k(&PID_Controller_DW.obj);
 
-  /* Start for MATLABSystem: '<S5>/Digital Output1' */
-  PID_Controller_DW.obj_n.matlabCodegenIsDeleted = false;
-  PID_Controller_DW.objisempty_j = true;
-  PID_Controller_DW.obj_n.isInitialized = 1L;
-  digitalIOSetup(7, 1);
-  PID_Controller_DW.obj_n.isSetupComplete = true;
+  /* InitializeConditions for DiscreteTransferFcn: '<S1>/Low Pass Filter' */
+  PID_Controller_DW.LowPassFilter_states =
+    PID_Controller_P.LowPassFilter_InitialStates;
 
-  /* Start for MATLABSystem: '<S5>/Digital Output2' */
-  PID_Controller_DW.obj_m.matlabCodegenIsDeleted = false;
-  PID_Controller_DW.objisempty = true;
-  PID_Controller_DW.obj_m.isInitialized = 1L;
-  digitalIOSetup(8, 1);
-  PID_Controller_DW.obj_m.isSetupComplete = true;
-
-  /* InitializeConditions for UnitDelay: '<S6>/UD' */
-  PID_Controller_DW.UD_DSTATE = PID_Controller_P.DiscreteDerivative_ICPrevScaled;
-
-  /* InitializeConditions for DiscreteIntegrator: '<S97>/Integrator' */
+  /* InitializeConditions for DiscreteIntegrator: '<S44>/Integrator' */
   PID_Controller_DW.Integrator_DSTATE =
-    PID_Controller_P.PIDController_InitialConditio_f;
+    PID_Controller_P.PIDController1_InitialConditi_d;
 
-  /* InitializeConditions for DiscreteIntegrator: '<S92>/Filter' */
+  /* InitializeConditions for DiscreteIntegrator: '<S39>/Filter' */
   PID_Controller_DW.Filter_DSTATE =
-    PID_Controller_P.PIDController_InitialConditionF;
+    PID_Controller_P.PIDController1_InitialCondition;
 
-  /* InitializeConditions for DiscreteIntegrator: '<S3>/Position Integration' */
-  PID_Controller_DW.PositionIntegration_DSTATE =
-    PID_Controller_P.PositionIntegration_IC;
+  /* SystemInitialize for MATLAB Function: '<S1>/MATLAB Function1' */
+  PID_Controller_DW.N = 100.0;
+  PID_Controller_DW.N_not_empty = true;
+  PID_Controller_DW.sample_count = 0.0;
+  PID_Controller_DW.sample_count_not_empty = true;
+  PID_Controller_DW.theta_sum = 0.0;
+  PID_Controller_DW.theta_sum_not_empty = true;
+  PID_Controller_DW.theta0 = 0.0;
+  PID_Controller_DW.theta0_not_empty = true;
+  PID_Controller_DW.calibrated = false;
+  PID_Controller_DW.calibrated_not_empty = true;
+  PID_Controller_DW.sfEvent_m = PID_Controller_CALL_EVENT;
 
-  /* SystemInitialize for MATLAB Function: '<S8>/Filter for data dropouts' */
-  PID_Controller_DW.prevVal_not_empty = false;
-  PID_Controller_DW.sfEvent_e = PID_Controller_CALL_EVENT;
-
-  /* SystemInitialize for MATLAB Function: '<S3>/Select PWM Direction' */
+  /* SystemInitialize for MATLAB Function: '<S2>/Select PWM Direction' */
   PID_Controller_DW.sfEvent = PID_Controller_CALL_EVENT;
 
-  /* InitializeConditions for MATLABSystem: '<S1>/Moving Average' */
+  /* SystemInitialize for MATLAB Function: '<S7>/Filter for data dropouts' */
+  PID_Controller_DW.prevVal_not_empty = false;
+  PID_Controller_DW.sfEvent_k = PID_Controller_CALL_EVENT;
+
+  /* InitializeConditions for MATLABSystem: '<S1>/Moving Average1' */
   PID_Controller_DW.obj_i.pCumSum = 0.0;
-  PID_Controller_DW.obj_i.pCumSumRev[0] = 0.0;
-  PID_Controller_DW.obj_i.pCumSumRev[1] = 0.0;
+  PID_Controller_DW.obj_i.pCumSumRev = 0.0;
   PID_Controller_DW.obj_i.pCumRevIndex = 1.0;
   PID_Controller_DW.obj_i.pModValueRev = 0.0;
 
-  /* InitializeConditions for MATLABSystem: '<S8>/Encoder' */
-  MW_EncoderReset(PID_Controller_DW.obj_l.Index);
+  /* InitializeConditions for MATLABSystem: '<S7>/Encoder' */
+  MW_EncoderReset(PID_Controller_DW.obj_a.Index);
 
-  /* InitializeConditions for MATLABSystem: '<S8>/Moving Average' */
+  /* InitializeConditions for MATLABSystem: '<S7>/Moving Average' */
   PID_Controller_DW.obj.pCumSum = 0.0;
   PID_Controller_DW.obj.pCumSumRev[0] = 0.0;
   PID_Controller_DW.obj.pCumSumRev[1] = 0.0;
@@ -756,21 +751,49 @@ void PID_Controller_initialize(void)
 /* Model terminate function */
 void PID_Controller_terminate(void)
 {
-  /* Terminate for MATLABSystem: '<S1>/Analog Input' */
-  if (!PID_Controller_DW.obj_h.matlabCodegenIsDeleted) {
-    PID_Controller_DW.obj_h.matlabCodegenIsDeleted = true;
-    if ((PID_Controller_DW.obj_h.isInitialized == 1L) &&
-        PID_Controller_DW.obj_h.isSetupComplete) {
-      PID_Controller_DW.obj_h.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
+  /* Terminate for MATLABSystem: '<S1>/Analog Input1' */
+  if (!PID_Controller_DW.obj_j.matlabCodegenIsDeleted) {
+    PID_Controller_DW.obj_j.matlabCodegenIsDeleted = true;
+    if ((PID_Controller_DW.obj_j.isInitialized == 1L) &&
+        PID_Controller_DW.obj_j.isSetupComplete) {
+      PID_Controller_DW.obj_j.AnalogInDriverObj.MW_ANALOGIN_HANDLE =
         MW_AnalogIn_GetHandle(14UL);
       MW_AnalogIn_Close
-        (PID_Controller_DW.obj_h.AnalogInDriverObj.MW_ANALOGIN_HANDLE);
+        (PID_Controller_DW.obj_j.AnalogInDriverObj.MW_ANALOGIN_HANDLE);
     }
   }
 
-  /* End of Terminate for MATLABSystem: '<S1>/Analog Input' */
+  /* End of Terminate for MATLABSystem: '<S1>/Analog Input1' */
+  /* Terminate for MATLABSystem: '<S2>/PWM' */
+  if (!PID_Controller_DW.obj_o.matlabCodegenIsDeleted) {
+    PID_Controller_DW.obj_o.matlabCodegenIsDeleted = true;
+    if ((PID_Controller_DW.obj_o.isInitialized == 1L) &&
+        PID_Controller_DW.obj_o.isSetupComplete) {
+      PID_Controller_DW.obj_o.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(5UL);
+      MW_PWM_SetDutyCycle(PID_Controller_DW.obj_o.PWMDriverObj.MW_PWM_HANDLE,
+                          0.0);
+      PID_Controller_DW.obj_o.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(5UL);
+      MW_PWM_Close(PID_Controller_DW.obj_o.PWMDriverObj.MW_PWM_HANDLE);
+    }
+  }
 
-  /* Terminate for MATLABSystem: '<S1>/Moving Average' */
+  /* End of Terminate for MATLABSystem: '<S2>/PWM' */
+
+  /* Terminate for MATLABSystem: '<S2>/PWM1' */
+  if (!PID_Controller_DW.obj_c.matlabCodegenIsDeleted) {
+    PID_Controller_DW.obj_c.matlabCodegenIsDeleted = true;
+    if ((PID_Controller_DW.obj_c.isInitialized == 1L) &&
+        PID_Controller_DW.obj_c.isSetupComplete) {
+      PID_Controller_DW.obj_c.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(6UL);
+      MW_PWM_SetDutyCycle(PID_Controller_DW.obj_c.PWMDriverObj.MW_PWM_HANDLE,
+                          0.0);
+      PID_Controller_DW.obj_c.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(6UL);
+      MW_PWM_Close(PID_Controller_DW.obj_c.PWMDriverObj.MW_PWM_HANDLE);
+    }
+  }
+
+  /* End of Terminate for MATLABSystem: '<S2>/PWM1' */
+  /* Terminate for MATLABSystem: '<S1>/Moving Average1' */
   if (!PID_Controller_DW.obj_i.matlabCodegenIsDeleted) {
     PID_Controller_DW.obj_i.matlabCodegenIsDeleted = true;
     if ((PID_Controller_DW.obj_i.isInitialized == 1L) &&
@@ -780,48 +803,33 @@ void PID_Controller_terminate(void)
     }
   }
 
-  /* End of Terminate for MATLABSystem: '<S1>/Moving Average' */
-  /* Terminate for MATLABSystem: '<S3>/PWM' */
-  if (!PID_Controller_DW.obj_d.matlabCodegenIsDeleted) {
-    PID_Controller_DW.obj_d.matlabCodegenIsDeleted = true;
-    if ((PID_Controller_DW.obj_d.isInitialized == 1L) &&
-        PID_Controller_DW.obj_d.isSetupComplete) {
-      PID_Controller_DW.obj_d.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(5UL);
-      MW_PWM_SetDutyCycle(PID_Controller_DW.obj_d.PWMDriverObj.MW_PWM_HANDLE,
-                          0.0);
-      PID_Controller_DW.obj_d.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(5UL);
-      MW_PWM_Close(PID_Controller_DW.obj_d.PWMDriverObj.MW_PWM_HANDLE);
-    }
+  /* End of Terminate for MATLABSystem: '<S1>/Moving Average1' */
+
+  /* Terminate for MATLABSystem: '<S4>/Digital Output1' */
+  if (!PID_Controller_DW.obj_b.matlabCodegenIsDeleted) {
+    PID_Controller_DW.obj_b.matlabCodegenIsDeleted = true;
   }
 
-  /* End of Terminate for MATLABSystem: '<S3>/PWM' */
+  /* End of Terminate for MATLABSystem: '<S4>/Digital Output1' */
 
-  /* Terminate for MATLABSystem: '<S3>/PWM1' */
-  if (!PID_Controller_DW.obj_e.matlabCodegenIsDeleted) {
-    PID_Controller_DW.obj_e.matlabCodegenIsDeleted = true;
-    if ((PID_Controller_DW.obj_e.isInitialized == 1L) &&
-        PID_Controller_DW.obj_e.isSetupComplete) {
-      PID_Controller_DW.obj_e.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(6UL);
-      MW_PWM_SetDutyCycle(PID_Controller_DW.obj_e.PWMDriverObj.MW_PWM_HANDLE,
-                          0.0);
-      PID_Controller_DW.obj_e.PWMDriverObj.MW_PWM_HANDLE = MW_PWM_GetHandle(6UL);
-      MW_PWM_Close(PID_Controller_DW.obj_e.PWMDriverObj.MW_PWM_HANDLE);
-    }
+  /* Terminate for MATLABSystem: '<S4>/Digital Output2' */
+  if (!PID_Controller_DW.obj_h.matlabCodegenIsDeleted) {
+    PID_Controller_DW.obj_h.matlabCodegenIsDeleted = true;
   }
 
-  /* End of Terminate for MATLABSystem: '<S3>/PWM1' */
-  /* Terminate for MATLABSystem: '<S8>/Encoder' */
-  if (!PID_Controller_DW.obj_l.matlabCodegenIsDeleted) {
-    PID_Controller_DW.obj_l.matlabCodegenIsDeleted = true;
-    if ((PID_Controller_DW.obj_l.isInitialized == 1L) &&
-        PID_Controller_DW.obj_l.isSetupComplete) {
+  /* End of Terminate for MATLABSystem: '<S4>/Digital Output2' */
+
+  /* Terminate for MATLABSystem: '<S7>/Encoder' */
+  if (!PID_Controller_DW.obj_a.matlabCodegenIsDeleted) {
+    PID_Controller_DW.obj_a.matlabCodegenIsDeleted = true;
+    if ((PID_Controller_DW.obj_a.isInitialized == 1L) &&
+        PID_Controller_DW.obj_a.isSetupComplete) {
       MW_EncoderRelease();
     }
   }
 
-  /* End of Terminate for MATLABSystem: '<S8>/Encoder' */
-
-  /* Terminate for MATLABSystem: '<S8>/Moving Average' */
+  /* End of Terminate for MATLABSystem: '<S7>/Encoder' */
+  /* Terminate for MATLABSystem: '<S7>/Moving Average' */
   if (!PID_Controller_DW.obj.matlabCodegenIsDeleted) {
     PID_Controller_DW.obj.matlabCodegenIsDeleted = true;
     if ((PID_Controller_DW.obj.isInitialized == 1L) &&
@@ -831,18 +839,5 @@ void PID_Controller_terminate(void)
     }
   }
 
-  /* End of Terminate for MATLABSystem: '<S8>/Moving Average' */
-  /* Terminate for MATLABSystem: '<S5>/Digital Output1' */
-  if (!PID_Controller_DW.obj_n.matlabCodegenIsDeleted) {
-    PID_Controller_DW.obj_n.matlabCodegenIsDeleted = true;
-  }
-
-  /* End of Terminate for MATLABSystem: '<S5>/Digital Output1' */
-
-  /* Terminate for MATLABSystem: '<S5>/Digital Output2' */
-  if (!PID_Controller_DW.obj_m.matlabCodegenIsDeleted) {
-    PID_Controller_DW.obj_m.matlabCodegenIsDeleted = true;
-  }
-
-  /* End of Terminate for MATLABSystem: '<S5>/Digital Output2' */
+  /* End of Terminate for MATLABSystem: '<S7>/Moving Average' */
 }
