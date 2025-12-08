@@ -2,12 +2,20 @@
 \part{Further Mathematics and Physics}\label{part: further math}
 \
 \begin{chapquote}{J. Robert Oppenheimer}
-    ''The history of science is rich in the example of the fruitfulness of bringing two sets of techniques, two sets of ideas, developed in separate contexts for the pursuit of new truth, into touch with one another.''
+    ``The history of science is rich in the example of the fruitfulness of bringing two sets of techniques, two sets of ideas, developed in separate contexts for the pursuit of new truth, into touch with one another.''
 \end{chapquote}
 \chapter*{Further Mathematics Overview}
-It is my view that the 
+It is my view that the best understanding of control theory can only be attained with a proper mathematical background.
+
+For this reason, I have developed this section to serve as a foundation for more advanced mathematical concepts which you are unlikely to find in undergraduate studies. Some topics, such as complex numbers and signal analysis -- while incredibly important -- are not given great emphasis here since they are often covered in standard curriculum.
+
+Instead, I have placed an emphasis on the ideas which carry great weight in control theory but are far less discussed. I hope that the intrepid reader will gain great value from the topics discussed in this part.
 
 \chapter{Lie Theory}\label{chap:lie theory}
+
+\begin{chapquote}{Albert Camus}
+    ``If thought discovered in the shimmering mirrors of phenomena eternal relations capable of summing them up and summing themselves up in a single principle, then would be seen an intellectual joy of which the myth of the blessed would be but a ridiculous imitation.''
+\end{chapquote}
 
 % clean up the notation for groups and ensure its all the same.
 
@@ -19,7 +27,7 @@ This mathematical description is not strictly necessary to use the concepts ment
 
 Since this is a heavy subject, supplemental resources will be useful. I have compiled a list of useful videos and texts to help explain \gls{lie theory}.
 
-Both of these video sources have good visuals that introduce \gls{lie theory} in a fairly intuitive way. \cite{michael_penn_maths_2021} is more mathematically rigorous but \cite{mathemaniac_what_2023} may be a better overall introduction. \gls{lie theory} is also used extensively in physics. Typically, these sources describe the mathematics in a less rigorous way more akin to what I have done here. 
+Both of these video sources have good visuals that introduce \gls{lie theory} in a fairly intuitive way. \cite{michael_penn_maths_2021} is more mathematically rigorous but \cite{mathemaniac_what_2023} may be a better overall introduction. \gls{lie theory} is also used extensively in physics. Typically, these physics sources describe the mathematics in a less rigorous way more akin to what I have done here. 
 
 For those readers who would like to dive deeper into the  subject or prefer written material to videos, I have included several good sources. Likely the best texts to read after this one is \cite{stillwell_naive_2008} and \cite{hall_lie_2015}, which both cover much of the basics of \gls{lie theory}.
 
@@ -50,7 +58,7 @@ The other big part of \gls{lie theory} is that we can describe the attributes of
 
 The last important thing to mention is that we can convert between the \gls{lie group} and the \gls{lie algebra} using something called an \gls{exponential map}. For some groups and operations, this \gls{exponential map} is simply an exponential function. Other times, however, we need a different way to describe these exponential transformations. This will be discussed later.
 
-The most important thing to realize is that we can relate a complex non-linear system (represented in \gls{lie theory} by a group on a manifold) locally with a linearized version of the system, which we essentially 'project' onto the system via the \gls{exponential map}. All of these aspects of \gls{lie theory} are to be explored in greater detail in the coming chapter.
+The most important thing to realize is that we can relate a complex non-linear system (represented in \gls{lie theory} by a group on a manifold) locally with a linearized version of the system, which we essentially `project' onto the system via the \gls{exponential map}. All of these aspects of \gls{lie theory} are to be explored in greater detail in the coming chapter.
 
 As a final point, I believe that Lie theory is simply a beautiful theory which ties together so much mathematics. A careful study of Lie theory will unite many of the mathematical concepts you encounter.
 
@@ -200,9 +208,9 @@ In total, there are 6 ways that we can create a triangle which looks exactly the
     This brief introduction should give you everything you need to help motivate the axiomatic treatment of groups and the \glspl{lie group} that are to follow.
 \end{example}
 
-Of course, groups are much more than this. We can think of this example as being analogous to thinking of numbers as physical groups of objects. When you first learn numbers, you might picture `3' as say, `3 apples'. But the concept becomes much more powerful when you think of `3' as an abstraction -- representing many possible different things. This abstraction will be even more useful for groups, so try and keep the idea of the group flexible in your mind.
+Of course, groups are much more than this. We can think of this example as being analogous to thinking of numbers as physical groups of objects. When you first learn numbers, you might picture `3' as say, `3 things'. But the concept becomes much more powerful when you think of `3' as an abstraction -- representing many possible different things. This abstraction will be even more useful for groups, so try and keep the idea of the group flexible in your mind.
 
-If you want to dive deeper, a wonderful introductory text which is still mathematically rigorous can be found in \cite{armstrong_groups_1988}.
+If you want to dive deeper into group theory, a wonderful introductory text which is still mathematically rigorous can be found in \cite{armstrong_groups_1988}.
 
 \section{Lie Groups}
 The \gls{lie group} is in essence a group and a manifold, which is shown in \autoref{fig:Lie Group}:
@@ -308,11 +316,11 @@ I will now go over all of these properties to explain their meaning in more natu
     \item Inverse is the last property, which states that for each element in the set, there is another element in the set, that when acted upon by an operation, returns the identity. This is analogous to the inverse of a number, or inverse of a function, which you have studied in algebra.
 \end{enumerate}
 
-Lastly, I will explain what a \textit{binary operation} is. Stated simply, a binary operation is an operation which takes in two inputs and returns a single output. Most operations, such as addition, subtraction, and multiplication are binary. Something like a conditional statement ("if/else") could be a ternary operation (3 inputs instead of just 2).
+Lastly, I will explain what a \textit{binary operation} is. Stated simply, a binary operation is an operation which takes in two inputs and returns a single output. Most operations, such as addition, subtraction, and multiplication are binary. Basically, a binary operation is a simple mathematical operation between two numbers that you are familiar with.
 
 \subsubsection{Further Group Examples}
 
-Let's solidify our understanding of groups with some examples. Some of these are worked out examples (blue), and some will require the reader to work through them (red).
+Let's solidify our understanding of groups with some examples. Some of these are worked examples (blue), and some will require the reader to work through them (red).
 
 \begin{example}[The Real Numbers]
     To wrap our minds around the concepts of groups, we consider the example of the integers, $\mathbb{Z}$.
@@ -345,7 +353,7 @@ There are many more types of symmetries which you may encounter if you further s
 \begin{example}[The Quaternion Group]
 We have shown in Volume II that the quaternions form an algebra which we call $\mathbb{H}$. We define the elements of $\mathbb{H}$:
 $q=q_0+q_1i+q_2j+q_3k ,\quad q_0,q_1,q_2,q_3\in\mathbb{R}$
-    More specifically, this algebra is a four-dimensional associate unital algebra. We have the four dimensions defined by the basis: $1,i,j,k$. These elements are associative, meaning that the order in which we perform operations does not matter (the order itself, does matter!). Unital simply means that the algebra contains an identity element.
+    More specifically, this algebra is a four-dimensional associate unital algebra. We have the four dimensions defined by the basis: $1,i,j,k$. These elements are associative, meaning that the order in which we perform operations does not matter (However, the operations are not commutative!). Unital simply means that the algebra contains an identity element.
 
     We can again show all of the properties of the \gls{lie group} hold for the quaternion algebra.
 
@@ -368,6 +376,17 @@ As we can see, the there is no multiplication that we can do that gives an eleme
     \end{enumerate}
     So we have shown that the quaternions form both an algebra and a group! This is a quite interesting property. See if there are any other common mathematical objects that you can find group representations for!
 \end{example}
+
+\begin{exercise}[The Octonion Group (Hard)]
+
+The octonions are an example of another algebra. The octonions have 8 elements and are denoted by $\mathbb{O}$. The octonians are typically expressed as $x=x_0e_0+x_1e_1+x_2e_2+x_3e_3+x_4e_4+x_5e_5+x_6e_6+x_7e_7$. It is also possible to express an octonion as a pair of quaternions.
+
+\begin{enumerate}
+    \item Use the Cayley-Dickson construction to create the octonions. From the construction, what property of the quaternions have you lost?
+    \item With this knowledge, do the octonians form a group?
+
+\end{enumerate}
+\end{exercise}
 
 \subsection{Representation Theory}
 It is useful that we can describe groups axiomatically, but it is hard to do mathematical operations with groups. Luckily, we can express most groups in a way that is simpler to perform mathematical operations on. This is part of a field of mathematics called \textit{Representation Theory}.
@@ -465,10 +484,10 @@ To apply the rules of calculus, such as taking a derivative, it is necessary tha
 
 So, we can axiomatically prove that any set is a group, but how do we go further to show that it is also a smooth manifold, and thus a \gls{lie group}?
 
-Part of the answer lies in the fact that the \gls{lie group} must be smooth. This means that the spatial derivatives at a point must exist, because if it does not the surface may have a sharp discontinuity.
+Part of the answer lies in the fact that the \gls{lie group} must be smooth. This means that the spatial derivatives at a point must exist, because if it does not the surface may have a sharp discontinuity. When represented as a matrix, this property of smoothness roughly means that each component of the matrix varies smoothly. More precisely, a Lie matrix group is a continuous subgroup of $GL(n)$.\cite{weiss_lie_nodate}.
 
 \begin{example}[Manifold Nature of $SL(2)$]
-    We have shown in the previous section that $SL(n)$ forms a group. To narrow the scope of our example, we consider the case of $n=2$ and our field to be $\mathbb{R}$. We can write this in shorthand as either $SL_2(\mathbb{R})$ or $SL(2,\mathbb{R})$. Here, we will prefer the latter notation.\textbf{ (or former? It lowkey looks cooler)}
+    We have shown in the previous section that $SL(n)$ forms a group. To narrow the scope of our example, we consider the case of $n=2$ and our field to be $\mathbb{R}$. We can write this in shorthand as either $SL_2(\mathbb{R})$ or $SL(2,\mathbb{R})$. Here, we will prefer the latter notation.
 
 We noted before that $SL(2)$ is defined as the group of $2{\times}2$ matrices that have $\det =1$. We may write this as:
 $$SL(2,\mathbb{R})=\begin{bmatrix}
@@ -481,7 +500,9 @@ Using the condition on the determinant, we have $ad-bc=1$. Because the group mus
     \frac{\partial}{\partial c}(ad-bc)=-b\\
     \frac{\partial}{\partial d}(ad-bc)=a
 \end{gather}
-Since all of the partial derivatives are non-zero and there must be at least two of the elements in $a,b,c,d$ non-zero for $ad-bc=1$ to hold, we can conclude that the manifold must be smooth! 
+We can see that each element does indeed vary smoothly, because the partial derivative of the determinant with respect to each variable is a real number. In a non-rigorous way, we can think of it like this: The determinant describes something about the volume distortion of a shape. For each partial derivative, then, we see that the change in volume with respect to that direction is a finite number. Therefore, the shape itself much be smooth in some way.
+
+More precisely, since all of the partial derivatives are non-zero and there must be at least two of the elements in $a,b,c,d$ non-zero for $ad-bc=1$ to hold, we can conclude that the manifold must indeed be smooth.
 \end{example}
 
 This is all that we will say about manifold structure for now. When studying matrix \gls{lie group}, there are some special conditions that are required to show that they are manifolds, but we will only discuss \glspl{lie group} that are well behaved here and we can assume this holds. The interested reader can look into the cited sources for more information.
@@ -584,7 +605,7 @@ For a \gls{lie algebra}, we must have the following properties for the Lie brack
     \item It is bilinear (definition above)
     \item It is alternating, $[x,x]=0 \quad \forall x\in \mathfrak{g}$
     \item It is antisymmetric, meaning that $[x,y]=-[y,x] \ \forall x, y$
-    \item It satisfies the Jacobi Identity, which states that: $[x,[y,z]]+[y,[z,x]]+[z,[x,y]]=0$.\endnote{Readers of Volume II should find there properties very similar to the properties of the wedge product. The \gls{lie algebra} and the Grassman algebra over which the wedge product is defined are very similar.}
+    \item It satisfies the Jacobi Identity, which states that: $[x,[y,z]]+[y,[z,x]]+[z,[x,y]]=0$.\endnote{Readers of Volume II should find there properties very similar to the properties of the wedge product. The \gls{lie algebra} and the Grassmann algebra over which the wedge product is defined are very similar.}
 \end{itemize}
 
 I should note that the property of being alternating and being skew-symmetric are the same.\endnote{\begin{proof}
@@ -947,7 +968,7 @@ We have recovered a rotation matrix as a result! This is a very exciting result.
 \printendnotes
 
 \chapter{The Implications of Lie Theory}
-After laying out some fundamentals of \gls{lie theory}, we can start applying it to actual problems we encounter to see how we can use it in aerospace and physics applications. These applications, especially in physics, are very numerous. Here, we will focus on the applications which are especially important to rotations, differential equations, and control theory. 
+After laying out some fundamentals of \gls{lie theory}, we can start applying it to actual problems we encounter to see how we can use it in aerospace and physics applications. These applications, especially in physics, are very numerous. Here, we will focus on the applications which are especially important to rotations, differential equations, and control theory. A brief aside on the uses in physics will be presented at the end.
 
 \section{Rotations}
 We've started to discuss rotations with the circle group, but we will now expand that to include information on more general rotations and some of the other attributes.
@@ -1297,3 +1318,8 @@ For the reader interested in the mathematics behind inner product spaces, I have
 To describe field theories, we should first return to the \gls{Lagrangian} which we have discussed earlier. So far, we have discussed discrete systems. That is, systems which we can describe with a finite number of degrees of freedom.
 
 What happens if we instead try to model something which is continuous? In our applications, we can approximate any fluid as continuous. In physics, gravitational fields and electromagnetic fields are continuous. 
+
+\chapter{A Brief Tour of Complex Analysis}
+\begin{chapquote}{Jacques Hadamard}
+    The shortest path between two truths in the real domain passes through the complex domain.
+\end{chapquote}

@@ -1,28 +1,29 @@
-\part{Control Theory}\label{part:control theory}
+\part{Classic Control Theory}\label{part:control theory}
 
 
 \newpage
 \chapter*{Control Theory Overview}
-\
-Control theory is a vast subject which is to vast to cover in its entirety in one book. Similar to Volume I, then, I will cover this subject mostly in it's applicability to our application with rocket modeling and a few select aerospace applications.
 
-An introduction to control theory as a whole is essential to understanding aerospace applications. This section will cover \gls{lti} systems and the usage of the \gls{laplace transform} and transfer functions in analyzing these systems. Linear systems are quite simple to model mathematically because they exhibit useful properties such as superposition. For this reason, linear models are studied quite extensively.
+We have now arrived at the main intention of this book -- to study control systems and its various applications. Fortunately, our mathematical background developed so far will aid us greatly in this journey. Control theory is a vast subject which is too vast to cover in its entirety in one book. Similar to Volume I, then, I will cover this subject mostly in it's applicability to our application with rocket modeling and a few select aerospace applications.
 
-Next, I choose to discuss some aspects of optimal estimation and control. This has deep ties to our discussion of the calculus of variations. This section will include some discussion of Kalman filtering and some parts of optimal control in aerospace applications, such as \gls{lqr} controllers. 
+An introduction to control theory as a whole is essential to understanding aerospace applications. This section will cover \gls{lti} systems and the usage of the \gls{laplace transform} and transfer functions in analyzing these systems. Linear systems are quite simple to model mathematically because they exhibit useful properties such as superposition. For this reason, linear models are studied quite extensively. One part of linear control theory I put a particular emphasis on is studying both the frequency domain and state space representations simultaneously. 
 
-Of course, nearly all systems are non-linear to some degree. Thus, it is prudent to cover some examples where we need to model non-linear systems. Non-linear systems will be discussed in brief at the end of the chapter. Non-linear systems, in general, are hard to generalize mathematically, so I take the approach of performing linear analysis for the system. Then, we use simulation to fine tune the linear model. Non-linear dynamics are easily simulated in MATLAB, which we have shown extensively in Volume I and Volume II. This is the common method by which non-linear systems are dealt with.
+Next, I have chosen to start the study of modern control with some aspects of optimal estimation and control. This has deep ties to our discussion of the calculus of variations. This section will include some discussion of Kalman filtering and some parts of optimal control in aerospace applications, such as \gls{lqr} controllers. 
+
+Of course, nearly all systems are non-linear to some degree. Thus, it is prudent to cover some examples where we need to model non-linear systems. Non-linear systems, in general, are hard to generalize mathematically, so I take the approach of performing linear analysis for the system. Then, we use simulation to fine tune the linear model. Non-linear dynamics are easily simulated in MATLAB, which we have shown extensively in Volume I and Volume II. This is the common method by which non-linear systems are dealt with.
 
 Finally, a full example of an inverted pendulum control scheme and physical implementation is given. This example should help to tie together some of the previously discussed concepts in a real world example and demonstrate physical implementation.
 
 \chapter{Introduction to Control Theory}
-Control theory, at the fundamental level, is about understanding how a system reacts to inputs and outputs. Because this definition is so broad, we can apply control theory to a vast number of things -- even many that you may not normally think of as control theory. Classic examples of control theory include the cruise control in a car or the moving control surfaces of an aircraft to change its trajectory. However, even mundane things are control systems. The knob on your toaster than dictates how long it cooks is a control system!
+Control theory, at the fundamental level, is about understanding how a system reacts to inputs and outputs. Because this definition is so broad, we can apply control theory to a vast number of things -- even many that you may not normally think of as control theory. Classic examples of control theory include cruise control in a car or moving control surfaces in an aircraft. However, even mundane things are control systems. The knob on your toaster that dictates how long it cooks is a control system!
 
-As we can see, this definition is quite broad. So, we need to narrow it down and focus on the types of systems that we want to analyze here. We can classify systems into several main categories for further analysis.
+As we can see, this definition is quite broad. So, we need to narrow it down and focus on the types of systems that we want to analyze here. To begin, it is useful to classify the types of control systems that exist. From there, we can begin studying the systems of interest.
 
 \section{Classifications of Control Systems}
-There are several characteristics that determine the classification of a control system. First and foremost is the distinction between an open-loop system and a closed-loop system, which we must first discuss before making any other distinctions.
+There are several characteristics that determine the classification of a control system. First and foremost is the distinction between an open-loop system and a closed-loop system.
+
 \subsubsection{Open-Loop Control}
-An open loop system is one that does a predetermined outcome based on some input. You can think of this like a "if/else" statement in code. "If" the input is `this', do this certain output. If the system begins to stray from the desired value, there is no way to detect this. The system simply keeps doing the same thing no matter what happens after the input. It's like trying to trying to walk around your house with your eyes closed! It may work sometimes, but other times you will step on your cat or run into a wall. We would draw a system like this as shown in \autoref{fig:Open Loop Controller}.
+An open loop system is one that does a predetermined outcome based on some input. If the system begins to stray from the desired value, there is no way to detect this. The system simply keeps doing the same thing no matter what happens after the input. It's like trying to trying to walk around your house with your eyes closed! It may work sometimes, but other times you will step on your cat or run into a wall. We would draw a system like this as shown in \autoref{fig:Open Loop Controller}.
 
 \begin{figure}[ht]
     \centering
@@ -187,25 +188,34 @@ In fact, most of the theory of classical control theory is based around these si
 
 \chapter{The Laplace Domain}
 
-We start our exploration of linear control theory by exploring the \gls{laplace transform}. The \gls{laplace transform} is an integral transform, much like the \textit{Fourier Transform}. We find the \gls{laplace transform} of special use for its applications in solving linear differential equations. The \gls{laplace transform} is especially useful because it converts a linear differential equation into an algebraic equation. This is especially useful because we are very well versed in solving algebraic equations!
+We start our exploration of linear control theory by exploring the \gls{laplace transform}. The \gls{laplace transform} is an integral transform, much like the \textit{Fourier Transform}. We find the \gls{laplace transform} of particular importantance for its applications in solving linear differential equations. The \gls{laplace transform} is especially useful because it converts a linear differential equation into an algebraic equation. This is especially useful because we are very well versed in solving algebraic equations!
 
 This conversion of a differential equation to an algebraic equation, combined with a bit of practice, is enough to effectively use the \gls{laplace transform}. However, it doesn't give us an appreciation of \textit{what} the \gls{laplace transform} actually is. Here, I want to present an alternative impetus for the \gls{laplace transform} that is often not taught in introductory differential equations, by analyzing the \glspl{eigenfunction} of the derivative operator. I hope this explanation will be useful both to those learning the subject for the first time and to those learning the subject again. I will admit, however, this explanation will be most useful to those who have at least seen the \gls{laplace transform} before.
 
 I find this explanation especially enlightening on this topic, although others may prefer the more conventional approach to this topic. As such, I have included some resources that cover the \gls{laplace transform} in the more conventional manner.
 
-\section{Eigenfunction of Derivatives}
-\Glspl{eigenfunction} are in essence, the building blocks of the solutions for equations. When we have a linear operator, such as an integral or derivative, there must exist a function that when acted upon by this operator, is unchanged by the operator aside from being scaled. This is precisely what we mean when we define something as an \gls{eigenfunction}. I find the etymology of this word especially useful in this case. Eigen, in German, is a word meaning `self' or `own'. So, any time we see something, such as an eigenvalue or \gls{eigenfunction}, it is a quantity for which it in some way produces itself. We define the eigenfunction as follows:
+\section{Eigenfunctions}
+
+Before we start our discussion of \glspl{eigenfunction}, we should remember what eigenvalues and eigenvectors in linear algebra are. From linear algebra, we are familiar with the following equation:
+$$A\xi=\lambda\xi$$
+Where we denote an eigenvector by $\xi$ and an eigenvalue by $\lambda$. Note that $A\in\mathbb{C}^{n\times n}$ and $\xi\in\mathbb{C}^n$ in general. From this equation, we can see that the eigenvectors are the special vectors that when multiplied with $A$ are only scaled by themselves. Let's keep this in mind as we extend this concept from vectors to functions. The two situations are very analogous.
+
+\Glspl{eigenfunction} are in essence, the building blocks of the solutions for equations, much like eigenvectors are the building blocks of matrices. When we have a linear operator, such as an integral or derivative, there must exist a function that when acted upon by this operator, is unchanged by the operator aside from being scaled. This is precisely what we mean when we define something as an \gls{eigenfunction}. I find the etymology of this word especially useful in this case. Eigen, in German, is a word meaning `self' or `own'. So, any time we see something, such as an eigenvalue or \gls{eigenfunction}, it is a quantity for which it in some way produces itself. We define the eigenfunction as follows:
 $$Df=\lambda f$$
-Where $D$ is some operator, $f$ is a function, and $\lambda$ is an eigenvalue. In the context of differential equations, where the derivative operator is especially prevalent, we find such a function especially useful.
+Where $D$ is some operator, $f$ is a function, and $\lambda$ is an eigenvalue. Notice the similarity between the equation for an eigenfunction and the eigenvectors.  We have replaced the eigenvector with a function, and the matrix $A$ by an operator, $D$.
 
-It is with this context that we investigate the exponential function, $e^{ax}$, which we find useful for exactly this property. More precisely, we want to solve the eigenvalue system $Dy=\lambda y$, where we denote the differentiation operator $\frac{d}{dx}\equiv D$. We can see that, plugging in $e^{ax}$ for this system, we have this exact property:
+In differential equations, we use the total derivative to describe all of our equations. As such, finding the eigenfunction for the total derivative is especially useful for us -- and is what will lead us directly to an understanding of the Laplace transform.
+
+It is with this context that we investigate the exponential function, $e^{ax}$, which we find useful for exactly this property. More precisely, we want to solve the eigenvalue system $Df=\lambda f$, where we denote the differentiation operator $\frac{d}{dx}\equiv D$. We can see that, plugging in $e^{ax}$ for $f$, we have this exact property:
 $$De^{ax}=ae^{ax}$$
-So we have our eigenfunction, $e^{ax}$, which produces an eigenvalue $a$. Now, we want to use this useful property on equations that are not exponentials. We can think about the concept this way. There is some operation that will tell us how similar the two functions are. If they are very similar, this value will be close to 1 and we really like that function! If it is close to 0, those functions are effectively `orthogonal' to each other and we shouldn't care about it too much. 
+So we have our eigenfunction, $e^{ax}$, which produces an eigenvalue $a$. So, we have found a function $e^{ax}$ which satisfies this condition for the total derivative.
 
-Formally, we call this operation a \textit{projection} of these functions. So we can project any other function on to the exponential functions and measure their similarity. How can we project functions on to each other? That is the function of the inner product, which we discuss next.
+Now, we want to use this useful property on equations that are not purely exponential equations. We can once again lean on our experience with linear algebra to understand how we may do this. In linear algebra, we may understand how similar two vectors are with the dot product. If our two vectors are aligned, the dot product returns a value of $1$, and returns a value of $0$ when the two vectors are orthogonal to each other.\endnote{We enforce the condition that both vectors are normalized so that the dot product returns 1.}
+
+We can come up with an analogous operation when using functions instead of vectors. Formally, we call this operation a \textit{projection} of these functions. Our goal, then, is to project an arbitrary function on to the exponential functions that we have created. This will tell us how `similar' such a function is to our exponential functions. The question then arises: How can we project functions on to each other? That is the function of the inner product, which we discuss next.
 
 \section{Inner Product Spaces}
-To perform this projection, we must first define some new terminology and mathematical understanding. In mathematics, we often have a simple case which we want to generally extent. The same is true here, which will motivate our discussion of inner products.
+To perform this projection, we must first define some new terminology and mathematical understanding. In mathematics, we often have a simple case which we want to generally extend. The same is true here, which will motivate our discussion of inner products.
 
 We start with the standard definition of projection in a finite-dimensional vector space. We consider two vectors, both existing in $\mathbb{R}^2$ space, which is shown in \autoref{fig:2d vec}.
 
@@ -247,10 +257,8 @@ We start with the standard definition of projection in a finite-dimensional vect
 
 If we want to find the component of one vector in the direction of the other vector (that is to say, find the component of $\vec{b}$ in the direction of $\vec{a}$), we use the linear operation of the dot product. This quantity tells us the `similarity' of the two vectors.
 
-We can start with an intuitive definition of the dot product and build up from there.
-
-We often see the dot product written out as $$a\cdot b=|a||b|\cos\theta$$
-This definition intuitively matches our `similarity' criteria. If the two vectors have the same angle, they are very `similar', and so the $\cos\theta$ term is close to 1. However, if the two vectors are oriented $90\degree$ from each other, we see that this term goes to zero, as the vectors are completely dissimilar.
+We can start with an intuitive definition of the dot product and build up from there. We often see the dot product written out as: $$a\cdot b=|a||b|\cos\theta$$
+This definition intuitively matches our `similarity' criteria. If the two vectors have the same angle, they are very `similar', and so the $\cos\theta$ term is 1. However, if the two vectors are oriented $90\degree$ from each other, we see that this term goes to zero, as the vectors are completely dissimilar (orthogonal).
 
 This definition only has a physical meaning to us when we can define an angle between the two vectors $\vec{a}$ and $\vec{b}$. Beyond 3-dimensional space, this concept of an angle between vectors begins to be more unclear (although it is still mathematically valid).
 
@@ -394,23 +402,34 @@ We define the conjugate of $b$ to have the same real part, $\sigma$, but the ima
 \end{equation}
 
 \subsection{Generalized Inner Product Spaces}
-Now, we can make a generalization of the inner product. Say we have a continuous function, $f(x)$. We can encode $f(x)$ as a vector by taking a measurement of the value of $f(x)$ at each input $x$. However, we run into a problem, because there are an infinite number of values of $x$! So, to do this, we would need a vector of infinite length.
+Now, we can make a generalization of the inner product. Say we have a continuous function, $f(x)$. We can encode $f(x)$ as a vector by taking a measurement of the value of $f(x)$ at each input $x$. However, we run into a problem, because there are an infinite number of values of $x$. So, to do this, we would need a vector of infinite length.
 
 In this context, how would be take the inner product? We might try to do this by extending our sum out to infinity. Now our $a$ and $b$ are functions of $t$ since they are continuous in time. We may write this as something like:
 $$a(t)\cdot b(t)=\sum_{k=0}^{\infty}{a_kb_k}$$
-Since we are summing to infinity, things can get out of control now! If the values of $a$ and $b$ never go to zero, then the sum will go off to infinity and be undefined. This is no good for us -- we want to work with functions that have finite values. One thing that we do is consider a finite interval, $\tau$, which means that we are less restrictive in the selection of functions. So long as a function does not have a value that approaches $\infty$ over the range of $\tau$, then this condition is satisfied. We can mathematically define this condition:
+Since we are summing to infinity, things can get out of control now! If the values of $a$ and $b$ never go to zero, then the sum will go off to infinity and be undefined. This is no good for us -- we want to work with functions that have finite values. There are a few things that we can do here. The first is impose that $a$ and $b$ must tend to zero as they approach $\infty$. This condition is not true for a general function, but if we think about functions describing real phenomenon, this is often the case.\endnote{This is commonly supposed in physics.}
+
+Another option is that we may consider a finite interval, $\tau$, which means that we are less restrictive in the selection of functions. So long as a function does not have a value that approaches $\infty$ over the range of $\tau$, then this condition is satisfied. We can mathematically define this condition:
 $$\int_0^\tau{|f(t)|^2}dt<\infty$$
 Mathematicians define a space with these properties as a Lebesgue space. A Lebesgue space may be defined in many ways, but we will stick to a quite simple definition. We will only consider Euclidean geometry, where lengths are given by the familiar Pythagorean distance: $\sqrt{{x_1}^2+{x_2}^2+\dots {x_n}^2}$. We call this way of measuring distance a 2-norm. For a general p-norm, we can define the distance as:
 $$||x||_p=\left({|x_1|}^p+{|x_2|}^p+\dots+{|x_n|}^p\right)^{\frac{1}{p}}$$
-For now, we are only concerned with the case where $p=2$, which we call the Euclidean norm. Sometimes we use other norms, though, so it is good to introduce the general concept here.
+For now, we are only concerned with the case where $p=2$, which we call the Euclidean norm (also called the 2-norm). Sometimes we use other norms, though, so it is good to introduce the general concept here.
 
 All of this formalism leads us to the final important realization, which we call the $L^2$ space -- $L$ for Lebesgue and $2$ for the 2-norm. In an $L^2$ space defined over the range $(0,\tau)$, we write the inner product as:
 $$a(t)\cdot b(t)=\frac{1}{\tau}\int_0^\tau{a(t)\overline{b(t)}}dt$$
-I should note that the addition of $\frac{1}{\tau}$ is not strictly necessary to make this an inner product. Instead, it is there as a `normalization' factor because it is often helpful to include it.
+I should note that the addition of $\frac{1}{\tau}$ is not strictly necessary to make this an inner product. Instead, it is there as a `normalization' factor in our inner product.
+
 \subsection{Example Inner Product Spaces}
 To solidify the idea of the inner product space, we should consider several inner product spaces that we see quite frequently. After this, we will consider the inner product that leads us to the \gls{laplace transform}.
 
 \subsubsection{Fourier Series}
+
+First, lets consider one of the most prominent and simple cases of an inner product space. This inner product space will serve as a basic example which we can use to understand the other inner product spaces.
+
+I assume that most readers are familiar with the Fourier series and transform, but if not, we should briefly summarize it to gain a better understanding of what we are trying to do. The Fourier series is a way of representing a periodic function in terms of $\sin$ and $\cos$ components. Sometimes, we may see this more compactly expressed as $e^{i\theta}$.
+
+
+
+We have 
 
 \subsubsection{Legendre Polynomials}
 
@@ -418,7 +437,11 @@ To solidify the idea of the inner product space, we should consider several inne
 
 
 \section{The Laplace Transform}
-We can now return to the example of the exponential functions, $e^{at}$. We have previously seen that these exponential functions are key in describing the solutions to differential equations. To further extend this definition, we can consider values of $a$ which are complex. We generally denote such complex values as $s$, which gives us the general function: $e^{st}$. This function contains all of the possible behaviors of a linear differential equation.
+We can now return to the example of the exponential functions, $e^{at}$. We have previously seen that these exponential functions are key in describing the solutions to linear differential equations. To further extend this definition, we can consider values of $a$ which are complex. We generally denote such complex values as $s$, which gives us the general function: $e^{st}$. This function contains all of the possible behaviors of a linear differential equation.
+
+To see why this is true, lets consider the four possible scenarios:
+
+
 
 We can show this quite easily by considering the possible cases for a linear differential equation. You may think this an intractable task -- there is no way that we can possibly do every variation! You would be correct, but the property of linearity allows us to combine solutions, so there in fact only a few special cases that we need to consider:
 
@@ -548,6 +571,10 @@ In the prior sections of the text, there has been much emphasis on the importanc
 
 \chapter{Linear Time Invariant Systems}
 
+\begin{chapquote}{Richard Feynman}
+    Finally, we make some remarks on why linear systems are so important. The answer is simple: because we can solve them! So most of the time we solve linear problems. Second (and most important), it turns out that the fundamental laws of physics are often linear. The Maxwell equations for the laws of electricity are linear, for example. The great laws of quantum mechanics turn out, so far as we know, to be linear equations. That is why we spend so much time on linear equations: because if we understand linear equations, we are ready, in principle, to understand a lot of things.
+\end{chapquote}
+
 \Gls{lti} systems are the simplest systems to describe, so we will start here. These systems will be the basis of almost every other control scheme that we describe. Since we can find exact solutions to \gls{lti} systems, we can apply the theories that we study here in many other types of control systems, whether they are non-linear or time varying.
 
 We find that \gls{lti} systems are simplest to describe in the Laplace domain. Luckily, we have developed some background in using \glspl{laplace transform} which will aid us greatly in doing this.
@@ -555,8 +582,10 @@ We find that \gls{lti} systems are simplest to describe in the Laplace domain. L
 \section{Transfer Functions}
 A \gls{transfer function} is a tool that is used in linear control theory to gain an understanding of the input-output relationship of a system. Given a certain input, the transfer function will tell us what the output will be!
 
+As an example, if we want to get from an input $R(s)$ to an output $Y(s)$, we can use an intermediate \gls{transfer function}, so that the relationship is:
+$$R(s)G(s)=Y(s)$$
 In the time domain, the relationship of the input and the output is quite complicated. To illustrate this complication, we can consider quite a simple system, a mass spring damper.
-\begin{figure}
+\begin{figure}[ht]
     \centering
 
 \includesvg[width=\linewidth]{Images/MSD Time History.svg}
@@ -568,26 +597,37 @@ The time history of the oscillation is shown on the right of \autoref{fig:msd so
 
 To construct a mathematical description of the system, we want to understand the input-output relationship of the force and the displacement of the mass. We describe the force input as $u(t)$ and the displacement output as $y(t)$. We should look for some intermediate function, $g(t)$, which maps $u(t)$ to $y(t)$. We can write this relationship as:
 $$u(t)*g(t)=y(t)$$
-To figure out what this relationship should be, we should start by considering the simple case of the delta function:
-
-\begin{figure}
+To figure out what this relationship should be, we should start by considering the simple case of the delta function. When a delta function is input, the output of the system for all future times can be measured. Conceptually, we can think of hitting the system with a hammer and seeing what happens in the subsequent time. For a typical system, there will be some oscillation that dies out over time, as shown in \autoref{fig:deltaFunc}.
+\begin{figure}[ht]
     \centering
-     \includesvg[width=\linewidth]{Images/DeltaFunction.svg}
+     \includesvg[width=.75\linewidth]{Images/DeltaFunction.svg}
     \caption{Delta Function}
     \label{fig:deltaFunc}
 \end{figure}
+Suppose we have a new delta function, which occurs at time $t=1 \ \mathrm{s}$ instead of $t=0 \ \mathrm{s}$. We should expect that the function describing the output should be shifted over by $1 \ \mathrm{s}$ as well.
+\begin{figure}[ht]
+    \centering
+    \includesvg[width=0.75\linewidth]{Images/DeltaFuncOffset.svg}
+    \caption{Delta Function with Delay}
+    \label{fig:deltaFuncDelay}
+\end{figure}
 
+We can think of a general input as consisting of many of these delta functions put together. In that case, our output should be the sum of all of their contributions!\endnote{This pure addition only works because we have specified the system to be linear. Take a moment to consider how this would break down in the non-linear case!}
+\begin{figure}[ht]
+    \centering
+    \includesvg[width=0.75\linewidth]{Images/DeltaFunctionSum.svg}
+    \caption{Sum of Delta Functions}
+    \label{fig:deltaFuncSum}
+\end{figure}
 
-
-We can say that at point $A$, the current time is given as $\tau$. To find the relationship between $u(t)$ and $y(t)$, we have to consider all times prior to this time, $\tau$, which have influenced the dynamics!
-
-To do this, we construct an integral over the interval from $0$ to $t$ (if we are to consider $t=0$ as the start of the dynamics). Then, the impact of each time \textit{before} the current time $\tau$ must be considered! This gives the integral:
-$$y(t)=(u*g)(t)=\int_0^tu(\tau)g(t-\tau)d\tau$$
+In this finite case, we can express this combination as the sum of each of the input functions. We may now consider the input as $x(t)$ -- a more general function than the $\delta$ function.
+$$y(t) = \sum x(\tau)*g(t-\tau)$$
+Of course, if we are to consider the fully continuous case, it is natural that each input is separated in time by $d\tau$, and we instead represent with the integral form.
+$$y(t) = \int_0^\infty x(\tau)*g(t-\tau)d\tau$$
+We define this operation, often denoted as $x*g$ in short, as the \textit{convolution} operation.
 
 \subsubsection{Transfer Functions in the Laplace Domain}
-We have seen that the the description of the input-output relationship in the time domain is quite complex. As a result, it is a good idea to try and express this relationship in the Laplace domain instead.
-
-We can express the convolution with the Laplace integral as 
+We have seen that the the description of the input-output relationship in the time domain is quite complex. As a result, it is a good idea to try and express this relationship in the Laplace domain instead. We can express the convolution with the Laplace integral as 
 $$\mathcal{L}\{(u*g)(t)\}=\int_0^\infty{\left(\int_0^\infty{}u(\tau)g(t-\tau)d\tau\right)}e^{-st}dt$$
 We can perform a substitution with $\sigma=t-\tau$, which simplifies the integral to:
 $$\mathcal{L}\{(u*g)(t)\}=\int_0^\infty{\left(\int_0^\infty{}u(\tau)g(\sigma)d\tau\right)}e^{-s(\sigma+\tau)}d\sigma$$
@@ -601,9 +641,10 @@ We can rewrite this in the Laplace domain:
 $$U(s)G(s)=Y(s)$$
 Since we have turned this complicated formula of the convolution into multiplication, it is now trivial to find the transfer function, $G(s)$ through simple manipulation of the equation:
 $$G(s)=\frac{Y(s)}{U(s)}$$
+In all instances, the transfer function is defined as the output divided by the input.
 
 \subsubsection{Why does this work?}
-Although I have shown the mathematics which show that the convolution reduces to multiplication in the Laplace domain, I find it quite helpful to examine why this holds from a physical point of view.
+Although we have shown the mathematics which show that the convolution reduces to multiplication in the Laplace domain, I find it quite helpful to examine why this holds from a physical point of view.
 
 We can remember from \autoref{sec:properties of laplace transform} that the \gls{laplace transform} gives us quite simple representations of derivatives and integrals as multiplication and division by $s$. As a result, we can quite easily express equations of motion in the Laplace domain. For example, we can consider the \gls{eom} for a mass spring damper:
 $$m\ddot{y}(t)+c\dot{y}(t)+ky(t)=u(t)$$
@@ -613,10 +654,185 @@ It is in this equation that the insight behind the \gls{laplace transform} can b
 
 So, we can see that in the Laplace domain, all of the information of the system dynamics is directly captured in the transfer function. We can therefore, know what the position, velocity, or acceleration are for any value $s$. The tradeoff, of course, is that we lose information on the temporal component, $t$, during the transformation. However, we still find it extremely useful to have this `global view' of the function in the Laplace domain! When we need to consider the temporal aspects of the system, we can either revert to the time domain or use some other tools to understand the temporal nature of the transfer function.
 
-\subsection{Impulse Response}
+\section{Block Diagrams}
+Block diagrams, which have previously been mentioned in the introduction, are especially useful when we introduce transfer functions. Using transfer functions, we can manipulate block diagrams in a mathematical way that allows us to ascertain the transfer function for a whole system. As an example, let us consider the open loop transfer function we showed in the introduction, reproduced below in \autoref{fig:Open Loop Controller 2}.
 
-\subsection{Step Response}
+\begin{figure}[ht]
+    \centering
 
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Flowchart: Process [id:dp0065268414857613255] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (200,110) -- (280,110) -- (280,150) -- (200,150) -- cycle ;
+%Flowchart: Process [id:dp7235317018344584] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (340,110) -- (420,110) -- (420,150) -- (340,150) -- cycle ;
+%Straight Lines [id:da7470075652158954] 
+\draw    (280,130) -- (337,130) ;
+\draw [shift={(340,130)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da5872746694536481] 
+\draw    (420,130) -- (477,130) ;
+\draw [shift={(480,130)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da149066055633855] 
+\draw    (140,130) -- (197,130) ;
+\draw [shift={(200,130)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (240,130) node   [align=left] {Controller};
+% Text Node
+\draw (380,130) node   [align=left] {System};
+% Text Node
+\draw (170,124.6) node [anchor=south] [inner sep=0.75pt]    {$r$};
+% Text Node
+\draw (310,124.6) node [anchor=south] [inner sep=0.75pt]    {$u$};
+% Text Node
+\draw (450,124.6) node [anchor=south] [inner sep=0.75pt]    {$y$};
+
+
+\end{tikzpicture}
+
+    \caption{Open Loop Control System}
+    \label{fig:Open Loop Controller 2}
+\end{figure}
+
+In the Laplace domain, we have shown that the input-output relationship is quite simple and can be represented with multiplication. So, we can replace the controller and the system by transfer functions instead:
+
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Flowchart: Process [id:dp22112180414009353] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (220,130) -- (300,130) -- (300,170) -- (220,170) -- cycle ;
+%Flowchart: Process [id:dp9940596706792563] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (360,130) -- (440,130) -- (440,170) -- (360,170) -- cycle ;
+%Straight Lines [id:da63618583494272] 
+\draw    (300,150) -- (357,150) ;
+\draw [shift={(360,150)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da4883479509669909] 
+\draw    (440,150) -- (497,150) ;
+\draw [shift={(500,150)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da2671815950803569] 
+\draw    (160,150) -- (217,150) ;
+\draw [shift={(220,150)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (190,144.6) node [anchor=south] [inner sep=0.75pt]    {$R( s)$};
+% Text Node
+\draw (330,144.6) node [anchor=south] [inner sep=0.75pt]    {$U( s)$};
+% Text Node
+\draw (470,144.6) node [anchor=south] [inner sep=0.75pt]    {$Y( s)$};
+% Text Node
+\draw (260,150) node    {$G_{1}( s)$};
+% Text Node
+\draw (400,150) node    {$G_{2}( s)$};
+
+
+\end{tikzpicture}
+
+    \caption{Transfer Function Definition of Open Loop System}
+    \label{fig:trans func open loop}
+\end{figure}
+With these transfer functions, we can quite easily describe how $Y(s)$ varies with the input $R(s)$, just by multiplying the components of the equation! We may write the system as follows\endnote{Note that the transfer function must premultiply the variable that is input into it. This is done so that the transfer function satisfies matrix multiplication rules in the case of transfer function matrices. In the general case, we must be careful of the order.}:
+\begin{gather}
+    U(s)=G_1(s)R(s)\\
+    Y(s)=G_2(s)U(s)
+\end{gather}
+We can combine these equations to get:
+$$Y(s)=G_2(s)G_1(s)R(s)$$
+And we may find the transfer function to be:
+$$\frac{Y(s)}{R(s)}=G_2(s)G_1(s)$$
+And so, we have stumbled upon the first rule of block diagrams: Two transfer functions in series can be multiplied together\endnote{We can derive any block diagram system in this way, no matter how complex. For very complex systems, this algebraic approach is often the simplest. It is worthwhile to discuss some commonly seen block diagram structures to make our lives easier, though.}. Note that the order of multiplication is important! The latest multiplication should be left-multiplied. From here, we may look at the closed-loop system as shown in \autoref{fig:closed loop BD}:\endnote{I have simplified signals and transfer functions by dropping the $s$ (e.g. $R(s)\rightarrow R$). There is no difference other than notational convenience. The time domain and the Laplace domain are often distinguished by the use of lowercase for the time domain, and uppercase letters for the Laplace domain ($r(t) \xrightarrow{\mathcal{L}} R(s)$}
+
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Flowchart: Process [id:dp5167459085437383] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (240,150) -- (320,150) -- (320,190) -- (240,190) -- cycle ;
+%Flowchart: Process [id:dp024236124247860036] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (380,150) -- (460,150) -- (460,190) -- (380,190) -- cycle ;
+%Straight Lines [id:da6694738487601175] 
+\draw    (320,170) -- (377,170) ;
+\draw [shift={(380,170)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da9941131523741493] 
+\draw    (460,170) -- (517,170) ;
+\draw [shift={(520,170)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da6458003734491378] 
+\draw    (130,170) -- (177,170) ;
+\draw [shift={(180,170)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Flowchart: Process [id:dp32241167753043465] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (290,210) -- (370,210) -- (370,250) -- (290,250) -- cycle ;
+%Straight Lines [id:da8704005118493297] 
+\draw    (470,170) -- (470,230) ;
+%Straight Lines [id:da8686602852908976] 
+\draw    (470,230) -- (373,230) ;
+\draw [shift={(370,230)}, rotate = 360] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Shape: Circle [id:dp828745970538281] 
+\draw   (180,170) .. controls (180,161.72) and (186.72,155) .. (195,155) .. controls (203.28,155) and (210,161.72) .. (210,170) .. controls (210,178.28) and (203.28,185) .. (195,185) .. controls (186.72,185) and (180,178.28) .. (180,170) -- cycle ;
+%Straight Lines [id:da842437980134493] 
+\draw    (195,230) -- (195,188) ;
+\draw [shift={(195,185)}, rotate = 90] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da37341988210838184] 
+\draw    (195,230) -- (290,230) ;
+%Straight Lines [id:da5509043201118162] 
+\draw    (210,170) -- (237,170) ;
+\draw [shift={(240,170)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (155,166.6) node [anchor=south] [inner sep=0.75pt]    {$R$};
+% Text Node
+\draw (350,164.6) node [anchor=south] [inner sep=0.75pt]    {$U$};
+% Text Node
+\draw (490,164.6) node [anchor=south] [inner sep=0.75pt]    {$Y$};
+% Text Node
+\draw (181,168) node [anchor=west] [inner sep=0.75pt]  [font=\scriptsize]  {$+$};
+% Text Node
+\draw (190,177.5) node [anchor=west] [inner sep=0.75pt]  [font=\scriptsize]  {$-$};
+% Text Node
+\draw (280,170) node    {$G_{1}$};
+% Text Node
+\draw (421.5,171) node    {$G_{2}$};
+% Text Node
+\draw (330,230) node    {$H$};
+% Text Node
+\draw (222,164.6) node [anchor=south] [inner sep=0.75pt]    {$E$};
+% Text Node
+\draw (242.5,224.6) node [anchor=south] [inner sep=0.75pt]    {$Z$};
+
+\end{tikzpicture}
+
+    
+    \caption{Closed Loop System Block Diagram}
+    \label{fig:closed loop BD}
+\end{figure}
+We may once again use an algebraic approach to get a input-output relationship for this system. First, however, we may simplify the upper portion of the system (which we call the open loop transfer function) to $G\equiv G_2G_1$.
+\begin{align}
+    Y&=GE\\
+    Z&=HY\\
+    E&=R-Z
+\end{align}
+In solving this system, it is helpful to remind ourselves that we want to isolate $R$ and $Y$, removing any of the intermediate signals ($E, U$ and $Z$).
+
+We start by substituting $E=R-Z$ into $Y=GE$ to get
+$$Y=G(R-Z)$$
+And $Z$ may be substituted from $Z=HY$ to yield:
+$$Y=G(R-HY)$$
+Which may be rearranged to isolate $Y$
+$$Y(1+GH)=GR$$
+A final rearrangement yields the transfer function between $R$ and $Y$ as:
+$$\frac{Y}{R}=\frac{G}{1+GH}$$
+These two rules are the most important in the block diagrams that are typically seen. Other relations do exist, which can be derived using the algebraic approach shown here.
 
 \section{Linear Systems}
 Since linear systems are our object of study for now, we should include some more information on linear systems and how we can manipulate them! Linear systems are quite nice to work with and we have lots of theory developed to work with them.
@@ -642,10 +858,112 @@ In short, we can relate $\Phi$ and $A$ through the following equation:
 $$\Phi=e^{A\Delta t}$$
 The matrix $\Phi$ is called the discrete state transition matrix, and $A$ is sometimes called the continuous transition matrix in analogy. The relationship between these two and the implications from \gls{lie theory} will be important for understanding the relationships of stability that are coming next!
 
-\section{Stability}
-One key criteria in control theory is studying the stability of a system. Simply stated, the stability of a system describes the tendency of a system to either return to an equilibrium position. Systems that are stable tend to return to equilibrium, and those that are unstable tend to grow in magnitude. The main objective of control theory is to build a controller, typically denoted $u$, which can either enhance the stability of a system or turn an unstable system into one that is stable.
 
-In control theory, there are several notions of stability. As you become more advanced in your studies, different notions of stability will become important in different contexts. However, we should establish a baseline notion of stability for linear systems.
+\section{Practice Problems}
+
+\begin{enumerate}
+    \item Consider a simple control system for a DC motor. The motors angle can be modeled as a simple transfer function between the input voltage $V$ and it's output $\theta$. The controller, $K_p+\frac{K_i}{s}$ is shown to the left of the motor transfer function. This system is shown below in the block diagram in \autoref{fig:motor angle control}:
+    \begin{figure}[H]
+        \centering
+        
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Flowchart: Process [id:dp47885050914751914] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (240,145) -- (320,145) -- (320,195) -- (240,195) -- cycle ;
+%Flowchart: Process [id:dp27586918225087564] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (380,145) -- (460,145) -- (460,195) -- (380,195) -- cycle ;
+%Straight Lines [id:da004910272094030388] 
+\draw    (320,170) -- (377,170) ;
+\draw [shift={(380,170)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da2888199737278474] 
+\draw    (460,170) -- (517,170) ;
+\draw [shift={(520,170)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da3783579579400398] 
+\draw    (120,170) -- (167,170) ;
+\draw [shift={(170,170)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da8246631595636741] 
+\draw    (470,170) -- (470,230) ;
+%Shape: Circle [id:dp187718705079432] 
+\draw   (170,170) .. controls (170,161.72) and (176.72,155) .. (185,155) .. controls (193.28,155) and (200,161.72) .. (200,170) .. controls (200,178.28) and (193.28,185) .. (185,185) .. controls (176.72,185) and (170,178.28) .. (170,170) -- cycle ;
+%Straight Lines [id:da23452296039315146] 
+\draw    (185,230) -- (185,188) ;
+\draw [shift={(185,185)}, rotate = 90] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da9138966679831894] 
+\draw    (185,230) -- (470,230) ;
+%Straight Lines [id:da8765530681435604] 
+\draw    (200,170) -- (237,170) ;
+\draw [shift={(240,170)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (145,166.6) node [anchor=south] [inner sep=0.75pt]    {$\theta _{r}$};
+% Text Node
+\draw (350,164.6) node [anchor=south] [inner sep=0.75pt]    {$V$};
+% Text Node
+\draw (490,164.6) node [anchor=south] [inner sep=0.75pt]    {$\theta $};
+% Text Node
+\draw (171,168) node [anchor=west] [inner sep=0.75pt]  [font=\scriptsize]  {$+$};
+% Text Node
+\draw (180,177.5) node [anchor=west] [inner sep=0.75pt]  [font=\scriptsize]  {$-$};
+% Text Node
+\draw (220,166.6) node [anchor=south] [inner sep=0.75pt]    {$E$};
+% Text Node
+\draw (280,170) node    {$K_{p} +\frac{K_{i}}{s}$};
+% Text Node
+\draw (420,170) node    {$\frac{1}{s+1}$};
+
+
+\end{tikzpicture}
+
+        \caption{Motor Angle Control}
+        \label{fig:motor angle control}
+    \end{figure}
+    \begin{enumerate}
+        \item Find the open-loop transfer function of the system. This is the transfer function that you would find if the sum block did not have anything being subtracted. Call this transfer function $L(s)$.
+        \item Find the closed loop transfer function of the system, given as $\frac{\theta}{\theta_r}$.
+        \item Take $K_p=K_i=1$ and $\theta_r=\frac{1}{s}$. What is the final value of $\theta$ as $t\rightarrow\infty$?
+        \item Compute $1+L(s)$. How does this compare with the closed loop transfer function that you found?
+    \end{enumerate}
+\end{enumerate}
+
+\chapter{Stability}
+One key criteria in control theory is studying the stability of a system. Simply stated, the stability of a system describes the tendency of a system to either return to an equilibrium position or to deviate from equilibrium. Systems that are stable tend to return to equilibrium, and those that are unstable tend to grow in magnitude. A simple representation of stability is the example of a ball in a valley or on a hill (\autoref{fig:stability}):
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Curve Lines [id:da8058765151147705] 
+\draw [line width=1.5]    (130,130) .. controls (165.34,168.38) and (214.89,168.38) .. (250,130) ;
+%Curve Lines [id:da6881071931117869] 
+\draw [line width=1.5]    (280,160) .. controls (315.34,120.48) and (366.44,121.34) .. (400,160) ;
+%Shape: Circle [id:dp8279307439533751] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] (180,148) .. controls (180,142.48) and (184.48,138) .. (190,138) .. controls (195.52,138) and (200,142.48) .. (200,148) .. controls (200,153.52) and (195.52,158) .. (190,158) .. controls (184.48,158) and (180,153.52) .. (180,148) -- cycle ;
+%Shape: Circle [id:dp17725528305328864] 
+\draw  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ] (330,120) .. controls (330,114.48) and (334.48,110) .. (340,110) .. controls (345.52,110) and (350,114.48) .. (350,120) .. controls (350,125.52) and (345.52,130) .. (340,130) .. controls (334.48,130) and (330,125.52) .. (330,120) -- cycle ;
+
+% Text Node
+\draw (190,164) node [anchor=north] [inner sep=0.75pt]   [align=left] {Stable};
+% Text Node
+\draw (340,162) node [anchor=north] [inner sep=0.75pt]   [align=left] {Unstable};
+
+\end{tikzpicture}
+    
+    \caption{Stability}
+    \label{fig:stability}
+\end{figure}
+
+In both states, the ball is at an equilibrium where the slope of the ground is zero. However, if the stable system is perturbed, the ball naturally goes back to center. In the unstable system, the ball will continue to roll down the hill and gain energy. In this example, the notion of stability is quite simple. However, it becomes useful in our study of control theory to find mathematical means of representing stability.
+
+Before we start, we should remind ourselves why we want to study stability. One of the main objectives of control theory is to build a controller, typically denoted $u$, which can either enhance the stability of a system or turn an unstable system into one that is stable. As such, finding out how to make a system stable -- and how stable it is -- are important to study.
+
+In control theory, there are several notions of stability. As you become more advanced in your studies, different notions of stability will become to important in different contexts. However, we should establish a baseline notion of stability for linear systems. 
 
 We have seen before the pole-zero plots, where we can represent the locations of the poles or zeros of a function in $\mathbb{C}^2$ space.
 
@@ -777,7 +1095,8 @@ We know that this decomposition is the result of the eigenvalue decomposition of
 It is fairly evident that the magnitude of the system is determined by the values of $D$, the eigenvalues! If all of the values of $D$ are negative, the system will tend towards zero. This is exactly the same as what we have seen with poles. This leads us to the important conclusion:
 \textbf{The eigenvalues of $\textbf{A}$ determine the stability of the system.}
 
-Of course, we have discussed that $A$ is only defined for discrete time 
+
+Of course, we have discussed that $A$ is only defined for discrete time.
 
 \subsection{Stability in discrete time}
 Having described the stability of a system in continuous time, we can move on to the case of a system in discrete time. 
@@ -1012,37 +1331,15 @@ pattern radius = 1pt}
     \caption{Transformation from continuous to discrete stability}
     \label{fig:continuous to discrete stability}
 \end{figure}
-Any eigenvalue which is contained within the unit circle will be stable, and anything outside will be unstable. As we can see, our representation with \gls{lie theory} lends itself perfectly showcasing this!
-\section{Controllability}
-Now that we are quite familiar with linear systems and how we characterize their stability, we can move to discussing how we can control such systems. As we have seen, we can understand the stability of a system by examining the eigenvalues of the matrix $A$ for the linear system $\dot{x}=Ax$. When we consider adding control, the system becomes a bit more complex. We now have:
-$$\dot{x}=Ax+Bu$$
-Where $B$ is a matrix describing the relationships of the control inputs and $u$ is the control input itself.
+Any eigenvalue which is contained within the unit circle will be stable, and anything outside will be unstable. As we can see, our representation with \gls{lie theory} lends itself to showcasing this!
 
-To see how this lends itself to changing the eigenvalues of the system, we can consider a simple controller -- one which simply takes the current state, $x$, multiplied by some constant as its input.
-
-From this description, we have a control system where $u=-kx$. Upon plugging in $u$, we have
-$$\dot{x}=Ax-Bkx$$
-We can factor our $x$, which returns our system to a very similar form to $\dot{x}=Ax$:
-$$\dot{x}=(A-Bk)x$$
-We can see that the eigenvalues of $A-Bk$ are now what we consider! With careful selection of $B$ and $k$, we may be able to make any unstable eigenvalues stable!
-
-We can solidify these ideas with some exact definitions. We consider a system to be controllable if:
-\begin{itemize}
-    \item It is possible to go from any one state, $x$, to another state $x'$ in the space $\mathbb{R}^n$
-    \item We can choose to place the eigenvalues of the system anywhere in $\mathbb{C}^2$.
-\end{itemize}
-
-It turns out that these are the only two conditions that we need to satisfy for controllability of a linear system. Still, we need to develop an exact criteria that tells us about 
-
-\section{Observability}
-
-\section{State Space Representation}
-
+\chapter{Frequency Domain Specifications}
+Transfer functions lend themselves quite easily to a description in the frequency domain. Using these relationships, we can understand the nature of a transfer function by understanding its response to different frequencies. This section will discuss the various methods by which this is done, and how they allow us to analyze systems.
 
 \section{Bode Plots}
 The core idea behind the Bode plot is to understand how a transfer function behaves over the range of all frequencies, and plot that behavior. Before we can do that, however, we need more context about transfer functions.
 
-One relationship of transfer functions that we have not mentioned yet is that when a sinusoid is input into the transfer function, the output at steady state must also be a sinusoid of the same frequency!
+One relationship of stable transfer functions that we have not mentioned yet is that when a sinusoid is input into the transfer function, the output at steady state must also be a sinusoid of the same frequency!
 \begin{figure}[H]
     \centering
     \includesvg[width=0.75\linewidth]{Images/SinusoidInOut.svg}
@@ -1058,6 +1355,14 @@ We can see this quite readily by considering the operations that we can perform 
 \end{enumerate}
 
 The operations above are the only operations we can perform, because any other type of input will violate the zero-input zero-output quality of the transfer function and the system is therefore nonlinear. These operations, in effect, are the only operations that preserve linearity of the system.
+
+More mathematically, we can consider a general system with transfer function $G(s)$. We require $G(s)$ to be stable for this result to be true, so we know that $G(s)$ must take the form:
+$$G(s) = \frac{a_0+a_1s+a_2s^2+\dots}{(s+s_1)(s+s_2)\dots}$$
+Supposing that each $s_n$ is positive, all poles lie in the LHP and the system is stable. Now, we multiply this transfer function by an input sine wave, $A\sin\omega t$. In the Laplace domain:
+$$A\sin\omega t \overset{\mathcal{L}}{\rightarrow}\frac{A\omega}{s^2+\omega^2}$$
+Multiplying the two terms together, we have:
+$$G(s)\frac{A\omega}{s^2+\omega^2}=\frac{a}{s+i\omega}+\frac{\bar{a}}{s-i\omega}+$$
+
 
 It is possible to show that applying any of these operations (or any combination of them) will yield another sine wave, with the only possible variation being the phase and amplitude of the wave!
 
@@ -1097,16 +1402,50 @@ $$\textrm{dB}=20\log\frac{A}{A_0}$$
 
 \section{Nyquist Plots}
 
+\subsection{The Nyquist Stability Criterion}
+
 \section{Nichols Chart}
 
 
+
+\chapter{State Space Criteria}
+
+\section{Controllability}
+Now that we are quite familiar with linear systems and how we characterize their stability, we can move to discussing how we can control such systems. As we have seen, we can understand the stability of a system by examining the eigenvalues of the matrix $A$ for the linear system $\dot{x}=Ax$. When we consider adding control, the system becomes a bit more complex. We now have:
+$$\dot{x}=Ax+Bu$$
+Where $B$ is a matrix describing the relationships of the control inputs and $u$ is the control input itself.
+
+To see how this lends itself to changing the eigenvalues of the system, we can consider a simple controller -- one which simply takes the current state, $x$, multiplied by some constant as its input.
+
+From this description, we have a control system where $u=-kx$. Upon plugging in $u$, we have
+$$\dot{x}=Ax-Bkx$$
+We can factor our $x$, which returns our system to a very similar form to $\dot{x}=Ax$:
+$$\dot{x}=(A-Bk)x$$
+We can see that the eigenvalues of $A-Bk$ are now what we consider! With careful selection of $B$ and $k$, we may be able to make any unstable eigenvalues stable!
+
+We can solidify these ideas with some exact definitions. We consider a system to be controllable if:
+\begin{itemize}
+    \item It is possible to go from any one state, $x$, to another state $x'$ in the space $\mathbb{R}^n$
+    \item We can choose to place the eigenvalues of the system anywhere in $\mathbb{C}^2$.
+\end{itemize}
+
+It turns out that these are the only two conditions that we need to satisfy for controllability of a linear system. Still, we need to develop an exact criteria that tells us about 
+
+\section{Observability}
+Observability is quite similar to the controllability
+
+
 \section{Useful MATLAB Commands}
-MATLAB has many features which are great for control systems. I have compiled several of the most useful commands for the subjects discussed here. Some of these are mentioned throughout the preceding chapters, but have been compiled here for convenience. For more information about specifics of each command, refer to the mathworks documentation.
+MATLAB has many features which are great for control systems. I have compiled several of the most useful commands for the subjects discussed here. Some of these are mentioned throughout the preceding chapters, but have been compiled here for convenience. For more information about specifics of each command, refer to the Mathworks documentation.
 
 \begin{itemize}
     \item "tf(num,den)" - create a transfer function with a numerator and denominator defined by row vectors of coefficients
     \item "step(tf)" - view the step response of the system
 \end{itemize}
+
+
+\newpage
+\printendnotes
 
 \chapter{Basic Control Methods}
 This chapter will cover a class of basic control schemes which can easily be developed with little additional theory. These controllers include the \gls{pid} controller and the pole placement controller. These represent some of the basic controllers which are often used in preliminary design or as a first attempt for the system.
@@ -1118,6 +1457,8 @@ Additionally, some criteria for evaluation of control systems will also be devel
 \section{First Order Systems}
 
 \section{Second Order System}
+
+$$\frac{\omega_n}{s^2+\zeta\omega_ns+{\omega_n}^2}$$
 
 \section{PID Control}
 The \gls{pid} controller is likely the most popular method for controlling a system. The \gls{pid} controller is simple, easily understandable, and has been widely studied due to its early adoption. The \gls{pid} controller is also quite common because it often requires no knowledge of the system dynamics to set up. Often, the \gls{pid} gains can be found manually through experimentation and requires little analysis.
@@ -1202,6 +1543,22 @@ Possibility the simplest choice for the throttle command is simply for the throt
 
 \section{Pole Placement Control}
 
+\part{Modern Control Theory}
+
+\newpage
+Modern control theory will establish many of the more complex ideas which we must deal with in order to build useful models of real systems. Having built an intuition for linear systems and their frequency domain representations, we may now extend these ideas.
+
+Using many of the ideas of classical control, we can build a framework that will allow us to analyze some of the most complex systems that humankind has developed. To do so, we must introduce a new representation of systems -- in the form of the state space representation. This tools will give us far greater power, especially in the analysis of \gls{mimo} systems.
+
+To start this journey, it is imperative to review state space representations, and explore how the ideas of classic control theory are described in the state space view.
+
+\chapter{State Space Representation}
+Up to now, we have developed most of our analysis of control systems in the complex frequency domain. As a reminder, this allowed us to understand control systems though the use of transfer functions and the Laplace domain.
+
+However, we do face some limitations that are inherit to the expression of control systems in this way. Notably, transfer functions can only describe \gls{siso} relationships.
+
+To extend the ideas of control theory further, we must introduce the 
+
 
 \chapter{Optimality}
 The subjects of both optimal estimation and optimal control lie on the foundations of optimality. I devote a chapter here to studying the various types of optimality that are relevant to our discussion here. The later parts of this chapter will derive much from our earlier work in the calculus of variations, \gls{Lagrangian} mechanics, and \gls{Hamiltonian} mechanics which were discussed in \autoref{part: energy mech}.
@@ -1210,7 +1567,7 @@ The subjects of both optimal estimation and optimal control lie on the foundatio
 Before we get into any mathematical analysis, I should explain exactly what is meant by optimality. An optimal solution is one which 
 
 \section{Least Squares Estimation}\label{sec:least squares}
-To start our discussion of optimal, we should first consider a quite simple case of optimality, which is the case of producing a least squares estimate. The solution to this problem will introduce us to the realm of optimal control.
+To start our discussion of optimality, we should first consider a quite simple case of optimality, which is the case of producing a least squares estimate. The solution to this problem will introduce us to the realm of optimal control.
 
 Before we begin, it is best to discuss the players in the least squares estimation, $\textbf{z}$, $H$, and $\textbf{x}$. We can use these together to form the following equation:
 $$\textbf{z}=H\textbf{x}$$
@@ -1272,7 +1629,7 @@ $$\begin{array}{rc}
      \mathrm{overdetermined:} & A^\#=(A^TA)^{-1}A^T
 \end{array}$$
 \begin{exercise}
-    It can be shown that these glspl{pseudoinverse} are identical to the standard matrix inverse in the case of an invertible square matrix. You may consider the property that $(AB)^{-1}=B^{-1}A^{-1}$ to show this. 
+    It can be shown that these \glspl{pseudoinverse} are identical to the standard matrix inverse in the case of an invertible square matrix. You may consider the property that $(AB)^{-1}=B^{-1}A^{-1}$ to show this. 
 \end{exercise}
 Least squares estimation has given us some of the mathematical tools that we will need when considering optimal estimation in the more general sense.
 
@@ -1284,6 +1641,8 @@ We considered kinetic energy as one of the prototypical examples of a quadratic 
 \begin{chapquote}{Kyoto Prize committee}
 The creator of modern control and system theory, Kalman theory, which was established in the early 1960s, brought a fundamental reformation to control engineering and since then laid the foundation for the rapid progress of modern control theory. 
 \end{chapquote}
+
+It is not an exaggeration to say that the development of Kalman Filtering facilitated many of advances which have led to modern control theory. The use of state space models can, in large part, be 
 
 
 Optimal estimation is a subject that is concerned with finding estimates of some or all of the states in a system in a way that we consider to be optimal. If we have a system output that we measure directly with a sensor, why do we need to estimate it?
@@ -1638,11 +1997,11 @@ We can reason through the formula to really understand what it is saying. Writte
 
 \subsubsection{Kalman Gain}
 
-We can intuitively construct a formula for $K$, the Kalman gain, by considering a few scenarios. In the case where the dynamics modeling is perfect, there is no process noise needed in the system. In this case, $\textbf{\^x}^+$should be exactly equal to $\textbf{\^x}^-$, because our dynamics will tell us exactly what it should be! We can conclude that in the limit as $R\rightarrow\infty$, the Kalman gain should go to zero.
+We can intuitively construct a formula for $K$, the Kalman gain, by considering a few scenarios. In the case where the dynamics modeling is perfect, there is no process noise needed in the system. In this case, $\textbf{\^x}^+$ should be exactly equal to $\textbf{\^x}^-$, because our dynamics will tell us exactly what it should be! We can conclude that in the limit as $R\rightarrow\infty$, the Kalman gain should go to zero.
 
 At the other extreme, when we trust our measurements much more than our dynamics, we should rely on the measurements completely, and the Kalman gain should be 1. We can set up a formula that gives us exactly this:
 $$K=\frac{P}{P+R}$$
-We can see that this matches exactly with what we predicted! In the case that the measurements are very poor, the measurement covariance, $R$, increased to infinity, and the Kalman gain is 0. In the other extreme, where the understand the dynamics very poorly, $P\gg R$ and the Kalman gain is indeed 1!
+We can see that this matches exactly with what we predicted. In the case that the measurements are very poor, the measurement covariance, $R$, increased to infinity, and the Kalman gain is 0. In the other extreme, where the understand the dynamics very poorly, $P\gg R$ and the Kalman gain is indeed 1!
 
 Since these quantities are matrices, we need to slightly reformulate the equation to ensure that the sizes of the matrices are all cooperative with each other. We can use the matrix $H$ to do so, since it converts from $\mathbb{R}^n$ to $\mathbb{R}^m$. 
 
@@ -1717,6 +2076,8 @@ Together, these equations are the discrete Kalman filter:
 Although we have constructed equations and detailed the mathematical background of the Kalman filter, our intuitions about the system may not be very strong. Quite often, a Kalman filter requires fair amount of debugging and tuning to work appropriately for a system. For this reason, a good intuition about the filter is as important, if not more important than understanding the mathematics of the Kalman filter.
 
 \subsection{Square Root Kalman Filter}
+
+
 
 \section{Kalman Filter Examples}
 
@@ -1926,6 +2287,11 @@ This is a considerable simplification, as there are no longer any integrals pres
 $$0=\min_{u[t_0,t_0+\Delta t]}\left[L(\textbf{x},u,\tau)+\left(\frac{\partial J^*(\textbf{x},t_0)}{\partial \textbf{x}}\right)^T\frac{\Delta \textbf{x}}{\Delta t}+\frac{\partial J^*(\textbf{x},t_0)}{\partial t}\right]$$
 At this point, we may perform a Legendre transform to make this equation amenable to further changes. Such a transformation will allow us to effectively remove the derivative and express it in terms of a Hamiltonian!
 
+% use the 
+
+\subsection{The Algebraic Riccati Equation}
+At this point, we have encountered a quadratic matrix equation. This equation is quite famous, and is known as the \gls{are}. 
+
 
 \section{LQG Control}
 Linear quadratic guassian lmao
@@ -1937,6 +2303,7 @@ Throw an integral on there for tracking shit
 
 
 \section{Other Optimal Control Problems}
+
 The \gls{lqr} controller is one case where the optimal control problem has an analytical solution. Sometimes the solution to this equation must be evaluated numerically, but there still exists a closed form solution to the problem. However, in the more general case of the optimal controllers, there is not always a closed form solution to the minimization of the functional. 
 
 \subsection{Gradient Descent}
@@ -2033,13 +2400,13 @@ $$T_{cart}=\frac{1}{2}M\dot{x}^2$$
 For the pendulum arm, both translational and rotational motion is permitted, so the total kinetic energy is more complicated. We will employ the formula above to find the kinetic energy in this case, considering only $i=2$ since $i=1$ has just been solved:
 $$T_{pend}=\frac{1}{2}m\left(\sum_j\frac{\partial\vec{r}_2}{\partial q_j}\dot{q}_j+\frac{\partial \vec{r}_2}{\partial t}\right)^2$$
 The vector $\vec{r}_2$ is expressed in terms of the two generalized coordinates, which gives 
-$$\vec{r}_2=(x-l\sin\theta)\hat{\imath}+(l\cos\theta)\hat{\jmath}$$
+$$\vec{r}_2=(x+l\sin\theta)\hat{\imath}+(l\cos\theta)\hat{\jmath}$$
 One `trick' we can do in the computation that is sometimes simpler is to unexpand the chain rule and express the kinetic energy as:
 $$T_{pend}=\frac{1}{2}m|\dot{r}_2|^2$$
 Computing the value of $\dot{r}_2$ (remembering the implicit chain rule, now that we are not explicitly writing it), we have:
-$$\dot{r}_2=(\dot{x}-l\cos\theta\dot{\theta})\hat{\imath}+(l\sin\theta\dot{\theta})\hat{\jmath}$$
+$$\dot{r}_2=(\dot{x}+l\cos\theta\dot{\theta})\hat{\imath}+(-l\sin\theta\dot{\theta})\hat{\jmath}$$
 Performing the norm-square of $\dot{r}_2$ is the same as the dot product, so we square each element:
-$$T_{pend}=\frac{1}{2}m\left[(\dot{x}-l\cos\theta\dot{\theta})^2+(l\sin\theta\dot{\theta})^2\right]$$
+$$T_{pend}=\frac{1}{2}m\left[(\dot{x}+l\cos\theta\dot{\theta})^2+(l\sin\theta\dot{\theta})^2\right]$$
 Importantly, the computation of this gives a cross term from the expansion of the first term, which we may have missed otherwise. Altogether, $T_{pend}$ is:
 $$T_{pend}=\frac{1}{2}m\dot{x}^2+\frac{1}{2}ml^2\dot{\theta}^2-ml\cos\theta\dot\theta\dot{x}$$
 At this point, we can identify that the term $\frac{1}{2}ml^2\dot{\theta}^2$ is exactly the rotational kinetic energy of the rod. As a result, we can replace this term with $\frac{1}{2}I\dot{\theta}^2$. Finally, summing the two values of $i$ gives us the following kinetic energy for the system:
@@ -2056,9 +2423,9 @@ $$\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{x}}\right)=\frac{\partial L}
 Since $x$ itself has no presence in the equation,  $x$ is a cyclic coordinate in the solution. This directly implies linear momentum in the system is conserved by Noether's Theorem when no actuating forces are present. Additionally, this implies the RHS of the equation must be $F$ only. Considering the LHS then, we have:
 $$\frac{d}{dt}\left(\frac{\partial}{\partial \dot{x}}\frac{1}{2}\left[\left(M+m\right)\dot{x}^2+I\dot{\theta}^2\right]-ml\cos\theta\dot{\theta}\dot{x}-mgl\cos{\theta}\right)$$
 This simplifies quite quickly upon evaluation of the partial derivative to:
-$$\frac{d}{dt}\left[\left(M+m\right)\dot{x}-ml\cos\theta\dot\theta\right]=F$$
+$$\frac{d}{dt}\left[\left(M+m\right)\dot{x}+ml\cos\theta\dot\theta\right]=F$$
 Which is quite simply:
-$$(M+m)\ddot{x}-ml\cos\theta\ddot{\theta}+ml\sin\theta\dot{\theta}^2=F$$
+$$(M+m)\ddot{x}+ml\cos\theta\ddot{\theta}-ml\sin\theta\dot{\theta}^2=F$$
 Next, we consider the $\theta$ component, which is quite a bit simpler. There is no generalized force in this component direction, so the result is:
 $$\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{\theta}}\right)=\frac{\partial L}{\partial \theta}$$
 Starting again with the partial derivatives, we get the following (this time, there is no cyclic coordinate in $\theta$, implying angular momentum is \textit{not} conserved):

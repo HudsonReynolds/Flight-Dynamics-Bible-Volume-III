@@ -18,7 +18,7 @@ Examining the proceedings of physics in the 20th century, we see this become inc
 
 It is with this background that we motivate the study of energy mechanics. This subject gives us the key understanding needed to examine subjects from the smallest to the largest scales of the universe.
 
-\chapter{Historical Background }
+\chapter{Historical Background }\label{sec: historical background}
 
 \color{red} Finish this section by improving some of the things with the brachistrochrone at the end.
 \color{black}
@@ -791,11 +791,15 @@ Because so many physical phenomena are governed by this behavior to minimize cer
 
 As stated before, for an optimization problem, we need to find the minima or maxima of a quantity. In single variable calculus, we only concern ourselves with finding the minimum value of a function, say finding the minimum value of $x^2$. Here however, we now have a new challenge. That challenge to find a whole function which is a minimum.
 
-Stated more precisely, we are attempting to find a function that is the minimum for some set of conditions. The conditions are often posed as conditions on a function or its derivative. We may write the conditions generally as $y(x)$ and $y'(x)$.
+Whenever we try to perform optimization, we need to know \textit{what} we are optimizing for. So, we should state our goal a bit more precisely: we are attempting to find a function that is the minimum for some set of conditions. In this case, we will take those set of conditions to be a state $y(x)$ and it's derivative $y'(x)$.
 
-These conditions take the form of a function, as they are dependent on some variable $x$. The tricky part about variational calculus is that we need to find another function, $f$, which abides by these constraint equations, but is also a minimum! Since $f$ has a dependence on these constraints, we may generally write $f$ as:
+You may notice that these conditions are themselves a function of $x$! This is where we see additional complexity as compared to single variable calculus, as we must minimize over this entire range of values. We call the function that we are trying to minimize $f$. 
+
+To reiterate, the conditions take the form of a function, as they are dependent on some variable $x$. We need to find another function, $f$, which abides by these constraint equations, but is also a minimum! Since $f$ has a dependence on these constraints, we may write $f$ as:
 $$f[y(x),y'(x);x]$$
 This statement means that $f$ is a function which is defined by $y(x)$ and its derivative $y'(x)$. The semicolon notes that the variable of interest is $x$.
+
+We should note that there is no intrinsic reason that $f$ is a function of $y(x)$ and $y'(x)$. It turns out that for the \gls{Lagrangian} this is the appropriate constraint on the system. However, we can imagine in the general case that $f$ is dependent on some other criteria, such as $y''(x)$. We will not tackle that situation here, but the proceeding steps may be conducted similarly for such a function. For now, let's return to a function $f$ which is defined in terms of conditions on $y(x)$ and $y'(x)$.
 
 We may write a function $f$ which abides by these conditions, say $f = y(x)+2y'(x)$. That is fine, but how can we find where this function is minimum? What does that even mean?
 
@@ -926,7 +930,7 @@ Using this definition of the \gls{neigh func}, we can apply it to \eqautoref{eq:
 \begin{equation}\label{eq:neighborhood functional}
     J(\varepsilon)=\int_{x_1}^{x_2}f\left[y(\varepsilon,x),y'(\varepsilon,x);x\right]{dx}
 \end{equation}
-So, with this new version of the function, we can finally find the extrema using the familiar calculus rule, setting the derivative of $J$ equal to zero. We also evaluate this condition $\varepsilon=0$ since we defined the extrema to exist at $y(0)$:
+So, with this new version of the function, we can finally find the extrema using the familiar calculus rule, setting the derivative of $J$ equal to zero. We also evaluate this condition $\varepsilon=0$ since we defined the extrema to exist at $y(0,x)$:
 \begin{equation}
     \left.\frac{\partial J(\varepsilon)}{\partial\varepsilon}\right\vert_{\varepsilon=0}=0
 \end{equation}
@@ -1081,14 +1085,14 @@ You are a prominent mathematician in the year 1696. Bernoulli proposes a problem
 
 Find the velocity as a function of the distance from the initial height, $h$, for the particle using energy conservation.
 
-Write a general expression for the amount of time it takes a particle to descent a path using an integral. \textit{Hint: you can write $t=\frac{ds}{v}$}.
+Write a general expression for the amount of time it takes a particle to descent a path using an integral. \textit{Hint: you can write $dt=\frac{ds}{v}$}.
 
 Use the Euler-Lagrange equation to solve for the form of this curve (You may find the integral form useful!). Plot the result.
 \end{example}
 
 \chapter{Lagrangian Mechanics}\label{chap:lagrangian}
 
-\color{red} This chapter needs a large amount of work still. Need to finish reading through Goldstein and include neccesary information from there. Include generalized forces, lagrangian multipliers, improve non-holonomic constraints, write the quantuam to lagrangian section, and write some good practice problems.
+\color{red} This chapter needs a large amount of work still. Need to finish reading through Goldstein and include necessary information from there. Include generalized forces, Lagrangian multipliers, improve non-holonomic constraints, write the quantum to lagrangian section, and write some good practice problems.
 
 \color{black}
 
@@ -1120,10 +1124,164 @@ A brief overview of the differences between the two schemes of \gls{eom} derivat
     \label{fig:newt v lang}
 \end{figure}
 
-\section{Hamilton's Principle}
-The basis of \gls{Lagrangian} mechanics is Hamilton's Principle. Similar to Fermat's principle of least time, Hamilton's principle states that a quantity called the \gls{action} must be minimized.
+\section{Hamilton's Optical-Mechanical Duality}
 
-Although we may not have a physical intuition of why this is true right now (that will come later), it proves to be especially useful. Additionally, these ideas follow direction from the calculus of variations! Hamilton (alongside some others) formulated a definition of this principle that describes all physical systems. Hamilton's Principle is as follows:
+We have seen in \autoref{sec: historical background} that there is some connection between optical phenomena and mechanics, which Bernoulli exploited to great success in order to find the brachistochrone solution curve. In the past sections, we have seen that light obeys this `least time' principle, which allows us to understand the optics of systems.
+
+Hamilton, the next great mind to enter our story, thought that this connection between the optical and mechanical systems was not a mere coincidence. Perhaps, if he could create a general analogy between the mechanical and optical systems, a more general principle would be revealed.
+
+Hamilton started by considering the optical scenario. In the past, we have treated light primarily like particles. Let us start there, and construct a general picture according to Fermat's least time principle. Let's consider a snapshot of time after a light has been turned on. As we can imagine, the light will propagate out from the source and each particle will have the same distance from the light source:
+
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Circle [id:dp9889123752874325] 
+\draw  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][fill={rgb, 255:red, 245; green, 166; blue, 35 }  ,fill opacity=1 ] (320,260) .. controls (320,254.48) and (324.48,250) .. (330,250) .. controls (335.52,250) and (340,254.48) .. (340,260) .. controls (340,265.52) and (335.52,270) .. (330,270) .. controls (324.48,270) and (320,265.52) .. (320,260) -- cycle ;
+%Straight Lines [id:da5697724945272408] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (330,250) -- (330,112) ;
+\draw [shift={(330,110)}, rotate = 90] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da6834153544002188] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (330,260) -- (379.33,121.88) ;
+\draw [shift={(380,120)}, rotate = 109.65] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da3407747898944704] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (330,260) -- (280.67,121.88) ;
+\draw [shift={(280,120)}, rotate = 70.35] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da20193768764751874] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (330,260) -- (428.65,151.48) ;
+\draw [shift={(430,150)}, rotate = 132.27] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da19024987729972997] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (330,260) -- (231.35,151.48) ;
+\draw [shift={(230,150)}, rotate = 47.73] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+
+
+
+\end{tikzpicture}
+
+    \caption{Light Rays Emanating from Point Source}
+    \label{fig:light ray}
+\end{figure}
+
+We can now consider the wave description of the light. We have seen before that the descriptions with either particles or waves should produce identical descriptions of the light path.\endnote{To a good approximation, at least. We assume that $\lambda$ is small compared to the path length.}
+
+ \begin{figure}[ht]
+     \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Circle [id:dp9889123752874325] 
+\draw  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][fill={rgb, 255:red, 245; green, 166; blue, 35 }  ,fill opacity=1 ] (320,260) .. controls (320,254.48) and (324.48,250) .. (330,250) .. controls (335.52,250) and (340,254.48) .. (340,260) .. controls (340,265.52) and (335.52,270) .. (330,270) .. controls (324.48,270) and (320,265.52) .. (320,260) -- cycle ;
+%Straight Lines [id:da5697724945272408] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (330,250) -- (330,112) ;
+\draw [shift={(330,110)}, rotate = 90] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da6834153544002188] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (330,260) -- (379.33,121.88) ;
+\draw [shift={(380,120)}, rotate = 109.65] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da3407747898944704] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (330,260) -- (280.67,121.88) ;
+\draw [shift={(280,120)}, rotate = 70.35] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da20193768764751874] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (330,260) -- (428.65,151.48) ;
+\draw [shift={(430,150)}, rotate = 132.27] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da19024987729972997] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (330,260) -- (231.35,151.48) ;
+\draw [shift={(230,150)}, rotate = 47.73] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Shape: Arc [id:dp6546530404313886] 
+\draw  [draw opacity=0] (291.11,221.11) .. controls (301.06,211.16) and (314.81,205) .. (330,205) .. controls (345.19,205) and (358.94,211.16) .. (368.89,221.11) -- (330,260) -- cycle ; \draw   (291.11,221.11) .. controls (301.06,211.16) and (314.81,205) .. (330,205) .. controls (345.19,205) and (358.94,211.16) .. (368.89,221.11) ;  
+%Shape: Arc [id:dp38662171716894356] 
+\draw  [draw opacity=0] (268.13,198.13) .. controls (283.96,182.29) and (305.84,172.5) .. (330,172.5) .. controls (354.16,172.5) and (376.04,182.29) .. (391.87,198.13) -- (330,260) -- cycle ; \draw   (268.13,198.13) .. controls (283.96,182.29) and (305.84,172.5) .. (330,172.5) .. controls (354.16,172.5) and (376.04,182.29) .. (391.87,198.13) ;  
+%Shape: Arc [id:dp03223465646149537] 
+\draw  [draw opacity=0] (246.03,176.03) .. controls (267.52,154.54) and (297.21,141.25) .. (330,141.25) .. controls (362.79,141.25) and (392.48,154.54) .. (413.97,176.03) -- (330,260) -- cycle ; \draw   (246.03,176.03) .. controls (267.52,154.54) and (297.21,141.25) .. (330,141.25) .. controls (362.79,141.25) and (392.48,154.54) .. (413.97,176.03) ;  
+%Straight Lines [id:da732077664903691] 
+\draw    (200,200) -- (260,200) ;
+
+% Text Node
+\draw (121,192) node [anchor=north west][inner sep=0.75pt]   [align=left] {Wavefront};
+
+
+\end{tikzpicture}
+
+     \caption{Wavefronts of light from a point source}
+     \label{fig:wavefront}
+ \end{figure}
+
+In this case, we see that the waves emanate outwards radially from the source. Importantly, these wavefronts are always orthogonal to the light rays! This is one reason that the Newtonian description of light meshes well with the descriptions of Huygens in most cases. Fermat's Least time principle describes both.
+
+What is interesting is that knowing the wavefront, we know the trajectory that any particle would take. We simply follow the path that is orthogonal to the wavefront at every point. In this way, the wavefront is more powerful, as it describes every path that a particle could take through this system.
+
+Hamilton's key insight is that this same idea can be applied to mechanical systems. Our wavefront is now some physical quantity that we call the \gls{action}, and the ray describes the path through some state space. Suppose we start at some point $A$ in our state space, and end at point $B$. We may use the same analogy as before to understand the path by which this may occur:
+
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da33089941802068357] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (326,224) -- (326,86) ;
+\draw [shift={(326,84)}, rotate = 90] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da5769393478614144] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (326,230) -- (375.33,91.88) ;
+\draw [shift={(376,90)}, rotate = 109.65] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da7362011800292855] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (326,230) -- (276.67,91.88) ;
+\draw [shift={(276,90)}, rotate = 70.35] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da18647319606069568] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (326,230) -- (424.65,121.48) ;
+\draw [shift={(426,120)}, rotate = 132.27] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da59675994951987] 
+\draw [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ]   (326,230) -- (227.35,121.48) ;
+\draw [shift={(226,120)}, rotate = 47.73] [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Shape: Arc [id:dp10866579750059258] 
+\draw  [draw opacity=0] (287.11,191.11) .. controls (297.06,181.16) and (310.81,175) .. (326,175) .. controls (341.19,175) and (354.94,181.16) .. (364.89,191.11) -- (326,230) -- cycle ; \draw   (287.11,191.11) .. controls (297.06,181.16) and (310.81,175) .. (326,175) .. controls (341.19,175) and (354.94,181.16) .. (364.89,191.11) ;  
+%Shape: Arc [id:dp4311008067523785] 
+\draw  [draw opacity=0] (264.13,168.13) .. controls (279.96,152.29) and (301.84,142.5) .. (326,142.5) .. controls (350.16,142.5) and (372.04,152.29) .. (387.87,168.13) -- (326,230) -- cycle ; \draw   (264.13,168.13) .. controls (279.96,152.29) and (301.84,142.5) .. (326,142.5) .. controls (350.16,142.5) and (372.04,152.29) .. (387.87,168.13) ;  
+%Shape: Arc [id:dp04719478797887722] 
+\draw  [draw opacity=0] (242.03,146.03) .. controls (263.52,124.54) and (293.21,111.25) .. (326,111.25) .. controls (358.79,111.25) and (388.48,124.54) .. (409.97,146.03) -- (326,230) -- cycle ; \draw   (242.03,146.03) .. controls (263.52,124.54) and (293.21,111.25) .. (326,111.25) .. controls (358.79,111.25) and (388.48,124.54) .. (409.97,146.03) ;  
+%Straight Lines [id:da9764696000759049] 
+\draw    (196,170) -- (256,170) ;
+%Shape: Circle [id:dp8000487112032604] 
+\draw  [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (319,230) .. controls (319,226.13) and (322.13,223) .. (326,223) .. controls (329.87,223) and (333,226.13) .. (333,230) .. controls (333,233.87) and (329.87,237) .. (326,237) .. controls (322.13,237) and (319,233.87) .. (319,230) -- cycle ;
+%Shape: Circle [id:dp1912671326784885] 
+\draw  [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (319,55) .. controls (319,51.13) and (322.13,48) .. (326,48) .. controls (329.87,48) and (333,51.13) .. (333,55) .. controls (333,58.87) and (329.87,62) .. (326,62) .. controls (322.13,62) and (319,58.87) .. (319,55) -- cycle ;
+
+% Text Node
+\draw (81,153) node [anchor=north west][inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{74.75pt}\setlength\topsep{0pt}
+\begin{flushright}
+Surface of 
+\end{flushright}
+\begin{flushright}
+Constant Action
+\end{flushright}
+\end{minipage}};
+% Text Node
+\draw (335,233.4) node [anchor=north west][inner sep=0.75pt]    {$A$};
+% Text Node
+\draw (335,58.4) node [anchor=north west][inner sep=0.75pt]    {$B$};
+
+
+\end{tikzpicture}
+
+    
+    \caption{Mechanical Analogy of Fermat's Principle}
+    \label{fig:action optical}
+\end{figure}
+
+One important thing to note is that this mechanical realization is not physically seen, but rather an abstraction of the optical system. The key insight, however, is that if we can find these surfaces of constant action, we can also find these `rays' through phase space that give us our solution to a problem in mechanics. Such a description is a key insight into the formulation of Hamilton's Principle. See \cite{abide_by_reason_how_2025} for more information.
+
+\section{Hamilton's Principle}
+With a solid foundation set, we may now proceed in explaining Hamilton's principle, the key insight in using variational calculus to solve problems in mechanics. We recall that similar to Fermat's principle of least time, Hamilton's principle states that the \gls{action} must be minimized. With this in mind, Hamilton formulated the following equation:
+
 \begin{theorem}[Hamilton's Principle]
 In a conservative system which may travel from one point to another within a specific time interval, the path that is followed is the path which minimizes the time integral of the difference between the kinetic and potential energies.
 $$\delta \int_{t_1}^{t_2}{T-U}{dt}=0$$
