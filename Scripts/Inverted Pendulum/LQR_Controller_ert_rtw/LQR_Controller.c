@@ -7,9 +7,9 @@
  *
  * Code generation for model "LQR_Controller".
  *
- * Model version              : 1.58
+ * Model version              : 1.59
  * Simulink Coder version : 25.1 (R2025a) 21-Nov-2024
- * C source code generated on : Sun Aug 24 15:48:43 2025
+ * C source code generated on : Mon Oct 27 21:09:59 2025
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -348,10 +348,10 @@ void LQR_Controller_step1(void)        /* Sample time: [0.007s, 0.0s] */
      *  Gain: '<S4>/Gain4'
      *  Sum: '<S4>/Add2'
      */
-    z = ((((LQR_Controller_P.K[0] * LQR_Controller_B.SetPoint[0] +
-            LQR_Controller_P.K[1] * LQR_Controller_B.SetPoint[1]) +
-           LQR_Controller_P.K[2] * LQR_Controller_B.SetPoint[2]) +
-          LQR_Controller_P.K[3] * LQR_Controller_B.SetPoint[3]) *
+    z = ((((LQR_Controller_P.LQRGains_Gain[0] * LQR_Controller_B.SetPoint[0] +
+            LQR_Controller_P.LQRGains_Gain[1] * LQR_Controller_B.SetPoint[1]) +
+           LQR_Controller_P.LQRGains_Gain[2] * LQR_Controller_B.SetPoint[2]) +
+          LQR_Controller_P.LQRGains_Gain[3] * LQR_Controller_B.SetPoint[3]) *
          LQR_Controller_P.Gain2_Gain * (LQR_Controller_P.R_motor *
           LQR_Controller_P.r / LQR_Controller_P.k_motor) +
          LQR_Controller_B.TmpRTBAtAdd2Inport1) * LQR_Controller_P.Gain4_Gain;

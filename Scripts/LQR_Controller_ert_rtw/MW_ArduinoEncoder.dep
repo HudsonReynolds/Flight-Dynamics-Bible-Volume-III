@@ -1,0 +1,44 @@
+MW_ArduinoEncoder.o: \
+ C:/ProgramData/MATLAB/SupportPackages/R2025a/toolbox/target/supportpackages/arduinobase/src/MW_ArduinoEncoder.cpp \
+ C:/ProgramData/MATLAB/SupportPackages/R2025a/toolbox/target/supportpackages/arduinobase/include/MW_ArduinoEncoder.h \
+ C:/Users/Hudso/OneDrive/Documents/GitHub/Flight-Dynamics-Bible-Volume-III/Scripts/LQR_Controller_ert_rtw/rtwtypes.h \
+ C:/PROGRA~1/MATLAB/R2025a/extern/include/tmwtypes.h \
+ C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/Arduino.h \
+ C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/binary.h \
+ C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/WCharacter.h \
+ C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/WString.h \
+ C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/HardwareSerial.h \
+ C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/Stream.h \
+ C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/Print.h \
+ C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/Printable.h \
+ C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/USBAPI.h \
+ C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/Arduino.h \
+ C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/variants/standard/pins_arduino.h
+
+C:/ProgramData/MATLAB/SupportPackages/R2025a/toolbox/target/supportpackages/arduinobase/include/MW_ArduinoEncoder.h:
+
+C:/Users/Hudso/OneDrive/Documents/GitHub/Flight-Dynamics-Bible-Volume-III/Scripts/LQR_Controller_ert_rtw/rtwtypes.h:
+
+C:/PROGRA~1/MATLAB/R2025a/extern/include/tmwtypes.h:
+
+C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/Arduino.h:
+
+C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/binary.h:
+
+C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/WCharacter.h:
+
+C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/WString.h:
+
+C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/HardwareSerial.h:
+
+C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/Stream.h:
+
+C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/Print.h:
+
+C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/Printable.h:
+
+C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/USBAPI.h:
+
+C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/cores/arduino/Arduino.h:
+
+C:\ProgramData\MATLAB\SupportPackages\R2025a\aCLI\data\packages\arduino/hardware/avr/1.8.3/variants/standard/pins_arduino.h:

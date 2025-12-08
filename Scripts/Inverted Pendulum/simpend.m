@@ -54,6 +54,8 @@ R = 0.005;           % control actuation penalty
 
 K = lqr(Plant_sys,Q,R);
 
+K = [-31.6228	-28.236   131.5243	11.773];
+
 % define the goal position, pointing straight up with no velocity and
 % centered on the track
 ref = [0;0;pi;0];

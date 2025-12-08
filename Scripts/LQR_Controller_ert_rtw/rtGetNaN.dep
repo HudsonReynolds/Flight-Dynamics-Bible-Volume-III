@@ -1,0 +1,14 @@
+rtGetNaN.o: \
+ C:/Users/Hudso/OneDrive/Documents/GitHub/Flight-Dynamics-Bible-Volume-III/Scripts/LQR_Controller_ert_rtw/rtGetNaN.c \
+ C:/Users/Hudso/OneDrive/Documents/GitHub/Flight-Dynamics-Bible-Volume-III/Scripts/LQR_Controller_ert_rtw/rtwtypes.h \
+ C:/PROGRA~1/MATLAB/R2025a/extern/include/tmwtypes.h \
+ C:/Users/Hudso/OneDrive/Documents/GitHub/Flight-Dynamics-Bible-Volume-III/Scripts/LQR_Controller_ert_rtw/rtGetNaN.h \
+ C:/Users/Hudso/OneDrive/Documents/GitHub/Flight-Dynamics-Bible-Volume-III/Scripts/LQR_Controller_ert_rtw/rt_nonfinite.h
+
+C:/Users/Hudso/OneDrive/Documents/GitHub/Flight-Dynamics-Bible-Volume-III/Scripts/LQR_Controller_ert_rtw/rtwtypes.h:
+
+C:/PROGRA~1/MATLAB/R2025a/extern/include/tmwtypes.h:
+
+C:/Users/Hudso/OneDrive/Documents/GitHub/Flight-Dynamics-Bible-Volume-III/Scripts/LQR_Controller_ert_rtw/rtGetNaN.h:
+
+C:/Users/Hudso/OneDrive/Documents/GitHub/Flight-Dynamics-Bible-Volume-III/Scripts/LQR_Controller_ert_rtw/rt_nonfinite.h:

@@ -7,9 +7,9 @@
  *
  * Code generation for model "LQR_Controller".
  *
- * Model version              : 1.58
+ * Model version              : 1.59
  * Simulink Coder version : 25.1 (R2025a) 21-Nov-2024
- * C source code generated on : Sun Aug 24 15:48:43 2025
+ * C source code generated on : Mon Oct 27 21:09:59 2025
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -22,12 +22,6 @@
 
 /* Block parameters (default storage) */
 P_LQR_Controller_T LQR_Controller_P = {
-  /* Variable: K
-   * Referenced by: '<Root>/LQR Gains'
-   */
-  { -114.01754250991182, -130.5047435190543, 728.34107589609982,
-    51.993866326858374 },
-
   /* Variable: R_motor
    * Referenced by: '<S4>/Gain2'
    */
@@ -86,6 +80,11 @@ P_LQR_Controller_T LQR_Controller_P = {
    * Referenced by: '<Root>/Constant6'
    */
   0.0,
+
+  /* Expression: 1e3*[-.2449 -.3075 1.2975 0.1171]
+   * Referenced by: '<Root>/LQR Gains'
+   */
+  { -244.9, -307.5, 1297.5, 117.1 },
 
   /* Expression: 1
    * Referenced by: '<Root>/Gain2'
