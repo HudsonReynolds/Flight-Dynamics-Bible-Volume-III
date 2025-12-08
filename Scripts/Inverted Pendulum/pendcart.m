@@ -4,8 +4,8 @@ Sx = sin(x(3));
 Cx = cos(x(3));
 D = m*L*L*(M+m*(1-Cx^2));
 r = 6/1000; % radius of motor shaft (m)
-R = 6; % motor resistance (ohms)
-k = 12/157.1; % motor constant (Vs/rad)
+R = 9.8; % motor resistance (ohms)
+k = 24/55.5; % motor constant (Vs/rad)
 
 V = u*R*r/k + k*x(2)/r;
 
