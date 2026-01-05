@@ -10,28 +10,25 @@
 We may motivate our study of energy mechanics by asking a simple, yet profound question:
 What is the fundamental nature of the universe?
 
-If you lived in the time of Isaac Newton, the answer might be fairly simple - if we know the positions, velocities, and accelerations of objects, you can determine the future of that object with exacting certainty. 
+If you lived in the time of Isaac Newton, the answer might be fairly simple - if we know the positions, velocities, and accelerations of objects, you can determine the future of that object with exacting certainty.\endnote{This idea of knowing the future and past given the set of all initial conditions is known as \textit{Laplace's Demon}.} Forces, it might have been said, are the fundamental actors in the universe.
 
 Later, physicists would derive a different way of looking at mechanics -- using the methods of energy. This is what we explore in our study of variational calculus and energy mechanics. At the time, many physicists believed that this reframing was simply another expression of Newtonian physics. In some way, this is true. However, the energy method allows us to peer more deeply into the beating heart of physics to examine the fundamental qualities of nature. 
 
-Examining the proceedings of physics in the 20th century, we see this become increasingly apparent. Mass -- Einstein had shown -- was fundamentally tied to the energy of particles in perhaps the most famous equation of all time, $E^2=m^2c^4+p^2c^2$. Later, as physicists began to develop quantum mechanics, energy, not forces, became the fundamental quantity to measure.
+Examining the proceedings of physics in the 20th century, we see this become increasingly apparent. Mass -- Einstein had shown -- was fundamentally tied to the energy of particles in perhaps the most famous equation of all time, $E^2=m^2c^4+p^2c^2$. Later, as physicists began to develop quantum mechanics, energy, not forces, became the fundamental quantity to measure. The famous Schr\"odinger equation, in fact, uses these energy relation:
+$$\hat{\mathcal{H}}\psi=E\psi$$
+The insights that humanity gained from this new methodology have permeated physics well into the 20th and 21st centuries. Here, they have found prevalent use in engineering applications as well. To understand the dynamics of complicated control systems or spacecraft, we rely on energy mechanics, rather than Newtonian mechanics, to guide us.
 
 It is with this background that we motivate the study of energy mechanics. This subject gives us the key understanding needed to examine subjects from the smallest to the largest scales of the universe.
 
 \chapter{Historical Background }\label{sec: historical background}
 
-\color{red} Finish this section by improving some of the things with the brachistrochrone at the end.
-\color{black}
-
 In this chapter, I cover a brief history of the early years of energy mechanics. I will mostly cover the main figures and ideas that are instrumental to our study of energy mechanics. These main figures include Isaac Newton, Pierre de Fermat, and Johann Bernoulli.
 
 The story of these figures is closely intertwined. It is impossible to discuss one figure without discussing the others as well. This section will thus take on a more chronological approach, but background information about some of the important characters is also included. Notably, I include some information about Isaac Newton for his far-reaching impacts in many aspects of mechanics.
 
-The story of these figures will culminate in energy mechanics, possibly the most important implication of the studies of these historic figures. The foundations set by these scientists persist in the landscape of modern engineering and physics.
+The story of these figures will culminate in energy mechanics, possibly the most important implication of the studies of these historic figures. The foundations set by these scientists persist in the landscape of modern engineering and physics. 
 
-Euler, Lagrange, Hamilton, and others later contributions to the subjects will not be discussed here, but rather in \autoref{chap:calculus of variations}, \autoref{chap:lagrangian}, and \autoref{chap:hamiltonian}.
-
-While the contributions of Weierstrass, Hilbert, and others is important to the mathematical solidification of the calculus of variations, I have chosen not to cover them in this text because I feel that it does not greatly aid readers in understanding the core of the subject.
+Euler, Lagrange, Hamilton, and others later contributions to the subjects will not be discussed here, but rather in \autoref{chap:calculus of variations}, \autoref{chap:lagrangian}, and \autoref{chap:hamiltonian}. While the contributions of Weierstrass, Hilbert, and others is important to the mathematical solidification of the calculus of variations, I have chosen not to cover them in this text because I feel that it does not greatly aid readers in understanding the core of the subject.
 
 The book by Goldstine \cite{goldstine_history_1980} has been especially useful in the development of this chapter. I highly recommend reading chapters 1-3 for readers who are interested in learning more about the history of this subject.
 
@@ -46,20 +43,18 @@ The goal of this chapter is not necessarily to derive many mathematical expressi
     \label{fig:Newton}
 \end{figure}
 
-The history of any kind of mechanics must start with a study of Isaac Newton. Newton is very famous for his description of mechanics based on forces and vectors. However, Newton is also instrumental character in our study of energy mechanics. 
+The history of any kind of mechanics must include a study of Isaac Newton. Newton is very famous for his description of mechanics based on forces and vectors. However, Newton is also instrumental character in our study of energy mechanics. 
 
 In fact, Newton was instrumental to the development of Calculus of Variations, solving two of the first problems in the subject, the \textit{minimal resistance problem} and the \gls{brachistochrone} problem, which we will further explore in our study of the calculus of variations. It is on these subjects that we will spend most of the time.
 
 Before we explore his contributions in this field, though, an understanding of his work in force-based mechanics and calculus is needed. This background section draws mostly from the text \cite{noauthor_isaac_2017}. Newton's work on variational calculus draws from several different sources, including the original \textit{Principia} and the \cite{goldstine_fermat_1980} chapter of Goldstine.
 
 \subsection{Newton's Beginnings (1643-1661)}
-In a story likely familiar to many people who find their interests in the realm of physics and engineering, Newton was born as an unwanted child to both his mother and father.
-
-Born on Christmas Day in 1642 (Early January, 1643 in the modern calendar), Newton was born into an England in the midst of a civil war and full of strife. His father had died 3 months prior to his birth, and he was born prematurely. Newton was unwanted by his own mother, so he was raised by his maternal grandmother, Margery Ayscough.
+In a story likely familiar to many people who find their interests in the realm of physics and engineering, Newton was born as an unwanted child to both his mother and father. Born on Christmas Day in 1642 (Early January, 1643 in the modern calendar), Newton was born into an England in the midst of a civil war and full of strife. His father had died 3 months prior to his birth, and he was born prematurely. Newton was unwanted by his own mother, so he was raised by his maternal grandmother, Margery Ayscough.
 
 Needless to say, Isaac Newton's early years were dominated by a lack of control and great turmoil. Thus, Newton took great solace in the isolation and fundamental truth of mathematics. This background in Newton's early life is likely to have had profound influences on his growth into adulthood and his later exploration of math.
 
-Newton, in his years of study before college, had a great fascination for mechanical devices and an understanding of the world around him. It was in 1661 that he gained admittance to the Trinity College in Cambridge, right as the English Civil War was coming to a close.
+Newton, in his years of study before college, had a great fascination for mechanical devices and an understanding of the world around him. It was in 1661 that he gained admittance to the Trinity College in Cambridge, right as the English Civil War was coming to a close. It was here that his true exploration of math began to blossom.
 
 \subsection{The Newtonian Calculus (1661-1679)}
 
@@ -82,7 +77,7 @@ The original scope of this theorem only applies to the integer elements, $\mathb
     $$\binom{r}{k}=\frac{r(r-1)(r-2)\cdots(r-k+1)}{k!}$$
 \end{theorem}
 
-We note here that Newton has introduced an infinite sum! This is one of the first steps towards the methods of calculus. In fact, this equation has applicability towards the definition of the constant $e$, which is very fundemental in our studies of calculus. We can see this by inspection the definition of $e$ as:
+We note here that Newton has introduced an infinite sum! This is one of the first steps towards the methods of calculus. In fact, this equation has applicability towards the definition of the constant $e$, which is very fundamental in our studies of calculus. We can see this by inspection the definition of $e$ as:
 $$ \lim_{x\to\infty} \left(1+\frac{1}{n}\right)^n$$
 Using Newton's generalized binomial theorem, this infinite limit can be approximated and the value of $e$ can be closely approximated.
 
@@ -99,13 +94,13 @@ While the Newtonian methods of calculus are largely forgotten today in favor of 
     \caption{A portrait of Pierre de Fermat}
     \label{fig:fermat}
 \end{figure}
-It is in the midst of Newton's most fruitful years that we must talk about Fermat's contributions to the subject of energy mechanics, which predate Newton's earliest contributions by nearly a score.
+It is in the midst of Newton's most fruitful years that we must talk about Fermat's contributions to the subject of energy mechanics, which predate Newton's earliest contributions by nearly a score. Fermat, in the view of many, was the first to consider how nature may perform actions in `optimal' ways.
 
 Fermat is famous in mathematics for \textit{Fermat's Last Theorem}, which remained unsolved for 358 years. A solution involving elliptic curves exists, which you can find an in-depth discussion in \cite{hellegouarch_invitation_2001} (this is entirely irrelevant to our work here). 
 
-His contributions here, however, relate to the so-called \textit{Fermat's Principle of Least Time}. Fermat's biggest insight was the understanding that 'nature operates by means and ways that are easiest and fastest'. Although this may seem a simple statement, it will underlie the physical principle at the root of energy mechanics.
+His contributions here, however, relate to the so-called \textit{Fermat's Principle of Least Time}. Fermat's biggest insight was the understanding that 'nature operates by means and ways that are easiest and fastest'. By this, Fermat says that light will always take a path that minimizes the total time. Although this may seem a simple statement, it will underlie the physical principle at the root of energy mechanics.
 
-Fermat's Principle of Least Time involves finding a light path such that the time is minimized.\endnote{It can be shown that this is not exactly true, as the only condition required for sufficiency in this problem is that the changes to the variation are of the second-order. Fermat's condition is simply one such case of this. See \cite{feynman_feynman_1963} for more info.}Fermat's set up is as shown in \autoref{fig:least time ray}. Fermat noticed that the light path will refract and change its angle when moving through a medium where the speed of light is slower.\endnote{I should note that technically, the speed of light is constant. However, we may approximate the speed of light as being slower in more optically dense mediums.}
+Most of Fermat's work involves systems of optics. For any system, Fermat's Principle of Least Time involves finding a light path such that the total time is minimized.\endnote{It can be shown that this is not exactly true, as the only condition required for sufficiency in this problem is that the changes to the variation are of the second-order. Fermat's condition is simply one such case of this. See \cite{feynman_feynman_1963} for more info.} Fermat started by considering the refraction of light, which can easily be observed. Fermat's set up is as shown in \autoref{fig:least time ray}. Fermat noticed that the light path will refract and change its angle when moving through a medium where the speed of light is slower.\endnote{I should note that technically, the speed of light is constant. However, we may approximate the speed of light as being slower in more optically dense mediums. What really happens is that the light reflects and changes directions between a greater number of particles in an optically dense medium, which gives the appearance of a reduced speed on the macroscopic scale.}
 
 The law of reflection can also be shown from Fermat's Principle, although that will not be done here. It is quite similar to the derivation of the refraction law. If you find an interest in the subject matter here, a much more in-depth discussion in the wonderful Feynman lectures on physics can be found in \cite{feynman_feynman_1963}.
 
@@ -171,13 +166,9 @@ The law of reflection can also be shown from Fermat's Principle, although that w
     \label{fig:least time ray}
 \end{figure}
 
-I do not delve into the proof by Fermat, since it uses archaic methods of calculus that are more confusing than enlightening to the modern audience. Fermat's solution is mostly geometric and it involves a geometric proof using the Law of Cosines. 
+I do not delve into the proof by Fermat, since it uses archaic methods of calculus that are more confusing than enlightening to the modern audience. Fermat's solution involves a geometric proof using the Law of Cosines. 
 
-Instead, I will take a more modern approach which follows roughly along with Fermat. Following the standard procedures of calculus, we will find a minimization of the function by considering the point where the first derivative is zero.
-
-I will present here a modern derivation of this principle, because I believe it makes the later derivations more satisfying and provides a brief introduction to the methodologies of the calculus of variations.
-
-Starting from the set-up shown in \autoref{fig:least time ray}, we can write equations for the time for each of the sections of the light path. To do so, we use the fundemental relationship for velocity:
+Instead, I will take a more modern approach which follows roughly along with Fermat. Following the standard procedures of calculus, we will find a minimization of the function by considering the point where the first derivative is zero. Starting from the set-up shown in \autoref{fig:least time ray}, we can write equations for the time for each of the sections of the light path. To do so, we use the fundamental relationship for velocity:
 $$t=\frac{d}{v}$$
 Using the definition that the velocity in an optical medium is $v=\frac{c}{n}$, we can write the time for each section. Starting with the section in the lower optical density:
 $$t_{upper}=\frac{n_i\sqrt{{h_1}^2+x^2}}{c}$$
@@ -194,23 +185,264 @@ Using the established angles $\theta_1$ and $\theta_2$, we can express this rela
     \color{blue}\boxed{\color{black}n_i\sin\theta_i=n_r\sin\theta_r}\\
     \color{blue}\mathrm{Snell's \ Law}
 \end{gather}
-We will keep this result in mind, as we will see it again when we solve the problem of the \gls{brachistochrone}.
+If you would like to have a greater understanding of the underlying principles in Fermat's Least Time Theorem, consider reading \autoref{sec: connection to quantum} at the end of this chapter.
 
-\subsection{Connection to Quantum Electrodynamics}\label{sec: connection to quantum}
-The curious reader may not be fully satisfied with the answer given by Fermat. Why does light take a path that minimizes time? Is there any physical reason for this? In this section we will take a brief aside from the history to answer these questions.
+We will keep Fermat's result in mind, as we will see it again when we solve the problem of the \gls{brachistochrone}. For now, let's go back to Newton to understand his developments in his masterwork, \textit{Principia Mathematica}.
+
+\section{Principia (1687)}
+It is in \textit{Principia} that we find the first evidences of Newton's contributions to the field of energy mechanics. It is Newton's work in the \textit{Principia} that most scholars agree are the first real works of the calculus of variations.
+
+Newton's first attempt at a variational problem in 1685 was to understand the shape that minimizes the drag, which Newton called the \textit{minimal resistance problem}. In essence, this problem involves finding a solid of revolution for which the object produces a minimal drag. In Newton's time, no solidified theories of fluid dynamics had been formulated, so Newton suggested a fluid that is `a rare medium of very small quiescent particles of equal magnitude and freely disposed at equal distances from one other'. Although this fluid is not at all reminiscent of a real fluid\endnote{Unless, curiously, the fluid is travelling at hypersonic speeds, in which case this model is quite good.}, it still remains a useful exercise in the study of the calculus of variations.
+
+The major advancement in this problem came from Newton's formulation to solve it, rather than the problem setup, which we will not derive\endnote{See \cite{goldstine_history_1980} for information on the derivation.}. Newton came up with a simple integral to represent the drag of an object:$$\int_{t_1}^{t_2}{\frac{y\dot{y}^3dt}{\dot{x}^2+\dot{y}^2}}$$In this equation, Newton has parameterized the minimal drag surface curve in terms of the variable $t$ and expressed the derivatives of $x$ and $y$ with respect to $t$ as $\dot{x}$ and $\dot{y}$. As we will see later, this integral is something that we will call a \gls{functional}. When we evaluate this integral, we will get a single number, and that number is the quantity which we want to minimize in order to get the lowest drag.
+
+Newton solved this problem in \textit{Principia}, but his exact methodology was not known. It was not until 1691, when Huygens began independent study of the problem, that anyone had shed any light on the methods of solving the problem. The text, however, still inspired the idea of the \gls{functional} and began the further exploration of the subject of calculus of variations.
+
+With the idea of the functional created and a methodology to solve problems in the calculus of variations, the next major step in the subject came with the \gls{brachistochrone} problem.
+
+\section{Brachistochrone (1696)}
+
+In June of 1696, nearly a decade after Newton's initial foray into the calculus of variations, John Bernoulli challenged the mathematical world to solve the problem of the \gls{brachistochrone} -- a word coming from Greek, meaning 'shortest time'. In its simplest description, the problem involves finding a curve for which a frictionless bead will descend the fastest. A simple diagram of the system is reproduced in \autoref{fig:Brachistochrone}. 
+
+\begin{figure}[ht]
+    \centering
+
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Curve Lines [id:da5626290173929862] 
+\draw [line width=2.25]    (226,80) .. controls (224.23,164.47) and (303.23,269.47) .. (426,230) ;
+%Shape: Circle [id:dp16005060334035148] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (228,88) .. controls (228,85.24) and (230.24,83) .. (233,83) .. controls (235.76,83) and (238,85.24) .. (238,88) .. controls (238,90.76) and (235.76,93) .. (233,93) .. controls (230.24,93) and (228,90.76) .. (228,88) -- cycle ;
+%Straight Lines [id:da9179973387326911] 
+\draw    (136,80) -- (136,118) ;
+\draw [shift={(136,120)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da23565770066909053] 
+\draw    (136,80) -- (174,80) ;
+\draw [shift={(176,80)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+
+% Text Node
+\draw (207,72.4) node [anchor=north west][inner sep=0.75pt]    {$A$};
+% Text Node
+\draw (437,222.4) node [anchor=north west][inner sep=0.75pt]    {$B$};
+% Text Node
+\draw (130,122.4) node [anchor=north west][inner sep=0.75pt]    {$\hat{x}$};
+% Text Node
+\draw (179,70.4) node [anchor=north west][inner sep=0.75pt]    {$\hat{y}$};
+
+
+\end{tikzpicture}
+
+
+    \caption{Brachistochrone Problem Set-Up}
+    \label{fig:Brachistochrone}
+\end{figure}
+
+John Bernoulli, at the time, had come up with a quite an ingenious solution to the problem. However, he challenged the rest of the mathematical world to solve the problem as well, with a deadline of Easter of 1697.
+
+At the time, there were 4 notable solutions, those coming from Leibniz, John Bernoulli, James Bernoulli, and Isaac Newton (who submitted anonymously). 
+
+Newton, supposedly, spent one night on his anonymous solution, and submitted it to Bernoulli. Despite being an anonymous submission, Bernoulli is said to have recognized Newton's solution by the nature of the writing. Bernoulli said, ''tanquam ex ungue leonem'' (I recognize the lion by its claw), of Newton's solution.
+
+An exploration of the problem in the modern context (using the Euler-Lagrange approach) will be studied in \autoref{chap:calculus of variations}. The approach of Leibniz and Newton is similar to the modern approach, so I will not touch on those here. However, I will explore the solution of John Bernoulli here, mostly for the interesting approach. This will also help prime the reader for the derivation that is to come later. This derivation is by no means necessary to the understanding of the calculus of variations, but readers may find it to be quite elegant and enjoyable.
+
+\subsection{The Bernoulli Brachistochrone Solution}
+The set-up of the \gls{brachistochrone} problem is fairly simple. From energy relations, we know that the total energy of the system must be conserved:
+$$E=T+U$$
+Defining the reference at point $A$ as shown in \autoref{fig:Brachistochrone}, it is apparent that the velocity at any given point is:
+$$v(x)^2=2g(x-x_0)+v_0^2$$
+Where $v_0$ and $x_0$ represent initial conditions. Typically, we take these to be zero for the problem and can simplify this relation to:
+$$v(x)=\sqrt{2gx}$$
+Importantly, we can see that the velocity is independent of the horizontal range or the path of the particle. In other words, we have a \textit{conservative} system, which gives us great flexibility.
+
+From here, we can proceed in a number of ways. The standard method to do this will be explored later. Here, however, Bernoulli makes an insight relating the problem to Fermat's Least Time principle.
+
+Bernoulli's insight is as follows - a ray of light moves through a medium in a way that reaches the boundary in the shortest amount of time (as shown by Fermat). So, Bernoulli sets the index of refraction at each height inversely proportional to the velocity (as shown in \autoref{fig:Brachistochrone Optical}). By finding the path that light would take through this medium, Bernoulli can find the curve of fastest descent.
+
+Bernoulli's idea is to create an optical medium where the refraction index changes as a function of the height. Since the velocity is only dependent on the height, this optical picture is exactly analogous. So, by tracking the path that a ray of light would take through this optical medium, we can find a solution for the \gls{brachistochrone} problem.
+\begin{figure}[ht]
+    \centering
+    
+% Gradient Info
+  
+\tikzset {_3o1kvs6si/.code = {\pgfsetadditionalshadetransform{ \pgftransformshift{\pgfpoint{0 bp} { 0 bp }  }  \pgftransformrotate{-270 }  \pgftransformscale{2 }  }}}
+\pgfdeclarehorizontalshading{_iflcsb4zm}{150bp}{rgb(0bp)=(0.85,0.93,0.98);
+rgb(37.5bp)=(0.85,0.93,0.98);
+rgb(62.5bp)=(0.46,0.8,0.8);
+rgb(100bp)=(0.46,0.8,0.8)}
+\tikzset{_1rpym1rdo/.code = {\pgfsetadditionalshadetransform{\pgftransformshift{\pgfpoint{0 bp } { 0 bp }  }  \pgftransformrotate{-270 }  \pgftransformscale{2 } }}}
+\pgfdeclarehorizontalshading{_2n3dpfjln} {150bp} {color(0bp)=(transparent!61);
+color(37.5bp)=(transparent!61);
+color(62.5bp)=(transparent!49);
+color(100bp)=(transparent!49) } 
+\pgfdeclarefading{_lcv8mc5cx}{\tikz \fill[shading=_2n3dpfjln,_1rpym1rdo] (0,0) rectangle (50bp,50bp); } 
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Curve Lines [id:da20777690252029246] 
+\draw [line width=2.25]    (123,70) .. controls (143.99,142.01) and (203.32,227.34) .. (327,218) ;
+%Shape: Rectangle [id:dp29650606190117645] 
+\draw  [draw opacity=0][shading=_iflcsb4zm,_3o1kvs6si,path fading= _lcv8mc5cx ,fading transform={xshift=2}] (120,70) -- (330,70) -- (330,230) -- (120,230) -- cycle ;
+
+% Text Node
+\draw (99,60.4) node [anchor=north west][inner sep=0.75pt]    {$A$};
+% Text Node
+\draw (335,210.4) node [anchor=north west][inner sep=0.75pt]    {$B$};
+
+
+\end{tikzpicture}
+
+    \caption{Brachistochrone Represented as Optical Medium}
+    \label{fig:Brachistochrone Optical}
+\end{figure}
+
+With Bernoulli's idea in mind, let us formalute a mathematical description. We will start by showing a modern depiction of Bernoulli's drawing, which I will discuss as we work through the problem. This is shown in \autoref{fig:Brachistochrone Bernoulli}.  The \gls{brachistochrone} curve is denoted with the curve $ABK$. The velocity of the particle as function of height is denoted by the blue curve $AH$, with the magnitude at that height denoted by the horizontal distance from the line $\overline{AC}$. $A$ and $B$, like before, denote the start and end points of the \gls{brachistochrone}.
+
+
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da10833852271097855] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (209,152) -- (429,152) ;
+%Curve Lines [id:da5021295458279481] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (209,152) .. controls (179.84,151.72) and (151.84,210.12) .. (149,272) ;
+%Shape: Circle [id:dp04643442100307038] 
+\draw   (369,212) .. controls (369,178.86) and (395.86,152) .. (429,152) .. controls (462.14,152) and (489,178.86) .. (489,212) .. controls (489,245.14) and (462.14,272) .. (429,272) .. controls (395.86,272) and (369,245.14) .. (369,212) -- cycle ;
+%Straight Lines [id:da4186467531833358] 
+\draw    (339,262) ;
+\draw [shift={(339,262)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da8938403817574153] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (429,152) -- (429,272) ;
+%Straight Lines [id:da8730461996297206] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (155,231) -- (429,231) ;
+%Straight Lines [id:da39714506859684306] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (209,152) -- (209,272) ;
+%Curve Lines [id:da24877719413783894] 
+\draw    (209,152) .. controls (238.24,250.12) and (347.04,272.52) .. (429,272) ;
+\draw [shift={(209,152)}, rotate = 73.41] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da6942131018955847] 
+\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=0.45 ]   (359,120) -- (279,210) ;
+%Shape: Rectangle [id:dp7342305689582604] 
+\draw  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=0.45 ] (239,210) -- (299,210) -- (299,250) -- (239,250) -- cycle ;
+%Shape: Rectangle [id:dp7388601050866793] 
+\draw  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=0.45 ] (319,20) -- (469,20) -- (469,120) -- (319,120) -- cycle ;
+%Straight Lines [id:da9882885067136051] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (319,70) -- (469,70) ;
+%Curve Lines [id:da7784742509656426] 
+\draw    (322,20) .. controls (372.64,72.92) and (410.24,92.12) .. (469,118) ;
+%Straight Lines [id:da9415670416334097] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ][line width=0.75]  [dash pattern={on 4.5pt off 4.5pt}]  (319,90) -- (469,90) ;
+%Curve Lines [id:da28920502828750827] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=1.5]    (379,70) .. controls (393.71,80.73) and (397.71,82.33) .. (411,90) ;
+%Straight Lines [id:da04174893208828001] 
+\draw    (379,70) ;
+\draw [shift={(379,70)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da18742414177909505] 
+\draw    (410,90) ;
+\draw [shift={(410,90)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da1580581124462085] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (379,70) -- (379,90) ;
+%Straight Lines [id:da4349956438306438] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (379,90) ;
+\draw [shift={(379,90)}, rotate = 0] [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ][fill={rgb, 255:red, 128; green, 128; blue, 128 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da8642935211536492] 
+\draw    (429,272) ;
+\draw [shift={(429,272)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da5335808398156509] 
+\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (209,231) ;
+\draw [shift={(209,231)}, rotate = 0] [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ][fill={rgb, 255:red, 128; green, 128; blue, 128 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da9917624511792703] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (155,231) ;
+\draw [shift={(155,231)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+
+% Text Node
+\draw (200,132.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$A$};
+% Text Node
+\draw (332,265.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$B$};
+% Text Node
+\draw (375,44.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$M$};
+% Text Node
+\draw (399,93) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$m$};
+% Text Node
+\draw (412,71.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$dz$};
+% Text Node
+\draw (423,276.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$K$};
+% Text Node
+\draw (432,223.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$O$};
+% Text Node
+\draw (194,216.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$C$};
+% Text Node
+\draw (366,93) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$n$};
+% Text Node
+\draw (141,216.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$H$};
+% Text Node
+\draw (470,61.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$\overline{OC}$};
+
+\end{tikzpicture}
+
+    \caption{Depiction of John Bernoulli's Brachistochrone Set-Up}
+    \label{fig:Brachistochrone Bernoulli}
+\end{figure}
+
+
+
+Next, we find the differential element, $dz$. This is given by the vertical component ($\hat{x}$-direction in our established coordinates), which is given by the length $\overline{Mn}$, and the horizontal component ($\hat{y}$-direction), $\overline{nm}$. Denoting these distances $dx$ and $dy$, we have the fundemental relation:
+\begin{equation}\label{eq:pathlength}
+    dz^2=dx^2+dy^2
+\end{equation}
+Next, he uses the relationship from Snell's Law:
+$$n\sin\theta=const.$$
+The quantity $\sin\theta$ is thus $\frac{dy}{dz}$ and $n$ some arbitrary value depending on the exact curve.
+
+Remembering that the optical density is inversely proportional to the velocity at a point, Bernoulli relates the horizontal and path length distance to the velocity as well, using the previously established relationship that $\sin\theta=\frac{dy}{dz}$:
+$$\frac{dy}{dz}=\frac{v}{n}$$
+Using the fact relation from \eqautoref{eq:pathlength}, this can be related to $\frac{dy}{dx}$:
+$$\frac{dy}{dx}=\frac{v}{\sqrt{n^2-v^2}}$$
+There is one final step in this derivation. Using the fact from before that the velocity of the particle is $v=\sqrt{nx}$, the problem can be solved for a particle acted upon by gravity. Rearrangement yields:
+\begin{equation}
+\frac{dy}{dx}=\frac{\sqrt{nx}}{\sqrt{n^2-nx}}
+\end{equation}
+Which can be further simplified by dividing out a $\sqrt{n}$ term:
+\begin{equation}
+        \frac{dy}{dx}=\sqrt{\frac{x}{n-x}}
+\end{equation}
+From here, it is simply a matter of solving the differential equation to yield the resulting curve. Performing separation of variables and integrating, we arrive at the final solution:
+$$a\tan^{-1}\left(\sqrt{\frac{x}{n-x}}\right)-(n-x)\sqrt{\frac{x}{n-x}}$$
+This curve is the curve of a cycloid, the curve generated by tracking a point on a circle which rolls without slipping.
+
+The cycloid, Bernoulli noted, also has some other interesting properties which are strongly connected with the \gls{brachistochrone}. Huygens, another famous mathematician and physicist, had found earlier that a pendulum with a cycloidal path is \textit{isochronous}, meaning that the time for a swing of the pendulum is indepenent of the amplitude. Similarly, for the \gls{brachistochrone}, a particle released at any point along the curve will reach point $B$ at exactly the same time.
+
+%include some graphs of curve and some cool facts about it - same time from any point, pendulum with cycloidal path, Huygens, etc.
+
+It is at this point that we have sufficient background to understand the work that led to the creation of the calculus of variations. From these foundations, mathematicians such as Euler and Lagrange built up a rigorous basis for the subject, which we will now explore in the next chapter.
+
+\subsection{Historical Appendix: Fermat's Principle Proven}\label{sec: connection to quantum}
+
+Now that we've examined the history of variational calculus, let's return to Fermat's principle to understand why it is true. Why does light take a path that minimizes time? Is there any physical reason for this?
 
 To fully understand this question, we must understand that during Fermat's time there was a rift in the world of physics concerning the behavior of light. Some, such as Newton, believed light to be a particle. Others, led by the prominent dutch mathematician Christaan Huygens, believed that light was a wave.
 
-When we consider light to be a wave, the problem of least time is solved! If the light takes a suboptimal trajectory (that is, a trajectory that takes more time), the wave will destructively interfere with itself. It is only light which takes the shortest path which will constructively interfere and produce a  bright spot! So the riddle is solved. Newton is wrong, and light is in fact a wave! The problem is this: We can measure individual packets of light, photons, arriving at photomultipliers or digital sensors. When a light source gets dimmer, we simply measure fewer numbers of photons, but the energies associated with each one is exactly the same.
+When we consider light to be a wave, the problem of least time seems to have a simple explanation. If the light takes a suboptimal trajectory (that is, a trajectory that takes more time), the wave will destructively interfere with itself. It is only light which takes the shortest path which will constructively interfere and produce a visible spot. So the riddle is solved. Newton is wrong, and light is in fact a wave! The problem is this: We can measure individual packets of light, photons, arriving at photomultipliers or sensors. When a light source gets dimmer, we simply measure fewer numbers of photons, but the energies associated with each one is exactly the same.
 
-So we must again reconsider our viewpoint. Light must showcase both properties to match all of the evidence! Of course, it is now popularly understood that light - and in fact everything else - exhibits both properties in a wave-particle duality.
+So we must again reconsider our viewpoint. Light must showcase both properties to match all of the evidence! Of course, it is now popularly understood that light - and in fact everything else - exhibits both properties in a wave-particle duality.\endnote{Of course, the wave-particle duality is not precisely true. At the most fundamental level, we now believe that the universe is described purely by quantum fields. Particles, however, can appear to arise out of fluctuations in these quantum fields. Nonetheless, these fluctuations are still quantized, giving the appearance of particles. The description of light as particles suffices for our purposes.}
 
-The existence of this duality alone does not necessarily answer our question, but it gets us on the path to doing so. The true answer to this question remained unknown for nearly 300 years -- until the advent of \gls{qed} in the 1940's, the invention of which would lead Richard Feynman to winning the Nobel Prize in physics.
+The existence of this duality alone does not necessarily answer our question, but it gets us on the path to doing so. The true answer to this question remained unknown for nearly 300 years -- until the advent of \gls{qed} in the 1940's, the invention of which would lead Richard Feynman and Julian Schwinger to winning the Nobel Prize in physics.
 
-Of course, explaining a Nobel Prize worthy achievement in physics is no easy task! Luckily, Feynman himself has offered quite a simple explanation of the phenomena of light in his book, \cite{richard_phillips_feynman_qed_1988}. I highly suggest the interested reader to read this book in full (it is quite short and easy to read) to better comprehend this section. Here, I will present only a portion of Feynman's argument to convince you that the least action principle naturally arises from \gls{qed}.
+Of course, explaining a Nobel Prize worthy achievement in physics is no easy task! Luckily, Feynman himself has offered quite a simple explanation of the phenomena of light in his book \cite{richard_phillips_feynman_qed_1988}. I highly suggest the interested reader to read this book in full (it is quite short and easy to read) to better comprehend this section. Here, I will present only a portion of Feynman's argument to convince you that the least action principle naturally arises from \gls{qed}.
 
 \subsubsection{Mirrors}
-Although we earlier made a computation for Snell's Law using Fermat's principle, we will instead take the case of the mirror here. The derivation of the equivalent least time principle for the mirror is left as an exercise, but follows from a similar procedure.
+Although we earlier made a computation for Snell's Law using Fermat's principle, we will instead consider the case of the reflecting surface here. The derivation of the equivalent least time principle for the mirror is left as an exercise, but follows from a similar procedure.
 \begin{exercise}
     Using the same methods as were used to derive Snell's Law, find the criteria that minimizes time for the case of a mirror, which reflects light instead of refracting it. The set up for such a mirror system is shown in \autoref{fig:mirror}.
 \begin{figure}[H]
@@ -219,7 +451,7 @@ Although we earlier made a computation for Snell's Law using Fermat's principle,
 
 \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-.7,xscale=.7]
 %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
 
 %Shape: Rectangle [id:dp6275989944924254] 
@@ -272,7 +504,7 @@ Although we earlier made a computation for Snell's Law using Fermat's principle,
 
 Readers who carefully perform the derivation above using the methods shown before will find that in the case of the mirror, $\theta_i=\theta_f$. That is, the incident angle is equal to the outgoing angle. In our previous derivations, we showed this to be a consequence of the principle of least time.
 
-If we think of the problem more `democratically', we shouldn't give any preference to any one path though! Let's consider all of the straight line paths that light can take. A few of these paths are shown in \autoref{fig:light traj}.
+If we think of the problem more `democratically', we shouldn't give any preference to any one path. Let's consider all of the straight line paths that light can take. A few of these paths are shown in \autoref{fig:light traj}.
 \begin{figure}[ht]
     \centering
 
@@ -340,7 +572,7 @@ pattern radius = 1pt}
     \label{fig:light traj}
 \end{figure}
 
-Of course, we know from experience that mirrors do not show reflections like this. If they did, we could look from point $A$ at any angle and we would see $B$ centered in the view. There must be something wrong with our model! And there is: we are missing a key component called the phase of the light. Essentially, the phase measures the `direction' of the light (this description will suffice for our purposes). We can think of the phase of the light as a little clock that moves with the light. The clock hand starts pointing straight up at point $A$, and it winds around at a constant rate until the photon reaches point $B$, at that point, we measure the direction the clock hand is pointing. This direction will be a vector with a length of 1, but the direction will change based on the time duration!
+Of course, we know from experience that mirrors do not show reflections like this. If they did, we could look from point $A$ at any angle and we would see $B$ centered in the view. There must be something wrong with our model. And there is: we are missing a key component called the phase of the light. Essentially, the phase measures the `direction' of the light (this description will suffice for our purposes)\endnote{More technically, we can encode this phase with a complex number. The vector addition of these complex numbers causes constructive and destructive interference}. We can think of the phase of the light as a little clock that moves with the light. The clock hand starts pointing straight up at point $A$, and it winds around at a constant rate until the photon reaches point $B$, at that point, we measure the direction the clock hand is pointing. This will be a vector with a length of 1, but the direction will change based on the time duration!
 
 So, if we take phase into consideration, we get a new picture of the phenomenon, which is shown in \autoref{fig:polarization paths}. What is shown is the time that it takes each ray of light to reach point $B$ based on the point where it hits the mirror. These are marked with a red marker below the point of intersection with the mirror.
 
@@ -374,7 +606,7 @@ pattern radius = 1pt}
 \makeatother
 \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-0.9,xscale=0.9]
 %uncomment if require: \path (0,415); %set diagram left start at 0, and has height of 415
 
 %Shape: Rectangle [id:dp13216032235189357] 
@@ -507,11 +739,11 @@ The final phase of the light upon reaching point $B$ is shown below this image. 
 
 However, for paths that are close to the path of least time, we can move the intersection point left and right and the amount of time taken doesn't change much at all! This occurs, of course, because we are at a local minimum of the function, where the derivative is 0. When we look at the vectors for these portions, we find that the phase for each of these is almost identical! So we find that these paths near the path of least time have vectors that are all very similar to each other.
 
-The last step in this process is to add all of the vectors together to generate a final vector. The square of this final vector is representative of the probability that light reaches point $B$. By adding all of the vectors from before together, we can see that the largest contribution to the final vector comes from the portion in the middle. In fact, some of the portions near the outside can cancel each other out so that they have almost no effect.
+The last step in this process is to add all of the vectors together to generate a final vector. The square of this final vector is representative of the probability that light reaches point $B$. By adding all of the vectors from before together, we can see that the largest contribution to the final vector comes from the portion in the middle. In fact, the portions near the outside can cancel each other out so that they have almost no effect on the final outcome. We can see that the path of minimal time is the one which dominates our probability -- which is why this is the path we see in the classical world.
 
 Although the methodology described above is perfectly sound, the angular and time differences described here are quite exaggerated. In reality, even paths deviating by less than a degree from the ideal path tend to cancel each other out for visible light. This is a result of the frequency of light being so high that phase shifts occur on the order of picoseconds.
 
-If you want to gain a better understanding of this relationship, an interactive MATLAB script "Mirror.m" in \autoref{sec: Quantum Deriv Mirror} will run a simulation of this scenario. There, you can see how the vectors add for our demonstration model and also for a real physical system with a variable number of elements. The main thing to note is that the effects occur on a much smaller scale for a true physical system. However, we will still see the same effects arise and the form spiral patterns near the ends, where the vectors tend to cancel each other out. Altogether, they form a very beautiful spiral reminiscent of soundholes of a string instrument. Again, only the components near the path of least time add together! So, on the large scale, we say that light does indeed take the path of least time, even though we can show on the quantum scale that it is free to do anything!
+If you want to gain a better understanding of this relationship, an interactive MATLAB script "Mirror.m" in \autoref{sec: Quantum Deriv Mirror} will run a simulation of this scenario. In this toy model it can be seen how the vectors add in a similar way to our diagramatic depiction. For a true physical system, these effects occur on a much smaller scale. However, we will still see the same effects arise and the form spiral patterns near the ends, where the vectors tend to cancel each other out. Together, they form a very beautiful spiral that resemble the sound holes of a string instrument, which we can see in \autoref{fig:mirror vec 2}. Again, only the components near the path of least time add together! So, on the large scale, we say that light does indeed take the path of least time, even though we can show on the quantum scale that it is free to do anything!
 
 \begin{figure}
     \centering
@@ -524,249 +756,7 @@ Lastly, note that the actual computation involves computing every possible path 
 
 Another simplification you may have noticed is that the magnitude of the final vector arrow squared is the probability. However, we have given each component a length of 1! So if we add infinitely many of these together, the total probability will go to $\infty$, which is obviously incorrect. This is a problem in \gls{qed} called renormalization. Despite some of these challenges, \gls{qed} still provides a very nice framework that allows us to understand why the principle of least time holds.
 
-\section{Principia (1687)}
-We may return from our foray into \gls{qed} to once again discuss the contributions of Isaac Newton. It is in \textit{Principia} that we find the first evidences of Newton's contributions to the field of energy mechanics. It is Newton's work in the \textit{Principia} that most scholars agree are the first real works of the calculus of variations.
-
-In 1685, Newton formulated the \textit{minimal resistance problem}. In essence, this problem involves finding a solid of revolution for which the object produces a minimal drag. In Newton's time, no solidified theories of fluid dynamics had been formulated, so Newton suggested a fluid that is `a rare medium of very small quiescent particles of equal magnitude and freely disposed at equal distances from one other'. Although this fluid is not at all reminiscent of a real fluid, it still remains a useful exercise in the study of the calculus of variations.
-
-The major advancement in this problem came from Newton's formulation to solve it. Skipping a few steps of the geometry, Newton came up with a simple integral to represent the drag of an object:
-$$\int_{t_1}^{t_2}{\frac{y\dot{y}^3dt}{\dot{x}^2+\dot{y}^2}}$$
-In this equation, Newton has parameterized the curve in terms of the variable $t$ and expressed the derivatives of $x$ and $y$ with respect to $t$ as $\dot{x}$ and $\dot{y}$.
-
-As we will see later, this integral is something that we will call a \gls{functional}, and it is the quantity which we want to minimize. 
-
-Newton, despite sharing this result in his \textit{Principia}, did not share his methodology in the original publication. It was not until 1691, when Huygens began independent study of the problem, that anyone had shed any light on the methods of solving the problem. The text, however, still inspired the idea of the functional and began the further exploration of the subject of calculus of variations.
-
-With the idea of the functional created and a methodology to solve problems in the calculus of variations, the next major step in the subject came with the \gls{brachistochrone} problem.
-
-\section{Brachistochrone (1696)}
-
-In June of 1696, nearly a decade after Newton's initial foray into the calculus of variations, John Bernoulli challenged the mathematical world to solve the problem of the \gls{brachistochrone} - a word coming from Greek, meaning 'shortest time'. In its simplest description, the problem involves finding a curve for which a frictionless bead will descend the fastest. A simple diagram of the system is reproduced in \autoref{fig:Brachistochrone}. 
-
-\begin{figure}[ht]
-    \centering
-
-
-
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
-
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
-
-%Curve Lines [id:da5626290173929862] 
-\draw [line width=2.25]    (226,80) .. controls (224.23,164.47) and (303.23,269.47) .. (426,230) ;
-%Shape: Circle [id:dp16005060334035148] 
-\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (228,88) .. controls (228,85.24) and (230.24,83) .. (233,83) .. controls (235.76,83) and (238,85.24) .. (238,88) .. controls (238,90.76) and (235.76,93) .. (233,93) .. controls (230.24,93) and (228,90.76) .. (228,88) -- cycle ;
-%Straight Lines [id:da9179973387326911] 
-\draw    (136,80) -- (136,118) ;
-\draw [shift={(136,120)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
-%Straight Lines [id:da23565770066909053] 
-\draw    (136,80) -- (174,80) ;
-\draw [shift={(176,80)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
-
-% Text Node
-\draw (207,72.4) node [anchor=north west][inner sep=0.75pt]    {$A$};
-% Text Node
-\draw (437,222.4) node [anchor=north west][inner sep=0.75pt]    {$B$};
-% Text Node
-\draw (130,122.4) node [anchor=north west][inner sep=0.75pt]    {$\hat{x}$};
-% Text Node
-\draw (179,70.4) node [anchor=north west][inner sep=0.75pt]    {$\hat{y}$};
-
-
-\end{tikzpicture}
-
-
-    \caption{Brachistochrone Problem Set-Up}
-    \label{fig:Brachistochrone}
-\end{figure}
-
-John Bernoulli, at the time, had come up with a quite an ingenious solution to the problem. However, he challenged the rest of the mathematical world to solve the problem as well, with a deadline of Easter of 1697.
-
-At the time, there were 4 notable solutions, those coming from Leibniz, John Bernoulli, James Bernoulli, and Isaac Newton (who submitted anonymously). 
-
-Newton, supposedly, spent one night on his anonymous solution, and submitted it to Bernoulli. Despite being an anonymous submission, Bernoulli is said to have recognized Newton's solution by the nature of the writing. It is said that Bernoulli said, ''tanquam ex ungue leonem'' (I recognize the lion by its claw), of Newton's solution.
-
-An exploration of the problem in the modern context (using the Euler-Lagrange approach) will be studied in \autoref{chap:calculus of variations}. The approach of Leibniz and Newton is similar to the modern approach, so I will not touch on those here.
-
-However, I will explore the solution of John Bernoulli here, mostly for the interesting approach. This will also help prime the reader for the derivation that is to come later. This derivation is by no means necessary to the understanding of the calculus of variations, but readers may find it to be quite elegant and enjoyable.
-
-\subsection{The Bernoulli Brachistochrone Solution}
-The set-up of the \gls{brachistochrone} problem is fairly simple. From energy relations, we know that the total energy of the system must be conserved:
-$$E=T+U$$
-Defining the reference at point $A$ as shown in \autoref{fig:Brachistochrone}, it is apparent that the velocity at any given point is:
-$$v(x)^2=2g(x-x_0)+v_0^2$$
-Where $v_0$ and $x_0$ represent initial conditions. Typically, we take these to be zero for the problem and can simplify this relation to:
-$$v(x)=\sqrt{2gx}$$
-Importantly, we can see that the velocity is independent of the horizontal range or the path of the particle. In other words, we have a \textit{conservative} system, which gives us great flexibility.
-
-From here, we can proceed in a number of ways. The standard method to do this will be explored later. Here, however, Bernoulli makes an insight relating the problem to Fermat's Least Time principle.
-
-Bernoulli's insight is as follows - a ray of light moves through a medium in a way that reaches the boundary in the shortest amount of time (as shown by Fermat). So, Bernoulli sets the index of refraction at each height inversely proportional to the velocity (as shown in \autoref{fig:Brachistochrone Optical}). By finding the path that light would take through this medium, Bernoulli can find the curve of fastest descent.
-
-Because the velocity is path independent, Bernoulli sets this refraction index for the whole horizontal length. So, by tracking the path that a ray of light would take through this optical medium, we can find a solution for the \gls{brachistochrone} problem.
-\begin{figure}[ht]
-    \centering
-    
-% Gradient Info
-  
-\tikzset {_3o1kvs6si/.code = {\pgfsetadditionalshadetransform{ \pgftransformshift{\pgfpoint{0 bp} { 0 bp }  }  \pgftransformrotate{-270 }  \pgftransformscale{2 }  }}}
-\pgfdeclarehorizontalshading{_iflcsb4zm}{150bp}{rgb(0bp)=(0.85,0.93,0.98);
-rgb(37.5bp)=(0.85,0.93,0.98);
-rgb(62.5bp)=(0.46,0.8,0.8);
-rgb(100bp)=(0.46,0.8,0.8)}
-\tikzset{_1rpym1rdo/.code = {\pgfsetadditionalshadetransform{\pgftransformshift{\pgfpoint{0 bp } { 0 bp }  }  \pgftransformrotate{-270 }  \pgftransformscale{2 } }}}
-\pgfdeclarehorizontalshading{_2n3dpfjln} {150bp} {color(0bp)=(transparent!61);
-color(37.5bp)=(transparent!61);
-color(62.5bp)=(transparent!49);
-color(100bp)=(transparent!49) } 
-\pgfdeclarefading{_lcv8mc5cx}{\tikz \fill[shading=_2n3dpfjln,_1rpym1rdo] (0,0) rectangle (50bp,50bp); } 
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
-
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
-
-%Curve Lines [id:da20777690252029246] 
-\draw [line width=2.25]    (123,70) .. controls (143.99,142.01) and (203.32,227.34) .. (327,218) ;
-%Shape: Rectangle [id:dp29650606190117645] 
-\draw  [draw opacity=0][shading=_iflcsb4zm,_3o1kvs6si,path fading= _lcv8mc5cx ,fading transform={xshift=2}] (120,70) -- (330,70) -- (330,230) -- (120,230) -- cycle ;
-
-% Text Node
-\draw (99,60.4) node [anchor=north west][inner sep=0.75pt]    {$A$};
-% Text Node
-\draw (335,210.4) node [anchor=north west][inner sep=0.75pt]    {$B$};
-
-
-\end{tikzpicture}
-
-    \caption{Brachistochrone Represented as Optical Medium}
-    \label{fig:Brachistochrone Optical}
-\end{figure}
-
-So, with Bernoulli's idea in mind, let us formalute a mathematical description. We will start by showing a modern depiction of Bernoulli's drawing, which I will discuss as we work through the problem. This is shown in \autoref{fig:Brachistochrone Bernoulli}.  The \gls{brachistochrone} curve is denoted with the curve $ABK$. The velocity of the particle as function of height is denoted by the blue curve $AH$, with the magnitude at that height denoted by the horizontal distance from the line $\overline{AC}$. $A$ and $B$, like before, denote the start and end points of the \gls{brachistochrone}.
-
-
-\begin{figure}[ht]
-    \centering
-
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
-
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
-
-%Straight Lines [id:da10833852271097855] 
-\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (209,152) -- (429,152) ;
-%Curve Lines [id:da5021295458279481] 
-\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (209,152) .. controls (179.84,151.72) and (151.84,210.12) .. (149,272) ;
-%Shape: Circle [id:dp04643442100307038] 
-\draw   (369,212) .. controls (369,178.86) and (395.86,152) .. (429,152) .. controls (462.14,152) and (489,178.86) .. (489,212) .. controls (489,245.14) and (462.14,272) .. (429,272) .. controls (395.86,272) and (369,245.14) .. (369,212) -- cycle ;
-%Straight Lines [id:da4186467531833358] 
-\draw    (339,262) ;
-\draw [shift={(339,262)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
-%Straight Lines [id:da8938403817574153] 
-\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (429,152) -- (429,272) ;
-%Straight Lines [id:da8730461996297206] 
-\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (155,231) -- (429,231) ;
-%Straight Lines [id:da39714506859684306] 
-\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (209,152) -- (209,272) ;
-%Curve Lines [id:da24877719413783894] 
-\draw    (209,152) .. controls (238.24,250.12) and (347.04,272.52) .. (429,272) ;
-\draw [shift={(209,152)}, rotate = 73.41] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
-%Straight Lines [id:da6942131018955847] 
-\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=0.45 ]   (359,120) -- (279,210) ;
-%Shape: Rectangle [id:dp7342305689582604] 
-\draw  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=0.45 ] (239,210) -- (299,210) -- (299,250) -- (239,250) -- cycle ;
-%Shape: Rectangle [id:dp7388601050866793] 
-\draw  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=0.45 ] (319,20) -- (469,20) -- (469,120) -- (319,120) -- cycle ;
-%Straight Lines [id:da9882885067136051] 
-\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (319,70) -- (469,70) ;
-%Curve Lines [id:da7784742509656426] 
-\draw    (322,20) .. controls (372.64,72.92) and (410.24,92.12) .. (469,118) ;
-%Straight Lines [id:da9415670416334097] 
-\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ][line width=0.75]  [dash pattern={on 4.5pt off 4.5pt}]  (319,90) -- (469,90) ;
-%Curve Lines [id:da28920502828750827] 
-\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=1.5]    (379,70) .. controls (393.71,80.73) and (397.71,82.33) .. (411,90) ;
-%Straight Lines [id:da04174893208828001] 
-\draw    (379,70) ;
-\draw [shift={(379,70)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
-%Straight Lines [id:da18742414177909505] 
-\draw    (410,90) ;
-\draw [shift={(410,90)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
-%Straight Lines [id:da1580581124462085] 
-\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (379,70) -- (379,90) ;
-%Straight Lines [id:da4349956438306438] 
-\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (379,90) ;
-\draw [shift={(379,90)}, rotate = 0] [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ][fill={rgb, 255:red, 128; green, 128; blue, 128 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
-%Straight Lines [id:da8642935211536492] 
-\draw    (429,272) ;
-\draw [shift={(429,272)}, rotate = 0] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
-%Straight Lines [id:da5335808398156509] 
-\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ]   (209,231) ;
-\draw [shift={(209,231)}, rotate = 0] [color={rgb, 255:red, 128; green, 128; blue, 128 }  ,draw opacity=1 ][fill={rgb, 255:red, 128; green, 128; blue, 128 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
-%Straight Lines [id:da9917624511792703] 
-\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (155,231) ;
-\draw [shift={(155,231)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
-
-% Text Node
-\draw (200,132.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$A$};
-% Text Node
-\draw (332,265.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$B$};
-% Text Node
-\draw (375,44.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$M$};
-% Text Node
-\draw (399,93) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$m$};
-% Text Node
-\draw (412,71.4) node [anchor=north west][inner sep=0.75pt]  [font=\small,color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$dz$};
-% Text Node
-\draw (423,276.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$K$};
-% Text Node
-\draw (432,223.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$O$};
-% Text Node
-\draw (194,216.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$C$};
-% Text Node
-\draw (366,93) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$n$};
-% Text Node
-\draw (141,216.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$H$};
-% Text Node
-\draw (470,61.4) node [anchor=north west][inner sep=0.75pt]  [font=\small]  {$\overline{OC}$};
-
-\end{tikzpicture}
-
-    \caption{Depiction of John Bernoulli's Brachistochrone Set-Up}
-    \label{fig:Brachistochrone Bernoulli}
-\end{figure}
-
-
-
-Next, we find the differential element, $dz$. This is given by the vertical component ($\hat{x}$-direction in our established coordinates), which is given by the length $\overline{Mn}$, and the horizontal component ($\hat{y}$-direction), $\overline{nm}$. Denoting these distances $dx$ and $dy$, we have the fundemental relation:
-\begin{equation}\label{eq:pathlength}
-    dz^2=dx^2+dy^2
-\end{equation}
-Next, he uses the relationship from Snell's Law:
-$$n\sin\theta=const.$$
-The quantity $\sin\theta$ is thus $\frac{dy}{dz}$ and $n$ some arbitrary value depending on the exact curve.
-
-Remembering that the optical density is inversely proportional to the velocity at a point, Bernoulli relates the horizontal and path length distance to the velocity as well, using the previously established relationship that $\sin\theta=\frac{dy}{dz}$:
-$$\frac{dy}{dz}=\frac{v}{n}$$
-Using the fact relation from \eqautoref{eq:pathlength}, this can be related to $\frac{dy}{dx}$:
-$$\frac{dy}{dx}=\frac{v}{\sqrt{n^2-v^2}}$$
-There is one final step in this derivation. Using the fact from before that the velocity of the particle is $v=\sqrt{nx}$, the problem can be solved for a particle acted upon by gravity. Rearrangement yields:
-\begin{equation}
-\frac{dy}{dx}=\frac{\sqrt{nx}}{\sqrt{n^2-nx}}
-\end{equation}
-Which can be further simplified by dividing out a $\sqrt{n}$ term:
-\begin{equation}
-        \frac{dy}{dx}=\sqrt{\frac{x}{n-x}}
-\end{equation}
-From here, it is simply a matter of solving the differential equation to yield the resulting curve. Performing separation of variables and integrating, we arrive at the final solution:
-$$a\tan^{-1}\left(\sqrt{\frac{x}{n-x}}\right)-(n-x)\sqrt{\frac{x}{n-x}}$$
-This curve is the curve of a cycloid, the curve generated by tracking a point on a circle which rolls without slipping.
-
-The cycloid, Bernoulli noted, also has some other interesting properties which are strongly connected with the \gls{brachistochrone}. Huygens, another famous mathematician and physicist, had found earlier that a pendulum with a cycloidal path is \textit{isochronous}, meaning that the time for a swing of the pendulum is indepenent of the amplitude. Similarly, for the \gls{brachistochrone}, a particle released at any point along the curve will reach point $B$ at exactly the same time.
-
-%include some graphs of curve and some cool facts about it - same time from any point, pendulum with cycloidal path, Huygens, etc.
-
-It is at this point that we have sufficient background to understand the work that led to the creation of the calculus of variations. From these foundations, mathematicians such as Euler and Lagrange built up a rigorous basis for the subject, which we will now explore in the next chapter.
+Having gained this understanding of Fermat's least time principle, we may return to our journey on understanding variational calculus.
 
 \newpage
 
@@ -774,8 +764,8 @@ It is at this point that we have sufficient background to understand the work th
 
 \chapter{Calculus of Variations}\label{chap:calculus of variations}
 
-\color{red} This chapter needs to be expanded quite a bit, it is definitely lacking in the current state. Maybe include Lagrangian multipliers and problems of the 1st and 2nd variation. Finish the brachistochrone derivation. 
-\color{black}
+% \color{red} This chapter needs to be expanded quite a bit, it is definitely lacking in the current state. Maybe include Lagrangian multipliers and problems of the 1st and 2nd variation. Finish the brachistochrone derivation. 
+% \color{black}
 
 \begin{chapquote}{Richard Feynman}
  ''Nature uses only the longest threads to weave her patterns, so that each small piece of her fabric reveals the organization of the entire tapestry.''
@@ -783,11 +773,57 @@ It is at this point that we have sufficient background to understand the work th
 
 The calculus of variations underpins the ideas of \gls{Lagrangian} and \gls{Hamiltonian} mechanics, so it is important to understand the principles behind it before moving on to the actual mechanics. In analogy to how single variable calculus is fundamental to Newtonian mechanics, the calculus of variations is fundamental to energy mechanics.
 
-The fundamental idea of the calculus of variations is simple. We want to find the maximums and minimums of some quantity in our problem. Why? In physics, we often see that quantities are minimized or maximized for some reason. For example, a soap surface will minimize its surface area, or a beam of photons will follow a \gls{geodesic} of spacetime. Light will also refract through surfaces to minimize time as we have seen in Fermat's least time principle. As we will see, all of mechanics can be understood by the fact that a quantity called the \textit{action} can also be minimized.
+The fundamental idea of the calculus of variations is simple. We want to find the maximums and minimums over a whole \textit{path} in our problem. Why? In physics, we often see that quantities are minimized or maximized for some reason. For example, a soap surface will minimize its surface area, or a beam of photons will follow a \gls{geodesic} of spacetime. Light will also refract through surfaces to minimize time as we have seen in Fermat's least time principle. As we will soon see, all of mechanics can be understood by the fact that a quantity called the \textit{action} can also be minimized.
+
+We can draw an analogy between single variable calculus to understand what the calculus of variations is. In the standard picture of calculus, we are concerned with the change of a function when subjected to some infinitesimal change in a single direction, a small $dx$. In variational calculus, we are concerned with varying the whole path by some $\eta(x)$ and how that changes the value of an integral over the function.
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Curve Lines [id:da7609637284959898] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (290,200) .. controls (338.73,126.96) and (416.62,206.96) .. (459.77,110) ;
+\draw [shift={(459.77,110)}, rotate = 293.99] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+\draw [shift={(290,200)}, rotate = 303.71] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+%Curve Lines [id:da5393827702174848] 
+\draw    (290,200) .. controls (331.64,146.8) and (423.51,183.6) .. (459.77,110) ;
+\draw [shift={(459.77,110)}, rotate = 296.23] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+\draw [shift={(290,200)}, rotate = 308.05] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+%Curve Lines [id:da8856200216593881] 
+\draw    (90,210) .. controls (185.28,186.43) and (211.09,149.63) .. (250,90) ;
+\draw [shift={(250,90)}, rotate = 303.13] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+\draw [shift={(90,210)}, rotate = 346.1] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+%Straight Lines [id:da808657671697389] 
+\draw    (181,171) -- (203.75,171) ;
+%Straight Lines [id:da21364308945871324] 
+\draw    (203.75,171) -- (203.75,151.4) ;
+
+% Text Node
+\draw (469,92.4) node [anchor=north west][inner sep=0.75pt]    {$y( x)$};
+% Text Node
+\draw (386.46,167.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$y( x) +\varepsilon \eta ( x)$};
+% Text Node
+\draw (183,174.4) node [anchor=north west][inner sep=0.75pt]    {$dx$};
+% Text Node
+\draw (210.64,160) node [anchor=west] [inner sep=0.75pt]    {$dy$};
+% Text Node
+\draw (114,39) node [anchor=north west][inner sep=0.75pt]   [align=left] {Single Variable:\\Variation in $\displaystyle x$};
+% Text Node
+\draw (306,41) node [anchor=north west][inner sep=0.75pt]   [align=left] {Variational Calculus:\\Variation of whole path};
+
+
+\end{tikzpicture}
+    
+    \caption{Demonstration of the key difference between standard single variable calculus and variational calculus.}
+    \label{fig:variational calc}
+\end{figure}
 
 Because so many physical phenomena are governed by this behavior to minimize certain quantities, the calculus of variations became a prominent field of study from the 17th through the 20th centuries. Of course, the calculus of variations also has many applications outside of these confines, some of which will be explored at the end of this chapter. The key component of this theory that we need for energy mechanics is called the Euler-Lagrange equation, which we will now derive.
 
-\section{Derivation of the Euler-Lagrange Equation}
+\section{Derivation of Euler-Lagrange Equation}
 
 As stated before, for an optimization problem, we need to find the minima or maxima of a quantity. In single variable calculus, we only concern ourselves with finding the minimum value of a function, say finding the minimum value of $x^2$. Here however, we now have a new challenge. That challenge to find a whole function which is a minimum.
 
@@ -803,13 +839,13 @@ We should note that there is no intrinsic reason that $f$ is a function of $y(x)
 
 We may write a function $f$ which abides by these conditions, say $f = y(x)+2y'(x)$. That is fine, but how can we find where this function is minimum? What does that even mean?
 
-Since our function exists over a whole range of values of $x$, the sensible thing to do is to consider the function $f$ over all values of $x$, and assign a value to it that way. Of course, we can do this quite easily with an integral! We can evaluate this at two set endpoints, $x_1$ and $x_2$, and this will return a single number value that represents the function! We call this scalar output a \gls{functional}. This \gls{functional} is essentially a function of $f$, so it is a function of a function!
+Since our function exists over a whole range of values of $x$, the sensible thing to do is to consider the function $f$ over all values of $x$, and assign a value to it that way. Of course, we can do this quite easily with an integral! We can evaluate this at two set endpoints, $x_1$ and $x_2$, and this will return a single number value that represents the function! We call this scalar output a \gls{functional}. This \gls{functional} is essentially a function of $f$, so it is a function of a function.
 
 We typically describe a functional with the letter $J$, and we write the form of the integral as:
 \begin{equation}\label{eq:functional}
     J=\int_{x_1}^{x_2}f\left[y(x),y'(x);x\right]{dx}
 \end{equation}
-Remember that the most important aspect of $J$ is that we have taken an entire function, over a fixed range, and collapsed all of that functions properties into a single number, $J$! We may say this more precisely as: The \gls{functional}, $J$, is a quantity which maps a function onto the real number line. This means that it takes the function as its input and outputs a single real number (that is, a function of a function). 
+Remember that the most important aspect of $J$ is that we have taken an entire function, over a fixed range, and collapsed all of that functions properties into a single number, $J$. We may say this more precisely as: The \gls{functional}, $J$, is a quantity which maps a function onto the real number line. This means that it takes the function as its input and outputs a single real number (that is, a function of a function). 
 
 This, in essence, is the calculus of variations. For our purposes, we only want a specific application, which is to solve optimization problems to find the minima of functions. That is, we are attempting to find conditions on the function, $y(x)$ and $y'(x)$, which yield an extrema of $J$. 
 
@@ -859,7 +895,7 @@ To find the extrema of the function is quite similar to the approach we would ta
     \caption{Extrema of a single variable function}
     \label{fig:single var func}
 \end{figure}
-What is important to note is what happens right around these extremal points. If we are right at the point where $f'(0)$, we are of course at a local minimum or maximum of the function. However, if we move left or right by some very small amount -- which we call $\varepsilon$ -- the value of the function stays the same! This should come as no suprise, because $f'(x)$ gives a local value of the tangent of the function. In other words, it gives a linear approximation of the function at that location. As long as $\varepsilon$ remains small, $f(x)$ is perfectly represented by this linear approximation.
+What is important to note is what happens right around these extremal points. If we are right at the point where $f'(0)$, we are at a local minimum or maximum of the function\endnote{There is another case where we are at neither, if the function does not change sign and just goes perfectly flat. This is not illustrated here for simplicity.}. However, if we move left or right by some very small amount -- which we call $\varepsilon$ -- the value of the function stays the same! This should come as no suprise, because $f'(x)$ gives a local value of the tangent of the function. In other words, it gives a linear approximation of the function at that location. As long as $\varepsilon$ remains small, $f(x)$ is perfectly represented by this linear approximation.
 
 Now, we may extend this definition to the more difficult case of the extrema in variational calculus. Instead of adding some small value, we are instead adding some small function. This function is typically denoted $\eta(x)$, and by convention we still multiply $\eta(x)$ by $\varepsilon$ to denote the fact that we are considering very small functions.
 
@@ -875,40 +911,41 @@ In analogy to the single variable case of a minimum, if we have a minimized func
 %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
 
 %Curve Lines [id:da3860827164688039] 
-\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (25,214) .. controls (122.59,140.96) and (278.59,220.96) .. (365,124) ;
-\draw [shift={(365,124)}, rotate = 311.71] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
-\draw [shift={(25,214)}, rotate = 323.19] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (120,225) .. controls (167.17,151.96) and (242.56,231.96) .. (284.33,135) ;
+\draw [shift={(284.33,135)}, rotate = 293.3] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+\draw [shift={(120,225)}, rotate = 302.85] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
 %Curve Lines [id:da7977961164869156] 
-\draw    (25,214) .. controls (108.39,160.8) and (292.39,197.6) .. (365,124) ;
-\draw [shift={(365,124)}, rotate = 314.61] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
-\draw [shift={(25,214)}, rotate = 327.46] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+\draw    (120,225) .. controls (160.3,171.8) and (249.23,208.6) .. (284.33,135) ;
+\draw [shift={(284.33,135)}, rotate = 295.49] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
+\draw [shift={(120,225)}, rotate = 307.15] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 1.34, y radius= 1.34]   ;
 %Straight Lines [id:da527720029795286] 
-\draw    (423,210) -- (627,210) ;
-\draw [shift={(630,210)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (3.57,-1.72) -- (0,0) -- (3.57,1.72) -- cycle    ;
-\draw [shift={(420,210)}, rotate = 0] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (3.57,-1.72) -- (0,0) -- (3.57,1.72) -- cycle    ;
+\draw    (337.13,221) -- (504.61,221) ;
+\draw [shift={(507.61,221)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (3.57,-1.72) -- (0,0) -- (3.57,1.72) -- cycle    ;
+\draw [shift={(334.13,221)}, rotate = 0] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (3.57,-1.72) -- (0,0) -- (3.57,1.72) -- cycle    ;
 %Straight Lines [id:da4291618420656924] 
-\draw    (525,93) -- (525,210) ;
-\draw [shift={(525,90)}, rotate = 90] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (3.57,-1.72) -- (0,0) -- (3.57,1.72) -- cycle    ;
+\draw    (420.87,104) -- (420.87,221) ;
+\draw [shift={(420.87,101)}, rotate = 90] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (3.57,-1.72) -- (0,0) -- (3.57,1.72) -- cycle    ;
 %Shape: Parabola [id:dp32441741010727465] 
-\draw   (430,100) .. controls (493.33,166.67) and (556.67,166.67) .. (620,100) ;
+\draw   (342.39,111) .. controls (394.71,177.67) and (447.03,177.67) .. (499.35,111) ;
 
 % Text Node
-\draw (370,112.4) node [anchor=north west][inner sep=0.75pt]    {$y( x)$};
+\draw (286.93,123.4) node [anchor=north west][inner sep=0.75pt]    {$y( x)$};
 % Text Node
-\draw (266,176.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$y( x) +\varepsilon \eta ( x)$};
+\draw (194,193.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$y( x) +\varepsilon \eta ( x)$};
 % Text Node
-\draw (416,89.4) node [anchor=north west][inner sep=0.75pt]    {$J$};
+\draw (329.78,100.4) node [anchor=north west][inner sep=0.75pt]    {$J$};
 % Text Node
-\draw (632,199.4) node [anchor=north west][inner sep=0.75pt]    {$\varepsilon $};
+\draw (508.22,210.4) node [anchor=north west][inner sep=0.75pt]    {$\varepsilon $};
 % Text Node
-\draw (525,213.4) node [anchor=north] [inner sep=0.75pt]  [font=\small]  {$0$};
+\draw (420.87,224.4) node [anchor=north] [inner sep=0.75pt]  [font=\small]  {$0$};
+
 
 \end{tikzpicture}
     \caption{Graphical representation of the neighborhood function}
     \label{fig:neigh func}
 \end{figure}
 
-We can see this playing the same role as it did in the single variable case. As $\varepsilon$ tends to zero, the functional approaches the minimum value (shown in the RHS of \autoref{fig:neigh func})! The calculus of variations has some special terminology to define these properties which we should discuss now. These special values where $J$ is minimized are called \textit{stationary points}. We call them this because of the fact we can add some $\varepsilon\eta(x)$ and they are unchanged! For values that are not the minimum of $J$, this condition does not hold.
+We can see this playing the same role as it did in the single variable case. As $\varepsilon$ tends to zero, the functional approaches the minimum/maximum value (shown in the RHS of \autoref{fig:neigh func})! The calculus of variations has some special terminology to define these properties which we should discuss now. These special values where $J$ is minimized are called \textit{stationary points}. We call them this because of the fact we can add some $\varepsilon\eta(x)$ and they are unchanged! For values that are not the stationary points of $J$, this condition does not hold.\endnote{When we later consider Lagrangian and Hamiltonian mechanics, it actually does not matter if the point we are considering is a minimum, maximum, or just a point where the derivative goes flat. So long as the point is stationary, we can still guarantee the solution is correct.}
 
 Typically we also call $\eta(x)$ the \gls{neigh func}. The function $\eta(x)$ must meet the condition that is has zero value at the endpoints of the integral, $x_1$ and $x_2$. Otherwise, there is no guarantee that $\varepsilon\eta(x)$ will converge to the correct answer! It will also prove useful later when we go to integrate our function.
 
@@ -1001,7 +1038,7 @@ And thus, \eqautoref{eq: Euler's Diff eq} can be written concisely as:
 This is a very general and far reaching conclusion that can be applied to many systems. For our use cases in dynamics, we have more useful forms of this equation which will be explored in the following sections.
 
 \section{Using Variational Calculus}
-A vast majority of the use cases of variational calculus are solving optimization problems. For this purpose, we will use the \gls{Euler Equation} extensively. 
+A vast majority of the use cases of variational calculus are solving optimization problems. For this purpose, we will use the \gls{Euler Equation} extensively. One example where \gls{Euler Equation} is quite useful is in finding the shortest path between two points on a given surface.
 
 \subsection{Geodesics}
 We will explore a short example of its usefulness here as it relates to problems in geometry - namely of the \glspl{geodesic} of spherical geometries.
@@ -1078,47 +1115,155 @@ One important consequence of this is that a spherical geometry, when looked at `
 \subsection{Revisiting the Brachistochrone}
 
 \begin{example}[Brachistochrone]\label{ex:brachistrochrone}
-    Let us return to the example of the \gls{brachistochrone} to demonstrate the usefulness of the calculus of variations in solving  this problem. Of course, we have seen John
+    Let us return to the example of the \gls{brachistochrone} to demonstrate the usefulness of the calculus of variations in solving  this problem. Of course, we have seen John Bernoulli's solution to this problem, but let's explore the more conventional derivation here.
 
-    %clean this up and explain
-You are a prominent mathematician in the year 1696. Bernoulli proposes a problem to you to find a curve from a point $(x_0,y_0)$ to another point $\left(x_f,y_f\right)$. When a particle is placed on this path, it should be a faster path than any other path the particle could take down the slope under the influence of only gravity.
-
-Find the velocity as a function of the distance from the initial height, $h$, for the particle using energy conservation.
-
-Write a general expression for the amount of time it takes a particle to descent a path using an integral. \textit{Hint: you can write $dt=\frac{ds}{v}$}.
-
-Use the Euler-Lagrange equation to solve for the form of this curve (You may find the integral form useful!). Plot the result.
+    We start with the same basic idea. We know that the total time for the trajectory is given by $v=\frac{s}{t}$. We can rearrange this equation and use the integral form:
+    $$t=\int_1^2\frac{ds}{v}$$
+    As in our previous example, we may use energy conversation to see that the velocity is a function of $x$ only (we are using the same coordinate conventions as \autoref{fig:Brachistochrone Bernoulli}) : $v(x)=\sqrt{2gx}$.  We may also parameterize our path $ds$ in a similar way. 
+    \begin{equation}
+        ds=\sqrt{dx^2+dy^2}=\sqrt{1+y'(x)^2}dx
+    \end{equation}
+    Combining these two formulas gives us a complete functional for the \gls{brachistochrone} problem:
+    $$t=\frac{1}{\sqrt{2g}}\int_1^2\frac{\sqrt{1+y'(x)^2}}{\sqrt{x}}dx$$
+    Once again, we have made the equation amenable to expression via the \gls{Euler Equation}. Let's consider the integrand as our function $f$. We can see it follows the standard form\endnote{Notice that $y(x)$ doesn't actually present itself in the equation. That's no problem, but it does imply that the physical location of the entire system has no effect on the outcome -- something we call a symmetry. This is an important idea to highlight and we'll come back to it many times. }:
+    $$f=f[y(x),y'(x);x]=\frac{\sqrt{1+y'(x)^2}}{\sqrt{x}}$$
+    Now, we can simply apply the \gls{Euler Equation} to find the criteria for which this system has a minimum:
+    $$\frac{\partial f}{\partial x}=\frac{d}{dx}\frac{\partial f}{\partial y'}$$
+    We may notice immediately that the system has no $y(x)$, so the LHS is 0. Equivalently, the derivative of the RHS must be constant. This leaves us with:$$c=\frac{\partial}{\partial y'}\left(\frac{\sqrt{1+y'(x)^2}}{\sqrt{x}}\right)$$
+    After going through the calculations, we find:$$y'(x)=\sqrt{\frac{x}{2c-x}}$$
+    We can perform a final integration to get our curve $y(x)$\endnote{
+    This integral takes the form $$y(x)=\int\sqrt{\frac{x}{2c-x}}dx$$
+    We use a substitution with $x=c(1-\cos\theta)$, which gives us the integral as:
+    $$y(x)=c\int(1-\cos\theta)d\theta=c(\theta-sin\theta)+c_1$$} (See the endnote for details on the integration). This gives us the final parametric curve:
+    \begin{gather}
+        y=c(\theta-\sin\theta)\\
+        x=c(1-\cos\theta)
+    \end{gather}
 \end{example}
+
+From our two examples, we can see some general continuity in our solution methods. We may briefly outline our approach:
+\begin{enumerate}
+    \item Construct an integral which describes the total `cost' or criteria which we want to optimize
+    \item Rearrange our equation to be anemable to the \gls{Euler Equation} (write our function in terms of $y(x), y'(x), x$).
+    \item Solve the \gls{Euler Equation} for the system to find the stationary points.
+\end{enumerate}
+
+With these examples completed, we have enough understanding to embark on our journey with Lagrangian mechanics. There are still a few lingering questions with the calculus of variations, but we may handle those cases directly in the context of Lagrangian mechanics, where the physicality of the problems will aid us in our understanding.
+
+\printendnotes
 
 \chapter{Lagrangian Mechanics}\label{chap:lagrangian}
 
-\color{red} This chapter needs a large amount of work still. Need to finish reading through Goldstein and include necessary information from there. Include generalized forces, Lagrangian multipliers, improve non-holonomic constraints, write the quantum to lagrangian section, and write some good practice problems.
+\color{red} This chapter needs a large amount of work still. Need to finish reading through Goldstein and include necessary information from there. Include generalized forces, Lagrangian multipliers, improve non-holonomic constraints, write the quantum to Lagrangian section, and write some good practice problems.
 
 \color{black}
 
-Energy methods of mechanics use the energy of a system to determine the \gls{eom} of the system . This is in contrast to the Newtonian method, which considers the forces of a system to produce its \gls{eom}. The good news is that both will result in the same answer (see proof in \autoref{equiv newt and lang}). However, having both in your set of tools as an engineer can prove especially useful.
+Energy methods of mechanics use the energy of a system to determine the \gls{eom} of the system . This is in contrast to the Newtonian method, which considers the vector sum of forces of a system to produce its \gls{eom}. The good news is that both will result in the same answer (see proof in \autoref{equiv newt and lang}). However, having both in your set of tools as an engineer (or especially as a physicist) can prove useful. Especially as our coordinate systems become more complex, handling things from the standpoint of energy rather than vectors is especially advantageous.
 
-To grasp energy methods, it is best to have an intuition for Newtonian dynamics first. A thorough reading of Volume I and other sources will help prepare the reader for this section. The two are quite different, but the \gls{Lagrangian} formalism deals less with intuition and more with analytical solutions, so having the intuition from the Newtonian approach will be useful.
+To grasp energy methods, it is best to have an intuition for Newtonian dynamics first. A thorough reading of Volume I and other sources will help prepare the reader for this section. The two are quite different, and although the \gls{Lagrangian} formalism deals less with vectorial operations, having the intuition from the Newtonian approach will still be useful.
 
-There are two main types of energy mechanics, referred to as \gls{Hamiltonian} and \gls{Lagrangian} Mechanics. In this chapter, we will mostly focus on the \gls{Lagrangian} version of these mechanics. \gls{Hamiltonian} mechanics will be discussed further in \autoref{chap:hamiltonian}. Both approaches use energy, but have some distinct differences in implementation. Generally, the \gls{Lagrangian} approach is more suited to solving problems in classical dynamics, so we will start with this approach.
-
-\newglossaryentry{symplectic int}
-{
-    name=symplectic integrator,
-    first = {\textit{symplectic integrator}},
-    description={A class of numerical integration schemes that are energy preserving because they preserve certain geometric properties of a differential equation}
-}
+There are two main types of energy mechanics, referred to as \gls{Hamiltonian} and \gls{Lagrangian} Mechanics. In this chapter, we will focus on the \gls{Lagrangian} version of these mechanics. \gls{Hamiltonian} mechanics will be discussed further in \autoref{chap:hamiltonian}. Both approaches use energy, but have some distinct differences in implementation. Generally, the \gls{Lagrangian} approach is more suited to solving problems in classical dynamics, so we will start with this approach.
 
 Although the \gls{Hamiltonian} and \gls{Lagrangian} are not directly used in the case of our 6-\gls{dof}, they are fundamental to other areas of mechanics and make derivations far simpler in many cases. The \gls{Hamiltonian} and \gls{Lagrangian} descriptions of mechanics are more often taught to physics students rather than engineers, but we feel that they deserve inclusion among the topics presented here. For the reader interested in applications in robotics, energy mechanics has a vast number of applications.
 
-When we discuss \gls{numerical int}, we can use \glspl{symplectic int} when our problem has a \gls{Hamiltonian} description. This will be further discussed in \autoref{sec: Syplectic Ints}. You may find that certain \gls{eom} derivations, such as the spinning top and problems in orbital mechanics are more easily accomplished with energy methods. Another reason to motivate these systems is that these energy methods are invariant to transformations such as rotations. This occurs because energy methods employ a generalized coordinate system. These generalized coordinates are very powerful and allow us to describe a huge variety of systems. We will see this later in some examples.
+When we discuss \gls{numerical int}, we can use \glspl{symplectic int} when our problem has a \gls{Hamiltonian} description. This will be further discussed in \autoref{sec: Syplectic Ints}. You may find that certain \gls{eom} derivations, such as a spinning top and problems in orbital mechanics are more easily accomplished with energy methods. Another reason to motivate these systems is that these energy methods are invariant to transformations such as rotations. This occurs because energy methods employ a generalized coordinate system. These generalized coordinates are very powerful and allow us to describe a huge variety of systems.
 
 A brief overview of the differences between the two schemes of \gls{eom} derivation is shown in \autoref{fig:newt v lang}. As can be seen from the figure, the underlying governing mechanics are no different, but the way in which we arrive at the \gls{eom} is completely different. Knowing this, we can begin our dive into \gls{Lagrangian} mechanics.
 
 \begin{figure}[ht]
     \centering
-    
-\includesvg[width=.6\linewidth]{Images/NewtonianLagrangian.svg}
+
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,307); %set diagram left start at 0, and has height of 307
+
+%Flowchart: Alternative Process [id:dp14905707788420242] 
+\draw   (181,98.33) .. controls (181,93.52) and (184.9,89.62) .. (189.71,89.62) -- (234.15,89.62) .. controls (238.96,89.62) and (242.86,93.52) .. (242.86,98.33) -- (242.86,130.67) .. controls (242.86,135.48) and (238.96,139.38) .. (234.15,139.38) -- (189.71,139.38) .. controls (184.9,139.38) and (181,135.48) .. (181,130.67) -- cycle ;
+%Flowchart: Alternative Process [id:dp8264953508106619] 
+\draw   (263.48,98.33) .. controls (263.48,93.52) and (267.38,89.62) .. (272.19,89.62) -- (347.57,89.62) .. controls (352.38,89.62) and (356.28,93.52) .. (356.28,98.33) -- (356.28,130.67) .. controls (356.28,135.48) and (352.38,139.38) .. (347.57,139.38) -- (272.19,139.38) .. controls (267.38,139.38) and (263.48,135.48) .. (263.48,130.67) -- cycle ;
+%Flowchart: Alternative Process [id:dp12435716110431061] 
+\draw   (376.9,98.33) .. controls (376.9,93.52) and (380.79,89.62) .. (385.6,89.62) -- (471.29,89.62) .. controls (476.1,89.62) and (480,93.52) .. (480,98.33) -- (480,130.67) .. controls (480,135.48) and (476.1,139.38) .. (471.29,139.38) -- (385.6,139.38) .. controls (380.79,139.38) and (376.9,135.48) .. (376.9,130.67) -- cycle ;
+%Straight Lines [id:da7785756366403153] 
+\draw    (242.86,114.5) -- (261.48,114.5) ;
+\draw [shift={(263.48,114.5)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da16956960726381276] 
+\draw    (356.28,114.5) -- (374.9,114.5) ;
+\draw [shift={(376.9,114.5)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Flowchart: Alternative Process [id:dp44246911339647754] 
+\draw   (180,208.33) .. controls (180,203.52) and (183.9,199.62) .. (188.71,199.62) -- (254.05,199.62) .. controls (258.86,199.62) and (262.76,203.52) .. (262.76,208.33) -- (262.76,240.67) .. controls (262.76,245.48) and (258.86,249.38) .. (254.05,249.38) -- (188.71,249.38) .. controls (183.9,249.38) and (180,245.48) .. (180,240.67) -- cycle ;
+%Flowchart: Alternative Process [id:dp3723988845908619] 
+\draw   (283.45,208.33) .. controls (283.45,203.52) and (287.35,199.62) .. (292.16,199.62) -- (378.19,199.62) .. controls (383,199.62) and (386.9,203.52) .. (386.9,208.33) -- (386.9,240.67) .. controls (386.9,245.48) and (383,249.38) .. (378.19,249.38) -- (292.16,249.38) .. controls (287.35,249.38) and (283.45,245.48) .. (283.45,240.67) -- cycle ;
+%Flowchart: Alternative Process [id:dp3986497092067455] 
+\draw   (407.59,208.33) .. controls (407.59,203.52) and (411.48,199.62) .. (416.29,199.62) -- (471.29,199.62) .. controls (476.1,199.62) and (480,203.52) .. (480,208.33) -- (480,240.67) .. controls (480,245.48) and (476.1,249.38) .. (471.29,249.38) -- (416.29,249.38) .. controls (411.48,249.38) and (407.59,245.48) .. (407.59,240.67) -- cycle ;
+%Straight Lines [id:da07392727672316557] 
+\draw    (262.76,224.5) -- (281.45,224.5) ;
+\draw [shift={(283.45,224.5)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da24064295385025491] 
+\draw    (386.9,224.5) -- (405.59,224.5) ;
+\draw [shift={(407.59,224.5)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+% Text Node
+\draw (330,77) node [anchor=south] [inner sep=0.75pt]  [font=\large,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {\begin{minipage}[lt]{64.62pt}\setlength\topsep{0pt}
+\begin{center}
+\textbf{Newtonian}
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (330,187) node [anchor=south] [inner sep=0.75pt]  [font=\large,color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {\begin{minipage}[lt]{68.71pt}\setlength\topsep{0pt}
+\begin{center}
+\textbf{Lagrangian}
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (221.38,220) node  [font=\normalsize] [align=left] {\begin{minipage}[lt]{54.33pt}\setlength\topsep{0pt}
+\begin{center}
+Constraints
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (335.17,224.5) node  [font=\normalsize] [align=left] {\begin{minipage}[lt]{57.75pt}\setlength\topsep{0pt}
+\begin{center}
+Generalized\\Coordinates
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (443.79,224.5) node  [font=\normalsize] [align=left] {\begin{minipage}[lt]{35.05pt}\setlength\topsep{0pt}
+\begin{center}
+Energy
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (211.93,114.5) node  [font=\normalsize] [align=left] {\begin{minipage}[lt]{33.91pt}\setlength\topsep{0pt}
+\begin{center}
+Forces
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (309.88,114.5) node  [font=\normalsize] [align=left] {\begin{minipage}[lt]{54.34pt}\setlength\topsep{0pt}
+\begin{center}
+Frame\\Conversion
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (428.45,114.5) node  [font=\normalsize] [align=left] {\begin{minipage}[lt]{63.98pt}\setlength\topsep{0pt}
+\begin{center}
+Inertial\\Accelerations
+\end{center}
+
+\end{minipage}};
+
+
+\end{tikzpicture}
 
     \caption{Newtonian vs. Lagrangian Mechanics Approach}
     \label{fig:newt v lang}
@@ -1130,7 +1275,7 @@ We have seen in \autoref{sec: historical background} that there is some connecti
 
 Hamilton, the next great mind to enter our story, thought that this connection between the optical and mechanical systems was not a mere coincidence. Perhaps, if he could create a general analogy between the mechanical and optical systems, a more general principle would be revealed.
 
-Hamilton started by considering the optical scenario. In the past, we have treated light primarily like particles. Let us start there, and construct a general picture according to Fermat's least time principle. Let's consider a snapshot of time after a light has been turned on. As we can imagine, the light will propagate out from the source and each particle will have the same distance from the light source:
+Hamilton started by considering the optical scenario which we have previously imagined. In the past, we have treated light primarily like particles. Let us start there, and construct a general picture according to Fermat's least time principle. We may imagine a point source of light. At a certain time, we will turn the point light source on. Let's consider a snapshot of time after a light has been turned on. As we can imagine, the light will propagate out from the source and each particle will have the same distance from the light source:
 
 \begin{figure}[ht]
     \centering
@@ -1838,7 +1983,7 @@ With \gls{Lagrangian} mechanics, we can employ several methods to understand con
 
 We can understand conservation of linear momentum in a system quite easily in the case of the \gls{Lagrangian}. In fact, we have already seen it in some of our examples.
 
-\begin{example}{Rolling Wheel}
+\begin{example}[Rolling Wheel]
 Let us consider a system consisting of a wheel which is rolling without slipping along a level surface, as shown in \autoref{fig:roll wheel}:
 \begin{figure}[H]
     \centering
@@ -2209,7 +2354,7 @@ We know that $f^*\left(\frac{df}{dx}\right)=-b$, so we can rearrange to solve fo
     \color{blue}\mathrm{Legendre \ Transform}
 \end{gather}
 \section{What is Momentum?}
-Now that we are equipped with the Legendre transform, we are ready to tackle the \gls{Hamiltonian}. To do so, we will need to define a new quantity, the momentum.
+Now that we are equipped with the Legendre transform, we are ready to tackle the \gls{Hamiltonian}. To do so, we will need to define a new quantity, the generalized momentum.
 
 Of course, many of us are familiar with the concept of momentum from introductory physics classes, or even higher level classes. Typically, we define the momentum to be $mv$. However, this concept only entails linear momentum! We also have angular momentum, $r\times mv$.
 
@@ -2221,7 +2366,7 @@ Of course, many of us are familiar with the concept of momentum from introductor
     description={A generalized coordinate that is defined as $\frac{\partial L}{\partial \dot{q}_i}.$ Generalized momentum is mostly used in Hamiltonian mechanics}
 }
 
-Furthermore, if you are familiar with quantum mechanics, you likely know that momentum can also be represented as $-i\hbar\frac{\partial}{\partial x}$. We know that the momentum of a relativistic particle is also different, given by $\gamma m_0v$. You may have also heard that photons have momentum. It seems that our notion of momentum of $mv$ is in dire need of a new, more general formulation! Of course, it is okay if you've never seen these representations of momentum before. They are here simply to show that momentum is a concept that is very broad. 
+Furthermore, if you are familiar with quantum mechanics, you likely know that momentum can also be represented as $-i\hbar\frac{\partial}{\partial x}$. We know that the momentum of a relativistic particle is also different, given by $\gamma m_0v$. You may have also heard that photons have momentum. It seems that our notion of momentum of $mv$ is in dire need of a new, more general formulation! Of course, it is okay if you've never seen these representations of momentum before. They are here simply to show that momentum is a concept that is very broad\endnote{In fact, our generalized momentum does not even need the same units as a typical momentum. Consider, for example, angular momentum, which has units of $\mathrm{kg\cdot m^2\ s^{-1}}$ while typical momentum is $\mathrm{kg\cdot m\ s^{-1}}$}. 
 
 What we hope to accomplish is to capture all of these in a single formula for momentum. As a result, we should define a \textit{generalized momentum}, analogous to what we have done for generalized positions and velocities. 
 
@@ -2247,7 +2392,7 @@ Using the Legendre transform, we can transform $\dot{q}$ into a new variable. We
 $$L^*\left(\frac{\partial L}{\partial \dot{q}_j}\right)=\frac{\partial L}{\partial \dot{q}_j}\dot{q}_j-L$$
 We can recognize that the term $\frac{\partial L}{\partial \dot{q}}$ is the \gls{gen momentum} that we have just described! We can simplify the equation by calling this term $p$. We will also denote $L^*$ as $\mathcal{H}$:
 $$\mathcal{H}(q_j,p_j)=p_j\dot{q}_j-L$$
-We can notice that the expression for the \gls{Hamiltonian} still has $\dot{q}_j$ in it, so we still need an expression for the generalized velocities. However, we no longer need to take the derivative with respect to this term, so we have reduced the order of the differential equation. By the garuntees of the Legendre transformation, we have also made sure that all of the relevant information in the system is still there!
+We can notice that the expression for the \gls{Hamiltonian} still has $\dot{q}_j$ in it, so we still need an expression for the generalized velocities. However, we no longer need to take the derivative with respect to this term, so we have reduced the order of the differential equation. By the guarantees of the Legendre transformation, we have also made sure that all of the relevant information in the system is still there!
 
 \section{The Hamiltonian as Total Energy}
 In the introduction to this section, I mentioned that the \gls{Hamiltonian} has an interpretation as the total energy of the system. We can showcase this with the familiar example of the free particle:
@@ -2259,8 +2404,6 @@ In the introduction to this section, I mentioned that the \gls{Hamiltonian} has 
     $$\frac{\partial L}{\partial \dot{x}}=p=m\dot{x}$$
     Which is equivalent to the standard definition of linear momentum in this case. We can, in fact, check that linear momentum is conserved in the system by noting that $x$ is a cyclic coordinate and has 
 \end{example}
-
-Let u
 
 \section{Hamilton's Equations of Motion}
 When we create a \gls{Lagrangian}, we can apply the Euler-Lagrange equations to derive \glspl{eom}. In the case of \gls{Hamiltonian} mechanics, we can derive a similar relationship for the equations of motion. The same machinery of the calculus of variations can be used to derive these relationships.

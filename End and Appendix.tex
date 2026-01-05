@@ -1,9 +1,9 @@
 \chapter*{The End!}
-And so, you have finished all three volumes of the Flight Dynamics Bible! This is quite the accomplishment. Over the course of three volumes, you have read over 600 pages of content, containing over 85,000 words and 2,500 equations.
+And so, you have finished all three volumes of the Flight Dynamics Bible! This is quite the accomplishment. In this volume, you have read over 60,000 words and 2000 equations. Throughout the series, that is more than 100,000 words spanning many semesters of content.
 
 Preston and I hope that this series has been beneficial to you and furthered your knowledge of flight dynamics and all other subject enclosed. Of course, this reading is only the beginning of your journey. From here, there are many avenues that you can explore - be that \gls{gnc}, avionics, robotics, physics, or otherwise.
 
-My hope is that the reader have derived from these books some useful intuition for these complex topics and are inspired to further research. There is a vast amount of knowledge to be gained, and so much fundamental beauty in studying the math and physics of the natural world. I will leave you with one final quote as you continue your journey. 
+My hope is that the reader have derived from these books some useful intuition for these complex topics and are inspired to study further. There is a vast amount of knowledge to be gained, and so much fundamental beauty in studying the math and physics of the natural world. I will leave you with one final quote as you continue your journey. 
 
 \begin{chapquote}{Yo-Yo Ma}
 ``The worst thing you can do is say to yourself, `I want to be just like somebody else.' You have to absorb knowledge from someone else, but ultimately you have to find your own voice.''
@@ -12,10 +12,181 @@ My hope is that the reader have derived from these books some useful intuition f
 If you have any suggestions for improvements to these books, please message me on slack @HudsonReynolds or reach out by email at HudsonJ.Reynolds@gmail.com. Thank you for reading.
 
 \appendix
+\addappheadtotoc
 
-\chapter*{Appendix}
+\renewcommand{\chaptername}{Appendix}
+\renewcommand{\chapterautorefname}{Appendix}
 
-\section{Code}
+\chapter{Methods of Matrix Exponentiation}\label{sec: computation of matrix exp}
+
+The exponentiation of matrices prove to be extremely useful in many of the applications here. There are several ways to approach the matrix exponential, with each having their own advantages in approach. We will start with the simplest to construct and move to more complex (although sometimes better!) approaches.
+
+\section{Matrix Exponential as Taylor Series}
+Expressing the Matrix Exponential as a Taylor series is the simplest definition we can use, although a closed form only exists in limited cases. Such as an example is:
+$$A=\begin{bmatrix}
+    0&1&1\\0&0&1\\
+    0&0&0
+\end{bmatrix}$$
+For this matrix, we can take the Taylor series directly to find $e^A$.
+\begin{equation}\label{eq:eA taylor series}
+    e^A=\sum_{n=0}^2{\frac{A^n}{n!}}=A^0+A+\frac{A^2}{2}
+\end{equation}
+
+Although it may not be immediately apparent why we can stop the sum at $n=2$, it becomes immediately apparent upon computation. We have:
+$$A^0=\mathbb{I},A=\begin{bmatrix}
+    0&1&1\\0&0&1\\
+    0&0&0
+\end{bmatrix},A^2=\begin{bmatrix}
+    0&0&1\\0&0&0\\
+    0&0&0
+\end{bmatrix},A^3=\begin{bmatrix}
+    0&0&0\\0&0&0\\
+    0&0&0
+\end{bmatrix}$$
+So, $A^3$ and any successive derivative is exactly zero, so the sum is finite. So, the computation simply becomes addition of the matrices, giving us:
+$$e^A=\begin{bmatrix}
+    1&1&\frac{3}{2}\\0&1&1\\
+    0&0&1
+\end{bmatrix}$$
+This closed form only exists for simple matrices. We can extend this \textit{slightly} for some some matrices, as we can separate $e^A$ into $e^{(A+B)}=e^Ae^B$ in the case that $AB=BA$ (otherwise known as $A$ and $B$ \textit{commuting}). This is generally not the case so we will not dive further.
+
+The reason to present this method is that sometimes the other methods I will present to perform matrix exponentiation will not always work. In that case, when computing the matrix exponential, it is often okay for our purposes to find a `close enough' value by taking some finite sum of the Taylor series expansion. This method will always work; we all remember from introductory calculus that $\sum_{n=0}^\infty{\frac{A^n}{n!}}$ is an absolutely convergent series.
+
+\section{Matrix Exponential as Eigenvalue Decomposition}
+The next method will likely be familiar to students of linear algebra. This method involves taking the eigenvalue decomposition of the matrix $A$ to find its exponential. Diagonalization Theorem (presented in \autoref{thm:diagonalization thm}) tells us that we can only perform this diagonalization if $A$ has $n$ linearly independent eigenvectors. We can easily check this in MATLAB with the command "[P,D]=eig(A)", which returns the eigenvector matrix "P" and diagonalized matrix "D". We will not cover how to derive these matrices here. If you want a derivation, a good high-level overview is presented in \cite{michael_penn_matrix_2022}.
+
+\begin{theorem}[Diagonalization Theorem]\label{thm:diagonalization thm}
+    An $n{\times}n$ matrix $A$ is diagonalizable if and only if $A$ has $n$ linearly independent eigenvectors.
+\end{theorem}
+
+When we satisfy these criteria, we can write the matrix $A$ as $A=PDP^{-1}$.\endnote{You may see this decomposition as either $A=PDP^{-1}$ or $A=P^{-1}DP$. This distinction depends on how you choose to represent $P$. I choose to use the notation that allows users to use write the given equations in MATLAB directly. This is also the standard notation in most modern textbooks.} This becomes useful when computing the matrix exponential. Why exactly is this useful if we now have more terms?
+
+\begin{example}[$A^2$ for diagonalizable matrices]
+    We can take the example of $A^2$ for a general matrix $A$ with the decomposition $A=PDP^{-1}$ to show the usefulness. 
+    
+We start by squaring both sides of the equality $$A^2=\left(PDP^{-1}\right)^2$$ which we can expand to $$A^2=PDP^{-1}PDP^{-1}$$
+We notice that the middle term, $P^{-1}P$, reduces to $I$, so the sum is simply $$A^2=P(DID)P^{-1}$$which we can express plainly as $$A^2=PD^2P^{-1}$$
+\end{example}
+
+We can notice that for any integer $n$, the middle terms $P$ and $P^{-1}$ will cancel each other, given us the general formula:
+\begin{gather}
+    A^n=PD^nP^{-1}
+\end{gather}
+We also notice that it is remarkably simple to find $D^n$ since $D$ is a diagonal $n{\times} n$ matrix. We  have:
+$$D^n=\begin{bmatrix}
+    {d_{11}}^n &0&\cdots&0\\
+    0 &{d_{22}}^n & \cdots &0\\
+    \vdots & \vdots & \ddots & 0\\
+    0&0&0&{d_{nn}}^n
+\end{bmatrix}$$
+From here it is simple to extent this to the matrix exponential. We can refer back to our original form for the matrix exponential in \eqautoref{eq:eA taylor series} and rewrite is slightly for the diagonalized matrix:
+$$e^A=\sum_{n=0}^{\infty}{\frac{1}{n!}A^n}=P\sum_{n=0}^{\infty}{\frac{1}{n!}D^n}P^{-1}$$
+We can see that ${\frac{1}{n!}D^n}$ will simplify greatly since $D^n$ has a closed form. We can use the Taylor series definition to get:
+$$\sum_{n=0}^{\infty}\frac{1}{n!}D^n=\begin{bmatrix}
+    e^{d_{11}} &0&\cdots&0\\
+    0 &e^{d_{22}} & \cdots &0\\
+    \vdots & \vdots & \ddots & 0\\
+    0&0&0&e^{d_{nn}}
+\end{bmatrix}=e^D$$
+So we have a quite simple way to express the matrix exponential for diagonalizable matrices:
+$$e^A=Pe^DP^{-1}$$
+\begin{exercise}[Show $e^{tr(A)}=\det\left(e^A\right)$]\label{exer:trace det}
+    To ensure that you understand this method of computing the matrix exponential, show that $e^{tr(A)}=\det\left(e^A\right)$ for the matrix: $$A=\begin{bmatrix}
+        4&1\\2&5
+    \end{bmatrix}$$
+    Bonus points are awarded if you can prove this property holds for a general diagonalizable matrix $A$! You will want to use the properties of the trace and determinant on eigenvalues. This property will prove useful when we study rotation groups, so keep it in your back pocket!
+\end{exercise}
+
+\section{Matrix Exponential with Jordan Forms}
+Eigenvalue decomposition is a very promising method for computing the matrix exponential, but it is not always feasible, since our matrices are not always diagonalizable. In such a case, we may use what is called the \textit{Jordan Normal form} (sometimes called \textit{Jordan Canonical Form}) to compose a pseudo-diagonal matrix and compute the matrix exponential.
+
+\section{Matrix Exponential with Laplace Transform}
+
+There is one more method that we will employ to compute the matrix exponential, which comes from the \gls{laplace transform} which we explored in \autoref{part:control theory}. We may recall that we have:
+$$e^{at} = \mathscr{L}^{-1}\left(\frac{1}{s-a}\right)$$
+As we have done for our other cases, we can extend this definition to matrices:
+$$e^{At} = \mathscr{L}^{-1}\left(\left(s\mathbb{I}-A\right)^{-1}\right)$$
+Note that the $\mathscr{L}^{-1}$ of a matrix is the $\mathscr{L}^{-1}$ of each of its elements.
+
+\begin{example}[Diagonal Matrix]
+Let's consider a simple example of a diagonal matrix:
+$$A=\begin{bmatrix}
+    a&0\\0&d
+\end{bmatrix}$$
+We can compute $s\mathbb{I}-A$:
+$$s\mathbb{I}-A=\begin{bmatrix}
+    s-a&0\\0&s-d
+\end{bmatrix}$$
+For a diagonal matrix, our inverse is the reciprocal of the diagonal elements:
+$$\left(s\mathbb{I}-A\right)^{-1}=\begin{bmatrix}
+    \frac{1}{s-a}&0\\0&\frac{1}{s-d}
+\end{bmatrix}$$
+For the matrix exponential, we take the \gls{laplace transform} of each element:
+$$e^{At}=\begin{bmatrix}
+    \mathscr{L}^{-1}\left(\frac{1}{s-a}\right)&0\\0&\mathscr{L}^{-1}\left(\frac{1}{s-b}\right)
+\end{bmatrix}$$
+Computing this, we have:
+$$e^{At}=\begin{bmatrix}
+    e^{at}&0\\0&e^{bt}
+\end{bmatrix}$$
+Which matches our expectation for the result. 
+\end{example}
+\begin{exercise}[Skew Matrix]
+    Use the \gls{laplace transform} method of matrix exponentials to find the matrix exponential of the following skew matrix:
+    $$\theta\mathcal{J}=\begin{bmatrix}
+        0&\theta\\-\theta&0
+    \end{bmatrix}$$
+Next, compute the eigenvalues of $\theta\mathcal{J}$ and the eigenvalues of $e^{\theta\mathcal{J}}$. How are the two related? 
+\end{exercise}
+
+\section{Computational Methods of Matrix Exponentiation}
+Often, we would like to use computers to aid us in the computation of matrix exponentials. In MATLAB, there are several commands which we may use to aid us in computation.
+
+If our computation is purely numeric, we may perform a numerical version of the matrix exponential using "expm(A)", where "A" is our square matrix of interest. Note that "exp" in MATLAB will compute the exponential of each element of the matrix, \textit{not} the exponential for the matrix as a whole.
+
+If we desire a symbolic solution, "expm" may be used on a symbolic matrix. To declare a symbolic variable, we use "syms" followed by each variable we want to declare (e.g. "syms theta x y z").
+
+In addition to these commands, there are several which are useful when performing derivations via the previously mentioned methods:
+\begin{itemize}
+    \item "[V,J] = jordan(A)" - convert matrix "A" into the Jordan form, "V" returns the generalized eigenvectors and "J" the matrix in Jordan form
+    \item "F = laplace(f)" - perform the \gls{laplace transform} of "f".
+    \item "f = ilaplace(F)" - perform the inverse \gls{laplace transform} of "F".
+    \item "[V,D] = eig(A)" - compute the diagonal matrix ("D") and the eigenvector matrix ("V") for "A". 
+\end{itemize}
+
+\chapter{Inner Product Space Examples}\label{sec:inner prod ex}
+To solidify the idea of the inner product space, we should consider several inner product spaces that we see quite frequently. These are supplemental inner product spaces that may aid in our understanding of the \gls{laplace transform}.
+
+\section{Fourier Series}
+First, lets consider one of the most prominent and simple cases of an inner product space. This inner product space will serve as a basic example which we can use to understand the other inner product spaces.
+
+The Fourier series is a way of representing any periodic function in terms of $\sin$ and $\cos$ components. Sometimes, we may see this more compactly expressed as an exponential of form $e^{i\theta}$. Either way, we are trying to express some function in terms of periodic components. We can, for example, express a square wave using these $\sin$ and $\cos$ components, which is shown in \autoref{fig:fourier}.
+
+\begin{figure}
+    \centering
+    \includesvg[width=.5\linewidth]{Images/Fourier_Series.svg}
+    \caption{Fourier Series Example}
+    \label{fig:fourier}
+\end{figure}
+
+More specifically, we define the Fourier Series of a function as:
+
+$$f(t)=\sum_{n=0}^\infty\left[a_n\cos(n\omega t) + b_n\sin(n\omega t)\right]$$
+We define the coefficients $a_n$ and $b_n$ as follows:
+$$a_n=\frac{2}{\tau}\int_{-\tau/2}^{\tau/2}f(t)dt$$
+$$b_n=\frac{2}{\tau}\int_{-\tau/2}^{\tau/2}f(t)dt$$
+We must treat the $a_0$ term (this is one downside of the $\sin$ and $\cos$ approach. For the $a_0$ term, we have:
+$$a_0=\frac{2}{\tau}\int_{-\tau/2}^{\tau/2}f(t)dt$$
+You may notice these equations are strikingly similar to the inner product which we defined in \eqautoref{eq:inner product}. This, of course, is no coincidence, because we construct the Fourier series by considering an inner product. Let's now see how we can arrive at this answer by using the notion of the inner product space.
+
+First, lets remember our $L^2$ space that we defined earlier. For simplicity, we will consider our domain to be $0$ to $2\pi$. That way, we can simplify our equations by writing $2\pi$ in every location where $\tau$ is present. Note that we can indeed consider \textit{any} range $(0,\tau)$ for this domain, but $2\pi$ turns out to be the easiest because $\sin$ and $\cos$ have $2\pi$ periodicity. 
+$$a(t)\cdot b(t)=\frac{1}{\tau}\int_0^\tau{a(t)\overline{b(t)}}dt$$
+
+\subsubsection{Legendre Polynomials}
+
+\subsubsection{Hilbert Spaces}
+
+\chapter{Code}
 \subsection{Geodesics of a Sphere}
 \lstinputlisting[style=Matlab-editor, caption=Sphere Geodesic]{Scripts/SphereGeodesic.m}\label{script:Geodesic}
 
@@ -33,8 +204,8 @@ Performing seperation of variables and writing the integral, with the assumption
 $$\sqrt{2g}T=\int_{t_1}^{t_2}\frac{\sqrt{\dot{x}^2+\dot{y}^2}}{\sqrt{x}}$$
 
 
-\section{Proofs}
-\subsection{Equivalence of Newtonian and Lagrangian Mechanics}\label{equiv newt and lang}
+\chapter{Proofs}
+\section{Equivalence of Newtonian and Lagrangian Mechanics}\label{equiv newt and lang}
 
 \begin{proof}
 We start with Lagrange's equations in rectilinear coordinates $x_i=x,y,z$:
@@ -55,17 +226,45 @@ So, we have $F=m\ddot{x}_i$.
 
 \end{proof}
 \begin{corollary}
-    From the proof, we can also see that the validity is dependent on the choice of rectangular coordinates. 
+    From the proof, we can also see that the validity is dependent on the choice of rectangular/cartesian coordinates. 
 
-    It can further be shown that the Newtonian derivation must be performed in an inertial frame.
+    It can further be shown that the Newtonian derivation must be performed in an inertial frame to be valid.
 \end{corollary}
 
 
-\section{Code}
+\section{Derivation of the Exponential Eigenfunction}\label{sec:derivation of exp}
+\begin{proof}
+Consider the condition that 
+$$De^{x}=e^{x}$$
+That is, we assume that $e^x$ is the function such that it is the eigenfunction of the total derivative operator. Our objective is to find the value of $e^x$ that satisfies this equality, presuming we have no a priori information about the function aside from the fact that an exponential function has the special property of being proportional to its derivative.
+
+We consider a Taylor series of $e^x$, which has a general form such that it may represent any smooth and differentiable function.\footnote{We may also consider a vector space of infinite degree polynomials if we desire to derive this without knowledge of the Taylor series.}
+$$e^x=a_0+a_1x+a_2x^2+\cdots+ a_nx^n+\cdots$$
+We know, through the identity of any exponential function, that $e^0=1$. Thus, we may take $a_0=1$. Since this function must equal it's own derivative, we have:
+\begin{gather}
+    De^x=a_1+2a_2x+3a_3x^2+\cdots +na_nx^{n-1}
+\end{gather}
+Which results in the equality:
+\begin{gather}
+    a_1+2a_2x+3a_3x^2+\cdots +na_nx^{n-1}=\\
+    1+a_1x+a_2x^2+\cdots+ a_nx^n+\cdots
+\end{gather}
+For this equality to hold, $a_1=1$ must be true since these are the only terms of order $x^0$. This constraint on $a_1$ allows us to solve for the terms of order $x$:
+$$2a_2x=1x\rightarrow a_2=\frac{1}{2}$$
+A similar argument holds for the rest of the terms, as the derivative term allows us to solve for the $a_{n+1}$  term. Generalizing this solution (try a few to check!), we have $a_n$=$\frac{1}{n!}$.
+
+Altogether, this gives us an equation for $e^x$ as:
+$$e^x=\sum_{n=0}^\infty\frac{x^n}{n!}$$
+We may now solve for $e$ by setting $x=1$. The limit of this infinite series gives us the value of $e\approx2.781828$ and also results in the Taylor series expansion of $e^x$.
+
+\end{proof}
+
+
+\chapter{Additional Code}
 This section contains lengthier segments of example code from either the 6-\gls{dof} itself or a proof/example relating to it. Refer to the section numbers to find the appropriate implementation of each code segment.
 
 %\lstinputlisting[style=Matlab-editor, caption = Lorenz Attractor]{6DoF Explanation Scripts/Lorenz Attractor/LorenzAttractor.m}\label{code:Lorenz}
 
 \setglossarystyle{altlist}
-\printglossary[title=Special Terms, toctitle = Special Terms]
+\printglossary[title=Special Terms, toctitle = Terms \& Index]
 \printbibliography[heading=bibintoc, title={References}]
