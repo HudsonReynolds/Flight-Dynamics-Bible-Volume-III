@@ -1,31 +1,28 @@
 \chapter*{Preface}\label{sec:preface}
 
-I begin working on this document after the release of Volume I of the Flight Dynamics Bible. In that volume, I present a brief overview of energy mechanics. In that exploration of energy mechanics, I gained a great appreciation of the subject and began work on this text shortly thereafter. As in the first volume, I hope this document can provide all of the basic concepts of energy mechanics and control theory in their application to aerospace engineering in a single place. My goal with this book is to provide a feel for concepts and practical ways of solving them, while still remaining quite rigorous in a way that will allow the readers to reference this text even as they become quite advanced in their coursework. My hope here is to present these ideas and ways of solving them with only the minimal background need.
+I begin working on this document after the release of Volume I of the Flight Dynamics Bible. In that volume, I present a brief overview of energy mechanics. In that exploration of energy mechanics, I gained a great appreciation of the subject and began work on this text shortly thereafter. As in the first volume, I hope this document can provide all of the basic concepts of energy mechanics and control theory in their application to aerospace engineering in a single place. My goal with this book is to provide a feel for concepts and practical ways of solving them, while still remaining quite rigorous in a way that will allow the readers to reference this text even as they become quite advanced in their coursework. My hope here is to present these ideas and ways of solving them with only the minimal background need. 
 
-Furthermore, I hope that this edition can provide a bridge between the realms of Newtonian dynamics and energy methods in greater detail than in the first volume.
+Furthermore, I hope that this edition can provide a bridge between the realms of Newtonian dynamics and energy methods in greater detail than in the first volume. As with the first volume, I will be using excerpts of MATLAB script in some examples (code less than a page is included inline, and longer code is in the appendix) but my hope is that the explanations are thorough enough to facilitate the creation of code in any coding language. MATLAB is the language of choice for this document. 
 
-As with the first volume, we will be using excerpts of MATLAB script in some examples (code less than a page is included inline, and longer code is in the appendix) but our hope is that our explanations are thorough enough to facilitate the creation of code in any coding language. MATLAB is the language of choice for this document.
+As a note, while our work on flight dynamics has mainly focused on modeling rockets, I hope that this volume in particular can be used more widely in a variety of applications pertaining to energy mechanics and controls. As such, I have attempted to include content that is perhaps more general than Volume I, such as orbital dynamics and physics systems, insofar as I have experience in these areas. Because most of my experience lies in rocket modeling, I explore some of these concepts in the context of rocket modeling and 6-\gls{dof} creation. Please forgive my lack of strict mathematical rigor or any subtleties of physics that I may overlook.
 
-As a note, while our work on flight dynamics has mainly focused on modeling rockets, we hope that this document can be used more widely in a variety of applications pertaining to energy mechanics and controls. As such, we have attempted to include content that is useful for other systems, such as orbital dynamics and physics systems, insofar as I have experience in these areas. Because most of my experience lies in rocket modeling, I explore some of these concepts in the context of rocket modeling and 6-\gls{dof} creation.
-
-New to this volume, I include a separate notational overview and outline for each section. While the subjects discussed are closely related, notational differences arise that are large enough that notation guide and overview for each section is necessitated. Additionally, I have tried to keep the sections separated enough that a reader interested in only one section will not feel lost. Of course, reading all of the sections will provide the most insight and benefit to the reader. Sections with large overlap with previous content have been noted throughout the text.
+New to this volume, I include a separate notational overview and outline for each section. While the subjects discussed are closely related, notational differences arise that are large enough that notation guide and overview for each section is necessitated. Additionally, I have tried to keep the sections separated enough that a reader interested in only one section will not feel lost. Of course, reading all of the sections will provide the most insight and benefit to the reader. Sections with large overlap with previous content have been noted throughout the text. Note specifically that the content on optimal control is developed based on an understanding of variational principles discussed in Part I.
 
 This book weaves through a course of lots of -- sometimes seemingly unrelated -- material. However, my hope is that I have tied together some apparently unrelated concepts in a way that helps to display the beautiful and deep mathematical connections shared between these subjects. I hope I can inspire at least some readers to find a subject they are passionate about in the course of reading this book.
 
 \section*{Acknowledgments}
 \begin{itemize}
-\item I would like to give my deepest appreciation and thanks to Professor Cunningham for his support with each of the volumes of the Flight Dynamics Bible and his support in helping Preston and I. 
-\item I would also like to thank everyone at JHU APL who has helped me learn so much during my time there in the Summer of 2025. Their support and knowledge has been invaluable and has helped me in innumerable ways. I would like to give special thanks to -- and -- for their help in editing the mathematical content presented in this volume.
+\item I would like to give my deepest appreciation to Professor Cunningham for his support in helping Preston and I. 
+\item I would also like to thank everyone at JHU APL who has helped me learn so much during my time there in the Summer of 2025. Their support and knowledge has been invaluable and has helped me in innumerable ways. 
+%I would like to give special thanks to -- and -- for their help in editing the mathematical content presented in this volume.
 \end{itemize}
 
 \chapter*{Notation and Standards}
-Mathematical notation for energy mechanics that we discuss is somewhat formalized, but there are some areas where we may use notation slightly unfamiliar or different to standard textbooks. To remove any doubt, we describe the notation that we use here at the beginning for quick reference.
-
-We also choose to use notation that is used in the Purdue AAE classes. Some of these may be unfamiliar if you have not encountered this coursework yet, but we do our best to describe notation throughout this document and in this section.
+Mathematical notation for energy mechanics that we discuss is somewhat formalized, but there are some areas where we may use notation slightly unfamiliar or different to standard textbooks. To remove any doubt, we describe the notation that we use here at the beginning for quick reference. I also choose to use notation that is used in the Purdue AAE and PHYS classes. Some of these may be unfamiliar if you have not encountered this coursework yet, but we do our best to describe notation throughout this document and in this section.
 
 For derivatives with respect to time, I will use the compact Newtonian notation. For example, $\dot{x}=\frac{dx}{dt}$, $\ddot{x}=\frac{d^2x}{dt^2}$, and so on. Generally, I avoid the prime notation such as $x'$ as this notation does not make clear what we are taking the derivative with respect to. The prime notation is only used in specific circumstances where the other notation is not easily applicable.
 
-For vectors, any vector with a hat like $\hat{x}$ refers to a vector with a magnitude of 1 (normalized vector). These are often seen as basis vectors or unit vectors describing the direction of a force. Vectors with a ‘arrow’ hat like $\vec{x}$ refers to a general vector with a non-normalized magnitude. Vectors with a non-normalized magnitude may also be represented by a bold-faced symbol. When taking the time derivative of a vector, we prefer to write using this boldface notation, such as $\dot{\textbf{x}}$ instead of $\dot{\vec{x}}$. 
+For vectors, any vector with a hat like $\hat{x}$ refers to a vector with a magnitude of 1 (normalized vector). These are often seen as basis vectors or unit vectors describing the direction of a force. Vectors with a ‘arrow’ hat like $\vec{x}$ refers to a general vector with a non-normalized magnitude. Vectors with a non-normalized magnitude may also be represented by a bold-faced symbol. When taking the time derivative of a vector, we prefer to write using this boldface notation, such as $\mathbf{\dot{x}}$ instead of $\dot{\vec{x}}$. 
 
 An exception to these rules is control theory. Especially in the creation of state estimators, vector hats and other symbols take on quite different meanings than the meaning previously prescribed. This is described in more depth in the relevant sections.
 
@@ -83,13 +80,17 @@ $$\begin{array}{cl}
     \mathbb{Q}&\mathrm{rational\ numbers}\\
     \mathbb{R}&\mathrm{real\ numbers}\\
     \mathbb{C}&\mathrm{complex\ numbers}\\
-    \mathbb{H}&\mathrm{quaternions}
+    \mathbb{H}&\mathrm{quaternions}\\
+    \mathbb{S}&\mathrm{circle \ group}\\
 \end{array}$$
 \subsection*{Matrices and Groups}
 $$\begin{array}{cl}
-    \mathbb{I}&\mathrm{Identity \ Matrix}\\
-    GL_n(F)&\mathrm{General \ Linear \ Group}\\
-    SL_n(F)&\mathrm{Special \ Linear \ Group}\\
+    \mathbb{I}&\mathrm{identity \ matrix}\\
+    GL_n(F)&\mathrm{general \ linear \ group}\\
+    SL_n(F)&\mathrm{special \ linear \ group}\\
+    SO(n)&\mathrm{special \ orthogonal\ group}\\
+    SE(n)&\mathrm{special \ euclidean \ group}\\
+    SU(n)&\mathrm{special \ unitary\ group}\\
     
 \end{array}$$
 
@@ -107,22 +108,25 @@ $$\begin{array}{cl}
       D & \mathrm{feedthrough\ matrix}\\
       \Phi & \mathrm{state\ transition \ matrix}\\
       u& \mathrm{control \ input} \\
+      e& \mathrm{error \ signal}\\
+      d& \mathrm{disturbance}\\
       X(s)&\mathrm{Laplace \ Transform \ of \ } x(t)
 \end{array}$$
-\subsection*{Filtering}
+\subsection*{Kalman Filtering}
 $$\begin{array}{cl}
       {\textbf{x}^+}& \mathrm{posterior \ update}\\
       {\textbf{x}^-}& \mathrm{priori \ update}\\
       H & \mathrm{observation\ matrix}\\
       \Phi & \mathrm{state\ transition \ matrix}\\
       P & \mathrm{covariance\ matrix}\\
+      K &\mathrm{kalman \ gain}
 \end{array}$$
 \subsection*{Scalar Quantities and Symbols}
 $$\begin{array}{ll}
     J&  \mathrm{functional}\\
     \delta&\mathrm{variation}\\
     S& \mathrm{action}\\
-    \mathcal{L} & \mathrm{Laplace \ transform}\\
+    \mathscr{L} & \mathrm{Laplace \ transform}\\
     q& \mathrm{generalized \ coordinate}\\
     \dot{q}& \mathrm{generalized \ position}\\
     k& \mathrm{spring \ constant}\\
@@ -139,31 +143,33 @@ It has proven quite intractable to include all of the notation used throughout t
 
 This volume will primarily focus on energy methods of mechanics and control theory. I start this volume by briefly discussing the history of energy methods. I find this is especially useful in priming the reader on \textit{why} methods of energy mechanics exist and intuitively understanding what types of problems are best suited for energy mechanics. 
 
-The mathematical treatment starts by considering the calculus of variations, which will then naturally lead to the discussion of \gls{Lagrangian} mechanics. The discussion of \gls{Lagrangian} mechanics will then lead to our discussion of \gls{Hamiltonian} mechanics. \gls{Hamiltonian} physics is naturally suited for an exploration on physics and deeper mathematical concepts \autoref{part: energy mech}. I feel that any discussion on energy mechanics is incomplete without noting its significance in orbital applications. As such, I include a few chapters of this first sections which is related to the study of orbital mechanics, particularly as it related to \gls{Lagrangian} and \gls{Hamiltonian} mechanics.
+The mathematical treatment starts by considering the calculus of variations, which will then naturally lead to the discussion of \gls{Lagrangian} mechanics. The discussion of \gls{Lagrangian} mechanics will then lead to our discussion of \gls{Hamiltonian} mechanics. \gls{Hamiltonian} physics is naturally suited for an exploration on physics and deeper mathematical concepts. I feel that any discussion on energy mechanics is incomplete without noting its significance in orbital applications. As such, I include a short chapters in this first section which is related to the study of orbital mechanics, particularly as it related to \gls{Lagrangian} and \gls{Hamiltonian} mechanics. There exists some physics related content in this first section which the reader may skip if so desired.
 
-A deeper discussion of many of the mathematical concepts which either prove useful or provide the basis for understanding control theory and energy mechanics is provided in \autoref{part: further math}. I include the study of \glspl{lie group} and \glspl{lie algebra} in their application to rotations, controls, and some other applications. Manifolds and inner product spaces also find discussion in this section. This section is the most separated from the rest of the book, in that a reader may skip this section without losing much continuity. It is, of course, encouraged to read this section for a deeper understanding of the concepts.
+After this section, I have placed an introduction to classical control. I have kept this section fairly brief, as modern control is ultimately the more important theory for our purposes. However, a solid understanding of classical control is required nonetheless. After this section, the main portion of the text of modern control is covered, starting with state space modeling.
 
 The calculus of variations has many uses, including extensive uses in the subject of control theory. So, therefore, the third part of this volume will cover control theory and optimal control. This section ranges from discussions of basic control theory to more modern techniques. With all of the mathematical background that has been built up prior to this, a more foundational approach to control theory can be taken which is not often seen in introductory texts.
 
-My pedagogical approach is strongly reliant on examples and trying problems. I find that this is the best method for readers to learn the content. As such, I try to include many examples, especially those that are useful to the reader or significant in the development of the theories. I try to stray away from problems of rout memorization, although some practice of this kind will be required to fully appreciate some ideas presented. There is no substitute for trying problems yourself. Studying many problems -- both textbook and real world -- is the only method by which you may become an expert at this subject matter.
+A deeper discussion of many of the mathematical concepts which either prove useful or provide the basis for understanding control theory and energy mechanics is provided in \autoref{part: advanced topics}. I include the study of \glspl{lie group} and \glspl{lie algebra} in their application to rotations, controls, and some other applications. Manifolds and inner product spaces also discussed in this section. This section is the most separated from the rest of the book, in that a reader may skip this section without losing much continuity. It is, of course, encouraged to read this section for a deeper understanding of the concepts.
 
-In some chapters, there will be some additional content at the end that may be especially useful for quick reference. For quick reference, I include a 'Key Ideas' section that may be used to quickly reference the big takeaways from each chapter.
+Finally, this mathematical work is put to use in the advanced concepts portion of the book. This portion is devoted to some interesting applications of geometric control, which is an increasingly popular method of non-linear control. This section is left for the end for the most curious readers.
 
-Additionally, a `Further Reading and Notes' is included which the curious reader may benefit from. It is certainly not necessary to read any/all of these sources to comprehend the content here, but they may prove useful for deeper research into topic areas that interest the reader.
+My pedagogical approach is strongly reliant on examples and trying problems. I find that this is the best method for readers to learn the content. As such, I try to include many examples, especially those that are useful to the reader or significant in the development of the theories. I try to stray away from problems of rout memorization, although some practice of this kind will be required to fully appreciate some ideas presented. There is no substitute for trying problems yourself. Studying many problems -- both textbook and real world -- is the only method by which you may become an expert at this subject matter. Problems which are included inline with the chapter should be done as you read to further your understanding. Solutions for problems are given in the Appendix of this book (although not all are worked out for space limitations).
 
-The end of some sections also provides several practice problems to ensure the key ideas of each topic are understood by the reader. These problems are mainly to validate the readers understanding and provide an example of using the presented content.
+In some chapters, there will be some additional content at the end that may be especially useful for quick reference. For quick reference, I include a 'Key Ideas' section that may be used to quickly reference the big takeaways from each chapter. Additionally, a `Further Reading and Notes' is included which the curious reader may benefit from. It is certainly not necessary to read any/all of these sources to comprehend the content here, but they may prove useful for deeper research into topic areas that interest the reader.
 
-For readers new to this content, it is expected that some problem may take some consultation with other sources to complete. However, I have attempted to make these problems challenging while not being out of reach. These problems are designed to make the reader apply the knowledge and truly learn.
+The end of some sections also provides several additional practice problems to ensure the key ideas of each topic are understood by the reader. These problems are mainly to validate the readers understanding and provide an example of using the presented content.
+
+For readers new to this content, it is expected that some problems may require consultation with other sources to complete. However, I have attempted to make these problems challenging while not being out of reach. These problems are designed to make the reader apply the knowledge and truly learn. I strongly urge attempting the problems yourself before seeking a solution from other sources.
 
 \section*{Necessary Background}
 In this 3rd volume, I will cover energy mechanics, mathematics, and topics in control theory. These topics are largely grad-level subjects. At Purdue, energy mechanics is covered in AAE 507 and AAE 508. Other subjects mentioned may be outside of the scope of standard classwork. It is thus a large undertaking to cover the scope of several grad level courses in this text. However, I think that motivated undergrad students can grasp the content. My hope is to present the ideas at such a level that the reader may find them more satisfying than the methods that are presented in typical undergrad classes and be motivated to study further.
 
 This book will require a functional understanding of the topics covered in Volume I and Volume II, so I highly recommend reading those first and having an understanding of the material there. This book will also utilize calculus and linear algebra extensively, so it is expected that the reader have a good background in those subjects. This book will be more math heavy than Volume I, and includes a level of mathematics similar to that presented in Volume II. 
 
-The mathematical foundations of control theory can be dense and unlikely to be very useful to readers who are simply interested in learning the practical theory. So, for this last section of the book, I have mostly opted for practical examples of control theory and only included heavy theory where I feel that it is enlightening or especially useful to the understanding for the reader. This section also emphasizes practical use of MATLAB in solving control problems.
+The mathematical foundations of control theory can be dense and unlikely to be very useful to readers who are simply interested in learning the practical theory. So, for this section of the book, I have mostly opted for practical examples of control theory and only included heavy theory where I feel that it is enlightening or especially useful to the understanding for the reader. This section also emphasizes practical use of MATLAB in solving control problems.
 
 For those readers who prefer a deep mathematical understanding, there is a large portion of the book devoted to Lie theory and other fundamental mathematics which may satiate this curiosity. My hope is this allows both those who want to learn the basics of control theory as well as those who want to learn the intrinsic mathematics to both find this text useful.
 
-This volume attempts to derive most equations in a way that is intuitive to the undergraduate reader. As such, some of the derivations do not include the exacting mathematical precision found in other texts. In these instances, I try to either include footnotes noting what has been glossed over or link to other texts with more in-depth explanations.
+This volume attempts to derive most equations in a way that is intuitive to the undergraduate reader. As such, some of the derivations do not include the exacting mathematical precision found in other texts. In these instances, I try to either include footnotes noting what has been glossed over or cite other texts with more in-depth explanations.
 
 I assume some base knowledge of physics as well, but not much is covered outside the scope of standard undergraduate engineering coursework. There is some physics covered in the book that is outside the scope of typical engineering curriculum. Reader's without knowledge in these subjects may skip these sections if so desired, but I believe they are helpful to the understanding on the whole. A reader with minimal knowledge of quantum mechanics and classical physics will find these examples the most useful.

@@ -3,8 +3,12 @@
 %% Author:  Hudson Reynolds                      %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[12pt]{report}
-\usepackage[letterpaper, total={6in, 8in}]{geometry}
+\documentclass[12pt]{book}
+%\usepackage[letterpaper, total={6in, 8in}]{geometry}
+\usepackage[paperwidth=7in, paperheight=10in, 
+            top=1in, bottom=1in, 
+            left=0.75in, right=0.75in, 
+            bindingoffset=0.25in]{geometry}3141
 \usepackage[T1]{fontenc}
 \usepackage{booktabs}
 \usepackage[utf8]{inputenc}
@@ -33,6 +37,7 @@
 \usepackage[style=numeric]{biblatex}
 \addbibresource{references.bib}
 \usepackage{braket}
+\usepackage{mathrsfs}
 
 % If you want to break on URL numbers
 \setcounter{biburlnumpenalty}{9500}
@@ -46,8 +51,18 @@
 \usepackage{amsfonts}
 \usepackage{etoolbox}
 \usepackage{hyperref}
+\usepackage{appendix}
+
 
 \usepackage[inkscapelatex=false]{svg}
+
+\newcommand{\exampleframeconfig}{%
+  \ifodd\value{page}
+    \mdfsetup{leftline=false,rightline=true}
+  \else
+    \mdfsetup{leftline=true,rightline=false}
+  \fi
+}
 
 % examples creation:
 
@@ -72,8 +87,8 @@
     innertopmargin=10pt,
     linecolor=cyan!20,
     linewidth=2pt,
-    topline=false,
-    rightline=false,
+    topline=true,
+    rightline=true,
     bottomline=true,
    % frametitleaboveskip=\dimexpr-\ht\strutbox\relax,
   }%
@@ -129,8 +144,8 @@
     innertopmargin=10pt,
     linecolor=Maroon!20,
     linewidth=2pt,
-    topline=false,
-    rightline=false,
+    topline=true,
+    rightline=true,
     bottomline=true,
     %frametitleaboveskip=\dimexpr-\ht\strutbox\relax,
   }%
@@ -329,7 +344,7 @@
 %include all of the parts of the text seperately for performance
 \include{introduction}
 \include{EnergyMech}
-\include{FurtherMath}
+% \include{FurtherMath}
 \include{ControlTheory}
 \include{AdvancedTopics}
 \include{End and Appendix}
