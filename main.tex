@@ -1,15 +1,24 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PSP Liquids Book Template                     %%
 %% Author:  Hudson Reynolds                      %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[12pt]{book}
+\documentclass[10pt, openany, titlepage]{book}
+
+% for pdf layout, use the letterpaper preset here
 %\usepackage[letterpaper, total={6in, 8in}]{geometry}
-\usepackage[paperwidth=7in, paperheight=10in, 
+
+% for book layout, use the 6 x 9 pages:
+\usepackage[twoside,paperwidth=6in, paperheight=9in, 
             top=1in, bottom=1in, 
             left=0.75in, right=0.75in, 
-            bindingoffset=0.25in]{geometry}3141
+            bindingoffset=0.25in]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package import
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[T1]{fontenc}
+\usepackage{emptypage}
 \usepackage{booktabs}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -33,11 +42,40 @@
 \usepackage{extarrows}
 \usepackage{setspace}
 \usepackage{matlab-prettifier}
-\usepackage{csquotes}
 \usepackage[style=numeric]{biblatex}
 \addbibresource{references.bib}
 \usepackage{braket}
+\usepackage{appendix}
+\usepackage{float}
+\usepackage{gensymb}
+\usepackage{amsfonts}
+\usepackage{etoolbox}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\definecolor{linkgreen}{rgb}{0.117,0.67,0.24}
+\definecolor{maroon}{rgb}{0.5,0.1,0.1}
+\definecolor{refRed}{rgb}{0.443,0.0588,0.0392}
+\definecolor{Maroon}{rgb}{0.749,0.047,0.09}
+\definecolor{boxBlue}{HTML}{264cd6}
+\definecolor{pycolor}{RGB}{37,147,24}   % Python
+\definecolor{matcolor}{RGB}{0,101,161}  % MATLAB
+\usepackage[inkscapelatex=false]{svg}
+\usepackage[bf,small,hypcap=true]{caption}
+\usepackage{graphicx}
+\usepackage[english]{babel}
+\usepackage{fancyhdr}
+\usepackage{mathtools}
+\mathtoolsset{showonlyrefs}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{tcolorbox}
+\tcbuselibrary{minted,breakable,xparse,skins}
+\definecolor{bg}{gray}{0.95}
 \usepackage{mathrsfs}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Auto-formatting and page break
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % If you want to break on URL numbers
 \setcounter{biburlnumpenalty}{9500}
@@ -46,32 +84,17 @@
 % If you want to break on URL UPPER CASE letters
 \setcounter{biburlucpenalty}{9500}
 
-\usepackage{float}
-\usepackage{gensymb}
-\usepackage{amsfonts}
-\usepackage{etoolbox}
-\usepackage{hyperref}
-\usepackage{appendix}
+\widowpenalty10000
+\clubpenalty10000
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Example Environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage[inkscapelatex=false]{svg}
-
-\newcommand{\exampleframeconfig}{%
-  \ifodd\value{page}
-    \mdfsetup{leftline=false,rightline=true}
-  \else
-    \mdfsetup{leftline=true,rightline=false}
-  \fi
-}
-
-% examples creation:
-
-\usepackage[framemethod=TikZ]{mdframed}
-
+% import framed package for examples
 \mdfsetup{skipabove=\topskip,skipbelow=\topskip}
 
 % Define example counter that resets with each chapter
-
 \newcounter{example}[chapter]
 \renewcommand{\theexample}{\thechapter.\arabic{example}}
 
@@ -90,46 +113,16 @@
     topline=true,
     rightline=true,
     bottomline=true,
-   % frametitleaboveskip=\dimexpr-\ht\strutbox\relax,
+    roundcorner=3pt,
   }%
   \begin{mdframed}[]\relax%
 }{\end{mdframed}}
 
-
-% autoref names
-\newcommand{\lstnumberautorefname}{Script}
-\renewcommand{\chapterautorefname}{Chapter}
-\renewcommand{\sectionautorefname}{Section}
-\newcommand{\corollaryautorefname}{Corollary}
-\renewcommand{\subsectionautorefname}
-{subsection}
-\newcommand{\exampleautorefname}{Example}
-\newcommand{\exerciseautorefname}{Exercise}
-
-
-\usepackage[bf,small,hypcap=true]{caption}
-
-\usepackage{xcolor}
-
-\definecolor{linkgreen}{rgb}{0.117,0.67,0.24}
-\definecolor{maroon}{rgb}{0.5,0.1,0.1}
-\definecolor{refRed}{rgb}{0.443,0.0588,0.0392}
-\definecolor{Maroon}{rgb}{0.749,0.047,0.09}
-
-\usepackage{graphicx}
-\usepackage[english]{babel}
-\usepackage{fancyhdr}
-\usepackage{mathtools}
-\mathtoolsset{showonlyrefs} 
-
-\newcommand{\eqautoref}[1]{\hyperref[#1]{Equation~\eqref{#1}}}
-
-%% define the exercise environment
-
-\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Exercise Environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Define exercise counter that resets with each chapter
-
 \newcounter{exercise}[chapter]
 \renewcommand{\theexercise}{\thechapter.\arabic{exercise}}
 
@@ -147,15 +140,54 @@
     topline=true,
     rightline=true,
     bottomline=true,
+    roundcorner=3pt,
     %frametitleaboveskip=\dimexpr-\ht\strutbox\relax,
   }%
   \begin{mdframed}[]\relax%
 }{\end{mdframed}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Auto-Reference setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% autoref names
+\newcommand{\lstnumberautorefname}{Script}
+\renewcommand{\chapterautorefname}{Chapter}
+\renewcommand{\sectionautorefname}{Section}
+\newcommand{\corollaryautorefname}{Corollary}
+\renewcommand{\subsectionautorefname}
+{subsection}
+\newcommand{\exampleautorefname}{Example}
+\newcommand{\exerciseautorefname}{Exercise}
+\newcommand{\eqautoref}[1]{\hyperref[#1]{Equation~\eqref{#1}}}
+
+% change the autoref to black for printing. Remove the lines below for pdf versions.
+\makeatletter
+\let\oldautoref\autoref
+\renewcommand{\autoref}[1]{%
+  \begingroup
+  \hypersetup{linkcolor=black}%
+  \oldautoref{#1}%
+  \endgroup
+}
+\makeatother
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End notes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{enotez}
-\setenotez{backref=true,totoc=section}
+\setenotez{backref=true,totoc=section, reset=true}
+
+\DeclareInstance{enotez-list}{large}{paragraph}
+{
+    heading = \section*{#1},
+    format = \small ,
+    number = \enmark{#1} ,
+    notes-sep = .5\baselineskip ,
+}
 
 \hypersetup{ % Make links different colors
     colorlinks = true,
@@ -164,37 +196,31 @@
     citecolor = linkgreen
 }
 
-%% GLOSSARY:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Glossary
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \usepackage[toc]{glossaries}
-
-%\usepackage[style=tree, toc]{glossaries-extra}
-
 \glsdisablehyper
 
 \makeglossaries
 
-%\setglossarypreamble[\acronymtype]{\glssetwidest{RMS}}
-%\setabbreviationstyle[jargon]{long-short}
-%\glssetcategoryattribute{jargon}{glossdescfont}{emph} % Remove emph in glossary by using it again
-
-%examples to reference:
+%example to reference for glossary:
 \newglossaryentry{DoF}
 {
-    name=Degree of Freedom,
-    first = {\textit{Degree of Freedom}},
+    name=degree of freedom,
+    first = {\textit{degree of freedom}},
     description={A free direction of movement for a vehicle. These can be translational or rotational directions}
 }
-\newacronym{dof}{DoF}{Degree of Freedom}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 'dedication' environment: To add a dedication paragraph at the start of book %
-% Source: http://www.tug.org/pipermail/texhax/2010-June/015184.html            %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Dedication
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newenvironment{dedication}
 {
-   \cleardoublepage
+   %\cleardoublepage
+   \clearpage
    \thispagestyle{empty}
    \vspace*{\stretch{1}}
    \hfill\begin{minipage}[t]{0.66\textwidth}
@@ -206,32 +232,76 @@
    \clearpage
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Code Listings for MATLAB / Python 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% Code Listings
-\usepackage{listings}
+\newtcblisting{matlabscript}[2]{%
+  listing engine=minted,
+  listing only,
+  breakable,
+  minted language=#1,
+  minted options={linenos,breaklines=true,fontsize=\small},
+  title={#2},
+  coltitle=black,
+  fonttitle=\bfseries,
+  boxsep=0pt,
+  left=22pt,
+  top=6pt,
+  bottom=6pt,
+  arc=4pt,
+  colback=bg,
+  colframe=gray!40,
+  enhanced,
+  overlay={%
+    % left gray bar
+    \begin{tcbclipinterior}
+      \fill[gray!20!white] (frame.south west) rectangle ([xshift=18pt]frame.north west);
+    \end{tcbclipinterior}
+    % language badge (uses the separate language argument #1)
+    \node[
+      anchor=north east,
+      rounded corners=2pt,
+      font=\footnotesize\ttfamily,
+      inner xsep=6pt,
+      inner ysep=2pt,
+      fill=matcolor!30
+    ] at ([xshift=-4pt,yshift=-4pt]frame.north east) {#1};
+  }
+}
 
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.95}
-
-\lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},   
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=t,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=4
+\newtcblisting{pythonscript}[2]{%
+  listing engine=minted,
+  listing only,
+  breakable,
+  minted language=#1,
+  minted options={linenos,breaklines=true,fontsize=\small},
+  title={#2},
+  coltitle=black,
+  fonttitle=\bfseries,
+  boxsep=0pt,
+  left=22pt,
+  top=6pt,
+  bottom=6pt,
+  arc=4pt,
+  colback=bg,
+  colframe=gray!40,
+  enhanced,
+  overlay={%
+    % left gray bar
+    \begin{tcbclipinterior}
+      \fill[gray!20!white] (frame.south west) rectangle ([xshift=18pt]frame.north west);
+    \end{tcbclipinterior}
+    % language badge (uses the separate language argument #1)
+    \node[
+      anchor=north east,
+      rounded corners=2pt,
+      font=\footnotesize\ttfamily,
+      inner xsep=6pt,
+      inner ysep=2pt,
+      fill=pycolor!30
+    ] at ([xshift=-4pt,yshift=-4pt]frame.north east) {#1};
+  }
 }
 
 \lstMakeShortInline[style=Matlab-editor]"
@@ -246,10 +316,11 @@
 \setlength{\headheight}{15pt}
 
  
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Chapter quote at the start of chapter        %
-% Source: http://tex.stackexchange.com/a/53380 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter quote at the start of chapter 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{csquotes}
 \makeatletter
 \renewcommand{\@chapapp}{}% Not necessary...
 \newenvironment{chapquote}[2][2em]
@@ -260,23 +331,13 @@
   {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
 \makeatother
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Titles and header formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{titlesec}
-
-\titleclass{\part}{top} % make part like a chapter
-\titleformat{\part}
-[display]
-{\centering\normalfont\Huge\bfseries}
-{\MakeUppercase{\partname} \thepart}
-{0pt}
-{\titlerule[2pt]\vspace{1pc}\huge\MakeUppercase}
-%
-\titlespacing*{\part}{0pt}{100pt}{20pt}
-%
 
 \titleclass{\chapter}{top}
 \titleformat{\chapter}[display]{\normalfont\Huge\bfseries}{\MakeUppercase{\chaptername} \thechapter}{0pt}{\titlerule[2pt]\vspace{1pc}\huge}
-
-\titlespacing*{\chapter}{0pt}{0pt}{40pt}
 
 \titleclass{\part}{top} % make part like a chapter
 \titleformat{\part}
@@ -290,33 +351,62 @@
 %
 \titlespacing*{\chapter}{0pt}{0pt}{20pt}
 
+% page numbering and headers:
+\pagestyle{fancy}
+\fancyhf{}
 
+% --- Header Configuration ---
+\fancyhead[LE]{{\leftmark}}
+\fancyhead[RO]{{\rightmark}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% First page of book
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For Right-Odd: Number stays on the right, but pushed further out
+\fancyfoot[RO]{\makebox[0pt][l]{\hspace{0.1cm}\textbf{\thepage}}}
 
-% Book's title and subtitle
-\title{\Huge \textbf{Flight Dynamics Bible}  \\ \huge Volume III: \\Energy Mechanics and Controls}
+% For Left-Even: Number stays on the left, but pushed further out
+\fancyfoot[LE]{\makebox[0pt][r]{\textbf{\thepage}\hspace{0.1cm}}}
 
-% Author
-\author{\textsc{Hudson Reynolds} \\ \textit{Author}
+%\renewcommand{\headrulewidth}{0pt}
+
+% --- Chapter Start Page Override ---
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  
+  \fancyfoot[RO]{\makebox[0pt][l]{\hspace{0.1cm}\textbf{\thepage}}}
+
+\fancyfoot[LE]{\makebox[0pt][r]{\textbf{\thepage}\hspace{0.1cm}}}
 }
 
-\date{December 2025 \\ \newline \large{\textbf{First Edition}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% First page of book
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{titling}
+
+% Adjust this value to shift the title up (negative moves it higher)
+\setlength{\droptitle}{-4em} 
+
+\pretitle{\begin{center}\Huge}
+\posttitle{\par\end{center}\vskip 0.5em}
+
+\title{\textbf{Flight Dynamics Bible} \\ \huge Volume III:\\ Energy Mechanics and Controls}
+
+\author{
+    \textsc{Hudson Reynolds} \\ \textit{Author}
+}
+
+\newcommand{\printedition}{First Edition}
+\date{
+    March 2026 \\[10pt]
+    \large \textbf{\printedition}
+}
 
 \begin{document}
 
-\pagestyle{fancy}
-\renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}
-\fancyhead[R]{\thesection}
-\fancyhead[L]{\thechapter\ --\ \leftmark}
 %\frontmatter
 \maketitle
 %
-\pagenumbering{roman}
-
-\pagestyle{plain}
+\thispagestyle{empty}
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{Images/FlightDynamicsBookTransparent.png}
@@ -324,10 +414,13 @@
 \end{figure}
 
 \begin{dedication}
-    This document is dedicated to Purdue Space Program Liquids. PSP Liquids has given us a vast amount of experience and means to explore the realm of Flight Dynamics. We hope that we can contribute to the wealth of information provided by PSP with this document.
+    This document is dedicated to Purdue Space Program Liquids. PSP Liquids has given me a vast amount of experience and means to explore the realm of Flight Dynamics. I hope that I can contribute to the wealth of information provided by PSP with this document.
 \end{dedication}
 
 %table of contents, list of figures and list of tables
+
+\pagenumbering{roman}
+\pagestyle{fancy}
 
 \setcounter{tocdepth}{1}
 

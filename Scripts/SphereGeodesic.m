@@ -74,5 +74,3 @@ g = gcf;
 set(gcf,'Color','w');
 print(gcf,'Geodesic','-dpng','-r400')
 %print(gcf,'Geodesic','-svg')
-
-

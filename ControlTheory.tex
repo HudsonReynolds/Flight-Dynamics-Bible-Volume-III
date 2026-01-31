@@ -589,9 +589,9 @@ $$\mathscr{L}\left\{\cos(at)\right\}=\frac{s}{s^2+a^2}$$
 
 It is interested to note, that if we consider values of $s$ that are purely imaginary, that is $s=i\omega$, these formulas simplify a bit. For $\sin$, we have the following:
 $$\sin(at)=\frac{a}{a^2-\omega^2}$$
-When we plug in a frequency, $\omega$, that is the same as the frequency of the sine wave, we divide by zero! This division by zero is what we call a \textit{pole} in the complex plane. We typically represent these with an `x' marker in the complex plane, as shown in \autoref{fig: sine wave}.
+When we plug in a frequency, $\omega=a$, that is the same as the frequency of the sine wave, we divide by zero! This division by zero is what we call a \textit{pole} in the complex plane. We typically represent these with an `x' marker in the complex plane, as shown in \autoref{fig: sine wave}.
 
-\begin{figure}
+\begin{figure}[ht]
     \centering
 
 
@@ -627,7 +627,13 @@ When we plug in a frequency, $\omega$, that is the same as the frequency of the 
     \caption{Complex Plane Representation of Sine Wave}
     \label{fig: sine wave}
 \end{figure}
-This plot, which we call a pole-zero plot, tells us a lot of information about the system. Here, it tells us that the function $\sin(at)$ has zeros that are purely imaginary. That means that they will oscillate, without decaying or growing, forever. The same is true of cosine, since the denominator of the equation is the same.
+This plot, which we call a pole-zero plot, tells us a lot of information about the system. Here, it tells us that the function $\sin(at)$ has poles that are purely imaginary. That means that they will oscillate, without decaying or growing, forever. The same is true of cosine, since the denominator of the equation is the same.
+
+\begin{exercise}
+    We have stated that the $\sin$ and $\cos$ functions have poles which are purely imaginary. We know that we can represent a function in the Laplace domain as the addition of $e^{st}$ components. Prove that we can represent $\sin{at}$ and $\cos{at}$ using the Euler identity: $e^{i\theta}=\cos\theta+i\sin\theta$ to get:
+    $$\cos{at}=\frac{1}{2}\left(e^{iat}+e^{-iat}\right)$$   $$\sin{at}=\frac{1}{2i}\left(e^{iat}-e^{-iat}\right)$$
+    and show that the poles are indeed located on the purely imaginary line $\Re=0$ and that these always come in conjugate pairs.
+\end{exercise}
 
 \subsubsection{Step Function}
 The step function has a value of $0$ until time $t=0$, after which it attains a value of $1$. The unit step function is sometimes denoted with $u(t)$, but since we use $u$ to denote a control input, we will instead denote it $1^+(t)$. This notation is certainly less often used but it is often the case that both the unit step and $u$ as a control input exist in the same equation.
@@ -699,14 +705,67 @@ This frequency shift theorem tells us that an exponential decay in the time doma
 As we saw before, we can represent a functions behavior by the location of the poles. When we had a sinusoidal function, we had:
 \begin{figure}[ht]
     \centering
-    \includesvg[]{}
-    \caption{Caption}
-    \label{fig:placeholder}
+    \includesvg[width=\linewidth]{Images/sinFunction.svg}
+    \caption{Poles of a sine wave}
+    \label{fig:sin wave poles}
 \end{figure}
-\begin{exercise}
+If we multiply the function with $e^{-0.5t}$, we get a decay in our function over time. We can do this to our $\sin(t)$ function, which gives us the following:
+\begin{figure}[ht]
+    \centering
+     \includesvg[width=\linewidth]{Images/sinFunctionDecay.svg}
+    \caption{Poles of a decaying sine wave}
+    \label{fig:decaying sine wave poles}
+\end{figure}
+As we can see, this new function decays according to the red `envelope' function, $e^{-0.5t}$. The poles of the function have shifted to the \textit{left} now, so that we get the decay in the response. Notice that these poles still come in the conjugate pair, as we saw earlier. However, the $\Re$ component has shifted to the left by $a$.
 
+\subsubsection{Time Shift Theorem}
+Similar to the frequency shift theorem, if we have a function that is shifted in the time domain, we have an effect in the frequency domain. We saw this with the delta function, where:
+$$\mathscr{L}\{\delta(t)\}=1$$
+But, if we shifted the delta function to start at time $c$ (which we denoted as $\delta_c(t)$), then we had:
+$$\mathscr{L}\{\delta_c(t)\}=e^{-cs}$$
+The time shift theorem tells us that when we have a function $f(t-c)$, representing a shift in the function to the right by $c$ in the time domain, we get a corresponding exponential decay component in the frequency domain:
+$$\mathscr{L}\{f(t+c)\}=e^{-cs}F(s)$$
+We can see an exact symmetry between this case and the frequency shift case, but we have now changed the role of the time domain and the frequency domain.
 
-    Find the Laplace transforms of the following functions (you may use the Laplace tables provided in \cite{dawkins_differential_nodate}).
+With this theorem, we have now developed all of the tools of the \gls{laplace transform} which are of considerable use to us.
+
+\subsubsection{Final Value Theorem}
+We can sometimes use the Laplace domain to understand the time domain behavior of functions. One very useful tool is the final value theorem, which lets us determine the end behavior of a function as $t\rightarrow \infty$.
+
+\begin{theorem}{Final Value Theorem}
+    Given a function in the Laplace domain, $Y(s)$, if all of the poles of $Y(s)$ are in the left half plane\endnote{We will discuss what this means more exactly in the next chapter.}, then
+    $$\lim_{t\rightarrow\infty} y(t)=\lim_{s\rightarrow 0}sY(s)$$
+\end{theorem}
+\begin{proof}\textbf{Proof of Final Value Theorem}\\
+Consider a function $y(t)$ and its derivative $y'(t)$. We consider $y(t)$ to be bounded at infinity, continuous, and smooth. We may take the \gls{laplace transform} of the derivative of $y(t)$, which gives:
+$$\mathscr{L}\{y'(t)\}=sY(s)-y(0)$$
+We take the limit of this \gls{laplace transform} at $s\rightarrow 0$.
+$$\lim_{s\rightarrow0}sY(s)-y(0)$$
+Which we leave for now. Let's consider the integral definition of $\mathscr{L}\{y'(t)\}$:
+$$\mathscr{L}\{y'(t)\}=\int_0^\infty{}e^{-st}y'(t)dt$$
+We evaluate the limit as $s\rightarrow0$ for this expression
+    $$\mathscr{L}\{y'(t)\}=\lim_{s\rightarrow0}\int_0^\infty{}e^{-st}y'(t)dt=\int_0^\infty{}y'(t)dt$$
+    Since this is an indefinite integral, we take the limit at $t\rightarrow\infty$ to evaluate.
+    $$\int_0^\infty{}y'(t)dt=\lim_{t\rightarrow\infty}y(t)-y(0)$$
+    We now equate the two expressions:
+    $$\lim_{t\rightarrow\infty}y(t)-y(0)=\lim_{s\rightarrow0}sY(s)-y(0)$$
+    and find that $y(0)$ cancels from both sides of the equation, leaving us with:
+      $$\lim_{t\rightarrow\infty}y(t)=\lim_{s\rightarrow0}sY(s)$$
+\end{proof}
+\
+\subsubsection{Initial Value Theorem}
+We can do something similar if we would like to find the initial value of a function. Our theorem looks very similar:
+
+\begin{theorem}{Initial Value Theorem}
+    Given a function in the Laplace domain, $Y(s)$, then
+    $$\lim_{s\rightarrow\infty} sY(s)=y(0+)$$
+\end{theorem}
+\begin{exercise}[Initial Value Theorem]
+    Prove the initial value theorem using a proof similar to the final value theorem. Hint: consider the integral definition of the \gls{laplace transform}.
+\end{exercise}
+
+\begin{exercise}[Laplace Transform Practice]
+    Find the Laplace transforms of the following functions (you may use the Laplace tables provided in \cite{dawkins_differential_nodate}). For $2$, use the final value theorem. For $1$ and $3$, use the initial value theorem. Check these against the time domain solutions.
     \begin{enumerate}
         \item $t\sin 4t$
         \item $e^{-t}\cos3t$
@@ -720,7 +779,7 @@ The inverse Laplace transform allows us to take a function in the $s$-domain and
 $$\mathscr{L}^{-1}\left\{F(s)\right\}\Rightarrow f(t)$$
 The solution of this equation looks similar to the \gls{laplace transform}, but involves solving a contour integral:
 $$f(t)=\frac{1}{2\pi i}\int_\gamma{F(s)e^{st}ds}$$
-In practice, we don't solve for the inverse Laplace transform using this contour integral when solving by hand. Instead, we try to make the equation amenable to being represented as one of the known \glspl{laplace transform}. These methods involve algebraic manipulation to reach one of the known forms of the Laplace transform.
+In practice, we don't solve for the inverse Laplace transform using this contour integral when solving by hand. Instead, we try to make the equation amenable to being represented as one of the known \glspl{laplace transform}. These methods involve algebraic manipulation to reach one of the known forms of the Laplace transform. When solving by hand, we often employ two powerful methods:  completing the square, and partial fraction decomposition.
 
 \begin{example}[Completing the Square]
     Consider a function in the Laplace domain given by:
@@ -736,10 +795,138 @@ We want to also have this factor of $(s+2)$ present in the numerator, so that we
 \end{example}
 
 \begin{example}[Partial Fraction Decomposition]
-    
+Sometimes, we need some additional algebraic work to convert our answers from the Laplace domain into the time domain. The primary method for doing this is a technique known as partial fraction decomposition. We consider a function which takes the form of a polynomial divided by another polynomial:
+$$G(s)=\frac{N(s)}{D(s)}$$
+Let's make this example concrete, considering the following polynomial:
+$$G(s)=\frac{3s+5}{s^2+5s+6}$$
+Our first step is to rewrite the denominator in a factorized form. For $D(s)=s^2+5s+6$, it is apparent that we can factor this into two first order components, leaving us with:
+$$G(s)=\frac{3s+5}{(s+2)(s+3)}$$
+Our goal is to make this equation amenable to a form which we can easily find the inverse Laplace transform of. If we could separate this equation into two fractions of the $(s+2)$ and $(s+3)$ terms, we would have a solution with exponential components. Therefore, we want an equation of that form:
+$$\frac{A}{s+2}+\frac{B}{s+3}=\frac{3s+5}{(s+2)(s+3)}$$
+We can readily multiply each side by $(s+2)(s+3)$, which gives us an equation where $A$ and $B$ are readily solved:
+$$A(s+3)+B(s+2)=3s+5$$
+We may substitute values of $s$ into this equation to solve for these values. Using $s=-3$, we may solve for $B$:
+$$B(-3+2)=3(-3)+5\rightarrow B=4$$
+Following a similar procedure, we solve for $A$ to get $A=-1$.
+Thus, we have a decomposed fraction which is mathematically equivalent to our original equation:
+$$\frac{4}{s+3}-\frac{1}{s+2}=\frac{3s+5}{(s+2)(s+3)}$$
+We can use the left side of this equation and take the inverse Laplace transform to get:
+$$g(t)=4e^{-3t}-e^{-2t}$$
 \end{example}
 
-With that, we have developed the appropriate background with the \gls{laplace transform} to begin using this formula in control theory.
+\subsubsection{Further Notes on Partial Fraction Decomposition}
+When performing partial fraction decomposition, there are a few other rules which we should keep in find. First, we often have terms in the denominator with repeated roots. We must decompose these differently. Consider the function:
+$$G(s)=\frac{3s}{(s+1)(s+2)^2}$$
+To decompose this fraction, we \textit{must} consider the terms $(s+2)$ and $(s+2)^2$ as two separate factors. We do this because it is possible that our decomposed fraction requires both a term in $(s+2)$ and $(s+2)^2$ to satisfy the equality. We write such a partial fraction as:
+$$\frac{A}{s+1}+\frac{B}{s+2}+\frac{C}{(s+2)^2}=\frac{3s}{(s+1)(s+2)^2}$$
+It is of course possible that some of these coefficients turn out to be zero.
+\begin{exercise}[Partial fractions with repeated roots]
+    Solve the above example, finding the inverse Laplace transform of:
+    $$G(s)=\frac{3s}{(s+1)(s+2)^2}$$
+\end{exercise}
+As a last note, we sometimes have equations that lead to irreducible quadratic factors. For example, we sometimes have a system like:
+$$G(s)=\frac{3+s}{s^3-2s}$$
+We may factor out the $s$ in the denominator, to arrive at the following:
+$$G(s)=\frac{3+s}{s(s^2-2)}$$
+From here, we make no further simplification, since there exist no rational factorization of $s^2-2$. When we try to find the representation of this function using partial fractions, we must keep this term $s^2-2$ as a quadratic. For quadratic terms, our partial fraction decomposition appears like:
+$$\frac{A}{s}+\frac{Bs+C}{s^2-2}=\frac{3+s}{s(s^2-2)}$$
+
+\subsection{Computational Tools for Laplace and Inverse Laplace Transform}
+
+Sometimes the expressions for the \gls{laplace transform} and its inverse can be difficult to compute by hand. We can use MATLAB with symbolic toolbox or SymPy in Python.
+
+\subsubsection{Using MATLAB}
+To compute the \gls{laplace transform} in MATLAB, we use symbolic variables. To compute the \gls{laplace transform} of $\sin(t)$, we do:
+
+\begin{matlabscript}{MATLAB}{}
+syms t
+
+laplace(sin(t))
+\end{matlabscript}
+
+If we input this into a MATLAB live script, it will output a LaTeX formatted answer in the output:
+$$\texttt{ans}=\frac{1}{s^2+1}$$
+
+We may also type in differential equations with the symbolic toolbox. For the differential equation $\ddot{x}=3$, we input:
+\begin{matlabscript}{MATLAB}{}
+syms t x(t)
+
+eqn = diff(x,t,2) == 3
+
+laplace(eqn)
+\end{matlabscript}
+Which produces the output:
+$$s^2 \,\mathrm{laplace}\left(x\left(t\right),t,s\right)-{\left({{\left(\frac{\partial }{\partial t}\;x\left(t\right)\right)}\left|\right.}_{t=0} \right)}-s\,x\left(0\right)=\frac{3}{s}$$
+This output is slightly verbose, but it can be simplified if we recognize $\mathrm{laplace}\left(x\left(t\right),t,s\right)=X(s)$.
+
+We have a similar command for the inverse \gls{laplace transform}.
+\begin{matlabscript}{MATLAB}{}
+syms s
+
+ilaplace(1/(s\^2+s))
+\end{matlabscript}
+Again, this outputs a LaTeX formatted output when using a livescript:
+$$\texttt{ans}=1-{\mathrm{e}}^{-t}$$
+
+\subsubsection{Using Python}
+In Python, we can do similar things using the SymPy package. This package will also output LaTeX formatted results with the proper setup. We often use interactive python for such examples. For the \gls{laplace transform}, we can use a live notebook with the following code:
+\begin{pythonscript}{Python}{}
+import sympy
+sympy.init_printing()
+
+import matplotlib.pyplot as plt
+\%matplotlib inline
+
+t, s = sympy.symbols('t, s')
+a = sympy.symbols('a', real=True, positive=True)
+
+f = sympy.exp(-a*t)
+
+F = sympy.laplace_transform(f, t, s, noconds=True)
+F
+\end{pythonscript}
+
+This produces the output:
+$$\frac{1}{a+s}$$
+
+We can also find the inverse \gls{laplace transform}:
+\begin{pythonscript}{Python}{}
+ sympy.inverse_laplace_transform(F, s, t)
+\end{pythonscript}
+
+Which of course returns the original function:
+$$e^{-at}\theta(t)$$
+Where $\theta(t)$ is the Heaviside function. This is identical to our original output for $t>0$.
+
+Once we have the libraries imported, the two languages are very similar. We may even define shorthand functions to make easier to use and more similar to using MATLAB:
+\begin{pythonscript}{Python}{}
+def laplace(f):
+    return sympy.laplace_transform(f, t, s, noconds=True)
+
+def ilaplace(F):
+    return sympy.inverse_laplace_transform(F, s, t)
+\end{pythonscript}
+
+See \cite{sandrock_3_2018} for more information on using the Laplace transform in Python. This website also contains information on using Python for other controls applications.
+
+\section{Additional Exercises}
+\begin{exercise}[Laplace Transform Practice]
+    Find the \gls{laplace transform} for the following functions, assuming initial conditions are zero. Check your answers with the computational methods before checking the solutions in the book.\endnote{It is best if you try some in Python and some in MATLAB.}
+    \begin{enumerate}
+        \item $\ddot{x}+2\dot{x}+3=\delta(t)$
+        \item $\dddot{x}+3x=\sin(t)$
+        \item $m\ddot{x}+c\dot{x}+kx=u$
+        \item $e^{at}\sinh{at}$
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Inverse Laplace Transform Practice]
+    Find the inverse \gls{laplace transform} for the following functions:
+    \begin{enumerate}
+        \item $G(s)=\frac{4}{(s-3)(s+2)}$
+        \item $F(s)=\frac{6(s+1)}{(s+3)(s+6)}$
+    \end{enumerate}
+\end{exercise}
 
 \newpage
 \printendnotes
@@ -759,7 +946,7 @@ A linear system is \textit{not} just an equation of form $y=mx+b$. Instead, what
 $$\mathbf{\dot{x}}=A\textbf{x}$$
 where $A$ is a matrix of scalar coefficients. When our system is linear, it implies that we can add different solutions together to acquire another valid solution. This is a property we call \textit{superposition}.
 
-\begin{example}[Linear system example]
+\begin{example}[Linear system example]\label{ex: linear system}
     Consider a system which is governed by the differential equation
     $$\ddot{x}+2\dot{x}+3x=0$$
 To determine if this system is linear, we should check if its amenable to the form $\mathbf{\dot{x}}=A\textbf{x}$. We may start by doing a reduction of order:
@@ -800,12 +987,12 @@ To practice with linear systems, determine if the following equations are linear
 \end{enumerate}
 \end{exercise}
 
-Although this state space representation is useful, what we will actually start with is the \gls{transfer function} representation. As it turns out, anything we can represent with a \gls{transfer function} must also be linear (and also time invariant in the cases we study). Remember, our Laplace transform is only valid for linear differential equations, so anything we represent in that way will automatically satisfy linearity. 
+Although this state space representation is useful, what we will actually start with is using the \gls{laplace transform} to define our system. Such a description allows us to create what is known as the \gls{transfer function} representation. As it turns out, anything we can represent with a \gls{transfer function} must also be linear (and also time invariant in the cases we study). Remember, our Laplace transform is only valid for linear differential equations, so anything we represent in that way will automatically satisfy linearity. This is a very useful property for us. For classical control, we'll focus our efforts on this transfer function representation.
 
 \section{Transfer Functions}
-A \gls{transfer function} is a tool that is used in linear control theory to gain an understanding of the input-output relationship of a system. Given a certain input, the transfer function will tell us what the output will be.
-
-As an example, if we want to go from an input $R(s)$ to an output $Y(s)$, we can use an intermediate \gls{transfer function} $G(s)$, so that the relationship is:
+A \gls{transfer function} is a tool that is used in linear control theory to gain an understanding of the input-output relationship of a system. Given a certain input, the transfer function will tell us what the output will be. Let's come up with our definition right at the beginning. The transfer function is the relationship between our input and output, given by the output divided by the input. If we call our transfer function $G$, the input $U$, and the output $Y$, the transfer function is:
+$$G(s)=\frac{Y(s)}{U(s)}$$
+We can immediately see the use of a transfer function with an example. If we want to go from an input $R(s)$ to an output $Y(s)$, we can use an intermediate \gls{transfer function} $G(s)$, so that the relationship is:
 $$R(s)G(s)=Y(s)$$
 Notice that we desire this relationship to be a simple multiplication. In the time domain, however, the relationship of the input and the output is quite complicated. To illustrate this complication, we can consider a simple system like a mass spring damper.
 \begin{figure}[ht]
@@ -872,7 +1059,8 @@ We can rewrite this in the Laplace domain:
 $$U(s)G(s)=Y(s)$$
 Since we have turned this complicated formula of the convolution into multiplication, it is now trivial to find the transfer function, $G(s)$ through simple manipulation of the equation:
 $$G(s)=\frac{Y(s)}{U(s)}$$
-\subsubsection{Why does this work?}
+So, it turns out that we can use the Laplace domain to turn the complicated time domain representation into a simple multiplication. As a result, we will use the \gls{laplace transform} which we have previously developed to understand control systems.
+\subsubsection{A physical intuition}
 Although we have shown the mathematics which show that the convolution reduces to multiplication in the Laplace domain, I find it quite helpful to examine why this holds from a physical point of view.
 
 We can remember from \autoref{sec:properties of laplace transform} that the \gls{laplace transform} gives us quite simple representations of derivatives and integrals as multiplication and division by $s$. As a result, we can quite easily express equations of motion in the Laplace domain. For example, we can consider the \gls{eom} for a mass spring damper:
@@ -886,6 +1074,21 @@ It is in this equation that the insight behind the \gls{laplace transform} can b
 So, we can see that in the Laplace domain, all of the information of the system dynamics is directly captured in the transfer function. We can therefore, know what the position, velocity, or acceleration are for any value $s$. The tradeoff, of course, is that we lose information on the temporal component, $t$, during the transformation. There is no explicit information contained in this transfer function about how the system evolves with $t$. The $s$, however, gives all the relevant information about governing differential equation.
 
 Despite losing some information about the time evolution, we still find it extremely useful to have this `global view' of the function in the Laplace domain. When we need to consider the temporal aspects of the system, we can either revert to the time domain or use some other tools to understand the temporal nature of the transfer function.
+
+\begin{exercise}[Mass Spring Damper Transfer Function]\label{exer: mass spring tf}
+Consider a mass spring damper system with a force input $u(t)$. The system has a spring constant $k=2$ and $c=3$, and the mass is $1$.
+\begin{enumerate}
+    \item Write the equation of motion for the system.
+    \item Find the transfer function $\frac{Y(s)}{U(s)}$.
+    \item Find the state space for the system (use \autoref{ex: linear system} to help if you are stuck)
+    \item We will show later that we may get the transfer function from a state space from the following equation $G(s)=C(sI-A)^{-1}B+D$. Consider the matrix found in part 3 to be the $A$ matrix of the system. Letting $D=0$, $B=\begin{bmatrix}
+        0&1
+    \end{bmatrix}^\top$, $C=\begin{bmatrix}
+        1&0
+    \end{bmatrix}$, show that this yields the same transfer function as part 2.
+\end{enumerate}
+\end{exercise}
+    
 
 \section{Block Diagrams}
 Block diagrams, which have previously been mentioned in the introduction, are especially useful when we introduce transfer functions. Block diagrams allow us to create a visual representation of our transfer function.  We can manipulate block diagrams in a way that allows us to ascertain the transfer function for a whole system or for specific components. As an example, let us consider the open loop transfer function we showed in the introduction, reproduced below in \autoref{fig:Open Loop Controller 2}.
@@ -1069,6 +1272,9 @@ A final rearrangement yields the transfer function between $R$ and $Y$ as:
 \end{equation}
 
 These two rules are the most important in the block diagrams that are typically seen. Other relations do exist, which can be derived using the algebraic approach shown here.
+\begin{exercise}[Error Transfer Function]
+    Consider the same system which is shown in \autoref{fig:closed loop BD}. Find the transfer function from $E$ to $Y$ (that is, find $\frac{Y(s)}{E(s)}$) using the block diagram algebraic techniques.
+\end{exercise}
 
 \begin{example}[Block Diagram Reduction]
 Consider the block diagram system which is shown in \autoref{fig:block diagram example}. Reduce the block diagram to find $\frac{Y}{R}$, as well as $\frac{E}{R}$.
@@ -1344,7 +1550,7 @@ In these examples and exercises, we have covered most of the basic block diagram
     \item Use the solved system to express the transfer function of interest.
 \end{enumerate}
 
-With that, we have all the principle knowledge to create a transfer function from a block diagram, or to construct one from a differential equation using the \gls{laplace transform}. Our objective now is to understand how we may use these transfer functions to understand the stability of a system.
+With that, we have all the principle knowledge to create a transfer function from a block diagram, or to construct one from a differential equation using the \gls{laplace transform}. Our objective now is to understand how we may use these transfer functions to understand aspects of our system. A natural starting place is using the transfer function to understand stability.
 
 \section{Stability}
 One key criteria in control theory is studying the stability of a system. Simply stated, the stability of a system describes the tendency of a system to either return to an equilibrium position or to deviate from equilibrium. Systems that are stable tend to return to equilibrium, and those that are unstable tend to grow in magnitude. A simple representation of stability is the example of a ball in a valley or on a hill (\autoref{fig:stability}):
@@ -1508,11 +1714,11 @@ pattern radius = 1pt}
     \caption{Stability Criteria on Pole Zero Plot}
     \label{fig:pole zero stability}
 \end{figure}
-Our resulting stability criteria is this: If all poles of the transfer function are in the left half of the complex plane, then the transfer function is stable.
+Our resulting stability criteria is this: \textbf{If all poles of the transfer function are in the left half of the complex plane, then the transfer function is stable.}
 
 \subsection{Routh Stability Criterion}
-
-One important rule in the determination of the stability of a system is the Routh stability criterion. It is often the case that our denominator polynomial is not in a nice form - like $(s-p_1)(s-p_2)(s-p_3)$. Instead, it is much more often that we found our denominator in a form like $s^4-3s^2+2s+6$. This presents us with a problem. For cases where the order of the polynomial is small, like $s^2$ or $s^3$, we may easily compute the exact location of the poles using the quadratic or cubic formulas. However, once we reach a 5th order polynomial or higher, an analytical solution for the roots of a polynomial no longer exists in general\endnote{Interesting, this may be proved using discrete groups and their permutations, which is the subject of \textit{Galois Theory}}. 
+    
+One important rule in the determination of the stability of a system is the Routh stability criterion. It is often the case that our denominator polynomial is not in a nice form - like $(s-p_1)(s-p_2)(s-p_3)$. Instead, it is much more often that we found our denominator in a form like $s^4-3s^2+2s+6$. This presents us with a problem. For cases where the order of the polynomial is small, like $s^2$ or $s^3$, we may easily compute the exact location of the poles using the quadratic or cubic formulas. However, once we reach a 5th order polynomial or higher, an analytical solution for the roots of a polynomial no longer exists in general.\endnote{Interesting, this may be proved using discrete groups and their permutations, which is the subject of \textit{Galois Theory}.} 
 
 Luckily, our desires are not so grand. We don't need to know the exact location of the poles, but only if the real part of the poles are positive or negative. This is all we require to determine if the system is stable or not, after all! What we would like to do is develop a simple test which can tell us if such a polynomial is stable or not.
 
@@ -1650,15 +1856,208 @@ We see that the entry in the $s^1$ row is negative, so this polynomial must have
 \begin{exercise}[Routh Criterion Consequences]
 Use the Routh Hurwitz Criterion to show that each element of a polynomial $P(s)$ must have the same sign in order for the criteria to hold. Start with the case of $as^3+bs^2+cs+d$, showing that $a,b,c,d>0$ (or all are negative, which is equivalent). Generalize this to a polynomial of any degree.
 \end{exercise}
-\begin{exercise}
+\begin{exercise}[Routh Stability Criterion with a variable]
     Consider a polynomial $s^3+3s^2+ks+3$. Find the value(s) of $k$ such that the system is stable.
 \end{exercise}
-As we say in the last exercise, the Routh stability criterion has the interesting property that it allows us to determine whether a system will be stable under certain conditions. If we have direct control other that value, $k$, we may alter the stability of the system. Choosing appropriate values of $k$ is one good way that we may systematically construct a controller!
+
+As we say in the last exercise, the Routh stability criterion has the interesting property that it allows us to determine whether a system will be stable under certain conditions. \textbf{If we have direct control over that value, $k$, we may alter the stability of the system!} Choosing appropriate values of $k$ is one good way that we may systematically construct a controller. We'll keep that idea in mind -- that we can choose different values of $k$ to change the stability -- when we go to start developing controllers.
 
 \subsection{Special Cases of Routh Stability Criterion}
+Sometimes we run into some problems when following the procedure for the Routh stability criterion which is detailed above.
+
+\subsubsection{Special Case 1}
+One such special case is when we have a number in the first column which is equal to $0$. Consider the following case:
+    $$
+    \begin{array}{lccc}
+         s^5&1&2&4  \\
+         s^4&3&6&9\\
+         s^3&a_1&a_2\\
+         s^2&&\\
+         s^1&\\
+         s^0&
+    \end{array}
+    $$
+    Computation of $a_1$ reveals that:
+        $$a_1=\frac{-\begin{vmatrix}
+        1&2\\3&6
+    \end{vmatrix}}{3}=\frac{6-6}{3}=0$$
+    However, $a_2$ is a non-zero term:
+            $$a_2=\frac{-\begin{vmatrix}
+        1&4\\3&9
+    \end{vmatrix}}{3}=\frac{12-9}{3}=1$$
+    In such a case, we replace the $a_1$ term by a variable $\varepsilon$. We choose this variable with the intention that $\varepsilon$ is a small number, close to 0, which will give us information about the sign changes (which we would not have if we proceeded forward using $0$). Completing the table from this point as we ordinarily would:
+        $$
+    \begin{array}{lccc}
+         s^5&1&2&4  \\
+         s^4&3&6&9\\
+         s^3&\varepsilon&1\\
+         s^2&6-\frac{3}{\varepsilon}&9\\
+         s^1&1-\frac{3\varepsilon^2}{2\varepsilon-1}\\
+         s^0&9
+    \end{array}
+    $$
+    Now, we consider $\varepsilon$ to take on a small value, $|\varepsilon|\ll1$. We can either take $\varepsilon$ to be negative or positive, either gives the same final result. Here, let's choose $\varepsilon$ to be a small positive value. We may evaluate the statements in the first row, which gives:
+    \begin{gather}
+        \varepsilon\rightarrow +\\
+        6-\frac{3}{\varepsilon}\rightarrow -\\
+        1-\frac{3\varepsilon^2}{2\varepsilon-1}\rightarrow+
+    \end{gather}
+We see that $6-\frac{3}{\varepsilon}$ is the only statement which is negative, as $-\frac{1}{\varepsilon}$ tends towards $-\infty$. 
+
+\subsubsection{Special Case 2}
+Our second special case occurs when an entire row of our polynomial is zero. This will occur if two rows are exactly identical, leading the $\det$ to be zero for an entire row. An example is:
+$$
+    \begin{array}{lccc}
+         s^5&1&3&5  \\
+         s^4&1&3&5\\
+         s^3&a_1&a_2\\
+         s^2&&\\
+         s^1&\\
+         s^0&
+    \end{array}
+    $$
+    Computation of $a_1$ and $a_2$ shows that this entire row is $0$. We cannot employ the same trick as before, as our determinants will be $0$ for the rest of the sequence. In this special case, we take the row above, here $s^4$, and write the polynomial corresponding to this: $$P=s^4+3s^2+5$$
+    We find the derivative of this polynomial with respect to $s$, which gives the $s^3$ row:
+    $$P'=4s^3+6s$$
+    We use these coefficients in the Routh table, and proceed as normal:
+    $$
+    \begin{array}{lccc}
+         s^5&1&3&5  \\
+         s^4&1&3&5\\
+         s^3&4&6\\
+         s^2&\frac{3}{2}&5\\
+         s^1&-\frac{22}{3}\\
+         s^0&5
+    \end{array}
+    $$
+In the case where an entire row is zeros, there are no poles in the right half plane, but purely imaginary poles are guaranteed.
+
+\section{Types of Transfer Functions}
+There are a few types of transfer functions that we see very often, and it is useful to learn and understand their characteristics well. The two types that we focus on are first order systems and second order systems. We don't concern ourselves with higher order systems because we may construct them by multiplying together a combination of first and second order systems.
+
+\subsection{First Order Systems}
+First order transfer functions are some of the simplest transfer functions that we can construct. A first order transfer function represents a system which is the result of only a single derivative:
+$$\dot{y}=ay+bu$$
+In the Laplace domain:
+$$sY(s)=aY(s)+bU(s)$$
+$$Y(s)(s-a)=bU(s)$$
+
+$$\frac{Y(s)}{U(s)}=G(s)=\frac{b}{s-a}$$
+As we can see, such a system yields a simple transfer function. We choose to rewrite this into a transfer function which takes the form:\endnote{This is equivalent to the form above, simply divide by $a$ and rewrite the equation with $\tau=\frac{1}{a}$.}
+$$G(s)=\frac{K}{s\tau+1}$$
+This type of system only has two parameters. $K$ is the gain of the system, which tells us the amplification of the transfer function. The other parameter, $\tau$, is called the time constant of the system. It informs us how quickly our system responds to an input.
+
+\begin{example}[Step Response of First-order system]
+We can easily compute the step response of a first order system by hand or using a computer. Let's take our system to be:
+$$F(s)=\frac{1}{s+1}$$
+We remember that the unit step response looks like:
+$$\frac{1}{s}$$
+We multiply our transfer function by this to attain the total response:
+$$\frac{1}{s(s+1)}$$
+We may use partial fraction decomposition to solve this system:
+$$\frac{A}{s}+\frac{B}{s+1}=\frac{1}{s(s+1)}$$
+The solution of which is:
+$$f(t)=1-e^{-t}$$
+We can similarly compute the step response in code:
+\begin{matlabscript}{MATLAB}{}
+sys = tf(1,[1 1]) % transfer function
+
+[y,tOut] = step(sys);
+\end{matlabscript}
+\begin{pythonscript}{Python}{}
+import control as ctrl
+
+sys = ctrl.tf([1], [1, 1])  # transfer function
+t, y = ctrl.step_response(sys)
+\end{pythonscript}
+
+We see that the analytical approach is identical to the computational approach, as shown in \autoref{fig:step response first order}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{StepResponse.png}
+    \caption{Step Response of $\frac{1}{s+1}$}
+    \label{fig:step response first order}
+\end{figure}
+\end{example}
+Notice in our previous example that after $1$ second, $f(t)$ reaches $\sim63\%$ of the final value. This result is obvious when we consider that $1-e^{-t}\approx0.63$ when $t=1$. How long the function takes to reach this threshold is governed by the variable $\tau$. The numerical value of $\tau$ gives the amount of time before the system reaches this $\sim63\%$ threshold. Of course, gain $K$ dictates the final height in the step response.  
+
+\subsubsection{Impulse Response}
+In addition to the step response, we may sometimes want 
+
+\subsection{Second Order System}
+As we have seen when doing Newtonian or Lagrangian mechanics, most of our physical systems are dictated by second order equations. The second order system creates oscillations, which makes it much more complicated than the first order system. The canonical form of the second order system is:\endnote{If you want to derive this form, you may do so in an analogous way to what we did for the first order system.}
+$$G(s)=\frac{\omega_n}{s^2+\zeta\omega_ns+{\omega_n}^2}$$
+We give each of the variables in this equation a special name because they come up very frequently in engineering and physics applications. We call $\omega_n$ the natural frequency. The term $\zeta$ is called the \textit{damping coefficient}.
+
+
+\section{System Type}
+Before we actually start designing controllers for systems, we have one last nuance of transfer functions to cover. The \textit{system type} tells us the polynomial degree of an input where our system has a nonzero constant error.
+
+To get started, we need to find the error in our transfer function:
+
+
+To motivate this a bit further, let's consider a simple system with no controller and no feedback. We're going to choose the transfer function of the system to be something simple: $\frac{1}{s+1}$.
+
+\begin{figure}[ht]
+    \centering
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Flowchart: Process [id:dp22985398749031094] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (280,125) -- (360,125) -- (360,175) -- (280,175) -- cycle ;
+%Straight Lines [id:da22245740194670927] 
+\draw    (360,150) -- (417,150) ;
+\draw [shift={(420,150)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da8656358522969507] 
+\draw    (220,150) -- (277,150) ;
+\draw [shift={(280,150)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (250,146.6) node [anchor=south] [inner sep=0.75pt]    {$R( s)$};
+% Text Node
+\draw (390,146.6) node [anchor=south] [inner sep=0.75pt]    {$Y( s)$};
+% Text Node
+\draw (320,149) node    {$\frac{1}{s+1}$};
+
+
+\end{tikzpicture}    
+    \caption{Open Loop System Response}
+    \label{fig:open loop sys blk diagram}
+\end{figure}
+
+When we are concerned with \textit{system type}, we want to know how this system responds to an input of increasing order. When the system is unable to track the input, we know the system type. We'll define 
+
+Lets subject this transfer function $\frac{1}{s+2}$ to a step input, which is of the form $\frac{1}{s}$. In the Laplace domain, we have a multiplication:
+$$\frac{1}{s(s+2)}$$
+We can now apply final value theorem, which will tell us the condition at $t\rightarrow\infty$ since this transfer function is stable:
+$$\lim_{s\rightarrow0}\frac{s}{s(s+2)}=\lim_{s\rightarrow0}\frac{1}{s+2}=\frac{1}{2}$$So, we see that when subjected to a unit step, our function eventually reaches the condition that $y(t)=\frac{1}{2}$, not the original input of $1$. So, this function has a steady state error! It will never reach the input condition, no matter how long we wait.
+
+Let's now try a ramp input now, which we classify as $\frac{1}{s^2}$. This gives our total function:
+$$\frac{1}{s^2(s+1)}$$
+and the application of the final value theorem:
+$$\lim_{s\rightarrow0}\frac{s}{s^2(s+1)}=\lim_{s\rightarrow0}\frac{1}{s(s+1)}=\infty$$
+As we can see, in such a system our final value theorem tells us that 
+
+% \begin{array}{cc}
+%      &  \\
+%      & 
+% \end{array}
+
+\section{Systems with Delay}
+Up until now, we have ignored a pretty crucial part of system dynamics, which is delay. With an ideal transfer function, we don't get any delay in our system dynamics, since our sensors read things off exactly as they happen. This is not a physical reality, though, and we should take a bit of time to consider ways to model systems with delay.
+
+
+
+\subsection{Pad\'{e} Approximations}
+
 
 \section{Practice Problems}
 
+\begin{exercise}[DC Motor]
 \begin{enumerate}
     \item Consider a simple control system for a DC motor. The motors angle can be modeled as a simple transfer function between the input voltage $V$ and it's output $\theta$. The controller, $K_p+\frac{K_i}{s}$ is shown to the left of the motor transfer function. This system is shown below in the block diagram in \autoref{fig:motor angle control}:
     \begin{figure}[H]
@@ -1727,16 +2126,461 @@ As we say in the last exercise, the Routh stability criterion has the interestin
     \end{enumerate}
 \end{enumerate}
 
+\end{exercise}
+
 \newpage
 \printendnotes
 
 \chapter{Root Locus Design}
-Now that we have explored the use of the pole-zero plot for stability, we may use this to actually design a controller. Designing with the pole-zero plot is known as root locus design. We can design a number of controllers with this method, including PID controllers and lead-lag compensators.
+
+In our exploration of transfer functions, we discovered that we can change the stability of a system by changing attributes of the system, such as a gain $K$.  This turns out to be very powerful for designing controllers, and we will utilize this capability in our first method of controller design: the \textit{root locus} design method.
+
+With root locus design, we are going to use the pole-zero plot to explore how changing a gain $K$ will alter the pole locations of our function. We look at the locus of all points in the pole-zero plot, given by different values of $K$, which allows us to pick a good value of $K$ to control our system. With this method, we can design a number of controllers, including PID controllers and lead-lag compensators.
+
+\section{Feedback Control}
+To design a system via the root locus method, we first need to know what our systems look like. We'll restrict our focus to a few prototypical systems, like shown in \autoref{fig:root locus}.
+\begin{figure}[ht]
+    \centering
 
 
 
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
-\chapter{Frequency Domain Specifications}
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Flowchart: Process [id:dp1875054016665445] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (370,110) -- (450,110) -- (450,150) -- (370,150) -- cycle ;
+%Straight Lines [id:da7499236715272949] 
+\draw    (450,130) -- (537,130) ;
+\draw [shift={(540,130)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da8364498609050864] 
+\draw    (150,130) -- (197,130) ;
+\draw [shift={(200,130)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Flowchart: Process [id:dp08682453763533549] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (310,170) -- (390,170) -- (390,210) -- (310,210) -- cycle ;
+%Straight Lines [id:da254847170018897] 
+\draw    (480,130) -- (480,190) ;
+%Straight Lines [id:da15845579880945837] 
+\draw    (480,190) -- (393,190) ;
+\draw [shift={(390,190)}, rotate = 360] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Shape: Circle [id:dp8927677477080708] 
+\draw   (200,130) .. controls (200,121.72) and (206.72,115) .. (215,115) .. controls (223.28,115) and (230,121.72) .. (230,130) .. controls (230,138.28) and (223.28,145) .. (215,145) .. controls (206.72,145) and (200,138.28) .. (200,130) -- cycle ;
+%Straight Lines [id:da454001042018386] 
+\draw    (215,190) -- (215,148) ;
+\draw [shift={(215,145)}, rotate = 90] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da23591030240460575] 
+\draw    (215,190) -- (310,190) ;
+%Straight Lines [id:da9810682365957232] 
+\draw    (230,130) -- (257,130) ;
+\draw [shift={(260,130)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Flowchart: Process [id:dp6713546674027889] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.43 ] (260,110) -- (340,110) -- (340,150) -- (260,150) -- cycle ;
+%Straight Lines [id:da35454147722483087] 
+\draw    (340,130) -- (367,130) ;
+\draw [shift={(370,130)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (175,126.6) node [anchor=south] [inner sep=0.75pt]    {$R$};
+% Text Node
+\draw (502.5,126.6) node [anchor=south] [inner sep=0.75pt]    {$Y$};
+% Text Node
+\draw (201,128) node [anchor=west] [inner sep=0.75pt]  [font=\scriptsize]  {$+$};
+% Text Node
+\draw (210,137.5) node [anchor=west] [inner sep=0.75pt]  [font=\scriptsize]  {$-$};
+% Text Node
+\draw (410,130) node    {$G$};
+% Text Node
+\draw (350,190) node    {$H$};
+% Text Node
+\draw (242,124.6) node [anchor=south] [inner sep=0.75pt]    {$E$};
+% Text Node
+\draw (300,130) node    {$K$};
+
+\end{tikzpicture}
+    \caption{Control System for Root Locus Design}
+    \label{fig:root locus}
+\end{figure}
+
+For simplicity, we'll consider this gain $K$ to be part of the transfer function $G$. I have only written it out explicity to remind us that it's a variable in our system. We remember that we can understand the transfer function of such a system using the block diagram rules. For the transfer function from $R$ to $Y$, we have:
+$$\frac{Y(s)}{R(s)}=\frac{G}{1+GH}$$
+And if we wanted to find the error, we could use the relationship that
+$$\frac{Y(s)}{E(s)}=\frac{1}{1+GH}$$
+We notice that this denominator -- $1+GH$ -- is the same for both systems. For root locus design, we consider this denominator so important that we assign some special terminology to it. We call the terms $GH$ the \textit{loop transfer function}, since this is the transfer function that we have before closing the feedback loop. As a shorthand, we give this loop transfer function the variable $L$.\endnote{Unfortunately, there are a great many things in this book which use the letter $L$ or some variation of it. I will try to clarify in the case it is not clear.} We can thus rewrite $1+GH$ as $1+L(s)$.
+
+As we know from our study of transfer functions, the zeros of $1+L(S)$ (the poles of the transfer function) tell us the stability of our system. When we do root locus design, we concern ourselves with this function, $1+L(s)$. Let's remember that we would like $L(s)$ to contain some controller with gain $K$ so that we can change the stability characteristics of our system. Other than this requirement, $L(s)$ can be any proper transfer function. We assume that $L(s)$ is of the form
+$$L(s)=K\frac{(s+z_1)(s+z_2)\cdots(s+z_n)}{(s+p_1)(s+p_2)\cdots(s+p_n)}$$
+Our basic equation for root locus design is
+\begin{gather}
+    \color{blue}\boxed{\color{black}1+K\frac{(s+z_1)(s+z_2)\cdots(s+z_n)}{(s+p_1)(s+p_2)\cdots(s+p_n)}=0}\\
+    \color{blue}\text{Root Locus Equation}
+\end{gather}
+
+We're interested in the trajectories of the variable $s$ that solve this equation as we vary the value of $K$. That plot is what we call the root locus of the system.
+
+\section{Basics of Root Locus}
+In this text, we won't concern ourselves too heavily with rules for drawing a root locus. In the modern day, you rarely find yourself far from a computer with an install of MATLAB or Python. A good control systems engineer should understand how these plots work and be able to draw a basic version of the plot though, and for that we must still cover some of the basic ideas of the root locus.\endnote{Perhaps you would one day like to draw such a plot by hand to impress people who you were friends with before you started talking about control systems. You would be well off to learn how to draw such a plot then!}
+
+\subsubsection{Poles and Zeros}
+To get a handle on the root locus, we'll consider the extreme conditions on $K$ first. We typically don't let $K$ be negative, so our smallest condition is when $K\approx0$\endnote{We have this approximate condition to avoid the singularity when $K=0$ exactly.}. Our other condition is when $K\rightarrow\infty$. Let's see what happens to our root locus equation in those two cases.
+
+Let's start with the case where $K\approx0$. We'll start by multiplying our equation by the poles, $(s+p_1)(s+p_2)\cdots(s+p_n)$, to get
+$$(s+p_1)(s+p_2)\cdots(s+p_n)+K(s+z_1)(s+z_2)\cdots(s+z_n)=0$$
+When we now set $K\approx0$, we find that the equation looks like:
+$$(s+p_1)(s+p_2)\cdots(s+p_n)=0$$
+The solutions of this equation are the poles of this equation, $s=-p_1,-p_2\cdots p_n$. We have a simple fact, then, \textbf{that the root locus begins near the open-loop poles}.
+
+We make a similar argument as $K\rightarrow\infty$. In that case, the poles become inconsequential in compare to the zeros of the function. The function approaches the condition that
+$$(s+z_1)(s+z_2)\cdots(s+z_n)=0$$
+So, we see that \textbf{the root locus ends near the open-loop zeros}.
+
+The only problem of course, is that not all transfer functions have the same number of poles and zeros. Some of our paths, then, will break free and go off to infinity. We'll see how to deal with those now.
+
+\subsubsection{Constraint Conditions}
+Understanding what happens at the extreme conditions of $K$ is not good enough to draw an accurate plot. As a result, we have to introduce some equations of constraint to fully solve our system. As it turns out, that equation of constraint is the equation we've been using this whole time:
+$$1+K\frac{(s+z_1)(s+z_2)\cdots(s+z_n)}{(s+p_1)(s+p_2)\cdots(s+p_n)}=0$$
+Solving this directly by hand is challenging unless we are clever.\endnote{Luckily, we are very clever.} Instead of solving the equation as presented, we may rearrange it and solve two much simpler problems:
+$$K\frac{(s+z_1)(s+z_2)\cdots(s+z_n)}{(s+p_1)(s+p_2)\cdots(s+p_n)}=-1$$
+With this new equation, we can see that the magnitude of the LHS of the equation must be $1$, and the angle must be $180\degree$ since $-1$ is rotated $180\degree$ from the positive direction of the real number line.\endnote{It is common in controls to use degrees instead of radians for these measurements. Feel free to use radians and substitute $\pi$ into this equation.} Using this fact, we have two constraint equations:
+\begin{gather}
+    \left|K\frac{(s+z_1)(s+z_2)\cdots(s+z_n)}{(s+p_1)(s+p_2)\cdots(s+p_n)}\right|=1\\
+    \angle{K\frac{(s+z_1)(s+z_2)\cdots(s+z_n)}{(s+p_1)(s+p_2)\cdots(s+p_n)}}=180\degree(2n+1)\quad n=0,\pm1,\pm2,\cdots
+\end{gather}
+We may also write the second equation in a more digestible form, taking each angle term separately:
+$$\angle{(s+z_1)}+\angle{(s+z_2)}+\cdots\angle{(s+z_n)-\angle(s+p_1)-\angle(s+p_2)-\cdots=180\degree}$$
+These two equations are enough to uniquely determine the trajectory of $s$, since the values of $z$ and $p$ are known, leaving us with just two variables in $K$ and $s$.
+
+Once again, we could solve these equations directly, but we'll instead come up with a few rules that make our lives a bit easier. Every rule we create will come from these two basic equations, though, so we can always fall back to the simple approach of computing solutions this way.
+
+\section{Drawing Rules for Root Locus}
+Using the two equations we described above, we can come up with a few rules for drawing the root locus diagram.
+\subsection{Real axis values}
+Starting with the points on the real axis of the root locus is a very easy starting point. Any line on real axis will have an angle of either $0\degree$ or $180\degree$, so we can quite easily find the lines which satisfy the angle condition. Let's consider a simple system with the transfer function and draw it's pole-zero plot:
+$$L(s)=\frac{K}{s(s+2)(s+4)}$$
+
+\begin{figure}[ht]
+    \centering
+
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da4592564061031674] 
+\draw    (330,85) -- (330,195) ;
+%Straight Lines [id:da9963825813428108] 
+\draw    (410,140) -- (200,140) ;
+%Straight Lines [id:da6649082888514012] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (330,140) ;
+\draw [shift={(330,140)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da6127406045364459] 
+\draw    (290,135) -- (290,145) ;
+%Straight Lines [id:da6042218853244153] 
+\draw    (310,135) -- (310,145) ;
+%Straight Lines [id:da4724858061335113] 
+\draw    (270,135) -- (270,145) ;
+%Straight Lines [id:da9072493933623741] 
+\draw    (250,135) -- (250,145) ;
+%Straight Lines [id:da3451637976960903] 
+\draw    (210,135) -- (210,145) ;
+%Straight Lines [id:da5828238919882395] 
+\draw    (230,135) -- (230,145) ;
+%Straight Lines [id:da13765840163046827] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (250,140) ;
+\draw [shift={(250,140)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da5582241552813054] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (290,140) ;
+\draw [shift={(290,140)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+
+% Text Node
+\draw (376,62.4) node [anchor=north west][inner sep=0.75pt]    {$\mathbb{C}$};
+% Text Node
+\draw (217,102.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$1$};
+% Text Node
+\draw (265,102.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$2$};
+% Text Node
+\draw (307,102.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$3$};
+% Text Node
+\draw (347,102.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$4$};
+
+
+\end{tikzpicture}
+
+
+    \caption{Pole-Zero plot for $\frac{K}{s(s+2)(s+4)}$}
+    \label{fig:pole zero real line}
+\end{figure}
+I've labeled each region of this graph $1-4$ so they can be discussed easily. Let's start with region $1$ and place a test point on the real line:
+\begin{figure}[ht]
+    \centering
+
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da42234123482759833] 
+\draw    (350,105) -- (350,215) ;
+%Straight Lines [id:da6312770408796599] 
+\draw    (430,160) -- (220,160) ;
+%Straight Lines [id:da3991094241368439] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (350,160) ;
+\draw [shift={(350,160)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da8930512815405481] 
+\draw    (310,155) -- (310,165) ;
+%Straight Lines [id:da9891327275884197] 
+\draw    (330,155) -- (330,165) ;
+%Straight Lines [id:da977564124434322] 
+\draw    (290,155) -- (290,165) ;
+%Straight Lines [id:da2628578582402691] 
+\draw    (270,155) -- (270,165) ;
+%Straight Lines [id:da01003950309758983] 
+\draw    (230,155) -- (230,165) ;
+%Straight Lines [id:da2824780370007598] 
+\draw    (250,155) -- (250,165) ;
+%Straight Lines [id:da6956366343677244] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (270,160) ;
+\draw [shift={(270,160)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da8951560250601152] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (310,160) ;
+\draw [shift={(310,160)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da08754341599231841] 
+\draw [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ]   (240,160) ;
+\draw [shift={(240,160)}, rotate = 0] [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][fill={rgb, 255:red, 126; green, 211; blue, 33 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+
+% Text Node
+\draw (396,82.4) node [anchor=north west][inner sep=0.75pt]    {$\mathbb{C}$};
+% Text Node
+\draw (237,122.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$1$};
+% Text Node
+\draw (285,122.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$2$};
+% Text Node
+\draw (327,122.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$3$};
+% Text Node
+\draw (367,122.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$4$};
+
+
+\end{tikzpicture}
+
+
+    \caption{Pole-Zero plot with test point in region 1}
+    \label{fig:real line test point}
+\end{figure}
+The magnitude condition in this case is trivial. Given that $s$ is a real number, we can see that the transfer function takes the form:
+$$\left|\frac{K}{\text{real number}}\right|=1$$
+By varying $K$, it should be apparent that we can reach any point along the real number line. The angle condition is more interesting. Starting at point $1$, we see that the angle from the pole at $s+4$ is $180\degree$. At $s+2$, the angle is once again $180\degree$.  At $s$, the same is of course true. Altogether, we have that the angle is:\endnote{If you are confused about the presence of minus signs in this equation, note that an angle in the denominator of a transfer function is subtracted from the angle total. Notice also that I wrapped the angle $-540\degree$ to $180\degree$ since they are equivalent.}
+$$-\angle s-\angle s+2 - \angle s+4 =-180\degree-180\degree-180\degree=180\degree$$
+Notice that we did not need to specify \textit{where} in region $1$ that the test point was. It was a general fact that the angle in this region was always $180\degree$, so it holds that for all $s$ in region $1$, the angle condition is satisfied. Let's update our picture, filling in that region, and move to region $2$.
+\begin{figure}[ht]
+    \centering
+
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da1075253924249302] 
+\draw    (370,125) -- (370,235) ;
+%Straight Lines [id:da6436891349755611] 
+\draw    (450,180) -- (240,180) ;
+%Straight Lines [id:da9588796525597767] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (370,180) ;
+\draw [shift={(370,180)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da6480406030877912] 
+\draw    (330,175) -- (330,185) ;
+%Straight Lines [id:da1577577240172655] 
+\draw    (350,175) -- (350,185) ;
+%Straight Lines [id:da10491033624249835] 
+\draw    (310,175) -- (310,185) ;
+%Straight Lines [id:da7331758214772246] 
+\draw    (290,175) -- (290,185) ;
+%Straight Lines [id:da43740177872716535] 
+\draw    (250,175) -- (250,185) ;
+%Straight Lines [id:da2679503792515793] 
+\draw    (270,175) -- (270,185) ;
+%Straight Lines [id:da27022016217643263] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (290,180) ;
+\draw [shift={(290,180)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da8099213596250292] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (330,180) ;
+\draw [shift={(330,180)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da535188488118251] 
+\draw [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ]   (310,180) ;
+\draw [shift={(310,180)}, rotate = 0] [color={rgb, 255:red, 126; green, 211; blue, 33 }  ,draw opacity=1 ][fill={rgb, 255:red, 126; green, 211; blue, 33 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da524021046009422] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=1.5]    (234,180) -- (290,180) ;
+\draw [shift={(230,180)}, rotate = 0] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (9.29,-4.46) -- (0,0) -- (9.29,4.46) -- cycle    ;
+
+% Text Node
+\draw (416,102.4) node [anchor=north west][inner sep=0.75pt]    {$\mathbb{C}$};
+% Text Node
+\draw (257,142.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$1$};
+% Text Node
+\draw (305,142.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$2$};
+% Text Node
+\draw (347,142.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$3$};
+% Text Node
+\draw (387,142.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$4$};
+
+
+\end{tikzpicture}    
+    \caption{Pole-Zero plot with test point in region 2}
+    \label{fig:real line region 2}
+\end{figure}
+
+I've included a directionality to the arrow in the first region because we know that the root locus starts at the poles, so it must be going towards negative infinity as the gain $K$ is increased. With the new diagram, we can make a similar argument. Notice now that the angle from $s+4$ to the test point is now $0\degree$, not $180\degree$. The others remain the same. In this region, we have:
+$$-\angle s-\angle s+2 - \angle s+4 =-180\degree-180\degree-0\degree=0\degree$$
+This angle is in violation of the angle constraint, so we learn that there exists no part of the root locus in region $2$. We'll continue similarly with our analysis in regions $3$ and $4$, and we can see that the final result is:
+\begin{figure}[ht]
+    \centering
+    
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da3483152737455598] 
+\draw    (390,145) -- (390,255) ;
+%Straight Lines [id:da016062354812395263] 
+\draw    (470,200) -- (260,200) ;
+%Straight Lines [id:da44157825315764965] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (390,200) ;
+\draw [shift={(390,200)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da7286719847529227] 
+\draw    (350,195) -- (350,205) ;
+%Straight Lines [id:da41297236301251694] 
+\draw    (370,195) -- (370,205) ;
+%Straight Lines [id:da2928419898249093] 
+\draw    (330,195) -- (330,205) ;
+%Straight Lines [id:da11842026013785989] 
+\draw    (310,195) -- (310,205) ;
+%Straight Lines [id:da4291995443171389] 
+\draw    (270,195) -- (270,205) ;
+%Straight Lines [id:da1409552586415992] 
+\draw    (290,195) -- (290,205) ;
+%Straight Lines [id:da4460829576806987] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (310,200) ;
+\draw [shift={(310,200)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da8468637902059643] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (350,200) ;
+\draw [shift={(350,200)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
+%Straight Lines [id:da8631232482140341] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=1.5]    (254,200) -- (310,200) ;
+\draw [shift={(250,200)}, rotate = 0] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (9.29,-4.46) -- (0,0) -- (9.29,4.46) -- cycle    ;
+%Straight Lines [id:da3973491588976733] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=1.5]    (350,200) -- (390,200) ;
+
+% Text Node
+\draw (436,122.4) node [anchor=north west][inner sep=0.75pt]    {$\mathbb{C}$};
+% Text Node
+\draw (277,162.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$1$};
+% Text Node
+\draw (325,162.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$2$};
+% Text Node
+\draw (367,162.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$3$};
+% Text Node
+\draw (407,162.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ]  {$4$};
+
+
+\end{tikzpicture}
+    \caption{Root locus for real axis poles}
+    \label{fig:completed rl real}
+\end{figure}
+
+By going through this exercise, we can see that a general pattern emerges. Whenever we have poles on the real axis of our transfer function, \textbf{we know the root locus must be filled in the regions where there are an odd number of points to the right} (An even number of points to the left gives the same result).
+
+\subsection{Asymptotes}
+
+Remember that when we have a greater number of poles than zeros, our root locus will have some parts that go off towards infinity in some direction. Now, we'll figure out how we can find those points.
+
+Our main tool in doing this will be the angle constraint. Let's remember that we can express the angle of the transfer function with
+$$\angle G(s)=\angle\text{zeros}-\angle\text{poles}$$
+The angles of the asymptotes, then, are related to the number of poles and zeros in our system\footnote{You may find a more in depth derivation at \cite{peet_root_nodate}. I don't cover it deeply here.}.  We denote the number of poles as $P$ and the number of zeros as $Z$. We can denote the center and the angle of the asymptotes as:
+\begin{gather}
+    \text{Center}: S=\frac{-(\sum p_i-\sum z_i)}{P-Z}\\
+    \text{Angle}: \phi=\frac{180\degree(2n+1)}{P-Z} 
+\end{gather}
+\begin{exercise}[Asymptote Angles]
+Find the center and the asymptote angles for the following transfer functions:
+\begin{enumerate}
+    \item $G(s)=\frac{s+1}{(s+1)(s+2)}$
+    \item $G(s)=\frac{s^2+1}{s^3+10s^2+31s_30}$
+    \item This one is (s+2)(s+3)(s+5) for future me
+    \item $G(s)=\frac{1}{s+3}$
+\end{enumerate}
+\end{exercise}
+
+\subsection{Breakaway points}
+Let's return to our example transfer function $L(s)=\frac{K}{s(s+2)(s+4)}$. There, we saw that the transfer function went between two poles (see \autoref{fig:completed rl real}). We know, however, that the root locus should end at a zero or infinity. This root locus must split somewhere in section 3. At the point where it splits, there must be a repeated root. Let's look for the point where:
+$$1+K\frac{N(s)}{D(s)}=0$$ has a repeated root at our test point $s=s^*$. Since we know that this will have a repeated root for $s^*$, we may equivalently state that
+$$f(s)=D(s)+KN(s)$$
+has multiple roots. We can equivalently say that the derivative as this point must be zero (a proof of this fact can be found in \autoref{multiple root} of the Appendix).
+$$f'(s)\bigg\vert_{s=s^*}=D'(s)+KN'(s)\bigg\vert_{s=s^*}=0$$
+We can rearrange this statement to the following:
+$$K=-\frac{D'(s^*)}{N'(s^*)}$$
+Now that we have $K$  in terms of $D'$ and $N'$, we are ready to proceed. Plugging back in to the equation for $f(s)$:
+$$D(s^*)-\frac{D'(s^*)}{N'(s^*)}N(s^*)=0$$
+We may multiply both sides by $N'(s^*)$ and arbitrarily divide by  $N^2(s^*)$:
+$$\frac{N'(s^*)D(s^*)-D'(s^*)N(s^*)}{N^2(s^*)}=0$$
+You will notice that this is the quotient rule for the term $K$. We therefore know that the breakaway point occurs for the condition:
+$$\frac{dK}{ds}=0$$
+\subsection{Departure and Arrival Angles}
+
+
+\section{Root Locus in code}
+Drawing the root locus with MATLAB or Python is quite simple, but there are a few key points to recognize. First of all, we want our "sys" in MATLAB to be the loop transfer function $L(s)$, not the closed loop system. We may input this in several ways. Typically, we define this "sys" using a transfer function, but we may also input a state space.\endnote{We will discuss state space modeling in later chapters.} For a loop transfer function like:
+$$L(s)=K\frac{s+1}{(s+2)(s+4)}$$
+We would write the following:
+\begin{matlabscript}{MATLAB}{}
+sys = tf([1 1], [1 6 8])
+rlocus(sys)
+\end{matlabscript}
+\begin{pythonscript}{Python}{}
+import numpy as np
+from matplotlib import pyplot as plt 
+import control
+
+G = control.TransferFunction((1, 1), (1, 6, 8))
+
+rlist, klist = control.rlocus(G, gains=np.linspace(0, 10.0, num=1000))
+
+plt.show()
+\end{pythonscript}
+
+\begin{exercise}[Root Locus Drawings]
+    Consider a system with the following loop transfer function:
+    $$L(s)=K\frac{s+1}{s(s+2)(s^2+2s+5)}$$
+    \begin{enumerate}[label=\alph*)]
+        \item Draw the root locus of the system by hand. Calculate the angle of departure and asymptotes for the system
+        \item Use MATLAB / Python to verify the root locus for the system
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Routh and Root Locus]
+Consider a system with the loop transfer function:
+$$L(s)=\frac{K(s+1)}{s(s+3)}$$
+\begin{enumerate}[label=\alph*)]
+\item Determine the closed loop transfer function for the system from the open loop transfer function
+\item Use the Routh stability criterion to determine the values of $K$ for which the system is stable.
+\item Plot the root locus in MATLAB / Python and show that the $\Im$ axis crossover occurs at the gain $K$ found in part b.
+\end{enumerate}
+\end{exercise}
+
+\section{Controller Design with Root Locus}
+We've now reached a critical point in our journey with control theory. After much background, we're ready to design our first real controller design! With some root locus drawing strategies in our toolkit, we can now create controllers which are more complicated that the simple proportional controllers. Now, we can create PID controllers and lead-lag compensators.
+
+
+
+\newpage
+\printendnotes
+\chapter{Frequency Domain Design}
 Transfer functions lend themselves quite easily to a description in the frequency domain. Using these relationships, we can understand the nature of a transfer function by understanding its response to different frequencies. This section will discuss the various methods by which this is done, and how they allow us to analyze systems.
 
 \section{Bode Plots}
@@ -1828,11 +2672,7 @@ Additionally, some criteria for evaluation of control systems will also be devel
 
 \section{Step Response}
 
-\section{First Order Systems}
 
-\section{Second Order System}
-
-$$\frac{\omega_n}{s^2+\zeta\omega_ns+{\omega_n}^2}$$
 
 \section{PID Control}
 The \gls{pid} controller is likely the most popular method for controlling a system. The \gls{pid} controller is simple, easily understandable, and has been widely studied due to its early adoption. The \gls{pid} controller is also quite common because it often requires no knowledge of the system dynamics to set up. Often, the \gls{pid} gains can be found manually through experimentation and requires little analysis.
@@ -1985,14 +2825,21 @@ It turns out that we can determine the values of the poles by examining the eige
 $$\dot{x}=Ax$$
 Which we know has a solution
 $$x(t)=e^{At}x_0$$
-Supposing that $x_0$ has non-zero values, the $e^{At}$ matrix will determine the time evolution of the matrix. As we have previously discussed in \autoref{sec: computation of matrix exp}, we can perform a decomposition of the matrix to find the solution of the matrix exponential $e^{At}$ as $$e^{At}=Pe^{Dt}P^{-1}$$
+Supposing that $x_0$ has non-zero values, the $e^{At}$ matrix will determine the time evolution of the matrix. We can perform a decomposition of the matrix to find the solution of the matrix exponential $e^{At}$ as\endnote{This methodology is explained in \autoref{sec: computation of matrix exp} of the Appendix.} $$e^{At}=Pe^{Dt}P^{-1}$$
 We know that this decomposition is the result of the eigenvalue decomposition of the problem, where the eigenvalues are contained in the diagonal entries of $D$.
 
 It is fairly evident that the magnitude of the system is determined by the values of $D$, the eigenvalues! If all of the values of $D$ are negative, the system will tend towards zero. This is exactly the same as what we have seen with poles. This leads us to the important conclusion:
 \textbf{The eigenvalues of $\textbf{A}$ determine the stability of the system.}
 
 
-Of course, we have discussed that $A$ is only defined for discrete time.
+\section{From Continuous to Discrete Time}
+It is all well and good to describe our systems as continuous, but that is almost never what we measure! In most cases, the measurements that we get are discrete because we operate with digital systems. As a result, we need to understand how the system changes over a finite interval of time, $\Delta t$. In a finite interval of time, we express these equations not as standard differential equations, but rather as \textit{difference} equations. The analogous difference equation to $\mathbf{\dot{x}}=A\textbf{x}$ is:
+$$x_{k+1}=\Phi x_k$$
+From this equation we can see some obvious similarities to the continuous time case. In fact, $\Phi$ is a matrix of the same size. We can relate the continuous nature of $A$ to the discrete nature of $\Phi$ with a matrix exponential.\endnote{Reader's who have read the section on \autoref{chap:lie theory} should be able to connect this to what we have already learned there!} For a derivation of this fact, consider reading \autoref{sec:lie theory relation to differential equations} for more information. In short, we can relate $\Phi$ and $A$ through the following equation:
+$$\Phi=e^{A\Delta t}$$
+$\Phi$ is the solution of the $\mathbf{\dot{x}}=A\textbf{x}$ over some small time interval $\Delta t$. The nice feature of these matrices is that we can multiply them together to get the solution at times further in the future. For example, $\Phi^2$ represents a time $2\Delta t$ from the present state (assuming $\Phi$ is time invariant).
+
+The matrix $\Phi$ is called the discrete state transition matrix, and $A$ is sometimes called the continuous transition matrix in analogy. The relationship between these two is very important for understanding the difference between continuous and discrete time representations.
 
 \subsection{Stability in discrete time}
 Having described the stability of a system in continuous time, we can move on to the case of a system in discrete time. 
@@ -2229,32 +3076,162 @@ pattern radius = 1pt}
 \end{figure}
 Any eigenvalue which is contained within the unit circle will be stable, and anything outside will be unstable. As we can see, our representation with \gls{lie theory} lends itself to showcasing this!
 
+
+
 \section{Converting between State Space and Transfer Function}
 
+As we saw in \autoref{exer: mass spring tf}, we have an equation which relates the state space description to the transfer function description. There, we had seen that $G(s)=C(sI-A)^{-1}B+D$. We should not take this on good faith, however. Let's derive this equation ourselves to see how this property emerges.
 
-\section{Controllability}
-Now that we are quite familiar with linear systems and how we characterize their stability, we can move to discussing how we can control such systems. As we have seen, we can understand the stability of a system by examining the eigenvalues of the matrix $A$ for the linear system $\dot{x}=Ax$. When we consider adding control, the system becomes a bit more complex. We now have:
+We'll start with our state space equation's, which we are well familiar with now:
+\begin{gather}
+    \mathbf{\dot{x}}=A\textbf{x}+B\textbf{u}\\
+    \textbf{y}=C\textbf{x}+D\textbf{u}
+\end{gather}
+We'll take the \gls{laplace transform} of both sides of the equation, since we need our variables in the $s$-domain for a transfer function description. Doing so, we have:
+\begin{gather}
+sX(s)=AX(s)+BU(s)\\
+    Y(s)=CX(s)+DU(s)
+\end{gather}
+Our final goal is to find the ratio of $\frac{Y(s)}{U(s)}$, so we must eliminate the variable $X(s)$ from the equation. This is simple enough, we'll just solve the top equation for $X(s)$:
+$$sX(s)-AX(s)=BU(s)$$
+Now, we factor out $X(s)$ and isolate that variable, being careful to respect the rules of matrix multiplication:
+$$\left(sI-A\right)X(s)=BU(s)\rightarrow X(s)=(sI-A)^{-1}BU(s)$$
+Now that we've solved for $X(s)$, we're free to input this into the bottom equation:
+$$Y(s)=C(sI-A)^{-1}BU(s)+DU(s)$$
+Just one more step, we divide both sides by $U(s)$ to get the final transfer function:
+$$G(s)=C(sI-A)^{-1}B+D$$
+\subsubsection{Going the other way}
+We've shown quite easily that we can derive the transfer function of our system from the state space equations. Going the other way, however, turns out to be a bit more tricky. The reason for this is simple -- the state space model of a system is not unique. We can prove this quite easily.
+\begin{proof}\textbf{State Space Non Uniqueness}
+\\Consider a state space of the form:
+\begin{gather}
+    \mathbf{\dot{x}}=A\textbf{x}+B\textbf{u}\\
+    \textbf{y}=C\textbf{x}+D\textbf{u}
+\end{gather}
+There exists, without loss of generality, a transformation such that $\mathbf{{x}}=T\mathbf{\tilde{x}}$. This matrix $T$ transforms the equation above as:
+\begin{gather}
+    \mathbf{\dot{\tilde{x}}}=T^{-1}AT\mathbf{\tilde{x}}+T^{-1}B\textbf{u}\\
+    \textbf{y}=CT\mathbf{\tilde{x}}+D\textbf{u}
+\end{gather}
+Notice that $T^{-1}AT$ is a similarity transform which does not alter the eigenvalues of $A$. $B$ and $C$ simply transform as vectors under this transformation. We may rewrite the equation as:
+\begin{gather}
+    \mathbf{\dot{\tilde{x}}}=\tilde{A}\mathbf{\tilde{x}}+\tilde{B}\textbf{u}\\
+    \textbf{y}=\tilde{C}\mathbf{\tilde{x}}+\tilde{D}\textbf{u}
+\end{gather}
+This equation is of the same form as our original state space, and no properties of the system are altered. The state space is thus not unique, and any suitable transformation $T$ may convert it between different forms.
+\end{proof}
+The essence of this proof is that when we go the other way -- from the transfer function to the state space -- there isn't a unique way of doing so. As a result, we have to choose how we want to represent our state space \textit{before} we do the transformation.
+
+Since we need to choose how we want to express this, there are a few different forms that have become common, depending on what the application is.
+
+
+\section{Controllability and Controllers}
+As we have seen, we can understand the stability of a system by examining the eigenvalues of the matrix $A$ for the linear system $\dot{x}=Ax$. When we consider adding control, the system becomes a bit more complex. We now have:
 $$\dot{x}=Ax+Bu$$
-Where $B$ is a matrix describing the relationships of the control inputs and $u$ is the control input itself.
+Where $B$ is a matrix describing the relationships of the control inputs and $u$ is the control input itself. This is part of the standard state space we've described already.
 
-To see how this lends itself to changing the eigenvalues of the system, we can consider a simple controller -- one which simply takes the current state, $x$, multiplied by some constant as its input.
+Using such a state space, we \textit{may} be able to make the system controllable. Even with an input $u$ on the system, there is no guarantee that this will lead to a controllable system. We can come up with an example of such an uncontrollable system quite easily, in fact. Consider a pendulum with two arms, as shown in \autoref{fig:uncontrollable}:
 
-From this description, we have a control system where $u=-kx$. Upon plugging in $u$, we have
-$$\dot{x}=Ax-Bkx$$
-We can factor our $x$, which returns our system to a very similar form to $\dot{x}=Ax$:
-$$\dot{x}=(A-Bk)x$$
-We can see that the eigenvalues of $A-Bk$ are now what we consider! With careful selection of $B$ and $k$, we may be able to make any unstable eigenvalues stable!
+\begin{figure}
+    \centering
 
-We can solidify these ideas with some exact definitions. We consider a system to be controllable if:
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Rectangle [id:dp5552980078605938] 
+\draw   (250,150) -- (380,150) -- (380,190) -- (250,190) -- cycle ;
+%Straight Lines [id:da17705055918057389] 
+\draw    (250,80) -- (280,150) ;
+%Shape: Circle [id:dp397666828720904] 
+\draw   (229,66) .. controls (229,57.72) and (235.72,51) .. (244,51) .. controls (252.28,51) and (259,57.72) .. (259,66) .. controls (259,74.28) and (252.28,81) .. (244,81) .. controls (235.72,81) and (229,74.28) .. (229,66) -- cycle ;
+%Straight Lines [id:da7989833151597414] 
+\draw    (372.26,81.01) -- (340,150) ;
+%Shape: Circle [id:dp24273139832816637] 
+\draw   (368.73,56.02) .. controls (374.91,50.51) and (384.39,51.05) .. (389.9,57.23) .. controls (395.42,63.41) and (394.88,72.89) .. (388.7,78.41) .. controls (382.52,83.92) and (373.03,83.38) .. (367.52,77.2) .. controls (362,71.02) and (362.54,61.54) .. (368.73,56.02) -- cycle ;
+%Shape: Arc [id:dp43093366133446853] 
+\draw  [draw opacity=0] (271.45,126.5) .. controls (274.12,125.53) and (277,125) .. (280,125) .. controls (293.81,125) and (305,136.19) .. (305,150) -- (280,150) -- cycle ; \draw    (274.32,125.65) .. controls (276.15,125.22) and (278.05,125) .. (280,125) .. controls (293.81,125) and (305,136.19) .. (305,150) ;  \draw [shift={(271.45,126.5)}, rotate = 353.84] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da7564650429680718] 
+\draw    (330,210) -- (370.88,210) -- (397,210) ;
+\draw [shift={(400,210)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da9574484712831245] 
+\draw    (330,190) -- (330,210) ;
+%Shape: Arc [id:dp22387355547567533] 
+\draw  [draw opacity=0] (353.62,123.26) .. controls (363.34,128.23) and (370,138.34) .. (370,150) -- (340,150) -- cycle ; \draw    (356.31,124.81) .. controls (364.55,130.16) and (370,139.44) .. (370,150) ;  \draw [shift={(353.62,123.26)}, rotate = 38.55] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+
+% Text Node
+\draw (300,110.4) node [anchor=north west][inner sep=0.75pt]    {$\theta _{1}$};
+% Text Node
+\draw (402,200.4) node [anchor=north west][inner sep=0.75pt]    {$u( t)$};
+% Text Node
+\draw (371,110.4) node [anchor=north west][inner sep=0.75pt]    {$\theta _{2}$};
+
+
+\end{tikzpicture}
+    
+    \caption{Uncontrollable system example}
+    \label{fig:uncontrollable}
+\end{figure}
+It is apparent that there is no choice of $\textbf{u}$ that allows us to control both the pendulum on the left and the right simultaneously, because both have different starting conditions. We would like some mathematical rigor to understand the controllability of our system, however. Even better, we would like to develop this in a way that's independent of the controller design. This test will tell us if control is possible at all.
+
+The key idea is this: if we sent an impulse response through our system and it does not affect one or more of our states, then there is no possible way for us to control that state! With this argument in mind, we can come up with a more mathematical way to find if our system is controllable.
+
+Let's start by considering a \textit{discrete} system, which is similar to the systems we've considered before. For this section, I'm going to replace $\Phi$ by $A$, for notational convenience. The details don't matter much anyways, since what follows isn't an exact proof. If you want a full proof, that is given in \autoref{Controllability proof}. We'll consider a discrete system which looks like the system we've seen before:
+$$x_{n+1}=Ax_n+Bu_n$$
+Consider sending the discrete time equivalent of an impulse $u_n=\delta(t)$ through our system at rest, where $x_n$ can be assumed to be a zero vector at the start. At the instant we send that impulse through the system, the response is going to be just the term associated with the input $u_n$. As a result, we would see that our state at the next time step, $x_{n+1}$, is going to be this term, $Bu_n$. We remember that for a $\delta$ input, this $u_n$ is simply $1$ in the Laplace domain.\endnote{In discrete time, we're not working in the Laplace domain, but in the $z$-domain. Just think of this discrete input as something which takes on a value if $1$ for the short interval of one discrete step. In leue of introducing many new concepts, I just use slightly incorrect language here. This `proof' isn't rigorous either, so it doesn't matter much if you're not a pedant.} Then, our first state is simply going to be the matrix $B$:
+$$x_{n+1}=0A+B$$
+Let's march forward a step in time, so that this $B$ vector is our new state, $x_n$. Our $u_n$ is now zero, since that delta function input only lasts for the first step in time. Plugging in to our equation, we see that $x_{n+1}=AB$, since we just multiply $A$ by our previous state. We'll continue this pattern on multiplying by $A$ at each future time, such that our state vector evolves like:
+$$\begin{bmatrix}
+    B&AB&A^2B&A^3B&\cdots&A^{n-1}B
+\end{bmatrix}$$
+Once we reach the dimension of $A$ ($n\times n)$, it turns out that we don't get any more information from this matrix we've constructed. The reason is pretty simple -- this matrix can't have any more linearly independent columns after it exceeds the size of $A$. It is a simple fact of linear algebra. As a result, we only need to perform this multiplication to the point where we have $A^{n-1}$.
+
+We've constructed this nice matrix which tells us what happens when we put a delta function through our system. If each of the elements of the state vector have been affected by this input, we'll expect them to appear in this matrix. 
+
+We can devise a pretty simple test to see if any part of our state has made it into this matrix. We'll simply look at the \textit{rank} of this matrix. If any of our elements of the state vector weren't affected, the matrix will have a rank which is smaller than $n$. Using this condition, we have our final condition for controllability:
+\begin{gather}
+\color{blue}\boxed{\color{black}\mathrm{rank}\left(\begin{bmatrix}
+    B&AB&A^2B&\cdots&A^nB
+\end{bmatrix}\right)}\\
+\color{blue}\text{Controllability Test}
+\end{gather}
+When the rank of the controllability matrix, $W_c$, is the same as $n$, then the system is controllable. Mathematically, if $\mathrm{rank(}W_c)=n\Leftrightarrow\text{System is controllable}$.
+
+Of course, I will reiterate that this `proof' was not exact. We did not show that this holds for the continuous time case, either. If you want a more precise proof, that can be found in \autoref{Controllability proof}. The result holds nonetheless. With these ideas established, we can add a few other corollaries. For a controllable system:
 \begin{itemize}
     \item It is possible to go from any one state, $x$, to another state $x'$ in the space $\mathbb{R}^n$
-    \item We can choose to place the eigenvalues of the system anywhere in $\mathbb{C}^2$.
+    \item We can choose to place the eigenvalues of the system anywhere in $\mathbb{C}$.
 \end{itemize}
 
-It turns out that these are the only two conditions that we need to satisfy for controllability of a linear system. Still, we need to develop an exact criteria that tells us about 
+\subsection{Controllers}
+
+Now that we have developed an understanding of when a system is controllable, let's develop a typical form for a controller in the state space representation. Our typical controller acts on the state $\textbf{x}$ and changes the eigenvalues of the system to change the stability characteristics. To see how this lends itself to changing the eigenvalues of the system, we can consider a simple controller of this form-- one which simply takes the current state, $\textbf{x}$, multiplied by some constant matrix as its input.
+
+From this description, we have a control system where $\textbf{u}=-K\textbf{x}$. Upon plugging in $\textbf{u}$, we have
+$$\mathbf{\dot{x}}=A\textbf{x}-BK\textbf{x}$$
+We can factor out $\textbf{x}$, which returns our system to a very similar form to $\mathbf{\dot{x}}=A\textbf{x}$:
+$$\mathbf{\dot{x}}=(A-BK)\textbf{x}$$
+We can see that of $A-BK$ plays the role that $A$ does is the equation $\mathbf{\dot{x}}=A\textbf{x}$. Thus, the eigenvalues of $A-BK$ tells us about the stability of the system under control. When the system is controllable, we can select $K$ in such a way to put the eigenvalues where we desire.
+
+Upon seeing this, an obvious question arises. How should we pick $K$? In classical control, we used the root locus or the bode plot to understand a good value for $K$. Here, our approach can be much more powerful. In fact, we can find an optimal $K$ if our system is linear -- more on that in the chapters to follow. Let's start with an approach that lets us put our poles wherever we would like them.
+
+\textbf{Pole Placement and Ackermann's Formula}
+One of the corollaries from our controllability theorem is that if our system is controllable, we may place the poles of the system anywhere in the complex plane. I'll give you the formula right off the bat, and we can prove it after the fact. We call our pole placement formula \textit{Ackermann's formula}:
+$$K=\begin{bmatrix}
+    0&0&I
+\end{bmatrix}{W_C}^{-1}\Delta(\bar{A})$$
+We define $\Delta(s)$ as the polynomial with the desired pole locations. This polynomial is the characteristic equation for the system with the controller. We write:
+$$\Delta(s)\equiv\det(sI-(A-BK))=(s-p_1)(s-p_2)\cdots (s-p_n)$$
+We can show via the Cayley-Hamilton theorem that $\bar{A}=A-BK$ will satisfy it's own characteristic equation (this theorem is included in the controllability proof in \autoref{Controllability proof}).
+
 
 \section{Observability}
-Observability is quite similar to the controllability
+Observability is the other side of the coin. When we talk about a system being observable, we ask if we can determine the full state of the system from the outputs that we see. You'll notice that's a very similar question that we had a for a controllable system.
+
+We start in much the same way
 
 Observer: $A-LC$
 
@@ -2267,16 +3244,8 @@ Controller: $A-BK$
 Discuss duality of the controller and the observer in this section.
 
 
-\section{From Continuous to Discrete Time}
-It is all well and good to describe our systems as continuous, but that is almost never what we measure! In most cases, the measurements that we get are discrete. As a result, we need to understand how the system changes over a finite interval of time, $\Delta t$. In a finite interval of time, we express these equations not as standard differential equations, but rather as \textit{difference} equations. The analogous difference equation to $\dot{x}=Ax$ is:
-$$x_{k+1}=\Phi x_k$$
-From this equation we can see some obvious similarities to the continuous time case. In fact, $\Phi$ is a matrix of the same size. Reader's who have read the section on \autoref{chap:lie theory} should be able to connect this to what we have already learned there! We can relate the continuous nature of $A$ to the discrete nature of $\Phi$ with a matrix exponential. The derivation using calculus is also shown there, so I recommend reading \autoref{sec:lie theory relation to differential equations} for more information.
-
-In short, we can relate $\Phi$ and $A$ through the following equation:
-$$\Phi=e^{A\Delta t}$$
-The matrix $\Phi$ is called the discrete state transition matrix, and $A$ is sometimes called the continuous transition matrix in analogy. The relationship between these two and the implications from \gls{lie theory} will be important for understanding the relationships of stability that are coming next!
-
-
+\newpage
+\printendnotes
 
 \chapter{Optimality}
 The subjects of both optimal estimation and optimal control lie on the foundations of optimality. I devote a chapter here to studying the various types of optimality that are relevant to our discussion here. The later parts of this chapter will derive much from our earlier work in the calculus of variations, \gls{Lagrangian} mechanics, and \gls{Hamiltonian} mechanics which were discussed in \autoref{part: energy mech}.
@@ -2350,7 +3319,7 @@ $$\begin{array}{rc}
      \mathrm{underdetermined:} & A^\#=A^T(AA^T)^{-1} \\
      \mathrm{overdetermined:} & A^\#=(A^TA)^{-1}A^T
 \end{array}$$
-\begin{exercise}
+\begin{exercise}[Pseudoinversion Immersion]
     It can be shown that these \glspl{pseudoinverse} are identical to the standard matrix inverse in the case of an invertible square matrix. You may consider the property that $(AB)^{-1}=B^{-1}A^{-1}$ to show this. 
 \end{exercise}
 Least squares estimation has given us some of the mathematical tools that we will need when considering optimal estimation in the more general sense.
@@ -2960,7 +3929,7 @@ We may begin simplifying terms of the system to arrive at an answer. We consider
 $$\int_{t_0}^{t_0+\Delta t}{L(\textbf{x},u,\tau)d\tau}$$
 Considering the limiting behavior will be identical to the Riemann sum, the solution will look like the value at $L(\textbf{x},u,\tau)$ multiplied by the integration length, $\Delta t$:
 $$L(\textbf{x},u,\tau)\Delta t$$
-We can expand the term $J^*(\textbf{x}(t_0+\Delta t),t_0+\Delta t)$ using a similar idea. We will only consider the first order derivative of $J^*$ as higher order terms are unimportant as $\Delta t\rightarrow0$. The process is shown graphically in \autoref{fig:J star}:\endnote{Note that this representation only shows the spatial dimension and not the temporal dimension as well for simplicity. For a full picture, imagine the time evolution fo the $J^*$ function extending into 3-dimensional space. It then becomes apparent why we must also take the partial derivative with respect to time. The full picture is even more complex, as the state \textbf{x} is typically more than a single dimension}
+We can expand the term $J^*(\textbf{x}(t_0+\Delta t),t_0+\Delta t)$ using a similar idea. We will only consider the first order derivative of $J^*$ as higher order terms are unimportant as $\Delta t\rightarrow0$. The process is shown graphically in \autoref{fig:J star}:\endnote{Note that this representation only shows the spatial dimension and not the temporal dimension as well for simplicity. For a full picture, imagine the time evolution of the $J^*$ function extending into 3-dimensional space. It then becomes apparent why we must also take the partial derivative with respect to time. The full picture is even more complex, as the state \textbf{x} is typically more than a single dimension}
 \begin{figure}[ht]
     \centering
 
@@ -3034,6 +4003,9 @@ The \gls{lqr} controller is one case where the optimal control problem has an an
 \subsection{Gradient Descent}
 
 \subsection{Stochastic Methods}
+
+\newpage
+\printendnotes
 
 
 

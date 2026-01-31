@@ -186,26 +186,18 @@ $$a(t)\cdot b(t)=\frac{1}{\tau}\int_0^\tau{a(t)\overline{b(t)}}dt$$
 
 \subsubsection{Hilbert Spaces}
 
-\chapter{Code}
-\subsection{Geodesics of a Sphere}
-\lstinputlisting[style=Matlab-editor, caption=Sphere Geodesic]{Scripts/SphereGeodesic.m}\label{script:Geodesic}
+\chapter{Code}\label{app:code}
+All longer segments of code have been placed in a GitHub for ease of access. Scan the QR code or go to \cite{reynolds_hudsonreynoldsflight-dynamics-bible-volume-iii_2026} to access the code.
 
-\subsection{Quantum Derivation of the Mirror} \label{sec: Quantum Deriv Mirror}
-\lstinputlisting[style=Matlab-editor, caption=QED Mirror]{Scripts/Mirror.m}\label{script:Mirror}
-
-\section{Brachistrochrone Extras (Delete maybe)}
-From Brachistochrone section:
-
-Next, we can express this velocity as a infinitesimal element of the arc-length traversed over an infinitesimal time span. This is more simply stated mathematically:
-$$v=\dfrac{ds}{dt}$$
-Now, we can use these two relations to formulate an integral for the time. Taking the two and setting them in an equality:
-$$\frac{ds}{dt}=\sqrt{2gx}$$
-Performing seperation of variables and writing the integral, with the assumption that $t=\frac{s}{v}$ and that the initial conditions are zero:
-$$\sqrt{2g}T=\int_{t_1}^{t_2}\frac{\sqrt{\dot{x}^2+\dot{y}^2}}{\sqrt{x}}$$
-
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Images/adobe-express-qr-code.png}
+    \caption{GitHub link}
+    \label{fig:github}
+\end{figure}
 
 \chapter{Proofs}
-\section{Equivalence of Newtonian and Lagrangian Mechanics}\label{equiv newt and lang}
+\section{Newtonian and Lagrangian Equivalence}\label{equiv newt and lang}
 
 \begin{proof}
 We start with Lagrange's equations in rectilinear coordinates $x_i=x,y,z$:
@@ -231,6 +223,47 @@ So, we have $F=m\ddot{x}_i$.
     It can further be shown that the Newtonian derivation must be performed in an inertial frame to be valid.
 \end{corollary}
 
+\section{Cayley-Hamilton Theorem}\label{cayley hamilton}
+\begin{theorem}[Cayley-Hamilton Theorem]
+Every square matrix satisfies its own characteristic polynomial. Mathematically, 
+$$\Delta(s)\equiv\det(s I-A)=0$$
+$$\Delta(A)=0$$
+\end{theorem}
+
+This proof is adapted from \cite{eliashberg_cayley_2011}. Useful corrolarries for control theory are included after the proof.
+\begin{proof}
+    Assume that $A\in \mathbb{C}^{n\times n}$ is diagonalizable. We may then find a decomposition of $A$:
+    $$A=PDP^{-1}$$
+The matrix $D$ contains the eigenvalues, $s$, on the diagonal. We find $D^k$ to be:
+    $$D^k=\begin{bmatrix}
+        {s_1}^k&0&\cdots  &0\\
+        0&{s_2}^k&\cdots &0\\
+        \vdots&\vdots&\ddots&\vdots\\
+        0&\cdots&0&{s_n}^k
+    \end{bmatrix}$$
+    We can then find $\Delta(D)$ using this formula:
+    $$\Delta (D)=\begin{bmatrix}
+        \Delta\left({s_1}^k\right)&0&\cdots  &0\\
+        0&\Delta\left({s_2}^k\right)&\cdots &0\\
+        \vdots&\vdots&\ddots&\vdots\\
+        0&\cdots&0&\Delta\left({s_n}^k\right)
+    \end{bmatrix}$$
+We can express $\Delta(s)$, without loss of generality, as $(a_1-s_1)(a_2-s_2)\cdots(a_n-s_n)$. It is apparent that $\Delta(s_j)$ will be zero for all $j=1,2,\cdots,n$ and thus $\Delta(D)=0$.  Since $A^k=PD^kP^{-1}$, we have $\Delta(A)=P\Delta(D)P^{-1}$, which must be zero since $\Delta(D)=0$. We have shown for this special case that $\Delta(A)=0$ must hold.
+
+To prove that the theorem holds for a general matrix, we need only show that $A$ can be found as the limit of some sequence of diagonal matrices. That is, there is a sequence of diagonal matrices $\{A_k:k\in\mathbb{N}\}$ such that $A_k\rightarrow A$ as $k\rightarrow\infty$. Each matrix $A_k$ has distinct eigenvalues and is diagonalizable. Since $\lim_{k\rightarrow\infty}{A_k=A}$, we can conclude that $\lim_{k\rightarrow\infty}\Delta(A_k)=\Delta(A)=0$. Thus, we have proved the original statement.
+\end{proof}
+To prove that this limit holds, we require tools from algebra which are beyond the scope of this text. See \cite{eliashberg_cayley_2011} for more details on proving that this limit holds.
+
+\begin{corollary}[Closed form representations of $A^m$]
+The characteristic equation $\Delta(A)$ will be a polynomial equation of order $n$. It is directly apparent from this that any $A^m$ where $m>n$ can be expressed as some combination of in the span of $\left\{A^k\right\}_{k=0}^{n-1}$.
+\end{corollary}
+
+\section{Controllability and Observability Test}
+\begin{proof}\label{Controllability proof} \textbf{Controllability}\\
+We define a linear system of the standard form:
+$$\mathbf{\dot{x}}=A\textbf{x}+B\textbf{u}, \ \textbf{x}\in\mathbb{R}^n,\ \textbf{u}\in\mathbb{R}^m$$
+If the state $\textbf{x}$ can go from any $\mathbf{x_0}$ to $\mathbf{x_f}$ in a finite time, the system is controllable. We use the Cayley-Hamilton theorem to prove this (shown in \autoref{cayley hamilton}).
+\end{proof}
 
 \section{Derivation of the Exponential Eigenfunction}\label{sec:derivation of exp}
 \begin{proof}
@@ -259,11 +292,58 @@ We may now solve for $e$ by setting $x=1$. The limit of this infinite series giv
 
 \end{proof}
 
+\section{If $a$ is a multiple root, $f'(a)=0$}\label{multiple root}
+Consider a function $f(s) \in \mathbb{R}[x]$. Suppose that $a\in\mathbb{R}$ is a root of $f(s)$ such that $f(a)=0$. We state that 
+$$a \text{ is a multiple root of }f(s)\Leftrightarrow f'(a)=0$$
+\begin{proof}
+We consider $a$ to be a multiple root with multiplicity at least 2. Without loss of generality, we can write
+$$f(s)=(s-a)^kg(s)$$
+Note that $g(s)\neq0$ but may be any scalar or function of $s$ required to satisfy the equality. However $k\geq2$. We find $\frac{df}{ds}$ via the standard rules:
+$$\frac{df}{ds}=k(s-a)^{k-1}g(s)+(s-a)\frac{dg}{ds}$$
+We evaluate this at $a$ and find that:
+$$\frac{df}{ds}\bigg\rvert_{s=a}=k(a-a)^{k-1}g(a)+(a-a)\frac{dg}{ds}=0$$
+Independent of the value of $a$, we find that this expression must be $0$. To complete the proof, we must show this holds from the other direction. We begin with
+$$\text{If }\frac{df}{ds}\bigg\rvert_{s=a}=0\text{, then } a \text{ is a multiple root} $$
+We know that $a$ is at least a single root since $f(a)=0$ is given in our statement. We may write $f(s)$:
+$$f(s)=(s-a)g(s)$$
+We can differentiate the function:
+$$\frac{df}{ds}=g(x)+(s-a)\frac{dg}{ds}$$
+and evaluate at $s=a$:
+$$\frac{df}{ds}\bigg\rvert_{s=a}=g(x)+(s-a)\frac{dg}{ds}$$
+Which results in:
+$$\frac{df}{ds}\bigg\rvert_{s=a}=g(a)$$
+Since we assume that $\frac{df}{ds}\big\rvert_{s=a}=0$, $g(a)=0$. From this, it follows that $g(s)$ must also divide $f(s)$ for the same reason as the first statement. We may thus write:
+$$f(s)=(s-a)^2h(s)$$
+and we have shown that $f(s)$ has a root $a$ with multiplicity of at least 2 and proved both directions.
 
-\chapter{Additional Code}
-This section contains lengthier segments of example code from either the 6-\gls{dof} itself or a proof/example relating to it. Refer to the section numbers to find the appropriate implementation of each code segment.
+\end{proof}
 
-%\lstinputlisting[style=Matlab-editor, caption = Lorenz Attractor]{6DoF Explanation Scripts/Lorenz Attractor/LorenzAttractor.m}\label{code:Lorenz}
+
+\chapter{Answers to Selected Questions}
+
+
+\section{Chapter 8}
+\subsubsection{8.2: Mass Spring Damper Transfer Function}
+\begin{enumerate}
+    \item Given all the variables, it is simple to construct the \gls{eom} as $\ddot{x}+3\dot{x}+2x=u$
+    \item $\frac{Y(s)}{U(s)}=\frac{1}{s^2+3s+2}$
+    \item Choose $y=\dot{x}$. We rewrite the \gls{eom} as $\dot{y}+3y+2x=u$. Thus, we see easily that the state space is:$$\begin{bmatrix}
+        \dot{x}\\\dot{y}
+    \end{bmatrix}=\begin{bmatrix}
+        0&1\\-2&-3
+    \end{bmatrix}\begin{bmatrix}
+        x\\y
+    \end{bmatrix}$$
+    \item We start with the inverse $(sI-A)^{-1}$. We compute this using the simple rules for a $2\times 2$ matrix (otherwise we may use MATLAB). This gives:$$(sI-A)^{-1}=\frac{1}{s^2+3s+2}\begin{bmatrix}
+        s+3&1\\-2&s
+    \end{bmatrix}$$Now, we simply apply matrix multiplication by $C$ and $B$ to get the final answer:$$\frac{1}{s^2+3s+2}\begin{bmatrix}
+        1&0
+    \end{bmatrix}\begin{bmatrix}
+        s+3&1\\-2&s
+    \end{bmatrix}\begin{bmatrix}
+        0\\1
+    \end{bmatrix}=\frac{1}{s^2+3s+2}$$
+\end{enumerate}
 
 \setglossarystyle{altlist}
 \printglossary[title=Special Terms, toctitle = Terms \& Index]

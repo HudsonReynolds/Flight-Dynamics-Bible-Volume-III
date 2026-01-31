@@ -1,8 +1,14 @@
 
 \part{Energy Mechanics}\label{part: energy mech}
 \pagenumbering{arabic}
+\pagestyle{fancy}
+
 \begin{chapquote}{Joseph Fourier}
     ``Mathematics compares the most diverse phenomena and discovers the secret analogies that unite them.''
+\end{chapquote}
+
+\begin{chapquote}
+    
 \end{chapquote}
 
 \chapter*{Energy Mechanics Overview}
@@ -14,7 +20,7 @@ If you lived in the time of Isaac Newton, the answer might be fairly simple - if
 
 Later, physicists would derive a different way of looking at mechanics -- using the methods of energy. This is what we explore in our study of variational calculus and energy mechanics. At the time, many physicists believed that this reframing was simply another expression of Newtonian physics. In some way, this is true. However, the energy method allows us to peer more deeply into the beating heart of physics to examine the fundamental qualities of nature. 
 
-Examining the proceedings of physics in the 20th century, we see this become increasingly apparent. Mass -- Einstein had shown -- was fundamentally tied to the energy of particles in perhaps the most famous equation of all time, $E^2=m^2c^4+p^2c^2$. Later, as physicists began to develop quantum mechanics, energy, not forces, became the fundamental quantity to measure. The famous Schr\"odinger equation, in fact, uses these energy relation:
+Examining the proceedings of physics in the 20th century, we see this become increasingly apparent. Mass -- Einstein had shown -- was fundamentally tied to the energy of particles in perhaps the most famous equation of all time, $E^2=m^2c^4+p^2c^2$. Later, as physicists began to develop quantum mechanics, energy, not forces, became the fundamental quantity to measure. The famous Schr\"odinger equation, in fact, uses this energy relation:
 $$\hat{\mathcal{H}}\psi=E\psi$$
 The insights that humanity gained from this new methodology have permeated physics well into the 20th and 21st centuries. Here, they have found prevalent use in engineering applications as well. To understand the dynamics of complicated control systems or spacecraft, we rely on energy mechanics, rather than Newtonian mechanics, to guide us.
 
@@ -28,11 +34,9 @@ The story of these figures is closely intertwined. It is impossible to discuss o
 
 The story of these figures will culminate in energy mechanics, possibly the most important implication of the studies of these historic figures. The foundations set by these scientists persist in the landscape of modern engineering and physics. 
 
-Euler, Lagrange, Hamilton, and others later contributions to the subjects will not be discussed here, but rather in \autoref{chap:calculus of variations}, \autoref{chap:lagrangian}, and \autoref{chap:hamiltonian}. While the contributions of Weierstrass, Hilbert, and others is important to the mathematical solidification of the calculus of variations, I have chosen not to cover them in this text because I feel that it does not greatly aid readers in understanding the core of the subject.
+Euler, Lagrange, Hamilton, and others' later contributions to the subjects will not be discussed here, but rather in \autoref{chap:calculus of variations}, \autoref{chap:lagrangian}, and \autoref{chap:hamiltonian}. While the contributions of Weierstrass, Hilbert, and others are important to the mathematical solidification of the calculus of variations, I have chosen not to cover them in this text because I feel that it does not greatly aid readers in understanding the core of the subject. The book by Goldstine \cite{goldstine_history_1980} has been especially useful in the development of this chapter. I highly recommend reading chapters 1-3 for readers who are interested in learning more about the history of this subject.
 
-The book by Goldstine \cite{goldstine_history_1980} has been especially useful in the development of this chapter. I highly recommend reading chapters 1-3 for readers who are interested in learning more about the history of this subject.
-
-The goal of this chapter is not necessarily to derive many mathematical expressions, as most of the methods used were archaic and difficult to interpret for the modern reader. Goldstine has great historical analysis of these mathematics that is beyond the scope of the historical background presented here.
+The goal of this chapter is not necessarily to derive many mathematical expressions, as most of the methods used were archaic and difficult to interpret for the modern reader. Goldstine has great historical analysis of these mathematics that is beyond the scope of the historical background presented here. Instead, I aim to present the core ideas of energy mechanics, show how it emerged, and why it is useful for solving some types of problems.
 
 \section{Isaac Newton (1643-1727)} 
 
@@ -43,14 +47,12 @@ The goal of this chapter is not necessarily to derive many mathematical expressi
     \label{fig:Newton}
 \end{figure}
 
-The history of any kind of mechanics must include a study of Isaac Newton. Newton is very famous for his description of mechanics based on forces and vectors. However, Newton is also instrumental character in our study of energy mechanics. 
+The history of any kind of mechanics must include a study of Isaac Newton. Newton is very famous for his description of mechanics based on forces and vectors. However, Newton is also instrumental character in our study of energy mechanics.  In fact, Newton was a founder of Calculus of Variations, solving two of the first problems in the subject, the \textit{minimal resistance problem} and the \gls{brachistochrone} problem, which we will further explore in our study of the calculus of variations. It is on these subjects that we will spend most of the time.
 
-In fact, Newton was instrumental to the development of Calculus of Variations, solving two of the first problems in the subject, the \textit{minimal resistance problem} and the \gls{brachistochrone} problem, which we will further explore in our study of the calculus of variations. It is on these subjects that we will spend most of the time.
-
-Before we explore his contributions in this field, though, an understanding of his work in force-based mechanics and calculus is needed. This background section draws mostly from the text \cite{noauthor_isaac_2017}. Newton's work on variational calculus draws from several different sources, including the original \textit{Principia} and the \cite{goldstine_fermat_1980} chapter of Goldstine.
+Before we explore his contributions in this field, though, an understanding of his work in force-based mechanics and calculus is needed. This background section draws mostly from \cite{noauthor_isaac_2017}. Newton's work on variational calculus draws from several different sources, including the original \textit{Principia} and the \cite{goldstine_fermat_1980} chapter of Goldstine.
 
 \subsection{Newton's Beginnings (1643-1661)}
-In a story likely familiar to many people who find their interests in the realm of physics and engineering, Newton was born as an unwanted child to both his mother and father. Born on Christmas Day in 1642 (Early January, 1643 in the modern calendar), Newton was born into an England in the midst of a civil war and full of strife. His father had died 3 months prior to his birth, and he was born prematurely. Newton was unwanted by his own mother, so he was raised by his maternal grandmother, Margery Ayscough.
+In a story likely familiar to many people who find their interests in the realm of physics and engineering, Newton was born as an unwanted child to both his mother and father. On Christmas Day in 1642 (Early January, 1643 in the modern calendar), Newton was born into an England in the midst of a civil war and full of strife. His father had died 3 months prior to his birth, and Newton was born prematurely. Newton was unwanted by his own mother, so he was raised by his maternal grandmother, Margery Ayscough.
 
 Needless to say, Isaac Newton's early years were dominated by a lack of control and great turmoil. Thus, Newton took great solace in the isolation and fundamental truth of mathematics. This background in Newton's early life is likely to have had profound influences on his growth into adulthood and his later exploration of math.
 
@@ -58,18 +60,16 @@ Newton, in his years of study before college, had a great fascination for mechan
 
 \subsection{The Newtonian Calculus (1661-1679)}
 
-During his time in college, Newton began his real exploration of mathematics. Newton's first great contribution to mathematics was in his studies of the Binomial theorem, which can give an expansion for a binomial raised to an arbitrary degree. Before Newton, there existed a theorem for the binomial theorem for the integers, $\mathbb{Z}$, which is presented below in \autoref{thm: binomial}.
+During his time in college, Newton began his real exploration of mathematics. Newton's first great contribution to mathematics was in his studies of the Binomial theorem, which can give an expansion for a binomial raised to an arbitrary degree. Before Newton, there existed a theorem for the binomial theorem for the positive integers, $\mathbb{Z}^+$, which is presented below in \autoref{thm: binomial}.
 
 \begin{theorem}[Binomial theorem]\label{thm: binomial}
-    A binomial of form $x+y$ to a power n, where $n\in\mathbb{Z}$, the expansion can be written as:
+    A binomial of form $x+y$ to a power n, where $n\in\mathbb{Z}^+$, the expansion can be written as:
     $$(x+y)^n=\sum_{k=0}^{n}\binom{n} {k}x^ky^{n-k}$$
     where $\binom{r}{k}$ is defined as:
     $$\binom{n}{k}=\frac{n!}{k!(n-k)!}$$
 \end{theorem}
 
-The original scope of this theorem only applies to the integer elements, $\mathbb{Z}$. Newton, however, extended the application of this theorem to the whole of the real numbers, $\mathbb{R}$. Newton's generalized theorem is then:
-
-
+The original scope of this theorem, as I have just stated, only applies to the positive integers, $\mathbb{Z}^+$. Newton started by applying this formula on negative integers, which turned out to work well! He then extended the application of this theorem to the whole of the real numbers, $\mathbb{R}$ (Note: this is a \textit{great} accomplishment, but there is not time to dive into every interesting idea in this book). Newton's generalized theorem is then:
 \begin{theorem}[Generalized Binomial theorem]
     A binomial of form $x+y$ to a power r, where $r\in\mathbb{R}$, the expansion can be written as:
     $$(x+y)^r=\sum_{k-0}^{\infty}\binom{r} {k}x^ry^{r-k}$$
@@ -77,7 +77,7 @@ The original scope of this theorem only applies to the integer elements, $\mathb
     $$\binom{r}{k}=\frac{r(r-1)(r-2)\cdots(r-k+1)}{k!}$$
 \end{theorem}
 
-We note here that Newton has introduced an infinite sum! This is one of the first steps towards the methods of calculus. In fact, this equation has applicability towards the definition of the constant $e$, which is very fundamental in our studies of calculus. We can see this by inspection the definition of $e$ as:
+We note here that Newton has introduced an infinite sum! This is one of the first steps towards the methods of calculus. In fact, this equation has applicability towards the definition of the constant $e$, which is very fundamental in our studies of calculus.\endnote{This equation also allowed mathematicians to calculate the value of $\pi$ to better approximation than ever before. See \cite{veritasium_discovery_2021} for more info on this.} We can see this by inspection the definition of $e$ as:
 $$ \lim_{x\to\infty} \left(1+\frac{1}{n}\right)^n$$
 Using Newton's generalized binomial theorem, this infinite limit can be approximated and the value of $e$ can be closely approximated.
 
@@ -96,15 +96,14 @@ While the Newtonian methods of calculus are largely forgotten today in favor of 
 \end{figure}
 It is in the midst of Newton's most fruitful years that we must talk about Fermat's contributions to the subject of energy mechanics, which predate Newton's earliest contributions by nearly a score. Fermat, in the view of many, was the first to consider how nature may perform actions in `optimal' ways.
 
-Fermat is famous in mathematics for \textit{Fermat's Last Theorem}, which remained unsolved for 358 years. A solution involving elliptic curves exists, which you can find an in-depth discussion in \cite{hellegouarch_invitation_2001} (this is entirely irrelevant to our work here). 
+Fermat is famous in mathematics for \textit{Fermat's Last Theorem}, which remained unsolved for 358 years. A solution involving elliptic curves exists, on which you can find an in-depth discussion in \cite{hellegouarch_invitation_2001} (this is entirely irrelevant to our work here). 
 
-His contributions here, however, relate to the so-called \textit{Fermat's Principle of Least Time}. Fermat's biggest insight was the understanding that 'nature operates by means and ways that are easiest and fastest'. By this, Fermat says that light will always take a path that minimizes the total time. Although this may seem a simple statement, it will underlie the physical principle at the root of energy mechanics.
+His contributions here, however, relate to the so-called \textit{Fermat's Principle of Least Time}. Fermat's biggest insight was the understanding that `nature operates by means and ways that are easiest and fastest'. By this, Fermat says that light will always take a path that minimizes the total time. Although this may seem a simple statement, it will underlie the physical principle at the root of energy mechanics.\endnote{During Fermat's time, it was thought that religious figures such as the Christian God dictated that such a principle was true. It was popular at the time to combine religious beliefs with physics and even use such beliefs as a kind of `proof' for why such principles are preferred to other principles. Newton, in fact, was a devout Christian. Today, most physicists view Fermat's Theorem as an embodiment of the fact that we can describe things locally (Newtonian-like) or globally (Fermat/Lagrangian-like) and still arrive at the same result either way. The fact that we can do so is astounding, but isn't thought to require divine intervention as things stand today.
 
-Most of Fermat's work involves systems of optics. For any system, Fermat's Principle of Least Time involves finding a light path such that the total time is minimized.\endnote{It can be shown that this is not exactly true, as the only condition required for sufficiency in this problem is that the changes to the variation are of the second-order. Fermat's condition is simply one such case of this. See \cite{feynman_feynman_1963} for more info.} Fermat started by considering the refraction of light, which can easily be observed. Fermat's set up is as shown in \autoref{fig:least time ray}. Fermat noticed that the light path will refract and change its angle when moving through a medium where the speed of light is slower.\endnote{I should note that technically, the speed of light is constant. However, we may approximate the speed of light as being slower in more optically dense mediums. What really happens is that the light reflects and changes directions between a greater number of particles in an optically dense medium, which gives the appearance of a reduced speed on the macroscopic scale.}
+The concept of `God' still enters the vernacular of physics sometimes (notably, Einstein was quite famous for this), but it is often used as a kind of personification of nature rather than a statement about the role of religion in physics.}
 
-The law of reflection can also be shown from Fermat's Principle, although that will not be done here. It is quite similar to the derivation of the refraction law. If you find an interest in the subject matter here, a much more in-depth discussion in the wonderful Feynman lectures on physics can be found in \cite{feynman_feynman_1963}.
-
-\begin{figure}
+Most of Fermat's work involves systems of optics. For any system, Fermat's Principle of Least Time involves finding a light path such that the total time is minimized.\endnote{It can be shown that this is not exactly true, as the only condition required for sufficiency in this problem is that the changes to the variation are of the second-order. Fermat's condition is simply one such case of this. See \cite{feynman_feynman_1963} for more info.} Fermat started by considering the refraction of light, which can easily be observed. The setup is as shown in \autoref{fig:least time ray}. Fermat noticed that the light path will refract and change its angle when moving through a medium where the speed of light is slower.\endnote{I should note that technically, the speed of light is constant. However, we may approximate the speed of light as being slower in more optically dense mediums. What really happens is that the light reflects and changes directions between a greater number of particles in an optically dense medium, which gives the appearance of a reduced speed on the macroscopic scale.} Notice that when entering the more optically dense medium, the angle of the light will become more steep ($\theta_r<\theta_i)$ because light travels slower through this dense medium. This is Fermat's principle in action.
+\begin{figure}[ht]
     \centering
     
 
@@ -190,9 +189,9 @@ If you would like to have a greater understanding of the underlying principles i
 We will keep Fermat's result in mind, as we will see it again when we solve the problem of the \gls{brachistochrone}. For now, let's go back to Newton to understand his developments in his masterwork, \textit{Principia Mathematica}.
 
 \section{Principia (1687)}
-It is in \textit{Principia} that we find the first evidences of Newton's contributions to the field of energy mechanics. It is Newton's work in the \textit{Principia} that most scholars agree are the first real works of the calculus of variations.
+It is in \textit{Principia} that we find the first evidence of Newton's contributions to the field of energy mechanics. It is Newton's works in the \textit{Principia} that most scholars agree are the first real works of the calculus of variations.
 
-Newton's first attempt at a variational problem in 1685 was to understand the shape that minimizes the drag, which Newton called the \textit{minimal resistance problem}. In essence, this problem involves finding a solid of revolution for which the object produces a minimal drag. In Newton's time, no solidified theories of fluid dynamics had been formulated, so Newton suggested a fluid that is `a rare medium of very small quiescent particles of equal magnitude and freely disposed at equal distances from one other'. Although this fluid is not at all reminiscent of a real fluid\endnote{Unless, curiously, the fluid is travelling at hypersonic speeds, in which case this model is quite good.}, it still remains a useful exercise in the study of the calculus of variations.
+Newton's first attempt at a variational problem in 1685 was to understand the shape that minimizes drag, which Newton called the \textit{minimal resistance problem}. In Newton's time, no solidified theories of fluid dynamics had been formulated, so Newton suggested a fluid that is `a rare medium of very small quiescent particles of equal magnitude and freely disposed at equal distances from one other'. Although this fluid is not at all reminiscent of a real fluid\endnote{Unless, curiously, the fluid is travelling at hypersonic speeds, in which case this model is quite good.}, it still remains a useful exercise in the study of the calculus of variations.
 
 The major advancement in this problem came from Newton's formulation to solve it, rather than the problem setup, which we will not derive\endnote{See \cite{goldstine_history_1980} for information on the derivation.}. Newton came up with a simple integral to represent the drag of an object:$$\int_{t_1}^{t_2}{\frac{y\dot{y}^3dt}{\dot{x}^2+\dot{y}^2}}$$In this equation, Newton has parameterized the minimal drag surface curve in terms of the variable $t$ and expressed the derivatives of $x$ and $y$ with respect to $t$ as $\dot{x}$ and $\dot{y}$. As we will see later, this integral is something that we will call a \gls{functional}. When we evaluate this integral, we will get a single number, and that number is the quantity which we want to minimize in order to get the lowest drag.
 
@@ -202,7 +201,7 @@ With the idea of the functional created and a methodology to solve problems in t
 
 \section{Brachistochrone (1696)}
 
-In June of 1696, nearly a decade after Newton's initial foray into the calculus of variations, John Bernoulli challenged the mathematical world to solve the problem of the \gls{brachistochrone} -- a word coming from Greek, meaning 'shortest time'. In its simplest description, the problem involves finding a curve for which a frictionless bead will descend the fastest. A simple diagram of the system is reproduced in \autoref{fig:Brachistochrone}. 
+In June of 1696, nearly a decade after Newton's initial foray into the calculus of variations, John Bernoulli challenged the mathematical world to solve the problem of the \gls{brachistochrone} -- a word coming from Greek, meaning `shortest time'. In its simplest description, the problem involves finding a curve for which a frictionless bead will descend the fastest. A simple diagram of the system is reproduced in \autoref{fig:Brachistochrone}. 
 
 \begin{figure}[ht]
     \centering
@@ -244,9 +243,7 @@ In June of 1696, nearly a decade after Newton's initial foray into the calculus 
 
 John Bernoulli, at the time, had come up with a quite an ingenious solution to the problem. However, he challenged the rest of the mathematical world to solve the problem as well, with a deadline of Easter of 1697.
 
-At the time, there were 4 notable solutions, those coming from Leibniz, John Bernoulli, James Bernoulli, and Isaac Newton (who submitted anonymously). 
-
-Newton, supposedly, spent one night on his anonymous solution, and submitted it to Bernoulli. Despite being an anonymous submission, Bernoulli is said to have recognized Newton's solution by the nature of the writing. Bernoulli said, ''tanquam ex ungue leonem'' (I recognize the lion by its claw), of Newton's solution.
+At the time, there were 4 notable solutions, those coming from Leibniz, John Bernoulli, James Bernoulli, and Isaac Newton (who submitted anonymously). Newton, supposedly, spent one night on his anonymous solution, and submitted it to Bernoulli. Despite being an anonymous submission, Bernoulli is said to have recognized Newton's solution by the nature of the writing. Bernoulli said, ``tanquam ex ungue leonem'' (I recognize the lion by its claw), of Newton's solution.
 
 An exploration of the problem in the modern context (using the Euler-Lagrange approach) will be studied in \autoref{chap:calculus of variations}. The approach of Leibniz and Newton is similar to the modern approach, so I will not touch on those here. However, I will explore the solution of John Bernoulli here, mostly for the interesting approach. This will also help prime the reader for the derivation that is to come later. This derivation is by no means necessary to the understanding of the calculus of variations, but readers may find it to be quite elegant and enjoyable.
 
@@ -261,7 +258,7 @@ Importantly, we can see that the velocity is independent of the horizontal range
 
 From here, we can proceed in a number of ways. The standard method to do this will be explored later. Here, however, Bernoulli makes an insight relating the problem to Fermat's Least Time principle.
 
-Bernoulli's insight is as follows - a ray of light moves through a medium in a way that reaches the boundary in the shortest amount of time (as shown by Fermat). So, Bernoulli sets the index of refraction at each height inversely proportional to the velocity (as shown in \autoref{fig:Brachistochrone Optical}). By finding the path that light would take through this medium, Bernoulli can find the curve of fastest descent.
+Bernoulli's insight is as follows - a ray of light moves through a medium in a way that reaches the boundary in the shortest amount of time (as shown by Fermat). So, he sets the index of refraction at each height inversely proportional to the velocity (as shown in \autoref{fig:Brachistochrone Optical}). By finding the path that light would take through this medium, Bernoulli can find the curve of fastest descent.
 
 Bernoulli's idea is to create an optical medium where the refraction index changes as a function of the height. Since the velocity is only dependent on the height, this optical picture is exactly analogous. So, by tracking the path that a ray of light would take through this optical medium, we can find a solution for the \gls{brachistochrone} problem.
 \begin{figure}[ht]
@@ -302,7 +299,7 @@ color(100bp)=(transparent!49) }
     \label{fig:Brachistochrone Optical}
 \end{figure}
 
-With Bernoulli's idea in mind, let us formalute a mathematical description. We will start by showing a modern depiction of Bernoulli's drawing, which I will discuss as we work through the problem. This is shown in \autoref{fig:Brachistochrone Bernoulli}.  The \gls{brachistochrone} curve is denoted with the curve $ABK$. The velocity of the particle as function of height is denoted by the blue curve $AH$, with the magnitude at that height denoted by the horizontal distance from the line $\overline{AC}$. $A$ and $B$, like before, denote the start and end points of the \gls{brachistochrone}.
+With Bernoulli's idea in mind, let us formulate a mathematical description. We will start by showing a modern depiction of Bernoulli's drawing, which I will discuss as we work through the problem. This is shown in \autoref{fig:Brachistochrone Bernoulli}.  The \gls{brachistochrone} curve is denoted with the curve $ABK$. The velocity of the particle as a function of height is denoted by the blue curve $AH$, with the magnitude at that height denoted by the horizontal distance from the line $\overline{AC}$. $A$ and $B$, like before, denote the start and end points of the \gls{brachistochrone}.
 
 
 \begin{figure}[ht]
@@ -397,13 +394,13 @@ With Bernoulli's idea in mind, let us formalute a mathematical description. We w
 
 
 
-Next, we find the differential element, $dz$. This is given by the vertical component ($\hat{x}$-direction in our established coordinates), which is given by the length $\overline{Mn}$, and the horizontal component ($\hat{y}$-direction), $\overline{nm}$. Denoting these distances $dx$ and $dy$, we have the fundemental relation:
+Next, we find the differential element, $dz$. This is given by the vertical component ($\hat{x}$-direction in our established coordinates), which is given by the length $\overline{Mn}$, and the horizontal component ($\hat{y}$-direction), $\overline{nm}$. Denoting these distances $dx$ and $dy$, we have the fundamental relation:
 \begin{equation}\label{eq:pathlength}
     dz^2=dx^2+dy^2
 \end{equation}
 Next, he uses the relationship from Snell's Law:
 $$n\sin\theta=const.$$
-The quantity $\sin\theta$ is thus $\frac{dy}{dz}$ and $n$ some arbitrary value depending on the exact curve.
+The quantity $\sin\theta$ is thus $\frac{dy}{dz}$ and $n$ is some arbitrary value depending on the exact curve.
 
 Remembering that the optical density is inversely proportional to the velocity at a point, Bernoulli relates the horizontal and path length distance to the velocity as well, using the previously established relationship that $\sin\theta=\frac{dy}{dz}$:
 $$\frac{dy}{dz}=\frac{v}{n}$$
@@ -421,25 +418,25 @@ From here, it is simply a matter of solving the differential equation to yield t
 $$a\tan^{-1}\left(\sqrt{\frac{x}{n-x}}\right)-(n-x)\sqrt{\frac{x}{n-x}}$$
 This curve is the curve of a cycloid, the curve generated by tracking a point on a circle which rolls without slipping.
 
-The cycloid, Bernoulli noted, also has some other interesting properties which are strongly connected with the \gls{brachistochrone}. Huygens, another famous mathematician and physicist, had found earlier that a pendulum with a cycloidal path is \textit{isochronous}, meaning that the time for a swing of the pendulum is indepenent of the amplitude. Similarly, for the \gls{brachistochrone}, a particle released at any point along the curve will reach point $B$ at exactly the same time.
+The cycloid, Bernoulli noted, also has some other interesting properties which are strongly connected with the \gls{brachistochrone}. Huygens, another famous mathematician and physicist, had found earlier that a pendulum with a cycloidal path is \textit{isochronous}, meaning that the time for a swing of the pendulum is independent of the amplitude. Similarly, for the \gls{brachistochrone}, a particle released at any point along the curve will reach point $B$ at exactly the same time.
 
 %include some graphs of curve and some cool facts about it - same time from any point, pendulum with cycloidal path, Huygens, etc.
 
 It is at this point that we have sufficient background to understand the work that led to the creation of the calculus of variations. From these foundations, mathematicians such as Euler and Lagrange built up a rigorous basis for the subject, which we will now explore in the next chapter.
 
-\subsection{Historical Appendix: Fermat's Principle Proven}\label{sec: connection to quantum}
+\subsection*{Historical Addendum: Proving Fermat's Principle}\label{sec: connection to quantum}
 
-Now that we've examined the history of variational calculus, let's return to Fermat's principle to understand why it is true. Why does light take a path that minimizes time? Is there any physical reason for this?
+Now\footnote{This section may be skipped without loss of continuity.} that we've examined the history of variational calculus, let's return to Fermat's principle to understand why it is true. Why does light take a path that minimizes time? Is there any physical reason for this?
 
-To fully understand this question, we must understand that during Fermat's time there was a rift in the world of physics concerning the behavior of light. Some, such as Newton, believed light to be a particle. Others, led by the prominent dutch mathematician Christaan Huygens, believed that light was a wave.
+To fully understand this question, we must understand that during Fermat's time there was a rift in the world of physics concerning the behavior of light. Some, such as Newton, believed light to be a particle. Others, led by the prominent Dutch mathematician Christiaan Huygens, believed that light was a wave.
 
-When we consider light to be a wave, the problem of least time seems to have a simple explanation. If the light takes a suboptimal trajectory (that is, a trajectory that takes more time), the wave will destructively interfere with itself. It is only light which takes the shortest path which will constructively interfere and produce a visible spot. So the riddle is solved. Newton is wrong, and light is in fact a wave! The problem is this: We can measure individual packets of light, photons, arriving at photomultipliers or sensors. When a light source gets dimmer, we simply measure fewer numbers of photons, but the energies associated with each one is exactly the same.
+When we consider light to be a wave, the problem of least time seems to have a simple explanation. If the light takes a suboptimal trajectory (that is, a trajectory that takes more time), the wave will destructively interfere with itself. It is only light which takes the shortest path which will constructively interfere and produce a visible spot. So the riddle is solved. Newton is wrong, and light is in fact a wave! The problem is this: We can measure individual packets of light, photons, arriving at photomultipliers or sensors. When a light source gets dimmer, we simply measure fewer numbers of photons, but the energies associated with each one are exactly the same.
 
-So we must again reconsider our viewpoint. Light must showcase both properties to match all of the evidence! Of course, it is now popularly understood that light - and in fact everything else - exhibits both properties in a wave-particle duality.\endnote{Of course, the wave-particle duality is not precisely true. At the most fundamental level, we now believe that the universe is described purely by quantum fields. Particles, however, can appear to arise out of fluctuations in these quantum fields. Nonetheless, these fluctuations are still quantized, giving the appearance of particles. The description of light as particles suffices for our purposes.}
+So we must again reconsider our viewpoint. Light must showcase both properties to match all of the evidence! Of course, it is now popularly understood that light - and in fact everything else - exhibits both properties in a wave-particle duality.\endnote{Of course, the wave-particle duality is not precisely true. At the most fundamental level, we now believe that the universe is described purely by quantum fields. Particles, however, can appear to arise out of fluctuations in these quantum fields. Because the fluctuations of the field are quantized, it gives the appearance of individual particles. The description of light as particles suffices for our purposes.}
 
-The existence of this duality alone does not necessarily answer our question, but it gets us on the path to doing so. The true answer to this question remained unknown for nearly 300 years -- until the advent of \gls{qed} in the 1940's, the invention of which would lead Richard Feynman and Julian Schwinger to winning the Nobel Prize in physics.
+The existence of this duality alone does not necessarily answer our question, but it gets us on the path to doing so. The true answer to this question remained unknown for nearly 300 years -- until the advent of \gls{qed} in the 1940's, the invention of which would lead Richard Feynman and Julian Schwinger to win the Nobel Prize in physics.
 
-Of course, explaining a Nobel Prize worthy achievement in physics is no easy task! Luckily, Feynman himself has offered quite a simple explanation of the phenomena of light in his book \cite{richard_phillips_feynman_qed_1988}. I highly suggest the interested reader to read this book in full (it is quite short and easy to read) to better comprehend this section. Here, I will present only a portion of Feynman's argument to convince you that the least action principle naturally arises from \gls{qed}.
+Of course, explaining a Nobel Prize worthy achievement in physics is no easy task! Luckily, Feynman himself has offered quite a simple explanation of the phenomena of light in his book \cite{richard_phillips_feynman_qed_1988}. I highly suggest the interested reader to read this book in full (it is quite short and easy to read) to better comprehend this section. Here, I will present only a portion of Feynman's argument to convince you that the least time principle naturally arises from \gls{qed}.
 
 \subsubsection{Mirrors}
 Although we earlier made a computation for Snell's Law using Fermat's principle, we will instead consider the case of the reflecting surface here. The derivation of the equivalent least time principle for the mirror is left as an exercise, but follows from a similar procedure.
@@ -743,7 +740,7 @@ The last step in this process is to add all of the vectors together to generate 
 
 Although the methodology described above is perfectly sound, the angular and time differences described here are quite exaggerated. In reality, even paths deviating by less than a degree from the ideal path tend to cancel each other out for visible light. This is a result of the frequency of light being so high that phase shifts occur on the order of picoseconds.
 
-If you want to gain a better understanding of this relationship, an interactive MATLAB script "Mirror.m" in \autoref{sec: Quantum Deriv Mirror} will run a simulation of this scenario. In this toy model it can be seen how the vectors add in a similar way to our diagramatic depiction. For a true physical system, these effects occur on a much smaller scale. However, we will still see the same effects arise and the form spiral patterns near the ends, where the vectors tend to cancel each other out. Together, they form a very beautiful spiral that resemble the sound holes of a string instrument, which we can see in \autoref{fig:mirror vec 2}. Again, only the components near the path of least time add together! So, on the large scale, we say that light does indeed take the path of least time, even though we can show on the quantum scale that it is free to do anything!
+If you want to gain a better understanding of this relationship, an interactive MATLAB script "Mirror.m" in the GitHub. This will run a simulation of this scenario. In this toy model it can be seen how the vectors add in a similar way to our diagramatic depiction. For a true physical system, these effects occur on a much smaller scale. However, we will still see the same effects arise and the form spiral patterns near the ends, where the vectors tend to cancel each other out. Together, they form a very beautiful spiral that resemble the sound holes of a string instrument, which we can see in \autoref{fig:mirror vec 2}. Again, only the components near the path of least time add together! So, on the large scale, we say that light does indeed take the path of least time, even though we can show on the quantum scale that it is free to do anything!
 
 \begin{figure}
     \centering
@@ -759,7 +756,6 @@ Another simplification you may have noticed is that the magnitude of the final v
 Having gained this understanding of Fermat's least time principle, we may return to our journey on understanding variational calculus.
 
 \newpage
-
 \printendnotes
 
 \chapter{Calculus of Variations}\label{chap:calculus of variations}
@@ -768,14 +764,16 @@ Having gained this understanding of Fermat's least time principle, we may return
 % \color{black}
 
 \begin{chapquote}{Richard Feynman}
- ''Nature uses only the longest threads to weave her patterns, so that each small piece of her fabric reveals the organization of the entire tapestry.''
+ ``Nature uses only the longest threads to weave her patterns, so that each small piece of her fabric reveals the organization of the entire tapestry.''
 \end{chapquote}
 
 The calculus of variations underpins the ideas of \gls{Lagrangian} and \gls{Hamiltonian} mechanics, so it is important to understand the principles behind it before moving on to the actual mechanics. In analogy to how single variable calculus is fundamental to Newtonian mechanics, the calculus of variations is fundamental to energy mechanics.
 
-The fundamental idea of the calculus of variations is simple. We want to find the maximums and minimums over a whole \textit{path} in our problem. Why? In physics, we often see that quantities are minimized or maximized for some reason. For example, a soap surface will minimize its surface area, or a beam of photons will follow a \gls{geodesic} of spacetime. Light will also refract through surfaces to minimize time as we have seen in Fermat's least time principle. As we will soon see, all of mechanics can be understood by the fact that a quantity called the \textit{action} can also be minimized.
+The fundamental idea of the calculus of variations is simple. We want to find the maximums and minimums over a whole \textit{path} in our problem. Why? In physics, we often see that quantities are minimized or maximized for some reason. For example, a soap surface will minimize its surface area, or a beam of photons will follow a \gls{geodesic} of spacetime. Light will also reflect and refract across surfaces to minimize time, as we have just seen. As we will soon see, all of mechanics can be understood by the fact that a quantity called the \textit{action} can also be minimized.
 
-We can draw an analogy between single variable calculus to understand what the calculus of variations is. In the standard picture of calculus, we are concerned with the change of a function when subjected to some infinitesimal change in a single direction, a small $dx$. In variational calculus, we are concerned with varying the whole path by some $\eta(x)$ and how that changes the value of an integral over the function.
+There is an interesting idea contained in this statement that we have just made. In the Newtonian paradigm, we consider forces acting on an object, and these local changes lead us to a final trajectory as we advance time forward -- what we might call an initial value problem. In the paradigm we have just described, we instead consider the whole path taken from point $A$ to point $B$ -- a boundary value problem. Both, however, give the same answer. Instead of taking a local view of the physics, we take a global view.
+
+We can draw an analogy between single variable calculus to understand more deeply what the calculus of variations is. In the standard picture of calculus, we are concerned with the change of a function when subjected to some infinitesimal change in a single direction, a small $dx$. In variational calculus, we are concerned with varying the whole path by some $\eta(x)$ and how that changes the value of an integral over the function -- analogous to our local vs. global view.
 \begin{figure}[ht]
     \centering
 
@@ -820,8 +818,9 @@ We can draw an analogy between single variable calculus to understand what the c
     \caption{Demonstration of the key difference between standard single variable calculus and variational calculus.}
     \label{fig:variational calc}
 \end{figure}
+Let's extend the analogy between single variable calculus a little bit further. In standard calculus, when we do a small variance $dx$, we get some change $dy$. At a maximum or minimum, $dy$ will be zero when we do a shift by $dx$. By the same reasoning, when using a whole function, we know we must have reached a local minimum or maximum whenever we add some $\varepsilon\eta(x)$ and the value of our whole function doesn't change.\endnote{You may wonder at this point what it means to have the `value' of a function. We will return to this point later.}
 
-Because so many physical phenomena are governed by this behavior to minimize certain quantities, the calculus of variations became a prominent field of study from the 17th through the 20th centuries. Of course, the calculus of variations also has many applications outside of these confines, some of which will be explored at the end of this chapter. The key component of this theory that we need for energy mechanics is called the Euler-Lagrange equation, which we will now derive.
+Because so many physical phenomena are governed by this behavior to minimize certain quantities, the calculus of variations became a prominent field of study from the 17th through the 20th centuries. Of course, the calculus of variations also has many applications outside of the confines of physics, some of which will be briefly explored at the end of this chapter. The key component of this theory that we need for energy mechanics is called the Euler-Lagrange equation, which we will now derive.
 
 \section{Derivation of Euler-Lagrange Equation}
 
@@ -829,38 +828,26 @@ As stated before, for an optimization problem, we need to find the minima or max
 
 Whenever we try to perform optimization, we need to know \textit{what} we are optimizing for. So, we should state our goal a bit more precisely: we are attempting to find a function that is the minimum for some set of conditions. In this case, we will take those set of conditions to be a state $y(x)$ and it's derivative $y'(x)$.
 
-You may notice that these conditions are themselves a function of $x$! This is where we see additional complexity as compared to single variable calculus, as we must minimize over this entire range of values. We call the function that we are trying to minimize $f$. 
+You may notice that these conditions are themselves a function of $x$. This is where we see additional complexity as compared to single variable calculus, as we must minimize over this entire range of values.\endnote{In fact, we must minimize our function over a range that has an infinite number of values. For this reason, the calculus of variations is sometimes cited as a type of infinite dimensional calculus.} We call the function that we are trying to minimize $f$. 
 
-To reiterate, the conditions take the form of a function, as they are dependent on some variable $x$. We need to find another function, $f$, which abides by these constraint equations, but is also a minimum! Since $f$ has a dependence on these constraints, we may write $f$ as:
+To reiterate, the conditions take the form of a function, as they are dependent on some variable $x$. We need to find another function, $f$, which abides by these constraint equations. Since $f$ has a dependence on these constraints, we may write $f$ as:
 $$f[y(x),y'(x);x]$$
-This statement means that $f$ is a function which is defined by $y(x)$ and its derivative $y'(x)$. The semicolon notes that the variable of interest is $x$.
-
-We should note that there is no intrinsic reason that $f$ is a function of $y(x)$ and $y'(x)$. It turns out that for the \gls{Lagrangian} this is the appropriate constraint on the system. However, we can imagine in the general case that $f$ is dependent on some other criteria, such as $y''(x)$. We will not tackle that situation here, but the proceeding steps may be conducted similarly for such a function. For now, let's return to a function $f$ which is defined in terms of conditions on $y(x)$ and $y'(x)$.
+This statement means that $f$ is a function which is defined by $y(x)$ and its derivative $y'(x)$. The semicolon notes that the variable of interest is $x$. We should note that there is no intrinsic reason that $f$ is a function of $y(x)$ and $y'(x)$. It turns out that for the \gls{Lagrangian} this is the appropriate constraint on the system. However, we can imagine in the general case that $f$ is dependent on some other criteria, such as $y''(x)$. We will not tackle that situation here, but the proceeding steps may be conducted similarly for such a function. For now, let's return to a function $f$ which is defined in terms of conditions on $y(x)$ and $y'(x)$.
 
 We may write a function $f$ which abides by these conditions, say $f = y(x)+2y'(x)$. That is fine, but how can we find where this function is minimum? What does that even mean?
 
-Since our function exists over a whole range of values of $x$, the sensible thing to do is to consider the function $f$ over all values of $x$, and assign a value to it that way. Of course, we can do this quite easily with an integral! We can evaluate this at two set endpoints, $x_1$ and $x_2$, and this will return a single number value that represents the function! We call this scalar output a \gls{functional}. This \gls{functional} is essentially a function of $f$, so it is a function of a function.
-
-We typically describe a functional with the letter $J$, and we write the form of the integral as:
+Since our function exists over a whole range of values of $x$, the sensible thing to do is to consider the function $f$ over all values of $x$, and assign a value to it that way. Of course, we can do this quite easily with an integral! We can evaluate this at two set endpoints, $x_1$ and $x_2$, and this will return a single number value that represents the function. We call this scalar output a \gls{functional}. This \gls{functional} is essentially a function of $f$, so it is a function of a function. We typically describe a functional with the letter $J$, and we write the form of the integral as:
 \begin{equation}\label{eq:functional}
     J=\int_{x_1}^{x_2}f\left[y(x),y'(x);x\right]{dx}
 \end{equation}
 Remember that the most important aspect of $J$ is that we have taken an entire function, over a fixed range, and collapsed all of that functions properties into a single number, $J$. We may say this more precisely as: The \gls{functional}, $J$, is a quantity which maps a function onto the real number line. This means that it takes the function as its input and outputs a single real number (that is, a function of a function). 
 
-This, in essence, is the calculus of variations. For our purposes, we only want a specific application, which is to solve optimization problems to find the minima of functions. That is, we are attempting to find conditions on the function, $y(x)$ and $y'(x)$, which yield an extrema of $J$. 
-
-\newglossaryentry{neigh func}
-{
-    name=neighborhood function,
-    first = {\textit{neighborhood function}},
-    description={A small function added to another function in the calculus of variations. Analogous to a differential element in single variate calculus}
-}
+This idea of a functional is one of the key tools in the calculus of variations. For our purposes, we only want to use this property to solve for an optimal function $f$. More precisely, we are attempting to find conditions on the function, $y(x)$ and $y'(x)$, which yield an extrema of $J$. 
 
 \subsubsection{Extrema conditions}
 To find the extrema of the function is quite similar to the approach we would take in single variate calculus. We are all familiar with the method by which is this accomplished in single variable calculus. To find the minima or maxima of a function $f(x)$, we find where $f'(x)=0$ (\autoref{fig:single var func}).
 \begin{figure}[ht]
     \centering
-
 
 \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
@@ -895,11 +882,9 @@ To find the extrema of the function is quite similar to the approach we would ta
     \caption{Extrema of a single variable function}
     \label{fig:single var func}
 \end{figure}
-What is important to note is what happens right around these extremal points. If we are right at the point where $f'(0)$, we are at a local minimum or maximum of the function\endnote{There is another case where we are at neither, if the function does not change sign and just goes perfectly flat. This is not illustrated here for simplicity.}. However, if we move left or right by some very small amount -- which we call $\varepsilon$ -- the value of the function stays the same! This should come as no suprise, because $f'(x)$ gives a local value of the tangent of the function. In other words, it gives a linear approximation of the function at that location. As long as $\varepsilon$ remains small, $f(x)$ is perfectly represented by this linear approximation.
+What is important to note is what happens right around these extremal points. If we are right at the point where $f'(0)$, we are at a local minimum or maximum of the function\endnote{There is another case where we are at neither, if the function does not change sign and just goes perfectly flat. This is not illustrated here for simplicity.}. However, if we move left or right by some very small amount -- which we call $\varepsilon$ -- the value of the function stays the same! This should come as no surprise, because $f'(x)$ gives a local value of the tangent of the function. In other words, it gives a linear approximation of the function at that location. As long as $\varepsilon$ remains small, $f(x)$ is perfectly represented by this linear approximation.
 
-Now, we may extend this definition to the more difficult case of the extrema in variational calculus. Instead of adding some small value, we are instead adding some small function. This function is typically denoted $\eta(x)$, and by convention we still multiply $\eta(x)$ by $\varepsilon$ to denote the fact that we are considering very small functions.
-
-In analogy to the single variable case of a minimum, if we have a minimized functional, we can add $\varepsilon\eta(x)$ to $y(x)$ and the value of the functional remains unchanged! We can see this in \autoref{fig:neigh func}.
+Now, we may extend this definition to the more difficult case of the extrema in variational calculus. Instead of adding some small value, we are instead adding some small function. This function is typically denoted $\eta(x)$, and by convention we still multiply $\eta(x)$ by $\varepsilon$ to denote the fact that we are considering very small functions. In analogy to the single variable case of a minimum, if we have a minimized functional, we can add $\varepsilon\eta(x)$ to $y(x)$ and the value of the functional remains unchanged! We can see this in \autoref{fig:neigh func}.
 
 \begin{figure}[ht]
     \centering
@@ -947,9 +932,7 @@ In analogy to the single variable case of a minimum, if we have a minimized func
 
 We can see this playing the same role as it did in the single variable case. As $\varepsilon$ tends to zero, the functional approaches the minimum/maximum value (shown in the RHS of \autoref{fig:neigh func})! The calculus of variations has some special terminology to define these properties which we should discuss now. These special values where $J$ is minimized are called \textit{stationary points}. We call them this because of the fact we can add some $\varepsilon\eta(x)$ and they are unchanged! For values that are not the stationary points of $J$, this condition does not hold.\endnote{When we later consider Lagrangian and Hamiltonian mechanics, it actually does not matter if the point we are considering is a minimum, maximum, or just a point where the derivative goes flat. So long as the point is stationary, we can still guarantee the solution is correct.}
 
-Typically we also call $\eta(x)$ the \gls{neigh func}. The function $\eta(x)$ must meet the condition that is has zero value at the endpoints of the integral, $x_1$ and $x_2$. Otherwise, there is no guarantee that $\varepsilon\eta(x)$ will converge to the correct answer! It will also prove useful later when we go to integrate our function.
-
-The \gls{neigh func} proves especially useful because we can use the criteria of a stationary point of $J$ to find solutions of $y(x)$ satisfying this!
+Typically we call $\eta(x)$ the \gls{neigh func}. The function $\eta(x)$ must meet the condition that is has zero value at the endpoints of the integral, $x_1$ and $x_2$. Otherwise, there is no guarantee that $\varepsilon\eta(x)$ will converge to the correct answer! It will also prove useful later when we go to integrate our function.
 
 We often compactly write $y(x)+\varepsilon\eta(x)$ as $y(\varepsilon,x)$. We define the condition $y(0,x)\equiv y(x)$, where $y(x)$ is the function that gives the extrema of $J$. So, we can write $y(\varepsilon,x)$ as:
 \begin{equation}\label{eq:y epsilon}
@@ -1022,12 +1005,14 @@ Since $\eta(x)$ is an arbitrary function, the only way to guarantee equality is 
 
 This gives us the fundamental equation of the calculus of variations, called \gls{Euler Equation}:
 \begin{gather}\label{eq: Euler's Diff eq}
-\color{blue}\boxed{\color{black}\frac{\partial f}{\partial y}-\frac{d}{dx}\frac{\partial f}{\partial y'}=0}\\
-\color{blue}\mathrm{Euler's \ Equation}
+\color{boxBlue}\boxed{\color{black}\frac{\partial f}{\partial y}-\frac{d}{dx}\frac{\partial f}{\partial y'}=0}\\
+\color{boxBlue}\mathrm{Euler's \ Equation}
 \end{gather}
 \subsection{Delta Notation}
-In later sections, it is useful to have a shorthand for these partial derivative quantities. For a quantity $\chi$, the variation, $\delta$ is given as:
-$$\delta\chi\equiv\frac{\partial\chi}{\partial \varepsilon}d\varepsilon$$Using this notation, we can rewrite \eqautoref{eq:diff functional final} after some algebraic manipulation as:
+
+Sometimes, we see a delta notation used for the calculus of variations. It is useful to have a shorthand for these partial derivative quantities. For a quantity $\chi$, the variation, $\delta$ is given as:
+$$\delta\chi\equiv\frac{\partial\chi}{\partial \varepsilon}d\varepsilon$$
+Let's think briefly about what this says. It reads `a variation of $\chi$ is given by the partial of $\chi$ in the $\varepsilon$ component, multiplied by some small variation $d\varepsilon$'. This essentially says that a variation of $\chi$ is some small nudge by $\varepsilon$. Using this notation, we can rewrite \eqautoref{eq:diff functional final} after some algebraic manipulation as:
 \begin{equation}
     \delta J= \int_{x_1}^{x_2}\left(\frac{\partial f}{\partial y}-\frac{d}{dx}\frac{\partial f}{\partial y'}\right)\delta y{dx}
 \end{equation}
@@ -1035,7 +1020,7 @@ And thus, \eqautoref{eq: Euler's Diff eq} can be written concisely as:
 \begin{equation}
     {\color{black}\delta J=0}
 \end{equation}
-This is a very general and far reaching conclusion that can be applied to many systems. For our use cases in dynamics, we have more useful forms of this equation which will be explored in the following sections.
+This is no surprise, it's the same thing we've been saying all along. When we nudge by some $\varepsilon$ near a stationary point, the function will not change value. The implications of this statement are far reaching, though. For our use cases in dynamics, we have more useful forms of this equation which will be explored in the following sections.
 
 \section{Using Variational Calculus}
 A vast majority of the use cases of variational calculus are solving optimization problems. For this purpose, we will use the \gls{Euler Equation} extensively. One example where \gls{Euler Equation} is quite useful is in finding the shortest path between two points on a given surface.
@@ -1094,7 +1079,7 @@ $$\phi=\int{\phi'}=\int{\frac{c}{\sin\theta\left(\sin^2\theta-c^2\right)}}$$
 After looking at the problem for a long time, it becomes apparent that we should perform u-substitution with $u=\cot\theta$. Evaluation of this integral can easily be done with MATLAB or Mathematica (there is no useful information gleaned from doing this integral). Doing so yields: $$\cot{\theta}=a\cos{(\phi-\phi_0)}$$
 Where $\phi_0$ comes from the integration constant. This is our final answer. We can solve for $a$ and $\phi_0$ using numerical methods since the equation is transcendental.
 
-A MATLAB Script which shows such \glspl{geodesic} is included in the Appendix in \autoref{script:Geodesic}. The output of the script is shown in \autoref{fig:Geodesic}.
+A MATLAB Script which shows such \glspl{geodesic} is included in the script "SphereGeodesic" in the GitHub (linked in \autoref{app:code}. The output of the script is shown in \autoref{fig:Geodesic}.
 
 \begin{figure}[H]
     \centering
@@ -1144,15 +1129,24 @@ One important consequence of this is that a spherical geometry, when looked at `
 From our two examples, we can see some general continuity in our solution methods. We may briefly outline our approach:
 \begin{enumerate}
     \item Construct an integral which describes the total `cost' or criteria which we want to optimize
-    \item Rearrange our equation to be anemable to the \gls{Euler Equation} (write our function in terms of $y(x), y'(x), x$).
+    \item Rearrange our equation to be amenable to the \gls{Euler Equation} (write our function in terms of $y(x), y'(x), x$).
     \item Solve the \gls{Euler Equation} for the system to find the stationary points.
 \end{enumerate}
 
 With these examples completed, we have enough understanding to embark on our journey with Lagrangian mechanics. There are still a few lingering questions with the calculus of variations, but we may handle those cases directly in the context of Lagrangian mechanics, where the physicality of the problems will aid us in our understanding.
 
+\section{Practice Problems}
+\begin{exercise}
+    Show that the path $y=y(x)$ for which the integral $$\int_{x_1}^{x_2}x\sqrt{1-y'^2}dx$$ is stationary is the $\sinh^{-1}$ function.
+\end{exercise}
+
 \printendnotes
 
 \chapter{Lagrangian Mechanics}\label{chap:lagrangian}
+
+\begin{chapquote}{Richard Feynman}
+ ``Two formulations of a theory might give exactly the same predictions, and yet, not be psychologically identical when trying to move from that base into the unknown.''
+\end{chapquote}
 
 \color{red} This chapter needs a large amount of work still. Need to finish reading through Goldstein and include necessary information from there. Include generalized forces, Lagrangian multipliers, improve non-holonomic constraints, write the quantum to Lagrangian section, and write some good practice problems.
 
@@ -1160,13 +1154,15 @@ With these examples completed, we have enough understanding to embark on our jou
 
 Energy methods of mechanics use the energy of a system to determine the \gls{eom} of the system . This is in contrast to the Newtonian method, which considers the vector sum of forces of a system to produce its \gls{eom}. The good news is that both will result in the same answer (see proof in \autoref{equiv newt and lang}). However, having both in your set of tools as an engineer (or especially as a physicist) can prove useful. Especially as our coordinate systems become more complex, handling things from the standpoint of energy rather than vectors is especially advantageous.
 
-To grasp energy methods, it is best to have an intuition for Newtonian dynamics first. A thorough reading of Volume I and other sources will help prepare the reader for this section. The two are quite different, and although the \gls{Lagrangian} formalism deals less with vectorial operations, having the intuition from the Newtonian approach will still be useful.
+To grasp energy methods, it is best to have an intuition for Newtonian dynamics first. A thorough reading of Volume I and other sources will help prepare the reader for this section. The two are quite different, and although the \gls{Lagrangian} formalism deals less with vectorial operations, having the intuition from the Newtonian approach may still be useful.
 
 There are two main types of energy mechanics, referred to as \gls{Hamiltonian} and \gls{Lagrangian} Mechanics. In this chapter, we will focus on the \gls{Lagrangian} version of these mechanics. \gls{Hamiltonian} mechanics will be discussed further in \autoref{chap:hamiltonian}. Both approaches use energy, but have some distinct differences in implementation. Generally, the \gls{Lagrangian} approach is more suited to solving problems in classical dynamics, so we will start with this approach.
 
-Although the \gls{Hamiltonian} and \gls{Lagrangian} are not directly used in the case of our 6-\gls{dof}, they are fundamental to other areas of mechanics and make derivations far simpler in many cases. The \gls{Hamiltonian} and \gls{Lagrangian} descriptions of mechanics are more often taught to physics students rather than engineers, but we feel that they deserve inclusion among the topics presented here. For the reader interested in applications in robotics, energy mechanics has a vast number of applications.
+Although the \gls{Hamiltonian} and \gls{Lagrangian} are not directly used in the case of our 6-\gls{dof}, they are fundamental to other areas of mechanics and control theory which are to be explored in this volume henceforth. As an example, Pontryagin's Principle in control theory comes directly from variational calculus and \gls{Lagrangian} mechanics. 
 
-When we discuss \gls{numerical int}, we can use \glspl{symplectic int} when our problem has a \gls{Hamiltonian} description. This will be further discussed in \autoref{sec: Syplectic Ints}. You may find that certain \gls{eom} derivations, such as a spinning top and problems in orbital mechanics are more easily accomplished with energy methods. Another reason to motivate these systems is that these energy methods are invariant to transformations such as rotations. This occurs because energy methods employ a generalized coordinate system. These generalized coordinates are very powerful and allow us to describe a huge variety of systems.
+% The \gls{Hamiltonian} and \gls{Lagrangian} descriptions of mechanics are more often taught to physics students rather than engineers, but we feel that they deserve inclusion among the topics presented here. For the reader interested in applications in robotics, energy mechanics has a vast number of applications.
+
+When we discuss \gls{numerical int}, we can use \glspl{symplectic int} when our problem has a \gls{Hamiltonian} description. This will be further discussed in \autoref{sec: Syplectic Ints}. You may find that certain \gls{eom} derivations are much easier with energy mechanics. I have tried to out such examples with the practice problems in this chapter. Another reason to motivate these systems is that these energy methods are invariant to transformations such as rotations. This occurs because energy methods employ a generalized coordinate system. These generalized coordinates are very powerful and allow us to describe a huge variety of systems.
 
 A brief overview of the differences between the two schemes of \gls{eom} derivation is shown in \autoref{fig:newt v lang}. As can be seen from the figure, the underlying governing mechanics are no different, but the way in which we arrive at the \gls{eom} is completely different. Knowing this, we can begin our dive into \gls{Lagrangian} mechanics.
 
@@ -1220,7 +1216,7 @@ A brief overview of the differences between the two schemes of \gls{eom} derivat
 
 \end{minipage}};
 % Text Node
-\draw (221.38,220) node  [font=\normalsize] [align=left] {\begin{minipage}[lt]{54.33pt}\setlength\topsep{0pt}
+\draw (220,222) node  [font=\normalsize] [align=left] {\begin{minipage}[lt]{54.33pt}\setlength\topsep{0pt}
 \begin{center}
 Constraints
 \end{center}
@@ -1234,7 +1230,7 @@ Generalized\\Coordinates
 
 \end{minipage}};
 % Text Node
-\draw (443.79,224.5) node  [font=\normalsize] [align=left] {\begin{minipage}[lt]{35.05pt}\setlength\topsep{0pt}
+\draw (443.79,223) node  [font=\normalsize] [align=left] {\begin{minipage}[lt]{35.05pt}\setlength\topsep{0pt}
 \begin{center}
 Energy
 \end{center}
@@ -1273,7 +1269,7 @@ Inertial\\Accelerations
 
 We have seen in \autoref{sec: historical background} that there is some connection between optical phenomena and mechanics, which Bernoulli exploited to great success in order to find the brachistochrone solution curve. In the past sections, we have seen that light obeys this `least time' principle, which allows us to understand the optics of systems.
 
-Hamilton, the next great mind to enter our story, thought that this connection between the optical and mechanical systems was not a mere coincidence. Perhaps, if he could create a general analogy between the mechanical and optical systems, a more general principle would be revealed.
+Hamilton\endnote{It is difficult to not be confused about Hamilton's presence in energy mechanics. Hamilton's Principle and the Optical Mechanical Duality are principles that relate to \gls{Lagrangian} mechanics, not the Hamiltonian mechanics. Hamilton, like Euler, was such a prolific mathematician that he has too much named after him.}, the next great mind to enter our story, thought that this connection between the optical and mechanical systems was not a mere coincidence.\endnote{The order of events presented here is not exactly the same as the historical order. The history of physics is muddy and I don't want to confuse the mathematics with intervening history. Hamilton's ideas came after the original discovery of energy mechanics.} Perhaps, if he could create a general analogy between the mechanical and optical systems, a more general principle would be revealed.
 
 Hamilton started by considering the optical scenario which we have previously imagined. In the past, we have treated light primarily like particles. Let us start there, and construct a general picture according to Fermat's least time principle. We may imagine a point source of light. At a certain time, we will turn the point light source on. Let's consider a snapshot of time after a light has been turned on. As we can imagine, the light will propagate out from the source and each particle will have the same distance from the light source:
 
@@ -1428,7 +1424,7 @@ One important thing to note is that this mechanical realization is not physicall
 With a solid foundation set, we may now proceed in explaining Hamilton's principle, the key insight in using variational calculus to solve problems in mechanics. We recall that similar to Fermat's principle of least time, Hamilton's principle states that the \gls{action} must be minimized. With this in mind, Hamilton formulated the following equation:
 
 \begin{theorem}[Hamilton's Principle]
-In a conservative system which may travel from one point to another within a specific time interval, the path that is followed is the path which minimizes the time integral of the difference between the kinetic and potential energies.
+The physical path that is followed is the path which minimizes the time integral of the difference between the kinetic and potential energies.
 $$\delta \int_{t_1}^{t_2}{T-U}{dt}=0$$
 \end{theorem}
 
@@ -1442,7 +1438,7 @@ Before we get too ahead of ourselves, though, we should investigate this integra
 
 In fact, we can notice that the potential energy, generally, is a function of the position, $y$, and the kinetic energy is a function of $y'$ -- the time derivative of the position. As a result, we can write our \gls{Lagrangian} quite generally as:
 $$\int_{t_1}^{t_2}f[y(x),y(x)';x]dx$$
-This of course, matches the definition for the functional that we described in \autoref{chap:calculus of variations}.
+This, of course, matches the definition for the functional that we described in \autoref{chap:calculus of variations}.
 
 \newglossaryentry{princ of least action}
 {
@@ -1475,13 +1471,13 @@ Hamilton's Principle then states that the solutions to this \gls{euler lagrange}
 
 There is one small part of the principle that I glossed over during the derivation; the fact that the system must be \gls{conservative}. In short, a \gls{conservative} system is one in which the energy of the particle is path-independent. See \cite{goldstein_classical_2008} Chapter 1 for more information. This assumption helped when I assumed that the potential, $U$, was a function of position only. If this potential had a dependence of velocity, then the problem would not be easily solvable.
 
-This does mean that frictional forces and aerodynamics are not modeled with the \gls{Lagrangian} we describe here (although they can be with the utilization of Rayleigh's dissipation function and other techniques, such as those discussed in \cite{rabei_hamiltonian_2004}). This is the reason we do not directly use these equations in the 6-DoF.\footnote{However, much of the rotational dynamics we describe can be represented equivalently using the \gls{Lagrangian} approach, so we do use these equations in a roundabout manner.} This is also one reason that we need to use numerical integration methods to solve the \gls{eom} for the rocket trajectory when using Newtonian dynamics. In fact, the idea that the system in non-\gls{conservative} and cannot be solved analytically are intrinsically linked.
+This does mean that frictional forces and aerodynamics are not modeled with the \gls{Lagrangian} we describe here (although they can be with the utilization of Rayleigh's dissipation function and other techniques, such as those discussed in \cite{rabei_hamiltonian_2004}). This is the reason we do not directly use these equations in the 6-DoF.\endnote{However, much of the rotational dynamics we describe can be represented equivalently using the \gls{Lagrangian} approach, so we do use these equations in a roundabout manner.} This is also one reason that we need to use numerical integration methods to solve the \gls{eom} for the rocket trajectory when using Newtonian dynamics. In fact, the idea that the system in non-\gls{conservative} and cannot be solved analytically are intrinsically linked.
 
 So, for systems that are non-conservative, it is best to stick with the Newtonian method of mechanics, as we do for our 6-DoF, since the methods to find approximate solutions for these equations are quite a bit simpler. 
 
 However, for systems that are frictionless, the methods described here will work well. While it may seem that frictionless systems are very idealistic, we do see systems that can be approximated as frictionless quite often! Orbits, of course, are one case where this is especially true. For many other systems, such as a spinning top or other rotating bodies, we can often ignore the small amount of friction and arrive at analytical solutions without much hassle using the \gls{Lagrangian}. These methods also become extraordinarily important for our derivations of rotational equations.
 
-I should also note that the concept of friction and air drag is only a macroscopic one. All of the interactions that we regard as friction are fundamentally electromagnetic in origin. Therefore, in fundamental and theoretical physics, the energy methods of mechanics are almost always suitable methods! Unfortunately, our 6-\gls{dof} model does not simulate atomic interactions, so us engineers are sometimes stuck with the barbaric methods of Newton.
+I should also note that the concept of friction and air drag is only a macroscopic one. All of the interactions that we regard as friction are fundamentally electromagnetic in origin. Therefore, in fundamental and theoretical physics, the energy methods of mechanics are almost always suitable methods! Unfortunately, our 6-\gls{dof} model does not simulate atomic interactions, so us engineers are sometimes stuck with the troglodytic methods of Newton.
 
 With that noted, let us use the \gls{Lagrangian} in a few examples to see how it can turn some complex Newtonian systems into fairly trivial problems.
 \subsection{Mass-Spring System}
@@ -1571,9 +1567,7 @@ As a very basic prototypical system, we will consider a mass spring system as sh
 
 We know the analytical form of the \gls{eom} from Newtonian Dynamics:
 $$m\ddot{x}+kx=0$$
-So, in essence, we are using the \gls{Lagrangian} \textit{a posteriori} to match this solution.
-
-First, we will find the \gls{Lagrangian} of the system. The kinetic energy of the particle is given by the linear translation only (there is no rotational motion for a point particle), so we have $T=\frac{1}{2}m\dot{x}^2$. The potential energy is the energy of the spring, given as $U=\frac{1}{2}kx^2$. So, the \gls{Lagrangian} is:
+So, in essence, we are using the \gls{Lagrangian} \textit{a posteriori} to match this solution. First, we will find the \gls{Lagrangian} of the system. The kinetic energy of the particle is given by the linear translation only (there is no rotational motion for a point particle), so we have $T=\frac{1}{2}m\dot{x}^2$. The potential energy is the energy of the spring, given as $U=\frac{1}{2}kx^2$. So, the \gls{Lagrangian} is:
 $$L=\frac{1}{2}m\dot{x}^2-\frac{1}{2}kx^2$$
 Now, applying \eqautoref{eq: Euler-Lagrange} in the $\hat{x}$-direction, as this is the only degree of freedom:
 $$\frac{\partial L}{\partial x}-\frac{d}{dt}\frac{\partial L}{\partial \dot{x}}=0$$
@@ -1585,24 +1579,22 @@ So, the \eqautoref{eq: Euler-Lagrange} equation gives us:
 $$-kx-m\ddot{x}=0$$
 A simple change of signs gives the exact same result as the Newtonian approach:
 $$m\ddot{x}+kx=0$$
-In this problem, we used a simple case where the dynamics were constrained along a single axis of motion. Before we move to a more complex problem, we will introduce the method by which \gls{Lagrangian} mechanics deals with these reference frames.
+In this problem, we used a simple case where the dynamics were constrained along a single axis of motion. Before we move to a more complex problem, we will introduce the method by which \gls{Lagrangian} mechanics deals with these different reference frames.
 \section{Generalized Coordinates}
 \color{red} Need to possibly reorganize some of this. Should explain why generalized coordinates are needed in the context of constraints and how they solve problems with coordinates being coupled.
 
 \color{black}
 
-We recall that in Newtonian mechanics, we describe reference frames for an object. We represent the position, velocity, and acceleration of a particle in terms of these coordinate systems as a tridimensional vector. 
+We recall that in Newtonian mechanics, we describe reference frames with which we describe the positions, velocities, and accelerations for an object. We represent the position, velocity, and acceleration of a particle in terms of these coordinate systems as a tridimensional vector. 
 Generally, we may write the $\vec{r}^{\ op}$  vector in a frame $a$ as:
 $$x\hat{a}_1+y\hat{a}_2+z\hat{a}_3$$
 Because any tridimensional set of coordinates that we choose that are linearly independent of each other will span $\mathbb{R}^3$, we can generalize this to any reference frame, $q$, where the terms of $a$ can be described by the terms of $q$:
 $$x\left(q_1,q_2,q_3\right)+y\left(q_1,q_2,q_3\right)+z\left(q_1,q_2,q_3\right)$$
 As a shorthand, we will write this full set of $q$, $\left(q_1,q_2,\cdots q_n\right)$, as $q_j$.
 
-We can also generalize this to the velocity and the acceleration. The components of velocity can be written in terms of $q_j, \dot{q}_j$ and those for acceleration in terms of $q_j, \dot{q}_j, \ddot{q}_j$.  When we do Newtonian dynamics, we need to use the \gls{bke} to transform these quantities if they are not in an \gls{inertial frame}. Not so with the \gls{Lagrangian}! We are free to choose whatever $q$'s we want.
+We can also generalize this to the velocity and the acceleration. The components of velocity can be written in terms of $q_j, \dot{q}_j$ and those for acceleration in terms of $q_j, \dot{q}_j, \ddot{q}_j$.  When we do Newtonian dynamics, we need to use the \gls{bke} to transform these quantities if they are not in an \gls{inertial frame}. Not so with the \gls{Lagrangian}! We are free to choose whatever $q$'s we want, inertial or not.\endnote{The coordinates themselves are allowed to be non-inertial. We must be careful, however, that when we write our \gls{Lagrangian} as $L=T-U$, we do so in an inertial frame.}
 
-For a single particle, we can describe its position with the $q_j$ coordinates. When multiple particles are involved, we may need to increase this number of $q$ coordinates. As a very general statement, we can say for $N$ particles, we will need $n$ generalized coordinates in $q$. Expressed vectorially, given a particle of the $i^{\mathrm{th}}$ index:
-$$\vec{r}^{\ oi}(q_j)$$
-In other words, the position of an arbitrary particle is given in terms of $n$ generalized coordinates. 
+For a single particle, we can describe its position with the $q_j$ coordinates. When multiple particles are involved, we may need to increase this number of $q$ coordinates. As a very general statement, we can say for $N$ particles, we will need $n$ generalized coordinates in $q$. In other words, the position of an arbitrary particle is given in terms of $n$ generalized coordinates. 
 
 The acceleration of the particles, when Newton's Laws are applied, are a function of the $q_j$ as well as their derivatives, $\dot{q}_j$. So, the evolution of the system exists in a $2n$-dimensional state space. However, we can use our previously mentioned \gls{Lagrangian} to circumvent the need for Newton's Law and the \gls{bke} in our derivation of the \gls{eom} using \textit{constraints} on the equation.
 
@@ -1635,7 +1627,7 @@ The number of \glspl{holonomic const}, $K$, will change the number of generalize
 \begin{gather}\label{eq:dof}
 \color{blue}\boxed{\color{black}\mathcal{M}=3N-K}\color{black}
 \end{gather}
-The quantity $\mathcal{M}$ is the number of \gls{dof}. However, this is the number of \gls{dof} for the whole system, which is why it can exceed 6 in some cases!
+The quantity $\mathcal{M}$ is the number of \gls{dof}. However, this is the number of \gls{dof} for the whole system, which is why it can exceed 6 in many cases!
 
    \begin{example}[Particle on Path]
         Suppose we have a single particle that is constrained to motion along a path in the $xy$-plane. This path is given by $y=g(x)$. 
@@ -1806,7 +1798,7 @@ The other class of constraints are those constraints that are not merely a funct
     description={A free direction of movement for a vehicle. These can be translational or rotational directions}
 }
 
-The most common among these, and where we will focus our attention here, is constraints on the time derivative of the generalized coordinates. These are called \glspl{gen vel}, denoted $\dot{q}_j$. Such an example of a constraint on \glspl{gen vel} is a roller skate. A roller stake only allows a velocity in the direction of the skate and restricts velocity along the direction normal to the roller stake.
+The most common among these, and where we will focus our attention here, is constraints on the time derivative of the generalized coordinates. The derivative of the generalized coordinates are called \glspl{gen vel}, denoted $\dot{q}_j$. Such an example of a constraint on \glspl{gen vel} is a roller skate. A roller stake only allows a velocity in the direction of the skate and restricts velocity along the direction normal to the roller stake.
 
 One important thing about \glspl{non holo const} is that they do not reduce the number of parameters needed to define the system. Additionally, there is no general way to solve systems which have non-holonomic constraints. Later, we will look at a few cases which can be solved. For now, we will concern ourselves mostly with systems consisting of holonomic constraints.
 
@@ -1822,11 +1814,15 @@ Using the generalized coordinates, the kinetic energy is a function of the gener
 $$L\equiv T-U=T(q_j,\dot{q}_j,t)-U(q_j,t)$$
 Stated another way, the \gls{Lagrangian} is a function of the generalized positions, velocities, and time, as $L=L(q_j,\dot{q}_j,t)$. The \gls{euler lagrange} then becomes:
 \begin{gather}\label{eq:Euler-Lagrange General}
-\color{blue}\boxed{\color{black}\frac{\partial L}{\partial q_j}-\frac{d}{dt}\frac{\partial L}{\partial \dot{q}_j}=0,\quad j=1,2,\cdots M}\\
+\color{blue}\boxed{\color{black}\frac{\partial L}{\partial q_j}=\frac{d}{dt}\frac{\partial L}{\partial \dot{q}_j},\quad j=1,2,\cdots M}\\
 \mathrm{\color{blue}Generalized \ Euler-Lagrange \ Equations}
 \end{gather}
-Next we will show a problem where the rotational invariance and generalized coordinates proves especially useful in simplifying our derivation:
-\section{Pendulum EOM Derivation}
+Notice the similarity of this equation to Newton's 2nd law, $F=\frac{dp}{dt}$. These two equations are so similar in fact, that we can give names to each of the terms. On the left, we have something which looks like the force:
+$$\frac{\partial L}{\partial q_i}=i\text{th }\text{generalized force}$$
+and on the right, we have what looks like the time derivative of the momentum, so:
+$$\frac{\partial L}{\partial\dot{q}_i}=i\text{th generalized momentum}$$
+We can think of these terms as \textit{analogous} to the ones in Newton's 2nd law, but not always precisely the same. Before we move on a few more ideas, let's go through a full example to show this \gls{Lagrangian} approach.
+\subsection{Pendulum EOM Derivation}
 \subsubsection{Problem Set-Up}
 Suppose we have a pendulum of length L. The mass is rigidly attached to the pendulum. A reference frame $a$ that moves with the pendulum is shown in \autoref{fig:Pendulum}. The \gls{inertial frame} is also shown. The pendulum moves in only the $xy$ plane.
 \begin{figure}[ht]
@@ -1910,7 +1906,7 @@ $$-mg\sin\theta\hat{a}_\theta=\ddot{\theta}L\hat{a}_\theta$$
 Rearranging, we arrive at our \gls{eom}:
 $$\ddot{\theta}+\frac{g}{L}\sin\theta=0$$
 \subsubsection{Lagrangian Approach}
-In the \gls{Lagrangian} approach, we will start by defining our constraints and coordinates. Some preliminary analysis shows that using polar coordinates for this problem will be useful. If we do not recognize this, we can always convert later (a distinct advantage of the \gls{Lagrangian} approach, since it is coordinate frame invariant). Here we will choose a cylindrical coordinate systsem:
+In the \gls{Lagrangian} approach, we will start by defining our constraints and coordinates. Some preliminary analysis shows that using polar coordinates for this problem will be useful. If we do not recognize this, we can always convert later (a distinct advantage of the \gls{Lagrangian} approach, since it is coordinate frame invariant). Here we will choose a cylindrical coordinate system:
 \begin{gather}
     q_1=r\\q_2=\theta\\q_3=z
 \end{gather}
@@ -1940,7 +1936,7 @@ With some rearrangement:
 $$\ddot{\theta}+\frac{g}{L}\sin\theta=0$$
 We notice that with the \gls{Lagrangian} approach, we did not need to have an understanding of the vector directions, frame translations, or \gls{bke} to find our \gls{eom}. This, in addition to the flexibility of the generalized coordinates, is the real power of this approach.
 
-\subsubsection{Kinetic Energy Generalization}
+\subsection{Kinetic Energy Generalization}
 In the previous two examples that we explored, the functions for $T$ and $U$ were quite simple because the transformations from the generalized coordinates were quite simple and could be understood from intuition. In the case that they are not as simple, we would previously have to use \gls{bke} to find transformations or employ some other method. It would be useful if we had a general formula to express $T$ and $U$ in the generalized coordinates. We know that the kinetic energy is simply the following:
 $$T=\frac{1}{2}\sum_im_i{v_i}^2$$
 We can more explicitly define $v_i$ to be $\dot{r}_i$, with $r$ being the vector in cartesian coordinates. The kinetic energy in terms of $\dot{r}$ is thus:
@@ -1951,6 +1947,7 @@ As a result, $\dot{r}$ can be expressed in terms of the generalized positions an
 $$\dot{r}=\frac{dr}{dt}=\sum_k{\frac{\partial r_i}{\partial q_k}\dot{q}_k+\frac{\partial r_i}{\partial t}}$$
 Combining these two formulas, it is quite easy to see that we have the following for a general formula of the kinetic energy which converts between $r$ and the generalized coordinates\endnote{See \cite{goldstein_classical_2008} Chapter 1.6 for more information on this derivation} :
 $$T=\frac{1}{2}\sum_im_i\left(\sum_j\frac{\partial\vec{r}_i}{\partial q_j}\dot{q}_j+\frac{\partial \vec{r}_i}{\partial t}\right)^2$$
+This is a snake-proof way in which we can derive the kinetic energy of the system, and it will account for any issues that may arise from differing coordinate systems or conventions.
 
 \begin{example}[Free Particle in Polar Coordinates]
 We can show this equation in work with a simple example of a single free particle. We express the motion in polar coordinates in order to showcase the use of the formula. We need only know the transformations between the coordinate systems.
@@ -1977,11 +1974,26 @@ Which matches the Newtonian result and is generally applicable to many cases. Mo
 \end{example}
 
 \section{Cyclic Coordinates and Conservation}
-The \gls{Lagrangian} formulation of mechanics can give us some special insight into the quantities of a problem that are conserved. This is, once again, one of the distinct advantages over the Newtonian approach. In the Newtonian scheme, we can learn to recognize when systems will have conserved quantities, but there is no satisfactory analysis we can perform beforehand to ensure this. 
+The \gls{Lagrangian} formulation of mechanics can give us some special insight into the quantities of a problem that are conserved. This is, once again, one of the distinct epistemic advantages over the Newtonian approach. In the Newtonian scheme, we can learn to recognize when systems will have conserved quantities, but there is no satisfactory analysis we can perform beforehand to ensure this. 
 
-With \gls{Lagrangian} mechanics, we can employ several methods to understand conservation. The ideas discussed here are more deeply tied to Noether's Theorem, the mathematical background of which is more heavily discussed in \autoref{Noether's Theorem}.
+With \gls{Lagrangian} mechanics, we can employ several methods to understand conservation. These ideas about conservation ultimately stem from what we call \textit{Noether's Theorem}.
 
-We can understand conservation of linear momentum in a system quite easily in the case of the \gls{Lagrangian}. In fact, we have already seen it in some of our examples.
+\begin{theorem}[Noether's Theorem]
+In a system that can be modeled purely by a Lagrangian (that is, a conservative system), every continuous symmetry has a corresponding conservation law.
+\end{theorem}
+The implications of this statement are quite great. Noether's Theorem gives us a pathway to understand where the conservation laws of symmetry actually come from. Of course, we can also reverse the statement and understand the symmetries of our system based on the conserved quantities! If you are curious what exactly is meant by a \textit{continuous symmetry}, more information is to come in \autoref{sec:groups and syms}.
+
+Before we start applying this theorem, we should concretely define the terminology of the theorem. What exactly do we mean by a conserved quantity?
+
+A conserved quantity is simply one that does not change over time. When we say that energy is conserved, we mean that the energy of the system will be exactly the same if observed at $t=0\ \mathrm{s}$ or $t=100\ \mathrm{s}$. If we call our quantity of interest $X$, we can express this as:
+$$\frac{dX}{dt}=0$$
+
+\subsection{Symmetries in Physics}
+Symmetries in physics can be a bit different from the symmetries you might typically imagine -- such as the reflectional symmetry of a triangle. There are, of course, physical symmetries of a system that we leverage when solving a problem, such as spherical symmetry or axial symmetry. Our discussion here is somewhat distinct from those types of symmetries.
+
+When we discuss a symmetry in physics, we mean to say that the physics that act upon that system are in no way altered by whatever transformation we have performed (that is to say, the \gls{eom} is identical). For example, if we decide to move our rocket launch 20 ft to the north, the aerodynamics, gravity, and forces of the rocket are still exactly the same. We have performed a transformation -- in the form of moving the launch location -- but there are no observable differences to the dynamics of the system!
+
+Of course, these transformations are not merely limited to physical movements of the system, there are other types of transformations that we can do that do not impact the physics of the system. We will be best informed by an example:
 
 \begin{example}[Rolling Wheel]
 Let us consider a system consisting of a wheel which is rolling without slipping along a level surface, as shown in \autoref{fig:roll wheel}:
@@ -2054,14 +2066,73 @@ We can now consider the Euler-Lagrange equation for each coordinate, taking $x$ 
 $$\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{x}}\right)=\frac{\partial L}{\partial x}$$
 The partial with respect to $x$ yields $0$ since the coordinate $x$ appears nowhere in the \gls{Lagrangian}. When this is the case -- that a variable does not appear directly in the \gls{Lagrangian} -- it is \textit{cyclic}. Whenever a coordinate is cyclic, its partial derivative is 0.
 
-Thus, we can see that $\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{x}}\right)=0$ and thus $\frac{\partial L}{\partial \dot{x}}=\mathrm{const.}$ The result of this is that the linear momentum of the system is conserved, since it is constant! This result is one possible result of Noether's Theorem -- that linear momentum is conserved when the \gls{Lagrangian} is independent of position. \endnote{More precisely, the theorem states that the \gls{Lagrangian} must be invariant under a continuous transformation, but this is touched on much more in \autoref{Noether's Theorem}}.
+Thus, we can see that $\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{x}}\right)=0$ and thus $\frac{\partial L}{\partial \dot{x}}=\mathrm{const.}$ The result of this is that the linear momentum of the system is conserved, since it is constant! This is one possible result of Noether's Theorem -- that linear momentum is conserved when the \gls{Lagrangian} is independent of position. \endnote{More precisely, the theorem states that the \gls{Lagrangian} must be invariant under a continuous transformation.}
 
 We can apply the same reasoning to the $\theta$ component, and we see that:
 $$I\dot{\theta}=\mathrm{const.}$$
 Which is the statement that the angular momentum of the system is conserved.
 \end{example}
 
-Although a more general discussion of these topics is saved for later, the concept of cyclic coordinates and conserved quantities will be used throughout the proceeding text, and it is important to keep these concepts in mind!
+Before we move on the mathematical formulation and proof of Noether's Theorem, it would be prudent to consider a few more key points. Firstly, we should clarify a key point: A certain system may or may not conserve a quantity, but the universe as a whole will conserve that quantity. That is to say, the conservation of energy, momentum, charge, etc. is a fact of the universe\endnote{For the pedants, in an expanding universe the total energy is indeed increasing. Lowly aerospace engineers need not worry about this.}; for any given system these quantities are not guaranteed to be conserved.
+
+We should also discuss the types of conserved quantities we expect to appear in a system. The following relations are typical:
+\begin{align}
+       \text{time invariant system}&\Leftrightarrow\text{Conservation of Energy}\\
+    \text{spatially invariant system}&\Leftrightarrow  \text{Conservation of Momentum}\\
+    \text{rotationally invariant system}&\Leftrightarrow \text{Conservation of Angular Momentum}
+\end{align}
+In classical mechanics, these invariances are the ones that we see most often. However, there are more symmetries that occur, and they are very fundamental in our understanding of the universe and how forces arise. To understand these symmetries requires some physics beyond the scope of this volume.\footnote{See \cite{zee_quantum_2025} for a good introductory text explaining some of these symmetries in quantum field theories.}
+
+\subsection{The Mathematical Formulation}
+We know from Hamilton's Principle that physical trajectories have an action that is an extremal value. We denote this action as $S$, and the path it follows as $\gamma$, so we may write $S[\gamma]=0$. It may be possible to find another path $S[\gamma_2]=0$ somewhere else along the state space. This is not particularly noteworthy. We can take the analogy of the derivative from calculus as an example in \autoref{fig:calc sym}. Physically, this just means that we could have two paths which both result in an extremal action:
+\begin{figure}[H]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Polynomial [id:dp5733809673289914] 
+\draw  [line width=1.5]  (100,225) .. controls (170,35) and (240,320) .. (310,130) ;
+%Shape: Polynomial [id:dp22075841317731382] 
+\draw  [line width=1.5]  (310,130) .. controls (383.33,-100) and (456.67,245) .. (530,15) ;
+%Straight Lines [id:da16902943176946206] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=1.5]    (210,199) -- (290,199) ;
+%Straight Lines [id:da8215493758509421] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=1.5]    (430,99) -- (510,99) ;
+%Straight Lines [id:da24241399926680518] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (320,95) -- (280,65) ;
+%Straight Lines [id:da37036162717673604] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (400,240) -- (468.58,112.64) ;
+\draw [shift={(470,110)}, rotate = 118.3] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da8857104314835499] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (350,250) -- (262.74,211.22) ;
+\draw [shift={(260,210)}, rotate = 23.96] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da5379556180362811] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (250,199) ;
+\draw [shift={(250,199)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.34, y radius= 2.34]   ;
+%Straight Lines [id:da1048842221660955] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (470,99) ;
+\draw [shift={(470,99)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.34, y radius= 2.34]   ;
+
+% Text Node
+\draw (354,242.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$f'=0$};
+% Text Node
+\draw (249,47.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$f( x)$};
+
+
+\end{tikzpicture}
+
+    
+    \caption{Calculus Analogy of Discrete Symmetry}
+    \label{fig:calc sym}
+\end{figure}
+Given a general function, it is expected that there will likely be multiple minima, separated spatially. What Noether's Theorem is concerned with is infinitesimal transformations that do not change the action at all. In the case of our example before, we have some transformation, which we may call $T$, which maps path $\gamma$ to $\gamma'$:
+$$\gamma\xrightarrow{T}\gamma'$$
+When we have a continuous symmetry between these two, there is no difference in the action! So $S[\gamma]=S[\gamma']$. Additionally, this transformation $T$, must be infinitesimal. 
+
+We can understand conservation of linear momentum in a system quite easily in the case of the \gls{Lagrangian}. In fact, we have already seen it in some of our examples.
 
 \section{Generalized Forces}
 The next thing that we need to consider in our journey through \gls{Lagrangian} mechanics are \textit{generalized  forces}. In analogy to the other generalized quantities, generalized forces derive from the standard definitions of forces and can then be applied to other coordinate systems and more complex situations.
@@ -2130,21 +2201,21 @@ We can perform the analogous analysis for the other axes, yielding the full set 
 \end{gather}
 \subsection{Forced Euler Rigid Body Dynamics}
 
-\section{From Quantum to Lagrangian Mechanics}
-Taking inspiration from \autoref{sec: connection to quantum} where I showed the connection between the principle of least time and the quantum formulation of the phenomenon, can we find a similar underlying principle for all of classical mechanics?
+% \section{From Quantum to Lagrangian Mechanics}
+% Taking inspiration from \autoref{sec: connection to quantum} where I showed the connection between the principle of least time and the quantum formulation of the phenomenon, can we find a similar underlying principle for all of classical mechanics?
 
-Luckily, we can! This section will tackle the formalization of the topics discussed in \autoref{sec: connection to quantum} and extend them to the case far beyond the paths of light rays. A great video explanation, much of which is discussed here, is found in \cite{physics_with_elliot_how_2023}.
+% Luckily, we can! This section will tackle the formalization of the topics discussed in \autoref{sec: connection to quantum} and extend them to the case far beyond the paths of light rays. A great video explanation, much of which is discussed here, is found in \cite{physics_with_elliot_how_2023}.
 
-Having started our study of classical mechanics, we now know that the same underlying principle dictates the motion of both light and classical behaviors -- the minimization of action. 
+% Having started our study of classical mechanics, we now know that the same underlying principle dictates the motion of both light and classical behaviors -- the minimization of action. 
 
-For light, we could quite intuitively understand how this principle emerges using the phase of the light. For typical particles and rigid bodies, we can't measure a phase. Therefore, we need an approach that encompasses both phenomenon.
+% For light, we could quite intuitively understand how this principle emerges using the phase of the light. For typical particles and rigid bodies, we can't measure a phase. Therefore, we need an approach that encompasses both phenomenon.
 
 
- \section{A Vector Calculus Approach to Hamilton's Principle}
+%  \section{A Vector Calculus Approach to Hamilton's Principle}
 
- We have so far seen that Hamilton's principle is useful for solving these problems. Now, with our background for generalized coordinates built up, we can explore a derivation of the action which will explain the presence of the $T-U$ term and the $T+U$ term in the \gls{Hamiltonian}.
+%  We have so far seen that Hamilton's principle is useful for solving these problems. Now, with our background for generalized coordinates built up, we can explore a derivation of the action which will explain the presence of the $T-U$ term and the $T+U$ term in the \gls{Hamiltonian}.
 
-The approach described here comes mainly from the work in \cite{carcassi_geometric_2023}. I have simplified some of the details of this approach to make this section more simple for the reader, but I recommend reading this paper for a deeper understanding of the subject.
+% The approach described here comes mainly from the work in \cite{carcassi_geometric_2023}. I have simplified some of the details of this approach to make this section more simple for the reader, but I recommend reading this paper for a deeper understanding of the subject.
  
 
 \section{Key Ideas}
@@ -2289,7 +2360,7 @@ After the formulation of \gls{Lagrangian} Mechanics, another formulation was cre
 
 The first useful feature of the \gls{Hamiltonian} lies in the fact that it gives us a more intuitive feel for the system. The \gls{Lagrangian} has no physical meaning associated with it. $T-V$ doesn't describe any of attributes of the system we can point to and see. It is purely analytical. We \textit{need} the \gls{Lagrangian} to be $T-V$ for the formalism to work; there is no fundamental reason.
 
-The \gls{Hamiltonian}, on the other hand, is often constructed as $H=T+V$. This is something we can recognize! It's the total energy of the system. So we can get a more intuitive feel for the system using the Hamiltonian. We know that energy is conserved in a conservative system, so it's simply changing form and that attribute allows us to understand the trajectory of the system. Something about that description sounds a bit more `fundamental than the \gls{Lagrangian}.
+The \gls{Hamiltonian}, on the other hand, is constructed as $H=T+V$. This is something we can recognize! It's the total energy of the system. So we can get a more intuitive feel for the system using the Hamiltonian. We take the conservation of total energy to be a fact of physics, so it's a good definition to have in our formulation. ,Energy is simply changing form and that attribute allows us to understand the trajectory of the system. Something about that description sounds a bit more `fundamental' than the \gls{Lagrangian}.
 
 Secondly, and more important for our applications, is that the \gls{Hamiltonian} finds extensive use in the domain of optimal control! Here, we will outline the basics of \gls{Hamiltonian} mechanics and the relationship to optimal control will be explored in \autoref{part:control theory}.
 
@@ -2299,14 +2370,16 @@ Additionally, there is a nice geometrical interpretation that the \gls{Hamiltoni
 
 After doing a few problems with the \gls{Lagrangian} approach to mechanics, we notice that the $\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{q}_i}\right)$ term results in a second order derivative. If we want to solve this differential equation, then, we need to describe both the $q_i$'s and the $\dot{q}_i$'s. The effective analogy is that we need to know the initial position and velocity in order to integrate our acceleration \gls{eom}. So together, we have $2n$ independent variables that describe the full system motion.
 
-What if we could transform one of these coordinates so that we instead have only first order derivatives? Luckily, we can do this! We'll use something called the \textit{Legendre Transform} to do so.
+This formulation may be conceptually unsatisfying in some way. Consider that we may only observe the state of a system at one point in time. We may know all of the values of $q_i$ by looking at the system. To determine it's derivative, however, we would need to look at some $dt$ in the future to determine the evolution of those $q_i$'s -- and thus the $\dot{q}_i$'s. This time difference is infinitesimal, but it still means that we cannot determine the state of the system \textit{precisely} from an observation of a single time. To solve this, we want to introduce something into our formulation that is more fundamental that $\dot{q_i}$. Instead of a generalized velocity, we would like something which is more like a generalized momentum. If you wonder why the momentum would be more general, consider that $F=ma$ may be written more precisely as $F=\frac{d\vec{p}}{dt}$. Knowing velocity alone does not give us direct information about the forces, but knowing the momentum as a whole \textit{does}.
+
+With all that being said, we would like to develop a mathematical strategy which can alleviate these two issues. What if we could transform one of these coordinates, $\dot{q}_i$ so that it does not require a derivative? Doing so, we would resolve both issues. Luckily, we can do this! We'll use something called the \textit{Legendre Transform} to do so.
 
 \subsection{The Legendre Transform}
 The Legendre transform is the key mathematical tool that we will need in order to derive the \gls{Hamiltonian}. The Legendre transform is conceptually very simple -- it simply changes the variables we are using the our equation while still maintaining equivalence.
 
-The way the Legendre transform accomplishes this is actually quite simple. There are geometric interpretations, but personally I feel that these geometric interpretations are more confusing than helpful.
+The way the Legendre transform accomplishes this is actually quite simple -- it takes information about the derivative and turns that into the value of a function. This property is precisely what allows us to go from a generalized velocity into a momentum.
 
-It turns out that derivative of a function encodes a lot of information about the function! In fact, given just the derivative of a function, we can fully reconstruct the original function through integration. In fact, this is exactly what we do with numerical integration schemes, which you may read more about in Volume I. The only thing we are missing is some initial condition!
+It turns out that derivative of a function encodes a lot of information about the function. In fact, given just the derivative of a function, we can fully reconstruct the original function through integration. This is exactly what we do with numerical integration schemes, which you have read about in Volume I. The only thing we are missing is some initial condition.
 
 This is the key understanding that we need for the Legendre transform. We have some original function $f$ -- which in our case will be the \gls{Lagrangian} -- which we can transform by considering its derivative as the new input:
 $$f\Rightarrow f^*\left(\frac{df}{dx}\right)$$
@@ -2351,7 +2424,7 @@ We can see that taking $\frac{df}{dx}$ and multiplying by the distance $x$, we g
 We know that $f^*\left(\frac{df}{dx}\right)=-b$, so we can rearrange to solve for this in the equation above to get:
 \begin{gather}\label{eq:legendre}
     \color{blue}\boxed{\color{black}f^*\left(\frac{df}{dx}\right)=\frac{df}{dx}x-f(x)}\\
-    \color{blue}\mathrm{Legendre \ Transform}
+    \color{blue}\text{Legendre Transform}
 \end{gather}
 \section{What is Momentum?}
 Now that we are equipped with the Legendre transform, we are ready to tackle the \gls{Hamiltonian}. To do so, we will need to define a new quantity, the generalized momentum.
@@ -2366,23 +2439,27 @@ Of course, many of us are familiar with the concept of momentum from introductor
     description={A generalized coordinate that is defined as $\frac{\partial L}{\partial \dot{q}_i}.$ Generalized momentum is mostly used in Hamiltonian mechanics}
 }
 
-Furthermore, if you are familiar with quantum mechanics, you likely know that momentum can also be represented as $-i\hbar\frac{\partial}{\partial x}$. We know that the momentum of a relativistic particle is also different, given by $\gamma m_0v$. You may have also heard that photons have momentum. It seems that our notion of momentum of $mv$ is in dire need of a new, more general formulation! Of course, it is okay if you've never seen these representations of momentum before. They are here simply to show that momentum is a concept that is very broad\endnote{In fact, our generalized momentum does not even need the same units as a typical momentum. Consider, for example, angular momentum, which has units of $\mathrm{kg\cdot m^2\ s^{-1}}$ while typical momentum is $\mathrm{kg\cdot m\ s^{-1}}$}. 
+Furthermore, if you are familiar with quantum mechanics, you likely know that momentum can also be represented as $-i\hbar\frac{\partial}{\partial x}$. We know that the momentum of a relativistic particle is also different, given by $\gamma m_0v$. You may have also heard that photons have momentum. It seems that our notion of momentum of $mv$ is in dire need of a new, more general formulation. Of course, it is okay if you've never seen these representations of momentum before. They are here simply to show that momentum is a concept that is very broad.\endnote{In fact, our generalized momentum does not even need the same units as a typical momentum. Consider, for example, angular momentum, which has units of $\mathrm{kg\cdot m^2\ s^{-1}}$ while typical momentum is $\mathrm{kg\cdot m\ s^{-1}}$}
 
-What we hope to accomplish is to capture all of these in a single formula for momentum. As a result, we should define a \textit{generalized momentum}, analogous to what we have done for generalized positions and velocities. 
-
-Of course, this notion of the \gls{gen momentum} is more flexible than the ordinary momentum. To define the \gls{gen momentum}, we can consider the example of a free particle -- that is a particle acted upon by no potentials or forces.
+What we hope to accomplish is to capture all of these in a single formula for momentum. As a result, we should define a \textit{generalized momentum}, analogous to what we have done for generalized positions and velocities. Of course, this notion of the \gls{gen momentum} is more flexible than the ordinary momentum. To define the \gls{gen momentum}, we can consider the example of a free particle -- that is a particle acted upon by no potentials or forces.
 
 \begin{example}[The Free Particle]
     The free particle has one of the simplest possible \glspl{Lagrangian}. Since there are no potentials involved, we can fully describe the \gls{Lagrangian} of the free particle with $L=T$. Since the object is a point mass particle, the \gls{Lagrangian} is thus $$L=\frac{1}{2}m\dot{x}^2$$
-We can use the Euler-Lagrange equation here to find the equation of motion quite easily. The first term, $\frac{\partial L}{\partial x}$ goes to zero since there is no dependence on $x$. This leaves only the $\frac{d}{dt}\frac{\partial L}{\partial \dot{x}}=0$ term, which must be a constant. Upon evaluation, we have $m\dot{x}=C$, which means that the linear momentum, $m\dot{x}$ is conserved because it is constant! Moreover, it seems we have found a way to get the momentum from the \gls{Lagrangian}!
+We can use the Euler-Lagrange equation here to find the equation of motion quite easily. The first term, $\frac{\partial L}{\partial x}$ goes to zero since there is no dependence on $x$. This leaves only the $\frac{d}{dt}\frac{\partial L}{\partial \dot{x}}=0$ term, which must be a constant. Upon evaluation, we have $m\dot{x}=C$, which means that the linear momentum, $m\dot{x}$ is conserved because it is constant. Moreover, it seems we have found a way to get the momentum from the \gls{Lagrangian}.
 \end{example}
 
-As it turns out, the way that we calculated the momentum in the example, as $\frac{\partial L}{\partial \dot{x}}$, is the way that we find the \gls{gen momentum}. We can formalize this for any generalized velocity, as
+As it turns out, the way that we calculated the momentum in the example, as $\frac{\partial L}{\partial \dot{x}}$, is what we define to be the \gls{gen momentum}. We can formalize this for any generalized velocity, as
 \begin{gather}
     \color{blue}\boxed{\color{black}p_j=\frac{\partial L}{\partial\dot{q}_j}}\\
     \color{blue}\mathrm{Generalized\ Momentum}
 \end{gather}
-This definition of \gls{gen momentum} is much more powerful than the standard definition that we use. This definition, in fact, solves all of the problems that we listed before. By using the definition with the \gls{Lagrangian}, we are able to solve problems in quantum mechanics, special relativity, and of course, classical mechanics!
+To make sense of this definition, let's go back to our \gls{Lagrangian} momentarily. We remember that our equation there is:
+$$\frac{\partial L}{\partial q_j}=\frac{d}{dt}\frac{\partial L}{\partial\dot{q}_j}$$
+So, we can reformulate this to mean
+$$\text{Generalized Force}=\frac{d}{dt}p_j$$
+In other words, a generalized force is the time rate change of a generalized momentum. This should, of course, remind you of Newton's 2nd law.
+
+This definition of \gls{gen momentum} is much more powerful than the standard definition that we use. This definition, in fact, provides an answer for all of the problems that we listed before. By using the definition with the \gls{Lagrangian}, we are able to solve problems in quantum mechanics, special relativity, and of course, classical mechanics!
 
 Additionally, we can see the presence of a derivative in this definition goes hand in hand with the previously discussed Legendre transform.
 \subsection{From the Lagrangian to the Hamiltonian}
@@ -2434,6 +2511,9 @@ Why natural phenomenon are typically of 2nd order
 not writing any more rn because I don't know it
 
 This shit too complicated probably
+
+\newpage
+\printendnotes
 
 
 

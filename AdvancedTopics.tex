@@ -45,7 +45,7 @@ Before we dive into the mathematical foundations of \gls{lie theory}, we should 
 
 A big question is why do \textit{we} care? Well, it turns out that all of the rotations that we study are understood with \gls{lie theory}. It is also used to describe quaternions, symplectic groups (in Lagrangian and Hamiltonian mechanics), advanced control methods, robotics, and inertial navigation, just to name a few use cases. Gaining an intuition for the underlying mathematics will prove useful for us. 
 
-For us, \gls{lie theory} is especially useful in our study of dynamic systems. Often, we do have symmetries in our problems. There are those symmetries that are obvious -- such as axial symmetry and reflectional symmetry of an object. There are deeper, more fundamental symmetries though, such as the symmetry between the rotational invariance of the Lagrangian and conservation of angular momentum (we will explore this more in \autoref{Noether's Theorem}).
+For us, \gls{lie theory} is especially useful in our study of dynamic systems. Often, we do have symmetries in our problems. There are those symmetries that are obvious -- such as axial symmetry and reflectional symmetry of an object. There are deeper, more fundamental symmetries though, such as the symmetry between the rotational invariance of the Lagrangian and conservation of angular momentum, which we have seen briefly while studying Noether's Theorem.
 
 Understanding symmetries is what led Sophus Lie to originally develop his theory. The study of discrete symmetries by Galois had proven very useful in understanding polynomial equations. Originally, Sophus Lie (shown in \autoref{fig:Lie}) developed the theory in order to understand the continuous symmetries of differential equations. However, the theory also proved to be useful in describing other symmetries, such as the rotations and conservation equations which we are familiar with in dynamics.
 
@@ -70,7 +70,7 @@ We've just gone through the premise of \gls{lie theory} at a blistering speed. W
 
 As a final point before we start, I believe that Lie theory is simply a beautiful theory which ties together so much mathematics. A careful study of Lie theory will unite many of the mathematical concepts you encounter.
 
-\section{Groups and Symmetries}
+\section{Groups and Symmetries}\label{sec:groups and syms}
 \begin{chapquote}{Mark A. Armstrong}
     ``Numbers measure size, groups measure symmetry''
 \end{chapquote}
@@ -425,7 +425,7 @@ As we can see, the there is no multiplication that we can do that gives an eleme
     So we have shown that the quaternions form both an algebra and a group! This is a quite interesting property. See if there are any other common mathematical objects that you can find group representations for!
 \end{example}
 
-\begin{exercise}[The Octonion Group (Hard)]
+\begin{exercise}[The Octonion Group (Challenging)]
 
 The octonions are an example of another algebra. The octonions have 8 elements and are denoted by $\mathbb{O}$. The octonians are typically expressed as $x=x_0e_0+x_1e_1+x_2e_2+x_3e_3+x_4e_4+x_5e_5+x_6e_6+x_7e_7$. It is also possible to express an octonion as a pair of quaternions.
 
@@ -717,13 +717,13 @@ $$A\times (B\times C) = B(A\cdot C)-C(A\cdot B)$$
 Plugging this in to the Jacobi identity (and keeping in mind that the dot product is an commutative operation), we can see that this also gives us zero.} And so, we have shown that the cross product is a valid Lie bracket for $\mathbb{R}^3$.
 \end{example}
 
-\begin{exercise}
+\begin{exercise}[Lie Bracket of Matrices]
     We have shown previously that the \gls{lie algebra} can be written in a matrix form from \autoref{thm:Ado}. For matrices, we take the Lie bracket to be the \textit{commutator} of two matrices, which is defined
     $$[A,B]=AB-BA$$
     Show that the commutator as the Lie bracket produces a valid \gls{lie algebra}. You can follow the same steps as we did for the cross product. We will use the commutator heavily since we can define all Lie algebras in terms of matrices, so this is a good one to practice!
 \end{exercise}
 
-\section{Relating Lie Groups and Algebras}
+\section{Relating Lie Groups and Algebras}\label{sec: relating lie groups and algs}
 In \autoref{sec:motivation and background lie}, I briefly discussed the \gls{exponential map} as a way to convert between the \gls{lie group} and the \gls{lie algebra}. Here, we will take that definition and solidify its meaning.
 
 Up to now, we've developed this notion of groups and algebras. Our algebra is our simple definition, because everything there is our standard Euclidean geometry. We know our algebra looks like the group \textit{at} the identity because it is tangent. So, if we want to go from point A to point B, we can utilize the continuous structure to get there. Rotations, as we will later see, are a prototypical example of a \gls{lie group}. Therefore, we will understand the exponential map in this context.
@@ -775,7 +775,7 @@ Let's put some exact math to this. We're going to use a bit of linear algebra no
     \label{fig:coord rot}
 \end{figure}
 
-From simple geometry, it is evident that in our new coordinate system, we may express the point $P$ as:
+From simple geometry, it is evident that in our new coordinate system, we may express the point $P$ as:\endnote{There are two ways that we construct the rotation matrix. One is the transpose of the other. We typically denote $SO(2)$ with the opposite of what is shown here, but the principle shown here still stands.}
 \begin{gather}
     x'=x\cos\theta+y\sin\theta\\
     y'=-x\sin\theta+y\cos\theta
@@ -830,8 +830,9 @@ To do this, we turn to the Taylor expansion of $e^x$ for an answer. We can write
 \end{equation}
 
 This is the definition that we use for many the more complicated cases, such as complex numbers and matrices. Since we are only using integer indices for $n$, all of these operations are well-defined and valid.
+\newpage
 
-\begin{exercise}
+\begin{exercise}[Constructing the exponential map]
     Use the definition of the exponential as a Taylor series as shown in \eqautoref{eq:taylor exp} to write a closed form for the complex exponential, $e^{i\theta}$. It will be helpful to know / look up the Taylor series for $\sin\theta$ and $\cos\theta$.
 \end{exercise}
 
@@ -1039,11 +1040,21 @@ $$\begin{vmatrix}
 Computing this determinant, we find that the eigenvalues of the generator matrix are $\pm i\theta $. It is apparent that these eigenvalues are the same as the \gls{lie algebra} which had found before, when we derived the circle group geometrically. Interestingly, we may directly compute the exponential of these eigenvalues to get the expression of the \gls{lie group}:
 $$e^\lambda=e^{\pm i\theta}$$
 These results show us that the matrix representation can recover the same information as our geometric interpretation. From here, it is useful to spend some more time looking deeply at rotation groups and other useful \glspl{lie group} to determine properties which benefit us in engineering and physics contexts.
+
+\section{Additional Exercises}
+\begin{exercise}[Circle Group practice]
+    A large part of the discussion in this chapter related to the circle group. Let's spend some time exploring this group a bit further!
+    \begin{enumerate}
+        \item Prove that the circle group can be represented by the complex numbers of magnitude 1, which we call $U(1)$. We already showed this was a group. In other words, show that $U(1)\cong \mathbb{S}^1$.
+        \item Find the \gls{lie algebra} of $U(1)$ using the techniques described in \autoref{sec: relating lie groups and algs}.
+\end{enumerate}
+\end{exercise}
+
 \newpage
 \printendnotes
 
-\chapter{The Implications of Lie Theory}
-After laying out some fundamentals of \gls{lie theory}, we can start applying it to actual problems we encounter to see how we can use it in aerospace and physics applications. These applications, especially in physics, are very numerous. Here, we will focus on the applications which are especially important to rotations, differential equations, and control theory. A brief aside on the uses in physics will be presented at the end. With some practical knowledge attained, we may begin exploring the use in control theory.
+\chapter{Rotations with Lie Theory}
+After laying out some fundamentals of \gls{lie theory}, we can start applying it to actual problems we encounter to see how we can use it in aerospace and physics applications. These applications, especially in physics, are very numerous. In this chapter, we will focus on the applications in relation to 2D and 3D rotations. Lie theory turns out to be especially useful for understanding the nature of 3D rotations.
 
 \section{Rotations}
 We've started to discuss rotations with the circle group, but we will now expand that to include information on more general rotations and some of the other attributes.
@@ -1195,12 +1206,26 @@ We may start by considering the
 
 
 
-\section{Physics Applications of Lie Theory}
+\chapter{Physics Applications of Lie Theory}
+
+
+The\footnote{This chapter may be skipped without loss of continuity for the rest of the text.} applications of \gls{lie theory} in physics are especially interesting and provide great insight into our current understanding of the world. 
 
 \subsection{Quantum Mechanics}
 \color{red} All quantum mechanical operators are elements of lie algebras! \color{black}
 
+
 \subsection{Spinors}
+
+
+\section{Particle Physics}
+Particle physics is one realm in which \gls{lie theory} becomes indispensible. 
+
+Each generator of a gauge group corresponds to a force mediating particle:
+Electromagnetic: $U(1)\rightarrow$ photon (one generator)
+Weak: $SU(2)\rightarrow$$W^+,W^-,Z$ (three generators)
+Strong: $SU(3)\rightarrow$ gluons of different colors (8 generators)
+
 
 
 
@@ -1233,7 +1258,7 @@ Which matches the result of the product rule exactly!
     Where $A$ is an $n{\times}n$ matrix with constant coefficients and $x$ and $\dot{x}$ are $n{\times}1$ vectors. We can find the solution of this equation through separation and integration. We start by performing the seperation of variables:
     $$\frac{dx}{x}=Adt$$
     We can this integrate this equation to find the solution.
-    $$\int_{x_0}^x{\frac{dx}{x}}=\int_{t_0}^\top {Adt}$$
+    $$\int_{x_0}^x{\frac{dx}{x}}=\int_{t_0}^t {Adt}$$
     So, we have $\ln\left(\frac{x(t)}{x_0}\right)=A(t-t_0)$. We note that $t-t_0$ can be replaced by $\Delta t$. Finally, we exponentiate to arrive at our solution to the differential equation:
     \begin{gather}
         \color{blue}\boxed{\color{black}x(t)=e^{A\Delta t}x_0}\\
@@ -1253,83 +1278,6 @@ We can see the presence of the matrix exponential $e^{At}$, which we have seen b
 \end{example}
 
 \section{Lagrangian and Hamiltonians on Manifolds}
-
-\section{Noether's Theorem}\label{Noether's Theorem}
-
-We touched on this briefly in \autoref{sec:motivation and background lie}, but in many physical problems (and in \gls{lie theory}), we are concerned with physical symmetries. Noether's Theorem states the following:
-
-\begin{theorem}[Noether's Theorem]
-In a system that can be modeled purely by a Lagrangian (that is, a conservative system), every continuous symmetry has a corresponding conservation law.
-\end{theorem}
-The implications of this statement are quite great. Noether's Theorem gives us a pathway to understand where the conservation laws of symmetry actually come from. Of course, we can also reverse the statement and understand the symmetries of our system based on the conserved quantities!
-
-Although we have discussed continuous symmetries quite a bit in our discussion of \gls{lie theory}, concrete examples will aid us greatly.
-
-\subsection{Conservation in Physics}
-
-Before we get started, we should concretely define the terminology of the theorem. What exactly do we mean by a conserved quantity?
-
-A conserved quantity is simply one that does not change over time. When we say that energy is conserved, we mean that the energy of the system will be exactly the same if observed at $t=0\ \mathrm{s}$ or $t=100\ \mathrm{s}$. If we call our quantity of interest $X$, we can express this as:
-$$\frac{dX}{dt}=0$$
-
-\subsection{Symmetries in Physics}
-As we have discussed earlier, the picture of groups and symmetries changes a bit between each domain of math or physics that we are discussing. In the domain of physics, our picture of symmetries is most definitely different than the picture of triangles or number lines.
-
-When we discuss a symmetry in physics, we mean to say that the physics that act upon that system are in no way altered by whatever transformation we have performed (that is to say, the \gls{eom} is identical).
-
-For example, if we decide to move our rocket launch 20 ft to the north, the aerodynamics, gravity, and forces of the rocket are still exactly the same. We have performed a transformation -- in the form of moving the launch location -- but there are no observable differences to the system!
-
-Of course, these transformations are not merely limited to physical movements of the system, there are other types of transformations that we can do that do not impact the physics of the system.
-
-\subsection{The Mathematical Formulation}
-
-We know from Hamilton's Principle that physical trajectories have an action of zero. We denote this action as $S$, and the path it follows as $\gamma$, so we may write $S[\gamma]=0$. It may be possible to find another path $S[\gamma_2]=0$ somewhere else along the state space. This is not particularly noteworthy. We can take the analogy of the derivative from calculus as an example in \autoref{fig:calc sym}:
-\begin{figure}[H]
-    \centering
-
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
-
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
-
-%Shape: Polynomial [id:dp5733809673289914] 
-\draw  [line width=1.5]  (100,225) .. controls (170,35) and (240,320) .. (310,130) ;
-%Shape: Polynomial [id:dp22075841317731382] 
-\draw  [line width=1.5]  (310,130) .. controls (383.33,-100) and (456.67,245) .. (530,15) ;
-%Straight Lines [id:da16902943176946206] 
-\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=1.5]    (210,199) -- (290,199) ;
-%Straight Lines [id:da8215493758509421] 
-\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=1.5]    (430,99) -- (510,99) ;
-%Straight Lines [id:da24241399926680518] 
-\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (320,95) -- (280,65) ;
-%Straight Lines [id:da37036162717673604] 
-\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (400,240) -- (468.58,112.64) ;
-\draw [shift={(470,110)}, rotate = 118.3] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
-%Straight Lines [id:da8857104314835499] 
-\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (350,250) -- (262.74,211.22) ;
-\draw [shift={(260,210)}, rotate = 23.96] [fill={rgb, 255:red, 218; green, 44; blue, 0 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
-%Straight Lines [id:da5379556180362811] 
-\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (250,199) ;
-\draw [shift={(250,199)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.34, y radius= 2.34]   ;
-%Straight Lines [id:da1048842221660955] 
-\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (470,99) ;
-\draw [shift={(470,99)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.34, y radius= 2.34]   ;
-
-% Text Node
-\draw (354,242.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$f'=0$};
-% Text Node
-\draw (249,47.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$f( x)$};
-
-
-\end{tikzpicture}
-
-    
-    \caption{Calculus Analogy of Discrete Symmetry}
-    \label{fig:calc sym}
-\end{figure}
-Given a general function, it is expected that there will likely be multiple minima, separated spatially. What Noether's Theorem is concerned with is infinitesimal transformations that do not change the action at all. In the case of our example before, we have some transformation, which we may call $T$, which maps path $\gamma$ to $\gamma'$:
-$$\gamma\xrightarrow{T}\gamma'$$
-When we have a continuous symmetry between these two, there is no difference in the action! So $S[\gamma]=S[\gamma']$.
 
 \section{The Limitations of Lie Theory}
 A fundamental understanding of the mathematics that relate groups and algebras is quite interesting, but ultimately, our goal in engineering is to be able to control a system which is not mathematically ideal. We will have disturbances and random behaviors and noisy sensors in all of our real systems. Do these non-idealities make \gls{lie theory} useless for us? Of course not, but it does impose limitations of the extent to which we can use it.
