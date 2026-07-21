@@ -931,13 +931,77 @@ We remember that the control \gls{Hamiltonian} is defined as:
 $$\mathcal{H}(\bm{x},\bm{\lambda},\bm{u})=\bm{\lambda}^T\bm{\dot{x}}+L$$
 We can use the linear dynamics and the \gls{Lagrangian} to create the full \gls{Hamiltonian}:
 $$\mathcal{H}(\bm{x},\bm{\lambda},\bm{u})=\bm{\lambda}^T(A\bm{x}+B\bm{u})+\frac{1}{2}\bm{x}^TQ\bm{x}+\frac{1}{2}\bm{u}^TR\bm{u}$$
-To find the optimal control input for the system at each time, we take the partial derivative of $\mathcal{H}$ with respect to $\bm{u}$ and set it equal to zero. That will give an optimality condition for the control input:
+To find the optimal control input for the system at each time, we take the partial derivative of $\mathcal{H}$ with respect to $\bm{u}$ and set it equal to zero. That will give an optimality condition for the control input:\endnote{It is quite the miracle that the optimality condition arises so naturally in the \gls{Hamiltonian} framework. In other contexts, we have to discuss very much additional math in order to derive an optimality condition. For an example, see almost any other textbook on optimal control theory.}
 $$\frac{\partial \mathcal{H}(\bm{x},\bm{\lambda},\bm{u})}{\partial \bm{u}}=\bm{\lambda}^TB+\bm{u}^TR=0$$
 We can rearrange this equation to solve for $\bm{u}$, which is the optimal control, denoted $\bm{u}^*$. We simply need to solve the equation to find this value. We rely on the fact that $R$ is symmetric and invertible.
 $$\bm{u}^TR=-\bm{\lambda}^TB\xrightarrow{R^{-1}}\bm{u}^T=-\bm{\lambda}^TBR^{-1}\xrightarrow{\text{transpose}}\bm{u}^*=-R^{-1}B^T\bm{\lambda}$$
 We can substitute the optimal solution $\bm{u}^*$ back into the control \gls{Hamiltonian} now:
-$$\mathcal{H}(\bm{x},\bm{\lambda})=\bm{\lambda}^T(A\bm{x}-BR^{-1}B^T\bm{\lambda})+\frac{1}{2}\bm{x}^TQ\bm{x}+\frac{1}{2}(-R^{-1}B^T\bm{\lambda})^TR(-R^{-1}B^T\bm{\lambda})$$
+$$\mathcal{H}=\bm{\lambda}^T(A\bm{x}-BR^{-1}B^T\bm{\lambda})+\frac{1}{2}\bm{x}^TQ\bm{x}+\frac{1}{2}(-R^{-1}B^T\bm{\lambda})^TR(-R^{-1}B^T\bm{\lambda})$$
+If we consider just the last term, we see that it will yield the following:
+$$\frac{1}{2}(-R^{-1}B^T\bm{\lambda})^TR(-R^{-1}B^T\bm{\lambda})=\frac{1}{2}\bm{\lambda}^TBR^{-1}RR^{-1}B^T\bm{\lambda}$$
+We may cancel one of the pairs in $R^{-1}R$. As a result, this term will exactly match the term $-\bm{\lambda}^TBR^{-1}B^T\bm{\lambda}$. As a result, the final control \gls{Hamiltonian} will take the form:
+$$\mathcal{H}=\bm{\lambda}^TA\bm{x}-\frac{1}{2}\bm{\lambda}^TBR^{-1}B^T\bm{\lambda}+\frac{1}{2}\bm{x}^TQ\bm{x}$$
+At this point, we can write Hamilton's equations for this system. The first one is for the generalized coordinates, $\bm{x}$:
+$$\bm{\dot{x}}=\frac{\partial\mathcal{H}}{\partial \bm{\lambda}}=A\bm{x}-BR^{-1}B^T\bm{\lambda} $$
+\begin{exercise}
+Solve the equation $\bm{u}^*=-R^{-1}B^T\bm{\lambda}$ for $\bm{\lambda}$ and show that the first of Hamilton's equations reproduces the standard system dynamics $A\bm{x}+B\bm{u}$.
+\end{exercise}
+We can solve the second of Hamilton's equations to get the following:\endnote{Note that some terms have become transposed or changed otherwise. A good exercise is to perform these derivations using the tensor notation to see how these arise.}
+$$\bm{\dot{\lambda}}=-\frac{\partial\mathcal{H}}{\partial \bm{x}}=-Q\bm{x}-A^T\bm{\lambda}$$
+We can naturally package this in terms of state/costate vector:
+$$\bm{\dot{z}}=\begin{bmatrix}
+    \bm{\dot{x}}\\\bm{\dot{\lambda}}
+\end{bmatrix}=\begin{bmatrix}
+    A&-BR^{-1}B^T\\-Q&-A^T
+\end{bmatrix}\begin{bmatrix}
+    \bm{x}\\\bm{\lambda}
+\end{bmatrix}$$
+This equation is linear in the state/costate vector: $\bm{\dot{z}}=M\bm{z}$. We can verify that the system is indeed \gls{Hamiltonian} by checking the \gls{Hamiltonian} matrix property:
+$$M^TJ+JM=0$$
+Remembering that $J$ is a symplectic matrix, we have the following:
+$$\begin{bmatrix}
+    A&-Q\\-BR^{-1}B^T&-A^T
+\end{bmatrix}^T\begin{bmatrix}
+    0&I\\-I&0
+\end{bmatrix}+\begin{bmatrix}
+    0&I\\-I&0
+\end{bmatrix}\begin{bmatrix}
+    A&-BR^{-1}B^T\\-Q&-A^T
+\end{bmatrix}$$
+Which indeed simplifies to a matrix of all zeros, proving that our matrix $M$ is \gls{Hamiltonian}. We remember that for a \gls{Hamiltonian} matrix, whenever $\sigma$ is an eigenvalue, so is $-\sigma$. For a controller, we want the system to be stable and desire only the eigenvalues of the system which are negative. We remember that the costate can be expressed in terms of the state as:
+$$\lambda_j=\frac{\partial V(\bm{x},t)}{\partial x^j}$$
+In the LQR problem, the cost-to-go function $V$ is another quadratic function of the state. This function takes the form $V=\frac{1}{2}\bm{x}^TP\bm{x}$. As a result, the costate is a linear function of the state itself:
+$$\bm{\lambda}=P\bm{x}$$
+The matrix $P$ is also constant, meaning that we have the following additional relationship:
+$$\bm{\dot\lambda}=P\bm{\dot x}$$
+In the context of the symplectic geometry, our stable solution exists in the \textit{Lagrangian subspace}. In this subspace, the momentum (costate) is necessarily a linear combination of the coordinates (state). For now, we will accept this as fact. However, we can also prove this critical part of the derivation using the Hamilton-Jacobi Bellman equations which are given in \todo{appendix this}.
 
+Our final step is to create an equality with the costate equations based on this relation. First, we take the relationship of the derivatives:
+$$\bm{\dot\lambda}=P\bm{\dot x}$$
+Now, we substitute in the solution of Hamilton's equations for each of these terms:
+$$-Q\bm{x}-A^T\bm{\lambda}=P(A\bm{x}-BR^{-1}B^T\bm{\lambda} )$$
+Finally, we replace all instances of $\bm{\lambda}$ with $P\bm{x}$:
+$$-Q\bm{x}-A^TP\bm{x}=P(A\bm{x}-BR^{-1}B^TP\bm{x} )$$
+We can now factor out $\bm{x}$ from the equation entirely:
+$$-Q-A^TP=P(A-BR^{-1}B^TP)$$
+We can rearrange this equation slightly to the following:
+\begin{gather}
+\color{boxBlue}\boxed{\color{black}A^TP+PA-PBR^{-1}B^TP+Q=0}\\
+\color{boxBlue}\text{Continuous Algebraic Riccati Equation}
+\end{gather}
+This equation, known as the continuous algebraic Riccati equation, is our final result. While it is famous for being somewhat difficult to solve, we can again leverage the \gls{Hamiltonian} structure to help us solve the equation.
+
+
+\section{Hamilton-Jacobi Bellman}
+
+
+\section{LQI Control}
+
+Throw an integral on there for tracking things
+
+
+\section{Robustness}
+Uncertain parameters in MATLAB, basic synthesis of Hinf and Mu controllers
 
 \section{Optimal Control Design Examples}
 
