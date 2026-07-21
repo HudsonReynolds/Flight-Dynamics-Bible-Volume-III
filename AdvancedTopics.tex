@@ -449,7 +449,7 @@ We would say that `$\rho$' is a representation which maps our group $G$ onto a m
 
 Interested readers can look into the proofs which describe the details behind why this is true. These theorems will not be used elsewhere in this text, they are simply shown for completeness. More important than the proof is the result, which directly implies that we only need to know the field, $V$, we are operating in and some properties of the matrices.
 
-An important implication of this theorem is that we may also represent any \gls{lie algebra} using this same matrix method. Knowing that we can represent groups like this gives us a great amount of computational power. Because we are well versed in linear algebra, we may use our tools from there to gain a robust understanding of \gls{lie theory}. Because this matrix representation is so useful, henceforth we will focus on how we may represent these groups and perform math with them using the matrix representation of the group. We are in good company in going this. Most introductory books choose to take this matrix based approach.
+An important implication of this theorem is that we may also represent any \gls{lie algebra} using this same matrix method. Knowing that we can represent groups like this gives us a great amount of computational power. Because we are well versed in linear algebra, we may use our tools from there to gain a robust understanding of \gls{lie theory}. Because this matrix representation is so useful, henceforth we will focus on how we may represent these groups and perform math with them using the matrix representation of the group. We are in good company in doing this. Most introductory books choose to take this matrix based approach.
 
 \subsection{Matrix Multiplication Groups}\label{sec:matrix groups}
 To define matrix groups under multiplication, we need to again satisfy all four criteria of groups. For matrices, there are some subtleties that are worth covering in depth.
@@ -458,15 +458,15 @@ To define matrix groups under multiplication, we need to again satisfy all four 
 
 To get started, let's figure out how we can derive $GL(n)$ before moving on to some of our more advanced groups. First, we will only consider $n\times n$ square matrices so that we can apply matrix multiplication from either direction freely and inverses are well defined. We can then proceed to see what conditions are necessary for this to be a group, which we will call $GL$ (for general linear). We will denote the size, $n$, in parenthesis, giving us $GL(n)$ as our group for matrices of size $n\times n$. To write the group in full, we need to also specify the field that we are considering. 
 
-Typically, there are 3 fields that we consider. Those being the real numbers $(\mathbb{R})$, complex numbers $(\mathbb{C})$, and quaternions $(\mathbb{H})$.\endnote{The quaternions do not actually form a field since their multiplication is not commutative. However, we still consider them as an option over which we can define our field because the algebra of quaternions, $\mathbb{H}$, is isomorphic to $\mathbb{R}$ $(\mathbb{H}\cong\mathbb{R})$, so we are fine to use it in our field.} For now, for the sake of simplicity, we will consider the real numbers, so we would write $GL(n,\mathbb{R)}$ or $GL_n(\mathbb{R})$. I prefer to use the shorthand of $GL(n)$ since it is understood we are only considering reals for now. Other sources may prefer one of the other two notations.
+Typically, there are 3 fields that we consider, those being the real numbers $(\mathbb{R})$, complex numbers $(\mathbb{C})$, and quaternions $(\mathbb{H})$.\endnote{The quaternions do not actually form a field since their multiplication is not commutative. However, we still consider them as an option over which we can define our field because the algebra of quaternions, $\mathbb{H}$, is isomorphic to $\mathbb{R}$ $(\mathbb{H}\cong\mathbb{R})$, so we are fine to use it in our field.} For now, for the sake of simplicity, we will consider the real numbers, so we would write $GL(n,\mathbb{R)}$ or $GL_n(\mathbb{R})$. I prefer to use the shorthand of $GL(n)$ since it is understood we are only considering reals for now. Other sources may prefer one of the other two notations.
 
 Let's remember our four group axioms, as those are what we will need to construct our matrix group:
 
 \begin{enumerate}
 \item $Closure{:} \mathrm{\ for \ all\ } g,h \in G, g\cdot h \in G$
 \item $Associativity{:} \mathrm{\ for \ all \ } g,h,k \in  G, (g\cdot h)\cdot k=g\cdot(h\cdot k)$
-\item $Identity{:} \mathrm{\ there \ is  \ } e\in G, \mathrm{\ for \ all \ } g \in G, e\cdot g=g\cdot e=g$
-\item $Inverse{:} \mathrm{\ for \ all \ } g \in G, \mathrm{\ there \ is  \ } h \in G, g \cdot h=h\cdot g =e$
+\item $Identity{:} \mathrm{\ there \ exists  \ } e\in G, \mathrm{\ for \ all \ } g \in G, e\cdot g=g\cdot e=g$
+\item $Inverse{:} \mathrm{\ for \ all \ } g \in G, \mathrm{\ there \ exists  \ } h \in G, g \cdot h=h\cdot g =e$
 \end{enumerate}
 
 Starting with closure, we can write the following for any two matrices $A,B\in\mathbb{R}$:
@@ -500,13 +500,13 @@ So, when matrix $A$ is the identity, it has the property of an identity element.
 So, we have shown that the matrix $I(n)$ must be the identity element of the group $G(n)$.
 \end{proof}
 
-The last property is an inverse property, such that for all elements in $GL(n)$, there must exist another matrix in $GL(n)$ that when multiplied by returns $I(n)$. 
+The last property is an inverse property, such that for all elements in $GL(n)$, there must exist another matrix in $GL(n)$ that when multiplied by any element of the group returns $I(n)$. 
 
 \begin{proof}
 \textbf{Square Matrix Inverse}\\
 In linear algebra, it is known that a square matrix has an inverse if and only if the determinant is non-zero. This is proven by the invertible matrix theorem.
 \end{proof}
-Because the determinant must be non-zero, the columns of any element of $GL(n)$ must be linearly independent from the invertible matrix theorem. This is an important result, as it puts a definitive constraint on which matrices are part of $GL(n)$. Only the matrices with $n$ linear independent columns will be elements of $GL(n)$.
+Because the determinant must be non-zero, the columns of any element of $GL(n)$ must be linearly independent from the invertible matrix theorem. This is an important result, as it puts a definitive constraint on which matrices are part of $GL(n)$. Only the matrices with $n$ linearly independent columns will be elements of $GL(n)$.
 
 As a last step, we can go back and check that $GL$ is closed under the conditions that we described. 
 \begin{proof}
@@ -530,11 +530,11 @@ So, we have defined the important properties of matrix groups under multiplicati
 \subsection{Manifolds}
 The other important defining aspect of \glspl{lie group} is that they are manifolds. More specifically, a \gls{lie group} must be a \textit{differentiable manifold}. 
 
-But before we get ahead of ourselves, what \textit{is} a manifold? A manifold is simply a `space' that looks like Euclidean space on small scales.\endnote{More specifically, this is a topological space. The exact definition of a topological space is not important to us, but it can be defined in a number of ways. The most common definition involves defining a series of open sets with certain properties. Intuitively, a topological space as the most broad definition of a space. A topological space of set $X$ must contain $X$ and $\tau$ (the topological space is defined $(X,\tau)$). A satisfactory definition for $\tau$ is that it contains the empty set, $\varnothing$, and $X$.} This means that at local scales, the geometry must look like cartesian, where superposition and linearity hold. These are the exact criteria of a vector space.
+But before we get ahead of ourselves, what \textit{is} a manifold? A manifold is simply a `space' that looks like Euclidean space on small scales.\endnote{More specifically, this is a topological space. The exact definition of a topological space is not important to us, but it can be defined in a number of ways. The most common definition involves defining a series of open sets with certain properties. Intuitively, a topological space as the most broad definition of a space. A topological space of set $X$ must contain $X$ and $\tau$ (the topological space is defined $(X,\tau)$). A satisfactory definition for $\tau$ is that it contains the empty set, $\varnothing$, and $X$.} This means that at local scales, the geometry must look Cartesian, where superposition and linearity hold. These are the exact criteria of a vector space.
 
-To apply the rules of calculus, such as taking a derivative, it is necessary that we have a vector space. So, it is useful that we can utilize calculus and algebra on the local scale of a manifold. So, we can axiomatically prove that any set is a group, but how do we go further to show that it is also a smooth manifold, and thus a \gls{lie group}?
+To apply the rules of calculus, such as taking a derivative, it is necessary that we have a vector space. So, it is useful that we can utilize calculus and algebra on the local scale of a manifold. We can axiomatically prove that any set is a group, but how do we go further to show that it is also a smooth manifold, and thus a \gls{lie group}?
 
-Part of the answer lies in the fact that the \gls{lie group} must be smooth. This means that the spatial derivatives at a point must exist, because if it does not the surface may have a sharp discontinuity. When represented as a matrix, this property requires that each component of the matrix varies smoothly. More precisely, a Lie matrix group is a continuous subgroup of $GL(n)$.\cite{weiss_lie_nodate}.
+Part of the answer lies in the fact that the \gls{lie group} must be smooth. This means that the spatial derivatives at a point must exist, because if they do not, the surface may have a sharp discontinuity. When represented as a matrix, this property requires that each component of the matrix varies smoothly. More precisely, a Lie matrix group is a continuous subgroup of $GL(n)$.\cite{weiss_lie_nodate}.
 
 \begin{example}[Manifold Nature of $GL(n)$]
 Let us remember that the matrix $GL(n)$ has a non-zero determinant. We will remember from linear algebra that the determinant of a matrix is a polynomial equation of the matrix entries. Polynomial equations have $\mathcal{C}^\infty$ continuity (infinitely differentiable), so we have shown that the general linear matrix groups of any size will be smooth.
