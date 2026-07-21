@@ -20,6 +20,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{emptypage}
 \usepackage{booktabs}
+\usepackage{tabularx}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{tikz}
@@ -70,7 +71,17 @@
 \usepackage{tcolorbox}
 \tcbuselibrary{minted,breakable,xparse,skins}
 \definecolor{bg}{gray}{0.95}
+\definecolor{boxBlue}{HTML}{264cd6}
 \usepackage{mathrsfs}
+\usepackage{todonotes}
+\usepackage{bm}
+\usepackage{cancel}
+\usepackage{longdivision}
+
+\renewcommand{\thefootnote}{$\dagger$}
+\newcommand{\hatx}{\bm{\hat{x}}}
+
+\newcolumntype{L}{>{\RaggedRight\arraybackslash}X}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -192,7 +203,8 @@
 \hypersetup{ % Make links different colors
     colorlinks = true,
     urlcolor = blue,
-    linkcolor = refRed,
+    %linkcolor = refRed,
+    linkcolor = black,
     citecolor = linkgreen
 }
 
@@ -201,9 +213,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage[toc]{glossaries}
-\glsdisablehyper
+\usepackage{imakeidx}
+\makeindex
 
+\glsdisablehyper
 \makeglossaries
+
+\let\oldgls\gls
+\renewcommand{\gls}[1]{%
+  \oldgls{#1}%
+  \index{\glsentryname{#1}}%
+}
 
 %example to reference for glossary:
 \newglossaryentry{DoF}
@@ -236,13 +256,13 @@
 % Code Listings for MATLAB / Python 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newtcblisting{matlabscript}[2]{%
+\newtcblisting{matlabscript}[1]{% 
   listing engine=minted,
   listing only,
   breakable,
-  minted language=#1,
+  minted language=matlab, % Hardcoded language
   minted options={linenos,breaklines=true,fontsize=\small},
-  title={#2},
+  title={#1}, % Now the first and only argument is the title
   coltitle=black,
   fonttitle=\bfseries,
   boxsep=0pt,
@@ -258,7 +278,7 @@
     \begin{tcbclipinterior}
       \fill[gray!20!white] (frame.south west) rectangle ([xshift=18pt]frame.north west);
     \end{tcbclipinterior}
-    % language badge (uses the separate language argument #1)
+    % language badge
     \node[
       anchor=north east,
       rounded corners=2pt,
@@ -266,17 +286,17 @@
       inner xsep=6pt,
       inner ysep=2pt,
       fill=matcolor!30
-    ] at ([xshift=-4pt,yshift=-4pt]frame.north east) {#1};
+    ] at ([xshift=-4pt,yshift=-4pt]frame.north east) {MATLAB}; % Hardcoded label
   }
 }
 
-\newtcblisting{pythonscript}[2]{%
+\newtcblisting{pythonscript}[1]{%
   listing engine=minted,
   listing only,
   breakable,
-  minted language=#1,
+  minted language=python, % Language fixed to Python
   minted options={linenos,breaklines=true,fontsize=\small},
-  title={#2},
+  title={#1}, % Only argument is now the title
   coltitle=black,
   fonttitle=\bfseries,
   boxsep=0pt,
@@ -292,7 +312,7 @@
     \begin{tcbclipinterior}
       \fill[gray!20!white] (frame.south west) rectangle ([xshift=18pt]frame.north west);
     \end{tcbclipinterior}
-    % language badge (uses the separate language argument #1)
+    % language badge
     \node[
       anchor=north east,
       rounded corners=2pt,
@@ -300,7 +320,7 @@
       inner xsep=6pt,
       inner ysep=2pt,
       fill=pycolor!30
-    ] at ([xshift=-4pt,yshift=-4pt]frame.north east) {#1};
+    ] at ([xshift=-4pt,yshift=-4pt]frame.north east) {Python}; % Badge text fixed
   }
 }
 
@@ -337,7 +357,7 @@
 \usepackage{titlesec}
 
 \titleclass{\chapter}{top}
-\titleformat{\chapter}[display]{\normalfont\Huge\bfseries}{\MakeUppercase{\chaptername} \thechapter}{0pt}{\titlerule[2pt]\vspace{1pc}\huge}
+\titleformat{\chapter}[display]{\normalfont\Huge\bfseries\raggedright}{\MakeUppercase{\chaptername} \thechapter}{0pt}{\titlerule[2pt]\vspace{1pc}\huge}
 
 \titleclass{\part}{top} % make part like a chapter
 \titleformat{\part}
@@ -397,7 +417,7 @@
 
 \newcommand{\printedition}{First Edition}
 \date{
-    March 2026 \\[10pt]
+    July 2026 \\[10pt]
     \large \textbf{\printedition}
 }
 
@@ -414,7 +434,7 @@
 \end{figure}
 
 \begin{dedication}
-    This document is dedicated to Purdue Space Program Liquids. PSP Liquids has given me a vast amount of experience and means to explore the realm of Flight Dynamics. I hope that I can contribute to the wealth of information provided by PSP with this document.
+    This document is dedicated to Purdue Space Program Liquids. PSP Liquids has given me a vast amount of experience and means to explore the realm of flight dynamics and control systems. I hope that I can contribute to the wealth of information provided by PSP with this document.
 \end{dedication}
 
 %table of contents, list of figures and list of tables
@@ -422,15 +442,37 @@
 \pagenumbering{roman}
 \pagestyle{fancy}
 
+
+
 \setcounter{tocdepth}{1}
 
 \begin{spacing}{.5}
     \tableofcontents
     %\listoftables
     %\listoffigures
-    \lstlistoflistings
+    %\lstlistoflistings
 \end{spacing}
 
+\listoftodos
+
+\chapter*{Sections Ready for Review}
+\begin{enumerate}
+    \item \autoref{sec: historical background} 
+    \item \autoref{chap:calculus of variations}*
+    \item \autoref{chap:lagrangian}*
+    \item \autoref{chap:hamiltonian}*
+    \item \autoref{chap:intro to controls}
+    \item \autoref{chap:laplace domain}*
+    \item \autoref{chap: lti}
+    \item \autoref{chap:root locus}
+    \item \autoref{chap: state space} (aside from 10.3)
+    \item \autoref{chap:intro optimal est}*
+    \item \autoref{chap:kalman} up to 12.4
+    \item \autoref{chap:lie theory}*
+    \item \autoref{chap:lagrange continued}*
+\end{enumerate}
+
+Starred chapters are the chapters which should be preferred in review.
 % include all of the glossary and acronyms in the text in this file
 \include{Glossary and Acronyms}
 
@@ -439,6 +481,7 @@
 \include{EnergyMech}
 % \include{FurtherMath}
 \include{ControlTheory}
+\include{ModernControl}
 \include{AdvancedTopics}
 \include{End and Appendix}
 

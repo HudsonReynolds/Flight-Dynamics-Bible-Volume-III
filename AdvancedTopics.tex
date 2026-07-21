@@ -1,4 +1,4 @@
-\part{Advanced Topics in Controls and Physics}\label{part: advanced topics}
+\part{Geometric Control \& Advanced Topics}\label{part: advanced topics}
 \begin{chapquote}{Claude Shannon}
     ``Mathematics is the tool specially suited for dealing with abstract concepts of any kind and there is no limit to its power in this field.''
 \end{chapquote}
@@ -7,11 +7,9 @@
 
 \chapter*{Outline}
 
-\color{red} This section is to be finished after the initial release of this volume. My apologies to any readers with particular interest in the methods of geometric control and differential geometry.\color{black}
+In this final portion of the book, I will describe the methods of controls and other ideas which are much beyond the standard coursework of a typical curriculum in engineering. This section will hold the information related to differential geometry, Lie theory, and its application in the fields of geometric control (as well as some brief mention of the applications in physics). Such an understanding will require us to develop quite a bit of mathematics. The first several chapters will lay this mathematical foundation upon which our theories will be built.
 
-In this final portion of the book, I will describe the methods of controls which are much beyond the standard coursework of a typical curriculum in engineering. This section will hold the information related to differential geometry, Lie theory, and it's application in the fields of geometric control (as well as some brief mention of the applications in physics). Such an understanding will require us to develop quite a bit of mathematics. The first several chapters will lay this mathematical foundation upon which our theories will be built.
-
-This section is intended to live outside the scope of the rest of the book, such that the reader may stop their reading at the end of \autoref{part:control theory} and have gained all the necessary knowledge for a working understanding of control theory and energy mechanics. However, for those who want to dive deeply into these subject matter, this part will build off the rest of the book and dive into the study of advanced control theory and techniques. 
+This section is intended to live outside the scope of the rest of the book, such that the reader may stop their reading at the end of \autoref{part:control theory} and have gained all the necessary knowledge for a working understanding of control theory and energy mechanics. However, for those who want to dive deeply into these subject matters, this part will build off the rest of the book and dive into the study of advanced control theory and techniques. 
 
 I start with a study of \gls{lie theory}, which will form a foundational knowledge of group theory and introduce us to the concepts of differentiable manifolds. From our study of \gls{lie theory}, the study of differentiable manifolds naturally arises. So, I devote this first section to a brief overview of Lie theory, differential geometry, and some applications. In fields such as geometric control, differential geometry plays a crucial part. The study of differential geometry should provide a satisfying unification of the ideas of Clifford algebras, \gls{lie theory}, and inner product spaces. It is truly one of the most profound mathematical generalizations of the ideas found in physics and engineering.
 
@@ -22,7 +20,7 @@ To supplement the information in this chapter, I have found that \cite{hirvonen_
 
 
 \begin{chapquote}{Anthony Zee}
-    ``It is almost as if the Creator of the universe understood Lie groups and decided to use them (a few of the simplest exemplars anyway) to construct the interactions among the fundamental particles that fill the universe. You
+    ``It is almost as if the Creator of the universe understood Lie groups os decided to use them (a few of the simplest exemplars anyway) to construct the interactions among the fundamental particles that fill the universe. You
 might call Him or Her an applied group theorist.''
 \end{chapquote}
 % \begin{chapquote}{Albert Camus}
@@ -31,55 +29,52 @@ might call Him or Her an applied group theorist.''
 
 % clean up the notation for groups and ensure its all the same.
 
-The goal until now has been to introduce the methods of \gls{Lagrangian} and \gls{Hamiltonian} mechanics and control theory in a way that does not require very rigorous mathematical formalisms. However, to tie up some of the loose ends, it is useful to introduce some mathematical concepts which can be used to understand these concepts on a more fundamental level. Along the way, we will also gain insight into the nature of rotations and curved spaces. Introducing these concepts will allow us to formalize huge swaths of the content covered in both Volume II and Volume III up to now, and will prove beneficial in the future endeavors of this volume as well.
+The goal until now has been to introduce the methods of \gls{Lagrangian} and \gls{Hamiltonian} mechanics and control theory in a way that does not require very rigorous mathematical formalisms. However, to tie up some of the loose ends, it is useful to introduce some mathematical concepts which can be used to understand these concepts on a more fundamental level. Along the way, we will also gain insight into the nature of rotations and curved spaces. Introducing these concepts will allow us to formalize huge swaths of the content covered in both Volume II and Volume III up to now, and will prove very beneficial in geometric control and estimation.
 
 This mathematical description is not strictly necessary to use the concepts mentioned throughout this book, but it is helpful for readers who hope to gain a full understanding of the content. I will warn that these chapters are likely the most technical in the book and will require significant effort from the reader. Throughout the chapter, I will slowly introduce the standard mathematical notation of proofs to use as a shorthand instead of writing everything out. This will help acquaint the reader if they are to read further on the subject matter discussed.
 
+\subsubsection{Useful resources for getting started}
+
 Since this is a heavy subject, supplemental resources will be useful. I have compiled a list of useful videos and texts to help explain \gls{lie theory}. Both of these video sources have good visuals that introduce \gls{lie theory} fairly intuitively. \cite{michael_penn_maths_2021} is more mathematically rigorous, but \cite{mathemaniac_what_2023} may be a better overall introduction. \gls{lie theory} is also used extensively in physics, so much material may be found in this domain. Two of my favorite sources in this domain are \cite{eigenchris_spinors_nodate} and \cite{zee_group_2016}.
 
-For those readers who would like to dive deeper into the  subject or prefer written material to videos, I have included several good sources. Likely the best texts to read after this one is \cite{stillwell_naive_2008} and \cite{hall_lie_2015}, which both cover much of the basics of \gls{lie theory}.
+For those readers who would like to dive deeper into the  subject or prefer written material to videos, I have included several good sources. Likely the best texts to read after this one are \cite{stillwell_naive_2008} and \cite{hall_lie_2015}, which both cover much of the basics of \gls{lie theory}.
 
 \section{Motivation and Background}\label{sec:motivation and background lie}
 
-Before we dive into the mathematical foundations of \gls{lie theory}, we should first examine why it is of importance to us. \gls{lie theory} is concerned with the inherit symmetries of mathematical objects. More specifically, the theory is concerned with so-called \textit{continuous symmetries}.
+Before we dive into the mathematical foundations of \gls{lie theory}, we should first examine why it is of importance to us. \gls{lie theory} is concerned with the inherent symmetries of mathematical objects. More specifically, the theory is concerned with so-called \textit{continuous symmetries}.
 
-A big question is why do \textit{we} care? Well, it turns out that all of the rotations that we study are understood with \gls{lie theory}. It is also used to describe quaternions, symplectic groups (in Lagrangian and Hamiltonian mechanics), advanced control methods, robotics, and inertial navigation, just to name a few use cases. Gaining an intuition for the underlying mathematics will prove useful for us. 
+A big question is why do \textit{we} care? Well, it turns out that all of the rotations that we study can be understood with \gls{lie theory}. It is also used to describe quaternions, symplectic groups (in Lagrangian and Hamiltonian mechanics), advanced control methods, robotics, and inertial navigation, just to name a few use cases. Gaining an appreciation and working understanding of the underlying mathematics will prove useful for us in these domains.
 
-For us, \gls{lie theory} is especially useful in our study of dynamic systems. Often, we do have symmetries in our problems. There are those symmetries that are obvious -- such as axial symmetry and reflectional symmetry of an object. There are deeper, more fundamental symmetries though, such as the symmetry between the rotational invariance of the Lagrangian and conservation of angular momentum, which we have seen briefly while studying Noether's Theorem.
+For us, \gls{lie theory} is especially useful in our study of dynamic systems. Often, we do have symmetries in our problems. There are those symmetries that are obvious, such as axial symmetry and reflectional symmetry of an object. There are deeper, more fundamental symmetries, such as the symmetry between the rotational invariance of the Lagrangian and conservation of angular momentum, which we have seen briefly while studying Noether's Theorem.
 
-Understanding symmetries is what led Sophus Lie to originally develop his theory. The study of discrete symmetries by Galois had proven very useful in understanding polynomial equations. Originally, Sophus Lie (shown in \autoref{fig:Lie}) developed the theory in order to understand the continuous symmetries of differential equations. However, the theory also proved to be useful in describing other symmetries, such as the rotations and conservation equations which we are familiar with in dynamics.
+Understanding symmetries is what led Sophus Lie to originally develop his theory. The study of discrete symmetries by Galois had proven very useful in understanding polynomial equations. Originally, Sophus Lie (shown in \autoref{fig:Lie}) developed the theory in order to understand the continuous symmetries of differential equations. However, the theory also proved to be useful in many other domains, such as the rotations and conservation equations which we are familiar with in dynamics.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.5\linewidth]{Images/Portrett_av_Sophus_Lie.jpg}
+    \includegraphics[width=0.65\linewidth]{Images/Portrett_av_Sophus_Lie.jpg}
     \caption{A Portrait of Sophus Lie}
     \label{fig:Lie}
 \end{figure}
 
-The big question, then, is how we can describe symmetry mathematically. A mathematical object known as a \textit{group} is the answer. Groups contain inherit information about symmetry. Lie theory extends this concept via the inclusion of \textit{manifolds} - which will be detailed later. The important conceptual understanding is that groups provide the symmetry, and the manifolds give a `language' to describe our system using a set of coordinates - much like we can describe any point on the surface of earth using latitude and longitude.\endnote{Some mathematicians will be quick to point out that manifolds don't necessarily need coordinates for their description. For calculations, however, we like to ascribe these qualities. In physics, it is typical that we use cartesian coordinates when we do this conversion to physical units, since they require no Jacobian.}
+The big question, then, is how we can describe symmetry mathematically. A mathematical object known as a \textit{group} is the answer. Groups contain inherent information about symmetry. Basically, a group is just a set with some additional structure. Lie theory extends the concept of a group via the inclusion of \textit{manifolds} - which will be detailed later. The important conceptual understanding is that groups provide the symmetry, and the manifolds give a `language' to describe our system using a set of coordinates -- much like we can describe any point on the surface of Earth using latitude and longitude.\endnote{Some mathematicians will be quick to point out that manifolds don't necessarily need coordinates for their description. For calculations, however, we like to ascribe these qualities. In physics, it is typical that we use cartesian coordinates when we do this conversion to physical units, since they require no Jacobian.} The continuous groups that we talk about in \gls{lie theory} will have an infinite number of possible elements. If we were to embed these group elements in a space $\mathbb{R}^n$, we would see a geometry emerge -- a continuous `blob' which mathematicians call a manifold.
 
-The other big part of \gls{lie theory} is that we can describe the attributes of our system at a point using \textit{algebras}. By thinking about our system as a manifold, we are able to describe coordinates for a certain location. Then, we can do something akin to a derivative - looking at the space `tangent' to the manifold at that point. This `tangent space' is what we call the \gls{lie algebra}.
+The other big part of \gls{lie theory} is that we can describe the attributes of our system at a point using \textit{algebras}. By thinking about our system as a manifold, we are able to talk about where symmetries are with respect to each other, or how to get from one to another. Our manifold is a smooth fabric connecting any two symmetries (group elements). Then, we can do something akin to a derivative on this manifold - looking at the space `tangent' to the manifold at that point. This `tangent space' is related to what we call the \gls{lie algebra}. \glspl{lie algebra} are useful because the tangent space is flat. Because it is flat, typical rules of geometry and calculus can be used, making analysis much easier. These algebras are essentially our computational tool that allows us to do simple calculations that yield complex results.
 
-\glspl{lie algebra} are useful because the tangent space is flat. Because it is flat, typical rules of geometry and calculus can be used, making analysis much easier. These algebras are essentially our computational tool that allows us to do simple calculations that yield complex results.
+The last important thing to mention is that we can quite easily go between the representation on a manifold and the representation on the local \gls{lie algebra}. The transformation from the \gls{lie algebra} to the \gls{lie group} is called the \gls{exponential map}. A lot of times, this map is simply the exponential function. Going the other way, we call the mapping the logarithm map. The most important idea here is that we can relate a complex non-linear system (represented in \gls{lie theory} by a group on a manifold) locally with a linearized version of the system, which we essentially `project' onto the system via the \gls{exponential map}. 
 
-The last important thing to mention is that we can convert between the \gls{lie group} and the \gls{lie algebra} using something called an \gls{exponential map}. For some groups and operations, this \gls{exponential map} is simply an exponential function. Other times, however, we need a different way to describe these exponential transformations. This will be discussed later.
+We've just gone through the premise of \gls{lie theory} at a blistering speed. We will dive into each aspect in much greater detail in the following chapters. What is important now is to understand the big picture as we construct our mathematical ideas. As a final point before we start, I believe that Lie theory is simply a beautiful theory which ties together so much mathematics, physics, and control theory. A careful study of Lie theory and the related ideas will prove extraordinarily useful if the reader wishes to further pursue ideas in GNC, physics, or mathematics.
 
-The most important thing to realize is that we can relate a complex non-linear system (represented in \gls{lie theory} by a group on a manifold) locally with a linearized version of the system, which we essentially `project' onto the system via the \gls{exponential map}. 
-
-We've just gone through the premise of \gls{lie theory} at a blistering speed. We will dive into each aspect in much greater detail in the following chapters. What is important now is to understand the big picture ideas as we construct our mathematical ideas.
-
-As a final point before we start, I believe that Lie theory is simply a beautiful theory which ties together so much mathematics. A careful study of Lie theory will unite many of the mathematical concepts you encounter.
-
+\newpage
 \section{Groups and Symmetries}\label{sec:groups and syms}
 \begin{chapquote}{Mark A. Armstrong}
-    ``Numbers measure size, groups measure symmetry''
+    ``Numbers measure size, groups measure symmetry.''
 \end{chapquote}
 
 Groups are extremely fundamental in the construction of Lie theory. As we have mentioned, groups provide the language of symmetries. They are conceptually simple but exceedingly powerful.\endnote{In fact, we see groups used very often in quantum mechanics and field theories. Groups are foundational in our understanding of why forces themselves exist!}
 
-Before we get to formal definitions, it is helpful to have a mental picture of what a group is. From there, we can narrow our view to the concept of a  \gls{lie group}. 2-D Shapes are a good motivating example for what groups are at the basic level. We can consider a basic shape, like the equilateral triangle, as an example. What we define as the \textit{group} is the collection of symmetries that the triangle exhibits.
+Before we get to formal definitions, it is helpful to have a mental picture of what a group is. From there, we can narrow our view to the concept of a  \gls{lie group}. Basic shapes are a good motivating example for what groups are at the basic level. We can consider the equilateral triangle as an example. What we define as the \textit{group} is the collection of symmetries that the triangle exhibits.
 
-\begin{example}[The Symmetries of a Triangle]
+\subsection{The Symmetries of a Triangle}
 A triangle is a good showcase of the symmetries that we find naturally in geometry. Let us consider an equilateral triangle as shown in \autoref{fig:eq triangle}.
 
 \begin{figure}[H]
@@ -108,7 +103,7 @@ A triangle is a good showcase of the symmetries that we find naturally in geomet
 
 It is natural to say that this triangle is symmetric, but what do we really mean when we say that? Mathematically, we're saying that we can perform some operation, which we may call $g$, and the result is that the triangle looks exactly identical afterward. 
 
-The vertices of this triangle have only been labeled so that we can keep track of them as we perform actions on this triangle. If we don't have these labels, we couldn't see anything changing. This highlights one important thing about groups -- our group operations are those operations where we look at our object and we observe no measurable change.
+The vertices of this triangle have only been labeled so that we can keep track of them as we perform actions on this triangle. If we don't have these labels, we couldn't see anything changing. This highlights one important thing about groups -- our group operations are those operations where we look at our object and we observe no measurable change. We could also say that group operations will always have some invariant quantities.
 
 Let's understand each symmetry of the triangle one at a time. We'll start with reflectional symmetries, like putting the triangle in a mirror. We can reflect about the vertical line through `3' as an example of such a symmetry.
 \begin{figure}[H]
@@ -140,7 +135,7 @@ Let's understand each symmetry of the triangle one at a time. We'll start with r
 We can see that this action flips the locations of `1' and `2', but if we had not designated these points, we'd have no way of knowing the triangle was changed! For this reason, we call this action a symmetry of the triangle.
 
 We can also rotate the triangle by $120
-\degree$ about it's geometric center to get another indistinguishable triangle.
+\degree$ about its geometric center to get another indistinguishable triangle.
 \begin{figure}[H]
     \centering
 
@@ -212,19 +207,23 @@ In total, there are 6 ways that we can create a triangle which looks exactly the
     \caption{Symmetries of the Trangle}
     \label{fig:sym tri}
 \end{figure}
-    The very special thing about these symmetries is that we can do two (or more) of them -- one after the other -- and we get another symmetry of the group. Go ahead and try it! You'll find that no matter which operations you do, there's always a way to accomplish it with a single operation! This very special property is called \textit{closure}.
-    There is one other thing, too
+    The very special thing about these symmetries is that we can do two (or more) of them -- one after the other -- and we get another symmetry of the group. Go ahead and try it! You'll find that no matter which operations you do, there's always a way to accomplish it with a single operation! Additionally, there is no combination of symmetries that will \textit{not} give us another equilateral triangle. The combination of these two very special properties is called \textit{closure}.
 
-    One last thing to note: you'll notice that a rotation by $360\degree$ is equivalent to rotation by $0\degree$. This rotation effectively `does nothing'. This is what we call the identity element. Although it seems simple, it is a very important part of the group.
+    One last thing to note: you'll notice that a rotation by $360\degree$ is equivalent to rotation by $0\degree$. This rotation effectively `does nothing'. This is what we call the identity element. Although it seems simple, it is a very important part of the group. Every group requires such an identity element. This brief introduction should give you everything you need to help motivate the axiomatic treatment of groups and the \glspl{lie group} that are to follow.\footnote{If you want more practice or explanation with these concepts, 3Blue1Brown has a good video to help introduce this concept, which can be found at \cite{3blue1brown_eulers_2017}.}
 
-    This brief introduction should give you everything you need to help motivate the axiomatic treatment of groups and the \glspl{lie group} that are to follow.
+\begin{exercise}[Symmetry Practice]
+The group of symmetries for the equilateral triangle is often referred to as a \textit{dihedral} group. Since the triangle has three sides, it is often denoted as $D_3$. 
+\begin{enumerate}
+    \item Prove that the square has the symmetry group $D_4$ and that the square has more symmetries than the triangle.
+    \item Prove that for an $n$-sided regular polygon, the number of symmetries is $2n$.
+\end{enumerate}
+\end{exercise}
 
-    If you want more practice or explanation with these concepts, 3Blue1Brown has a good video to help introduce this concept, which has be found at \cite{3blue1brown_eulers_2017}.
-\end{example}
+\subsection{General Symmetries}
 
-What we have just seen with the triangle is an example of a \textit{discrete symmetry}; a symmetry which requires us to do a sort of `jump' to reach our next symmetry. Since the symmetry is discrete, we can count the total number of symmetries that we have. In the case of the triangle, we have our three rotations and three reflections, giving us a countable set of symmetries.
+What we have just seen with the triangle is an example of a \textit{discrete symmetry}, a symmetry which requires us to do a sort of `jump' to reach our next symmetry. Since the symmetry is discrete, we can count the total number of symmetries that we have. In the case of the triangle, we have our three rotations and three reflections, giving us a countable set of symmetries.
 
-There is another type of symmetry that exists, and one that will in fact be far more useful for us. This type of symmetry is a \textit{continuous symmetry}. Sticking with our 2-D shapes, we can think about a circle instead:
+There is another type of symmetry that exists, and one that will be far more useful for us. This type of symmetry is a \textit{continuous symmetry}. Sticking with our 2 dimensional shapes, we can think about a circle instead:
 \begin{figure}[ht]
     \centering
 
@@ -257,8 +256,8 @@ There is another type of symmetry that exists, and one that will in fact be far 
     \label{fig:circle sym}
 \end{figure}
 
-In contrast with the triangle, this circle may be rotated through \textit{any} angle or reflected about any axis. Mathematically, what makes this different is that it requires no `jump' to go from one symmetry to the next. Our symmetries are continuous as we go around the circle. In fact, the circle group, which we often denote $\mathbb{S}^1$, is one of the prototypical examples of a \gls{lie group}. This smoothly varying structure is in fact the definitive concept us to define this as a \gls{lie group}.
-\footnote{If you want to dive deeper into group theory, a wonderful introductory text can be found in \cite{armstrong_groups_1988}.}
+In contrast with the triangle, this circle may be rotated through \textit{any} angle or reflected about any axis. Mathematically, what makes this different is that it requires no `jump' to go from one symmetry to the next. Our symmetries are continuous as we go around the circle. In fact, the circle group, which we often denote $\mathbb{S}^1$, is one of the prototypical examples of a \gls{lie group}.\endnote{We use the symbol $\mathbb{S}$ to denote that this a 1-dimensional sphere, but we can also imagine it as a `Sircle'.} This smoothly varying structure is in fact the definitive concept that allows us to define this as a \gls{lie group}.
+\footnote{If you want to dive deeper into some of the basic ideas of group theory, a wonderful introductory text can be found in \cite{armstrong_groups_1988}.}
 
 \section{Lie Groups}
 The \gls{lie group} is in essence a group and a manifold, which is shown in \autoref{fig:Lie Group}:
@@ -334,52 +333,49 @@ color(400bp)=(transparent!50)}
 \end{figure}
 What exactly does it mean for the \gls{lie group} to be both a group and a manifold?
 
-The blue `orb' denoted $G$ is representative of a smooth manifold in $\mathbb{R}^n$. We can think of the manifold in this example as the surface of a 2D ellipsoid on which all the members of the group must live. We can see three points defined $g_1$, $g_2$, and $g_1\cdot g_2$. In this example, $g_1\cdot g_2$ is simply the multiplication of $g_1$ and $g_2$. We can remember from our triangle example that the product $g_1\cdot g_2$ must also be in the group because of closure.
+The blue `orb' denoted $G$ is representative of a smooth manifold in $\mathbb{R}^n$.\endnote{When thinking about such structures, we can either embed them in a higher dimensional space (like $\mathbb{R}^3$ in this example) or talk about the intrinsic nature of the surface. For clarity, we will often embed the manifold in a higher dimension to help visualize it.} We can think of the manifold in this example as the surface of a 2D ellipsoid on which all the members of the group must live. We can see three points defined $g_1$, $g_2$, and $g_1\cdot g_2$. In this example, $g_1\cdot g_2$ is simply the multiplication of $g_1$ and $g_2$. We can remember from our triangle example that the product $g_1\cdot g_2$ must also be in the group because of closure. Note that $g_2\cdot g_1$ does not have to be the same as $g_1\cdot g_2$! The multiplication is not always a standard multiplication that we are familiar with.
 
-The property that must hold for a \gls{lie group} is that not only do all $g_1,g_2,g_1\cdot g_2$ reside in $\mathbb{R}^n$, but additionally also lie on the surface of the ellipsoid! In other words, $g_1,g_2,g_1\cdot g_2\in G$. Now that we have a mental picture, we can move on to the formal definition.
+The property that must hold for a \gls{lie group} is that not only do all $g_1,g_2,$ and $g_1\cdot g_2$ reside in $\mathbb{R}^n$, but also lie on the surface of the ellipsoid! In other words, $g_1,g_2,g_1\cdot g_2\in G$, and the whole group $G$ is some manifold $\mathcal{M}$. Now that we have a mental picture, we can move on to the formal definitions.
 
 \subsection{The Axioms of Groups}
-As mentioned before, the defining feature of the \gls{lie group} is that it is both a group and a manifold. We must first define the attributes of a group if we are to formally define this concept. 
+As mentioned before, the defining feature of the \gls{lie group} is that it is both a group and a manifold. We must first define the attributes of a group if we are to formally define this concept. We should recognize most of these axioms from our discussions already.
 
 A group is a mathematical \textit{set} which obeys the following four properties for a given \textit{binary operation}. These properties are shown formally and then explained afterward.
 
 \begin{enumerate}
 \item $Closure{:} \mathrm{\ for \ all\ } g,h \in G, g\cdot h \in G$
 \item $Associativity{:} \mathrm{\ for \ all \ } g,h,k \in  G, (g\cdot h)\cdot k=g\cdot(h\cdot k)$
-\item $Identity{:} \mathrm{\ there \ is  \ } e\in G, \mathrm{\ for \ all \ } g \in G, e\cdot g=g\cdot e=g$
-\item $Inverse{:} \mathrm{\ for \ all \ } g \in G, \mathrm{\ there \ is  \ } h \in G, g \cdot h=h\cdot g =e$
+\item $Identity{:} \mathrm{\ there \ exists  \ } e\in G, \mathrm{\ for \ all \ } g \in G, e\cdot g=g\cdot e=g$
+\item $Inverse{:} \mathrm{\ for \ all \ } g \in G, \mathrm{\ there \ exists  \ } h \in G, g \cdot h=h\cdot g =e$
 \end{enumerate}
-
-
 I will now go over all of these properties to explain their meaning in more natural language for readers not familiar with the notation above.
 
 \begin{enumerate}
     \item By closure, we mean that when we apply an operation on a \textit{set}, we get another element of that set. This is best motivated by an example. 
 
-    Let us take the natural numbers, denoted $\mathbb{N}$ to be our set. The natural numbers are given as $1,2,3\cdots$  and so on. We say that the natural numbers are closed under addition, because adding any of the elements of the set together, we get another element of the set. For example, adding $1$ and $3$, we get $4$, which is also in the set $\mathbb{N}$. Moreover, any composition of these operations will also be part of the set. Performing addition twice will still give an element of the sequence. 
+    Let us take the natural numbers, denoted $\mathbb{N}$ to be our set. The natural numbers are given as $1,2,3\cdots$  and so on. We say that the natural numbers are closed under addition, because adding any of the elements of the set together results in another element of the set. For example, adding $1$ and $3$, we get $4$, which is also in the set $\mathbb{N}$. Moreover, any composition of these operations will also be part of the set. Performing addition twice will still give an element of the set. 
     
-    Connecting this to our notation, we say that two elements, $g$ and $h$ are in the set $G$, which we represent with this notation: $g,h \in G$. We define the operation to be `$\cdot$', which is the notation for a general operation. We can then say that the elements, when acted upon by this operation, are still in the set $G$: $g\cdot h \in G$. This is what the formal definition of closure is.
-    \item Associativity is a more simple concept which most readers are likely familiar with. It simply means that the grouping of the operations does not matter. Note that associativity \textit{does not} imply communitivity! If we take the example of matrices, $(AB)C=A(BC)$, which is an expression of associativity, but $AB\neq BA$ for matrices. 
+    Connecting this to our notation, we say that two elements, $g$ and $h$, are in the set $G$, which we represent with this notation: $g,h \in G$. We define the operation to be `$\cdot$', which is the notation for a general operation. We can then say that the elements, when acted upon by this operation, are still in the set $G$: $g\cdot h \in G$. This is what the formal definition of closure is.
+    \item Associativity is a more simple concept which most readers are likely familiar with. It simply means that the grouping of the operations does not matter. Note that associativity \textit{does not} imply commutativity! If we take the example of matrices, $(AB)C=A(BC)$, which is an expression of associativity, but $AB\neq BA$ for matrices. 
     \item Identity is also relatively simple. Identity simply means that there exists an element of the set $G$, which when applied on another element of set $G$, has no effect. For the real numbers, $\mathbb{R}$, multiplication by the number $1$ is an example of an identity element.
-    \item Inverse is the last property, which states that for each element in the set, there is another element in the set, that when acted upon by an operation, returns the identity. This is analogous to the inverse of a number, or inverse of a function, which you have studied in algebra.
+    \item Inverse is the last property, which states that for each element in the set, there is another element in the set, that when acted upon by an operation, returns the identity. This is analogous to the inverse of a number, or inverse of a function, which you have studied in algebra. For groups, the left and right inverse are the same.
 \end{enumerate}
 
-Lastly, I will explain what a \textit{binary operation} is. Stated simply, a binary operation is an operation which takes in two inputs and returns a single output. Most operations, such as addition, subtraction, and multiplication are binary. Basically, a binary operation is a simple mathematical operation between two numbers that you are familiar with.
+Lastly, I will explain what a \textit{binary operation} is. Stated simply, a binary operation is an operation which takes in two inputs and returns a single output. Most operations, such as addition, subtraction, and multiplication, are binary. Basically, a binary operation is a simple mathematical operation between two numbers that you are familiar with. Sometimes, mathematicians call this a \textit{mapping} or transformation. However, a binary operation is specific type of mapping, so I will prefer that phrasing as it is more specific.
 
 \subsubsection{Further Group Examples}
 
-Let's solidify our understanding of groups with some examples. Some of these are worked examples (blue), and some will require the reader to work through them (red).
+Let's solidify our understanding of groups with some examples and exercises.
 
 \begin{example}[The Real Numbers]
-    To wrap our minds around the concepts of groups, we consider the example of the integers, $\mathbb{Z}$.
-
-    To check if the integers form a group, we first need to define our operation. We will choose addition. Then, we simply check each of the properties. 
+    To wrap our minds around the concepts of groups, we consider the example of the integers, $\mathbb{Z}$. To check if the integers form a group, we first need to define our operation. We will choose addition. Then, we simply check each of the properties. 
     
-    We have shown previously that adding any two natural numbers gives another natural number, and we can intuitively extend this to the integers as well. Next, we consider the associativity. It is easily seen that $(a+b)+c=a+(b+c)$, since addition is associative. Next, we consider the identity. For the operation of addition, the identity is the number $0$, which when added to any integer, $z$, does nothing. Lastly, we consider the inverse. We should have for every integer another integer such that $a+b=0$. It is obvious that $b=-a$, which is satisfied since the integers include negative numbers. Thus, we have shown that the integers are closed under addition.
+    We have shown previously that adding any two natural numbers gives another natural number, and we can intuitively extend this to the integers as well. Next, we consider the associativity. It is easily seen that $(a+b)+c=a+(b+c)$, since addition is associative. Next, we consider the identity: for addition, the identity is the number $0$. Lastly, we consider the inverse. We should have for every integer another integer exists such that $a+b=0$. It is obvious that $b=-a$, which is satisfied since the integers include negative numbers. Thus, we have shown that the integers are closed under addition.
 \end{example}
 
-The axioms of groups can be applied to create a group from any set of objects. In our study, it is most helpful to assign group identities to matrices, since our studies of rotations and control systems involve matrices heavily.
-
+\begin{exercise}
+We have shown in the previous example how the real numbers are closed under addition. Using the same axiomatic approach,  show why the integers are not a group under multiplication. Which axiom(s) is/are violated?
+\end{exercise}
 \begin{exercise}
 We have shown in the previous example how the real numbers are closed under addition. Using the same axiomatic approach,  show why the integers are not a group under multiplication. Which axiom(s) is/are violated?
 \end{exercise}
@@ -397,11 +393,10 @@ There are many more types of symmetries which you may encounter if you further s
 \end{exercise}
 
 
-
 \begin{example}[The Quaternion Group]
 We have shown in Volume II that the quaternions form an algebra which we call $\mathbb{H}$. We define the elements of $\mathbb{H}$:
-$q=q_0+q_1i+q_2j+q_3k ,\quad q_0,q_1,q_2,q_3\in\mathbb{R}$
-    More specifically, this algebra is a four-dimensional associate unital algebra. We have the four dimensions defined by the basis: $1,i,j,k$. These elements are associative, meaning that the order in which we perform operations does not matter (However, the operations are not commutative!). Unital simply means that the algebra contains an identity element.
+$$q=q_0+q_1i+q_2j+q_3k ,\quad q_0,q_1,q_2,q_3\in\mathbb{R}$$
+    More specifically, this algebra is a four-dimensional associative unital algebra. We have the four dimensions defined by the basis: $1,i,j,k$. These elements are associative, meaning that the order in which we perform operations does not matter (However, the operations are not commutative!). Unital simply means that the algebra contains an identity element.
 
     We can again show all of the properties of the \gls{lie group} hold for the quaternion algebra.
 
@@ -417,31 +412,33 @@ $$\begin{array}{c|cccc}
 \end{array}$$
 As we can see, the there is no multiplication that we can do that gives an element outside of the group. Therefore, the quaternions are closed under multiplication.
 \item Associativity: An exact proof of the associativity of quaternions follows from the Cayley-Dickson construction of the quaternions or from Clifford algebras (which are discussed in Volume II). This is not immediately evident, but it is true that the quaternions are associative. More information can be found in \cite{michael_penn_climbing_2023} for the approach using the Cayley-Dickson construction or in \cite{sudgylacmoe_swift_2020} for the approach using Clifford algebras.
-\item Identity: The identity element of the quaternions is simple, it is the element which contains only a real part of 1 and no other element.
+\item Identity: The identity element of the quaternions is simple; it is the element which contains only a real part of 1 and no other element.
 \item Inverse: The inverse for the quaternions is also fairly simple. We can see from the multiplication table that any element of the quaternion algebra multiplied by itself gives the negative of the identity. So, we can simply multiply one of these terms by $-1$ to construct the identity. Since $-1$ is in the span of the real numbers, this is perfectly fine to do!
 
 
     \end{enumerate}
-    So we have shown that the quaternions form both an algebra and a group! This is a quite interesting property. See if there are any other common mathematical objects that you can find group representations for!
+    So, we have shown that the quaternions form both an algebra and a group! This is a quite interesting property. See if there are any other common mathematical objects that you can find group representations for!
 \end{example}
 
 \begin{exercise}[The Octonion Group (Challenging)]
 
-The octonions are an example of another algebra. The octonions have 8 elements and are denoted by $\mathbb{O}$. The octonians are typically expressed as $x=x_0e_0+x_1e_1+x_2e_2+x_3e_3+x_4e_4+x_5e_5+x_6e_6+x_7e_7$. It is also possible to express an octonion as a pair of quaternions.
+The octonions are an example of another algebra. The octonions have 8 elements and are denoted by $\mathbb{O}$. The octonions are typically expressed as $x=x_0e_0+x_1e_1+x_2e_2+x_3e_3+x_4e_4+x_5e_5+x_6e_6+x_7e_7$. It is also possible to express an octonion as a pair of quaternions.
 
 \begin{enumerate}
-    \item Use the Cayley-Dickson construction to create the octonions. From the construction, what property of the quaternions have you lost?
-    \item With this knowledge, do the octonians form a group?
+    \item Use the Cayley-Dickson construction (see source above) to create the octonions from the quaternions. From the construction, what property of the quaternions have you lost?
+    \item With this knowledge, do the octonions form a group?
 
 \end{enumerate}
 \end{exercise}
 
-\subsection{Representation Theory}
-It is useful that we can describe groups axiomatically, but it is hard to do mathematical operations with groups. Luckily, we can express most groups in a way that is simpler to perform mathematical operations on. This is part of a field of mathematics called \textit{Representation Theory}.
+The axioms of groups can be applied to create a group from a large variety of mathematical objects. In our study, it is most helpful to assign group identities to matrices, since our studies of rotations and control systems involve matrices heavily. In the next section, we will explore how we can represent \glspl{lie group} in terms of matrices, which will prove to be the most useful representation for us.
 
-The key realization is that it is possible to represent almost any group using a matrix! In the lingo of math, we are looking for a matrix that is \textit{isomorphic} to our group. An isomorphism means that the structure and information is indistinguishable, even if we have changed how we represent our object. Using representation theory, we typically denote this representation as $\rho$. We can then write the representation:
+\subsection{Representation Theory}
+It is useful that we can describe groups axiomatically, but it is hard to do mathematical operations with groups. Luckily, we can express most groups in a way that is simpler to perform mathematical operations on. This is part of a field of mathematics called \textit{representation theory}.
+
+The key realization is that it is possible to represent almost any group using a matrix! In the lingo of math, we are looking for a matrix that is \textit{isomorphic} to our group. An isomorphism means that the structure and information is indistinguishable, even if we have changed how we represent our object. In representation theory, we typically denote this representation as $\rho$. We can then write the representation:
 $$\rho:G\rightarrow GL(V)$$
-We would say that `$\rho$' is a representation which maps our group $G$ onto $GL(V)$. We haven't discussed $GL(V)$ yet -- but it is simply a matrix group. If interested, you may read more on \autoref{thm:cayley} and \autoref{thm:Ado} which are foundational in proving why this matrix representation holds.
+We would say that `$\rho$' is a representation which maps our group $G$ onto a matrix $GL(V)$. We haven't discussed $GL(V)$ yet -- but it is simply a generic matrix group. If interested, you may read more on \autoref{thm:cayley} and \autoref{thm:Ado} which are foundational in proving why this matrix representation holds.
 
 \begin{theorem}[Cayley's Theorem]\label{thm:cayley}
     Every group $G$ is isomorphic to a subgroup of the symmetric group.
@@ -450,18 +447,18 @@ We would say that `$\rho$' is a representation which maps our group $G$ onto $GL
     Every finite-dimensional \gls{lie algebra} over a field $K$ of characteristic zero can be viewed as a \gls{lie algebra} of square matrices under the commutator bracket.
 \end{theorem}
 
-Interested readers can look into  which describe the details behind why this is true. These theorems will not be used elsewhere in this text, they are simply shown for completeness. More important than the proof is the result, which directly implies that we only need to know the field, $V$, we are operating in and some properties of the matrices.
+Interested readers can look into the proofs which describe the details behind why this is true. These theorems will not be used elsewhere in this text, they are simply shown for completeness. More important than the proof is the result, which directly implies that we only need to know the field, $V$, we are operating in and some properties of the matrices.
 
-An important implication of this theorem is that we may also represent any \gls{lie algebra} using this same matrix method. Knowing that we can represent groups like this gives us a great amount of computational power. Because we are well versed in linear algebra, we may use our tools from there to gain a robust understanding of \gls{lie theory}. Because this matrix representation is so useful, the rest of this chapter will focus on how we may represent these groups and perform math with them using the matrix representation of the group.
+An important implication of this theorem is that we may also represent any \gls{lie algebra} using this same matrix method. Knowing that we can represent groups like this gives us a great amount of computational power. Because we are well versed in linear algebra, we may use our tools from there to gain a robust understanding of \gls{lie theory}. Because this matrix representation is so useful, henceforth we will focus on how we may represent these groups and perform math with them using the matrix representation of the group. We are in good company in going this. Most introductory books choose to take this matrix based approach.
 
 \subsection{Matrix Multiplication Groups}\label{sec:matrix groups}
 To define matrix groups under multiplication, we need to again satisfy all four criteria of groups. For matrices, there are some subtleties that are worth covering in depth.
 
-There are a few types of matrix multiplication groups that are important for our purposes. As noted before, $GL(V)$ is an important group to cover. All other groups will come from $GL(V)$, so it is the most important to describe. Before we get started, let's discuss our matrix group notation. Our field is what is denoted by $V$. As mentioned before, this field is the space that we operate in. For example, we may have $GL(\mathbb{R})$, which we read as `the general linear group with the real numbers as our field'. Often, we forego the description of the field because we so often use the real numbers. In that case, we may write $GL(n)$, which means that we are operating with a matrix with size $n\times n$.
+    There are a few types of matrix multiplication groups that are important for our purposes. As noted before, $GL(V)$ is an important group to cover. All other groups will come from $GL(V)$, so it is the most important to describe. Before we get started, let's discuss our matrix group notation. Our field is what is denoted by $V$. As mentioned before, this field is the space that we operate in. For example, we may have $GL(\mathbb{R})$, which we read as `the general linear group with the real numbers as our field'. Often, we forego the description of the field because we so often use the real numbers. In that case, we may write $GL(n)$, which means that we are operating with a matrix with size $n\times n$.
 
-To get started, let's figure out how we can derive $GL(n)$ before moving on to some of our more advanced groups. First, we will only consider $n{\times} n$ square matrices so that we can apply matrix multiplication from either direction freely. We can then proceed to see what conditions are necessary for this to be a group, which we will call $GL$. We will denote the size, $n$, in parenthesis, giving us $GL(n)$ as our group for matrices of size $n{\times}n$. To write the group in full, we need to also specify the field that we are considering. 
+To get started, let's figure out how we can derive $GL(n)$ before moving on to some of our more advanced groups. First, we will only consider $n\times n$ square matrices so that we can apply matrix multiplication from either direction freely and inverses are well defined. We can then proceed to see what conditions are necessary for this to be a group, which we will call $GL$ (for general linear). We will denote the size, $n$, in parenthesis, giving us $GL(n)$ as our group for matrices of size $n\times n$. To write the group in full, we need to also specify the field that we are considering. 
 
-Typically, there are 3 fields that we consider. Those being the real numbers $(\mathbb{R})$, complex numbers $(\mathbb{C})$, and quaternions $(\mathbb{H})$.\endnote{The quaternions do not actually form a field since their multiplication is not commutative. However, we still consider them as an option over which we can define our field because the algebra of quaternions, $\mathbb{H}$, is isomorphic to $\mathbb{R}$ $(\mathbb{H}\cong\mathbb{R})$, so we are fine to use it in our field.} For now, for the sake of simplicity, we will consider the real numbers, so we would write $GL(n,\mathbb{R)}$ or $GL_2(\mathbb{R})$. I prefer to use the shorthand of $GL(n)$ since it is understood we are only considering reals for now. Other sources may prefer one of the other two notations.
+Typically, there are 3 fields that we consider. Those being the real numbers $(\mathbb{R})$, complex numbers $(\mathbb{C})$, and quaternions $(\mathbb{H})$.\endnote{The quaternions do not actually form a field since their multiplication is not commutative. However, we still consider them as an option over which we can define our field because the algebra of quaternions, $\mathbb{H}$, is isomorphic to $\mathbb{R}$ $(\mathbb{H}\cong\mathbb{R})$, so we are fine to use it in our field.} For now, for the sake of simplicity, we will consider the real numbers, so we would write $GL(n,\mathbb{R)}$ or $GL_n(\mathbb{R})$. I prefer to use the shorthand of $GL(n)$ since it is understood we are only considering reals for now. Other sources may prefer one of the other two notations.
 
 Let's remember our four group axioms, as those are what we will need to construct our matrix group:
 
@@ -476,14 +473,14 @@ Starting with closure, we can write the following for any two matrices $A,B\in\m
 $$AB \in GL $$
 Without additional information about $A$, $B$, and $GL$, it is hard to define additional properties at this point. We will come back to this after establishing some of the other identities.
 
-The property of associativity also does not help much, since all $n{\times} n$ matrices must satisfy associativity by the nature of matrix multiplication:
+The property of associativity also does not help much in restricting the matrix properties, since all $n\times n$ matrices must satisfy associativity by the nature of matrix multiplication. However, it is good that we obey this condition.
 $$(AB)C=A(BC)$$
-The first information about this group comes from the identity property. There must exist some square $n{\times} n$ matrix such that multiplication of the identity on either side of $A$ returns $A$.
+The first information about this group comes from the identity property. There must exist some square $n\times n$ matrix such that multiplication of the identity on either side of $A$ returns $A$.
 
 \begin{proof}
 \textbf{Identity Matrix}\\
     We know from intuition that this identity matrix is of the form:
-$$\mathbb{I}(n)=\begin{bmatrix}
+$$I(n)=\begin{bmatrix}
     1 & 0  &\cdots &0\\
     0&1&\cdots&0\\
     \vdots&\vdots&\ddots&0\\
@@ -498,12 +495,12 @@ In effect, if we take $A$ to be the identity matrix, we can see that the product
 $$(AB)_{ij}={A_{ii}}{B}_{ij}$$
 We have also defined the Knonecker delta $\delta_{ij}$ such that $\delta_{ii}=1$. Thus $A_{ii}$ also has a value of 1. From here, we can see that the equality reduces to
 $$(AB)_{ij}={B}_{ij}$$
-So, when matrix $A$ is the identity, it has the property of an identity element. Remember that we need this `do nothing' identity element in every group. It is a basic property that all matrix multiplication groups have $\mathbb{I}$!
+So, when matrix $A$ is the identity, it has the property of an identity element. Remember that we need this `do nothing' identity element in every group. It is a basic property that all matrix multiplication groups have $I$!
 
-So, we have shown that the matrix $\mathbb{I}(n)$ must be the identity element of the group $G(n)$.
+So, we have shown that the matrix $I(n)$ must be the identity element of the group $G(n)$.
 \end{proof}
 
-The last property is an inverse property, such that for all elements in $GL(n)$, there must exist another matrix in $GL(n)$ that when multiplied by returns $\mathbb{I}(n)$. 
+The last property is an inverse property, such that for all elements in $GL(n)$, there must exist another matrix in $GL(n)$ that when multiplied by returns $I(n)$. 
 
 \begin{proof}
 \textbf{Square Matrix Inverse}\\
@@ -514,18 +511,17 @@ Because the determinant must be non-zero, the columns of any element of $GL(n)$ 
 As a last step, we can go back and check that $GL$ is closed under the conditions that we described. 
 \begin{proof}
 \textbf{Closure of $\mathbf{GL(n)}$}\\
-Supposing that matrices $A,B \in GL(n)$, we know that both have positive determinants from the invertible matrix theorem. We can then use the fact that $\det(AB)=\det(A)\det(B)$. Since $\det(A)>0$ and $\det(B)>0$, it must be true that $\det(AB)>0$ and thus $AB \in GL(n)$.
+Supposing that matrices $A,B \in GL(n)$, we know that both have non-zero determinants from the invertible matrix theorem. We can then use the fact that $\det(AB)=\det(A)\det(B)$. Since $\det(A)\ne0$ and $\det(B)\ne0$, it must be true that $\det(AB)\ne0$ and thus $AB \in GL(n)$.
 \end{proof}
 
-So, we have proven the most general group of $n{\times}n$ invertible matrices, which is called $GL(n)$ for the \textit{general linear group}.
 
 \subsection{The role of the determinant}\label{sec:role of the determinant}
 
-The determinant has a special meaning in linear algebra. It is representative of the scaling of `volume' that is performed under a linear transformation. In the case of a $2{\times}2$ or $3{\times}3$ matrix, this can easily be seen. However, the same is true for any $n{\times}n$ matrix.
+The determinant has a special meaning in linear algebra. It is representative of the scaling of `volume' that is performed under a linear transformation. In the case of a $2\times2$ or $3\times3$ matrix, this can easily be seen. However, the same is true for any $n\times n$ matrix.
 
 %figure of determinant in 2D case.
 
-In our study of dynamics, we often deal with rigid bodies or fluid dynamics that are a fixed volume. So, when we have physical descriptions of phenomena in matrices, we often want the property that $\det=1$ so that the matrix performs no scaling on the body.
+In our study of dynamics, we often deal with rigid bodies or fluid dynamics that are a fixed volume. So, when we have physical descriptions of phenomena in matrices, we often want the property that $\det=1$ so that the matrix performs no scaling on the body. Another way of stating this is that $\det=1$ is a necessary condition for isometries.
 
 These linear transformations with $\det=1$ are so important that they get a special group name with the prefix $S$ for special. In the case of $GL(n)$, we can identify a \textit{subset} of $GL(n)$, which we call the \textit{special linear group}, $SL(n)$. If this subset is also a group, we denote it as a \textit{subgroup} of $GL(n)$. In the common notation, we show this as $SL(n) \subset GL(n)$.  We should note that any matrix \gls{lie group} must be a subgroup of $GL(n)$ since it is the most generic case of the matrix \gls{lie group}! In fact, being a subset of the general linear group is used to define matrix \glspl{lie group}. You will find this definition in many textbooks.
 
@@ -534,37 +530,26 @@ So, we have defined the important properties of matrix groups under multiplicati
 \subsection{Manifolds}
 The other important defining aspect of \glspl{lie group} is that they are manifolds. More specifically, a \gls{lie group} must be a \textit{differentiable manifold}. 
 
-But before we get ahead of ourselves, what \textit{is} a manifold? A manifold is simply a `space' that looks like Euclidean space on small scales.\endnote{More specifically, this is a topological space. The exact definition of a topological space is not important to us, but it can be defined in a number of ways. The most common definition involves defining a series of open sets with certain properties. Intuitively, a topological space as the most broad definition of a space. A topological space of set $X$ must contain $X$ and $\tau$ (the topological space is defined $(X,\tau)$). A satisfactory definition for $\tau$ is that it contains the empty set, $\varnothing$, and $X$.} This means that at local scales, the geometry must look like straight lines, where superposition and linearity hold. These are the exact criteria of a vector space.
+But before we get ahead of ourselves, what \textit{is} a manifold? A manifold is simply a `space' that looks like Euclidean space on small scales.\endnote{More specifically, this is a topological space. The exact definition of a topological space is not important to us, but it can be defined in a number of ways. The most common definition involves defining a series of open sets with certain properties. Intuitively, a topological space as the most broad definition of a space. A topological space of set $X$ must contain $X$ and $\tau$ (the topological space is defined $(X,\tau)$). A satisfactory definition for $\tau$ is that it contains the empty set, $\varnothing$, and $X$.} This means that at local scales, the geometry must look like cartesian, where superposition and linearity hold. These are the exact criteria of a vector space.
 
-To apply the rules of calculus, such as taking a derivative, it is necessary that we have a vector space. So, it is useful that we can utilize calculus and algebra on the local scale of a manifold.
+To apply the rules of calculus, such as taking a derivative, it is necessary that we have a vector space. So, it is useful that we can utilize calculus and algebra on the local scale of a manifold. So, we can axiomatically prove that any set is a group, but how do we go further to show that it is also a smooth manifold, and thus a \gls{lie group}?
 
-So, we can axiomatically prove that any set is a group, but how do we go further to show that it is also a smooth manifold, and thus a \gls{lie group}?
+Part of the answer lies in the fact that the \gls{lie group} must be smooth. This means that the spatial derivatives at a point must exist, because if it does not the surface may have a sharp discontinuity. When represented as a matrix, this property requires that each component of the matrix varies smoothly. More precisely, a Lie matrix group is a continuous subgroup of $GL(n)$.\cite{weiss_lie_nodate}.
 
-Part of the answer lies in the fact that the \gls{lie group} must be smooth. This means that the spatial derivatives at a point must exist, because if it does not the surface may have a sharp discontinuity. When represented as a matrix, this property of smoothness roughly means that each component of the matrix varies smoothly. More precisely, a Lie matrix group is a continuous subgroup of $GL(n)$.\cite{weiss_lie_nodate}.
+\begin{example}[Manifold Nature of $GL(n)$]
+Let us remember that the matrix $GL(n)$ has a non-zero determinant. We will remember from linear algebra that the determinant of a matrix is a polynomial equation of the matrix entries. Polynomial equations have $\mathcal{C}^\infty$ continuity (infinitely differentiable), so we have shown that the general linear matrix groups of any size will be smooth.
 
-\begin{example}[Manifold Nature of $SL(2)$]
-    We have shown in the previous section that $SL(n)$ forms a group. To narrow the scope of our example, we consider the case of $n=2$ and our field to be $\mathbb{R}$. We can write this in shorthand as either $SL_2(\mathbb{R})$ or $SL(2,\mathbb{R})$. Here, we will prefer the latter notation.
-
-We noted before that $SL(2)$ is defined as the group of $2{\times}2$ matrices that have $\det =1$. We may write this as:
-$$SL(2,\mathbb{R})=\begin{bmatrix}
-    a&b\\c&d
-\end{bmatrix}$$
-Using the condition on the determinant, we have $ad-bc=1$. Because the group must also be a smooth manifold, we can take the partial derivatives with respect to each element $a,b,c,d$ of $ad-bc$:
-\begin{gather}
-    \frac{\partial}{\partial a}(ad-bc)=d\\
-    \frac{\partial}{\partial b}(ad-bc)=-c\\
-    \frac{\partial}{\partial c}(ad-bc)=-b\\
-    \frac{\partial}{\partial d}(ad-bc)=a
-\end{gather}
-We can see that each element does indeed vary smoothly, because the partial derivative of the determinant with respect to each variable is a real number. In a non-rigorous way, we can think of it like this: The determinant describes something about the volume distortion of a shape. For each partial derivative, then, we see that the change in volume with respect to that direction is a finite number. Therefore, the shape itself much be smooth in some way.
-
-More precisely, since all of the partial derivatives are non-zero and there must be at least two of the elements in $a,b,c,d$ non-zero for $ad-bc=1$ to hold, we can conclude that the manifold must indeed be smooth.
+The second point is that the matrix $GL(n)$ has $n^2$ elements, so it can appropriately be described as isomorphic to the space $\mathbb{R}^{n^2}$. Since we know these spaces are manifolds, it is neccesary that $GL(n)$ is also a smooth manifold.
 \end{example}
 
-This is all that we will say about manifold structure for now. When studying matrix \gls{lie group}, there are some special conditions that are required to show that they are manifolds, but we will only discuss \glspl{lie group} that are well behaved here and we can assume this holds. The interested reader can look into the cited sources for more information.
+\begin{exercise}
+Knowing that $GL(n)$ is a smooth matrix, make a similar argument to show that the multiplication of two matrices $A$ and $B$ will have smooth elements. Also show that this holds for inverse elements. With those, you can show that $GL(n)$ is a matrix \gls{lie group}.
+\end{exercise}
+
+This is all that we will say about manifold structure for now. Having shown that this property holds for general linear matrices, the properties will be inherited by any matrix subgroup that we may imagine. While understanding manifolds in depth is a fruitful labor, we will not need it for our work here. For a more in depth look at differential geometry from a mathematical perspective, I would recommend \cite{carmo_differential_2016}. A physics perspective on such issues is given by \cite{susskind_general_2025}.
 
 \section{Lie Algebras}
-Let us again start with a visualization of the Lie Algebra to contextualize our discussion. Using the same manifold that we showed previously in \autoref{fig:Lie Group}, we can visualize the Lie algebra as follows:
+Let us recall our visualization of a \gls{lie group} to start our discussion of \glspl{lie algebra}. Using the same manifold that we showed previously in \autoref{fig:Lie Group}, we can visualize the Lie algebra.
 \begin{figure}[ht]
     \centering
 
@@ -634,9 +619,9 @@ color(400bp)=(transparent!50)}
     \caption{Visualization of the Lie Algebra}
     \label{fig:Lie Algebra}
 \end{figure}
-As seen in the figure, we have the manifold and group, which we denote $G$. We identify the identity element of this group, which we denote $e$.\endnote{The reason for this notation comes from the German origin of this word, where ``einheits'' means ``one''. Some other notations exist for the identity element but this is the most common.} We can recall from the Lie group that this identity is defined as an element of $G$ such that for all  $g \in G, e\cdot g=g\cdot e=g$. This identity element for matrix groups is simply the identity matrix, $\mathbb{I}(n)$. 
+As seen in the figure, we have the manifold and group, which we denote $G$. We identify the identity element of this group, which we denote $e$.\endnote{The reason for this notation comes from the German origin of this word, where ``einheits'' means ``one''. Some other notations exist for the identity element but this is the most common.} We can recall from the Lie group that this identity is defined as an element of $G$ such that for all  $g \in G, e\cdot g=g\cdot e=g$. This identity element for matrix groups is simply the identity matrix, $I(n)$. It is a fact that every matrix \gls{lie group} will contain this identity element.
 
-Once we have identified the identity element, we construct a `space' which is tangent to the manifold at that point. Since we know that the manifold must be differentiable, we are guaranteed to have a tangent space!
+Once we have identified the identity element, we construct a `space' which is tangent to the manifold at that point. Since we know that the manifold must be differentiable, we are guaranteed to have a tangent space! For any manifold, we can construct a tangent space using \textit{Gaussian normal coordinates}. Normally, we do not need to explicitly compute this, but the procedure to do so exists and is well defined.
 
 So this is the picture of the \gls{lie algebra}. We have a space that is tangent to the \gls{lie group} at the identity, and extends out. Since the \gls{lie algebra} is a flat space, it is much easier to work with than the curved surface of the manifold!
 
@@ -654,18 +639,18 @@ We can formalize this definition of bilinearity to check if any operation is bil
 \end{enumerate}
 
 \subsection{The Lie Bracket}
-The particulars of algebras beyond this are not of great concern to us. Instead, we will be concerned with the specific properties of \glspl{lie algebra}. The \gls{lie algebra} is similar to an algebra, but has an additional operation. We define an operation called the \textit{Lie bracket}, which we denote $[\cdot,\cdot]$. We can think of the Lie bracket as a kind of weird multiplication. It takes two numbers from the algebra, and returns something else in the algebra.
+The particulars of algebras beyond this are not of great concern to us. Instead, we will be concerned with the specific properties of \glspl{lie algebra}. The \gls{lie algebra} is an algebra, but the bilinear operator we choose is special. We define our operation, called the \textit{Lie bracket}, which we denote $[\cdot,\cdot]$. It takes two numbers from the algebra, and returns something else in the algebra.
 
 For a \gls{lie algebra}, we must have the following properties for the Lie bracket. I introduce the notation $\forall x$ here which is shorthand for `for all $x$'.
 \begin{itemize}
     \item It is bilinear (definition above)
     \item It is alternating, $[x,x]=0 \quad \forall x\in \mathfrak{g}$
-    \item It is antisymmetric, meaning that $[x,y]=-[y,x] \ \forall x, y$
-    \item It satisfies the Jacobi Identity, which states that: $[x,[y,z]]+[y,[z,x]]+[z,[x,y]]=0$.\endnote{Readers of Volume II should find there properties very similar to the properties of the wedge product. The \gls{lie algebra} and the Grassmann algebra over which the wedge product is defined are very similar.}
+    \item It is antisymmetric, meaning that $[x,y]=-[y,x] \ \forall x, y\in\mathfrak{g}$
+    \item It satisfies the Jacobi Identity: $[x,[y,z]]+[y,[z,x]]+[z,[x,y]]=0$.\endnote{Readers of Volume II should find there properties very similar to the properties of the wedge product. The \gls{lie algebra} and the Grassmann algebra over which the wedge product is defined are very similar.}
 \end{itemize}
 
 I should note that the property of being alternating and being skew-symmetric are the same.\endnote{\begin{proof}
-    This can be proven by considering the identity from both directions to show equivalence. Both directions must be considered to show that the link is bijective. Starting with the antisymmetric property, we can substitute $y=x$. This gives us:
+    This can be proven by considering the identity from both directions to show equivalence. Both directions must be considered to show that the link is a logical equivalence. Starting with the antisymmetric property, we can substitute $y=x$. This gives us:
 $$[x,x]=-[x,x]$$
 The solution of which must be 0, since no other value satisfies this equality. 
 
@@ -675,14 +660,15 @@ The lie bracket is bilinear, so the terms can be expanded as follows:
 $$[x,x]+[x,y]+[y,x]+[y,y]=0$$
 From the assumption of the alternating form, $[x,x]$ and $[y,y]=0$. Thus,
 $$[x,y]=-[y,x]$$
-\end{proof}} In the future, it will suffice to show only one. Right now, this definition likely has no meaning to the reader. Let us consider the cross product as an example familiar to the reader:
+\end{proof}} In the future, it will suffice to show only one. Right now, this definition likely has no meaning to the reader. Let us consider two brief examples to make this idea more concrete: the standard cross product and a geometric interpretation of the Lie bracket.
 
-\begin{example}[The cross product as a Lie bracket]
-    We can start with the properties that we assumed for the \gls{lie algebra}. Taking the Lie bracket operation to be the cross product, that is: $[x,y]=x\times y$, it is easy to show that all of the properties are satisfied.
 
-\textbf{Bilinearity:} taking $x$ and $y$ to be vectors, which we would commonly denote $\vec{x}$ and $\vec{y}$, we know that the cross product is defined when $x$ and $y$ exist in $\mathbb{R}^3$. We also know that the cross product generates a vector orthogonal to $x$ and $y$, which also exists in $\mathbb{R}^3$. So, we can see that the cross product satisfies bilinearity.
+\subsubsection{The cross product as a Lie bracket}
+We can start with the properties that we assumed for the \gls{lie algebra}. Taking the Lie bracket operation to be the cross product, that is: $[x,y]=x\times y$, it is easy to show that all of the properties are satisfied.
 
-\textbf{Skew Symmetry:} It is commonly known that the cross product has the property that $x\times y=-y\times x$. This is commonly demonstrated with the right hand rule. Reversing the cross product direction flips the resultant direction.
+\textbf{Bilinearity:} taking $\bm{x}$ and $\bm{y}$ to be vectors, which we would commonly denote $\vec{x}$ and $\vec{y}$, we know that the cross product is defined when $\bm{x}$ and $\bm{y}$ exist in $\mathbb{R}^3$. We also know that the cross product generates a vector orthogonal to $\bm{x}$ and $\bm{y}$ in $\mathbb{R}^3$.
+
+\textbf{Skew Symmetry:} It is commonly known that the cross product has the property that $\bm{x}\times \bm{y}=-\bm{y}\times \bm{x}$. This is commonly demonstrated with the right hand rule. Reversing the cross product direction flips the resultant direction.
 
 We can show skew symmetry in another form though, using the matrix representation of the cross product. We can use two vectors, which we represent as follows:
 $$\begin{pmatrix}
@@ -704,31 +690,81 @@ $$\begin{pmatrix}
 \end{pmatrix}\begin{pmatrix}
     x\\y\\z
 \end{pmatrix}$$
-So, we can see that the matrix for the cross product is also skew symmetric - but in a different way. For a matrix, we say that it is skew symmetric when $A^\top =-A$, which is shown in the matrix for the cross product. It turns out that this matrix \gls{lie algebra} is called $\mathfrak{so}(3)$ and is related to rotations, which we will investigate further later.
+So, we can see that the matrix for the cross product is also skew symmetric -- but in a different way. For a matrix, we say that it is skew symmetric when $A^T =-A$, which is shown in the matrix for the cross product. It turns out that this matrix \gls{lie algebra} is called $\mathfrak{so}(3)$ and is related to rotations, which we will investigate further later.
 
 \textbf{Jacobi Identity:} Satisfaction of the Jacobi Identity is simply a practice of our algebraic skills, but it is still worthwhile to show that the cross product validates this identity for completeness. We can use the cross product shortcut to make this a bit easier:
-$$ \overrightarrow{\underleftarrow{xyzxy}}$$
-    The Jacobi Identity written as cross products gives us the following:
-$$x\times(y\times z)+y\times (z\times x)+z \times (x\times y)=0$$
+$$ \overrightarrow{\underleftarrow{\bm{xyzxy}}}$$
+The Jacobi Identity written as cross products gives us the following:
+$$\bm{x}\times(\bm{y}\times \bm{z})+\bm{y}\times (\bm{z}\times \bm{x})+\bm{z} \times (\bm{x}\times \bm{y})=0$$
 We can evaluate the expression in parenthesis first, giving:
-$$x\times(x)+y\times (y)+z \times (z)=0$$
+$$\bm{x}\times(\bm{x})+\bm{y}\times (\bm{y})+\bm{z} \times (\bm{z})=0$$
 Since any vector crossed with itself is 0, the sum obviously goes to zero.\endnote{If you are uneasy with the shortcut method, an equivalent way to solve this problem is the use the triple scalar product identity:
 $$A\times (B\times C) = B(A\cdot C)-C(A\cdot B)$$
 Plugging this in to the Jacobi identity (and keeping in mind that the dot product is an commutative operation), we can see that this also gives us zero.} And so, we have shown that the cross product is a valid Lie bracket for $\mathbb{R}^3$.
-\end{example}
 
+\subsubsection{The geometric interpretation:}
+The Lie bracket has a fairly intuitive geometric meaning. Remember that in \gls{lie theory}, we may work in arbitrarily curved spaces. So let's forget some of the intuition from Euclidean spaces for a moment. The idea is that we can think of the Lie bracket as a measuring how non-commutative elements of our space are. We input two elements of the algebra. Let's call these elements $\xi$ and $\eta$. Our Lie bracket is then $[\xi,\eta]$. It is natural to think of these elements as vector fields describing the flow of certain coordinates along the manifold. Thus, we can move along the vector fields defined by these elements. First, we'll move a little along $\xi$ and then a little along $\eta$. Our second path, starting from the same origin point as before, will move along $\eta$ and then along $\xi$. This is shown in \autoref{fig:lie bracket geometric}:
+
+\begin{figure}[ht]
+    \centering
+
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Curve Lines [id:da593954238900677] 
+\draw    (130,140) .. controls (154.63,137.67) and (202.54,133.75) .. (247.93,158.83) ;
+\draw [shift={(250,160)}, rotate = 209.82] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (6.25,-3) -- (0,0) -- (6.25,3) -- cycle    ;
+%Curve Lines [id:da025899394857656133] 
+\draw    (250,160) .. controls (263.79,132.06) and (269.82,110.29) .. (260.44,62.21) ;
+\draw [shift={(260,60)}, rotate = 78.61] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (6.25,-3) -- (0,0) -- (6.25,3) -- cycle    ;
+%Curve Lines [id:da4624617190668273] 
+\draw    (130,140) .. controls (138.78,102.59) and (138.99,79.79) .. (130.66,42.87) ;
+\draw [shift={(130,40)}, rotate = 76.89] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (6.25,-3) -- (0,0) -- (6.25,3) -- cycle    ;
+\draw [shift={(130,140)}, rotate = 283.2] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.34, y radius= 2.34]   ;
+%Curve Lines [id:da38017471667969804] 
+\draw    (130,40) .. controls (154.63,37.67) and (186.04,29.87) .. (237.63,49.1) ;
+\draw [shift={(240,50)}, rotate = 201.02] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (6.25,-3) -- (0,0) -- (6.25,3) -- cycle    ;
+%Straight Lines [id:da16907652407409313] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (240,50) .. controls (242.24,49.25) and (243.73,50) .. (244.47,52.24) .. controls (245.22,54.47) and (246.71,55.22) .. (248.94,54.47) .. controls (251.18,53.72) and (252.67,54.47) .. (253.42,56.71) .. controls (254.17,58.94) and (255.66,59.69) .. (257.89,58.94) -- (260,60) -- (260,60) ;
+
+% Text Node
+\draw (177,144.4) node [anchor=north west][inner sep=0.75pt]    {$\varepsilon \xi $};
+% Text Node
+\draw (269,102.4) node [anchor=north west][inner sep=0.75pt]    {$\varepsilon \eta $};
+% Text Node
+\draw (111,82.4) node [anchor=north west][inner sep=0.75pt]    {$\varepsilon \eta $};
+% Text Node
+\draw (171,12.4) node [anchor=north west][inner sep=0.75pt]    {$\varepsilon \xi $};
+% Text Node
+\draw (261,32.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,opacity=1 ]  {$\varepsilon ^{2}[ \xi ,\eta ]$};
+
+
+\end{tikzpicture}
+
+    \caption{Geometric interpretation of the Lie bracket}
+    \label{fig:lie bracket geometric}
+\end{figure}
+ 
 \begin{exercise}[Lie Bracket of Matrices]
     We have shown previously that the \gls{lie algebra} can be written in a matrix form from \autoref{thm:Ado}. For matrices, we take the Lie bracket to be the \textit{commutator} of two matrices, which is defined
     $$[A,B]=AB-BA$$
-    Show that the commutator as the Lie bracket produces a valid \gls{lie algebra}. You can follow the same steps as we did for the cross product. We will use the commutator heavily since we can define all Lie algebras in terms of matrices, so this is a good one to practice!
+    This choice should seem natural after the geometric interpretation. Show that the commutator as the Lie bracket produces a valid \gls{lie algebra}. You can follow the same steps as we did for the cross product. We will use the commutator heavily since we can define all Lie algebras in terms of matrices. As an additional exercise:
+    \begin{enumerate}
+        \item Find an example of a \gls{lie group} where the commutator is zero. What might this imply?
+        \item Find an example of a \gls{lie group} where the commutator is nonzero. What are the implications here?
+    \end{enumerate}
 \end{exercise}
 
 \section{Relating Lie Groups and Algebras}\label{sec: relating lie groups and algs}
 In \autoref{sec:motivation and background lie}, I briefly discussed the \gls{exponential map} as a way to convert between the \gls{lie group} and the \gls{lie algebra}. Here, we will take that definition and solidify its meaning.
 
-Up to now, we've developed this notion of groups and algebras. Our algebra is our simple definition, because everything there is our standard Euclidean geometry. We know our algebra looks like the group \textit{at} the identity because it is tangent. So, if we want to go from point A to point B, we can utilize the continuous structure to get there. Rotations, as we will later see, are a prototypical example of a \gls{lie group}. Therefore, we will understand the exponential map in this context.
+Up to now, we've developed this notion of groups and algebras. Our algebra is our simple definition, because everything there follows the rules of standard vector spaces. We know our algebra looks like the group \textit{at} the identity because it is tangent. But if we deviate at all from the identity element, the differences between the manifold and the algebra become nonzero. As a result, if we want to go from point A to point B on the manifold, we need to have a method that allows us to go back and forth between the two representations. Since two dimensional rotations are a prototypical example of a \gls{lie group}, we will develop our understanding of the exponential map in that context.
 
-Let's think briefly about doing a rotation by $\Theta$ degrees. Since we can only use our algebra, our `rule' is that we can only achieve this rotation using straight lines in our \gls{lie algebra}. So instead, of doing this rotation by $\Theta$, let's do a rotation by $\Theta/n$, $n$ times!\endnote{Choose $n$ in your head to be a really big number, like a zillion or so.} So, we can achieve this rotation by doing many, many small rotations, each of which look like straight lines. In the limit, each of these straight lines define the whole rotation. Let's call this small rotation $\theta\equiv\Theta/n$.
+Let's think briefly about doing a rotation by $\Theta$ degrees. Since we can only use our algebra, our `rule' is that we can only achieve this rotation using straight lines in our \gls{lie algebra}. So instead, of doing this rotation by $\Theta$, let's do a rotation by $\Theta/n$, $n$ times!\endnote{Imagine the value of $n$ in your head to be a really big number. I often choose 1 zillion as a good value.} So, we can achieve this full rotation by doing many, many small rotations, each of which look like straight lines. In the limit, each of these straight lines define the whole rotation. Let's call this small rotation $\theta\equiv\Theta/n$.
 
 Let's put some exact math to this. We're going to use a bit of linear algebra now, but this is just to show how we arrive at the exponential map. We'll dive deeper into all of this understanding later. Given our initial location of point $P$ as $(x,y)$, we can define a coordinate transformation as in \autoref{fig:coord rot}.
 \begin{figure}[ht]
@@ -780,7 +816,7 @@ From simple geometry, it is evident that in our new coordinate system, we may ex
     x'=x\cos\theta+y\sin\theta\\
     y'=-x\sin\theta+y\cos\theta
 \end{gather}
-These trigonometric functions are no good for our straight line version. We can represent the infinitesimal rotation \textit{exactly} with the first derivative:
+These trigonometric functions are no good for our straight line version. We can represent the infinitesimal rotation \textit{exactly} by taking the first derivative evaluated at $\theta=0$:
 \begin{gather}
     x'=x+y\theta\\
     y'=-x\theta+y
@@ -803,15 +839,17 @@ $$\begin{bmatrix}
 \end{bmatrix}+\begin{bmatrix}
     0&\theta\\-\theta&0
 \end{bmatrix}$$
-Let's go ahead and denote all of these matrices symbolically to make our math look a bit nicer. Our LHS matrix we'll call $R(\theta)$ -- this is our matrix which represents a coordinate transformation by some small $\theta$. On the right hand side, we have our identity, $\mathbb{I}$. This identity part is present because it's the `do nothing' part of our rotation. It is what's preserving what we already have, in a sense. We also have our matrix of $\theta$ values. This matrix is what is actually causing some change in the object. We're going to give this one a special name, $\mathcal{J}$, which we call a \textit{generator matrix}, since it is what is generating our rotation (by convention, we will factor our the $\theta$ so that our generator matrix is just the coefficients). With our new symbols, we can write the equation above again:
-$$R(\theta)=\mathbb{I}+\theta\mathcal{J}$$
+Let's go ahead and denote all of these matrices symbolically to make our math look a bit nicer. Our LHS matrix we'll call $R(\theta)$ -- this is our matrix which represents a coordinate transformation by some small $\theta$. On the right hand side, we have our identity, $I$. This identity part is present because it's the `do nothing' part of our rotation. It is what's preserving what we already have, in a sense. We also have our matrix of $\theta$ values. This matrix is what is actually causing some change in the object. We're going to give this one a special name, $\mathcal{J}$, which we call a \textit{generator matrix}, since it is what is generating our rotation (by convention, we will factor our the $\theta$ so that our generator matrix is just the coefficients). With our new symbols, we can write the equation above again:
+$$R(\theta)=I+\theta\mathcal{J}$$
 Now, we can finally appreciate how we get from the \gls{lie algebra} to the \gls{lie group}. Right now, we are considering a infinitesimal rotation $\theta$. Let's remember our original premise, though: We split our full rotation into $n$ pieces, and multiply all those $\Theta/n$ rotations together. Why do we multiply? Because this rotation is a group, and multiplication of two group elements yields a third element guaranteed to also be in the group. Mathematically:
-$$R(\Theta)=\left(R(\theta)\right)^n=\left(\mathbb{I}+\theta\mathcal{J}\right)^n$$
+$$R(\Theta)=\left(R(\theta)\right)^n=\left(I+\theta\mathcal{J}\right)^n$$
 Let's remember that $\theta\equiv\Theta/n$. Plugging this into our formula, we get our final result:
-$$R(\Theta)=\left(\mathbb{I}+\frac{\Theta}{n}\mathcal{J}\right)^n$$
-This formula should hopefully be familiar! This is exactly reminiscent to how we define the exponential operation:
+$$R(\Theta)\approx\left(I+\frac{\Theta}{n}\mathcal{J}\right)^n$$
+Of course, this approximation becomes exact as $n$ approaches infinity:
+$$R(\Theta)=\lim_{n\rightarrow\infty}\left(I+\frac{\Theta}{n}\mathcal{J}\right)^n$$
+At this point, the reader should be jumping up and down with excitement! This is exactly reminiscent to how we define the exponential operation:
 $$e^x=\lim_{n\rightarrow\infty}{\left(1+\frac{x}{n}\right)^n}$$
-This is, at the core, \textit{why} our exponential map is what takes us from the \gls{lie algebra} to the \gls{lie group}. The repeated multiplication of many small linear groups is \textit{exactly} the same as our exponential function.
+This is, at the core, \textit{why} our exponential map is what takes us from the \gls{lie algebra} to the \gls{lie group}. The repeated multiplication of many small linear groups is \textit{exactly} the same as an exponential function.
 
 Notice that we only required the first derivative of our function to construct this very powerful representation of the group. In fact, we constructed our generator by considering the derivative at the identity:
 $$\mathcal{J}=\frac{dR(\Theta)}{d\Theta}\Biggr\rvert_{\Theta=0}$$
@@ -819,18 +857,22 @@ You should notice a great parallel here in how we constructed our \gls{lie algeb
 
 \subsection{Exponential Maps}
 
-Our \gls{lie algebra}, in general, is not going to be a real number. As we saw with the cross product and the coordinate transformation, it is often a matrix or complex number instead. As we say earlier from \autoref{thm:Ado}, we may in fact represent almost any \gls{lie group} or 
+Our \gls{lie algebra}, in general, is going to be more complex than a single real number. As we saw with the cross product and the coordinate transformation, it is often a matrix or complex number instead. As we say earlier from \autoref{thm:Ado}, we may in fact represent almost any \gls{lie group} or 
 \gls{lie algebra} with a matrix.
 
 Although we have shown above that the exponential allows us to go from the \gls{lie algebra} to the \gls{lie group}, there is still a question of what exactly our exponential operation will look like for these objects. It seems that it will vary depending on our representation. How can we find a general exponential for these?
 
-To do this, we turn to the Taylor expansion of $e^x$ for an answer. We can write the Taylor expansion as a summation:
+To do this, we turn to the Taylor expansion of $e^x$ for an answer. We can write the Taylor expansion as an infinite summation:
 \begin{equation}\label{eq:taylor exp}
     e^x\equiv\sum_{n=0}^\infty{\frac{x^n}{n!}}
 \end{equation}
 
 This is the definition that we use for many the more complicated cases, such as complex numbers and matrices. Since we are only using integer indices for $n$, all of these operations are well-defined and valid.
-\newpage
+
+The procedure is nearly identical for matrices. We just remember that a matrix to the zeroth power is the identity:
+\begin{equation}\label{eq:taylor exp}
+    e^A\equiv I+\sum_{n=1}^\infty{\frac{A^n}{n!}}
+\end{equation}
 
 \begin{exercise}[Constructing the exponential map]
     Use the definition of the exponential as a Taylor series as shown in \eqautoref{eq:taylor exp} to write a closed form for the complex exponential, $e^{i\theta}$. It will be helpful to know / look up the Taylor series for $\sin\theta$ and $\cos\theta$.
@@ -840,12 +882,12 @@ So, we have a way to write any arbitrary exponential. We can then use this expon
 $$\exp:\mathfrak{g}\rightarrow G$$
 As we have noted before, this is useful because we can do operations on $\mathfrak{g}$, which is generally simpler to describe since it is a vector space, and then use the exponential map to put this back on to the manifold!
 
-Heretofor, we will mostly use matrix representations for our \glspl{lie group} and \glspl{lie algebra}. Therefore, I have included \autoref{sec: computation of matrix exp} which covers the variety of methods for the computation of matrix exponentials.
+Heretofore, we will use matrix representations for our \glspl{lie group} and \glspl{lie algebra}. Therefore, I have included \autoref{sec: computation of matrix exp} of the appendix which covers a variety of methods for the computation of matrix exponentials.
 
 \section{Bringing it Together - The Circle Group}
-Let's bring all of the previously mentioned concepts of \gls{lie theory} together into one concrete example. This example will showcase the full process of describing the \gls{lie group}, \gls{lie algebra}, and \gls{exponential map}. The prototypical example of study here is the circle group. Since most of us have been studying circles since preschool, this should be a fairly interesting example!
+Let's bring all of the previously mentioned concepts of \gls{lie theory} together into one concrete example. This example will showcase the full process of describing the \gls{lie group}, \gls{lie algebra}, and \gls{exponential map}. The prototypical example of study here is the circle group. Since most of us have been studying circles since preschool, this should be a fairly interesting example!\endnote{One key thing that we are missing in this example is the fact that the circle group is an \textit{abelian} group (the multiplication is commutative. The more interesting \glspl{lie group} are not abelian. We will rectify this in the next chapter.}
 
-We'll start by describing the group itself. We often call this group $\mathbb{S}^1$, which is a very fancy way of saying the group is a circle. $S$ refers to spheres, and the superscript to the dimension. $S^0$ is a point, $S^1$ to circles, $S^2$ to the surface of a sphere, and so on. The $\mathbb{S}$ is used to distinguish the group from the surface itself.
+We'll start by describing the group itself. We often call this group $\mathbb{S}^1$, which is a very fancy way of saying the group is a circle. $S$ refers to spheres, and the superscript to the dimension. $S^0$ is a point, $S^1$ a circle, $S^2$ the surface of a sphere, and so on. The $\mathbb{S}$ is used to distinguish the group from the surface itself.
 
 To actually define the group, we want to construct the unit circle. We know the unit circle has a magnitude of 1 everywhere. So, we know the group must be composed of all complex numbers with magnitude 1. We can then write the circle group:
 $$\mathbb{S}^1=\{z\in\mathbb{C}:|z|=1\}$$
@@ -859,7 +901,11 @@ $$\mathbb{S}^1=\{z\in\mathbb{C}:|z|=1\}$$
 Where $\bar{z}$ is the complex conjugate of $z$. If $z=\sigma+i\omega$, the complex conjugate $\bar{z}=\sigma-i\omega$. We can use the properties described when discussing closure to show that both $z$ and $\bar{z}$ have magnitude 1. Thus, the inverse is also a part of the circle group.
 \end{enumerate}
 
-So, with all four axioms satisfied, we have shown that $\mathbb{S}^1$ is indeed a group! Although we will not prove it precisely, we can also see that the circle group is also a manifold - there are no discontinuities on the circle. So, the circle group defines a \gls{lie group}!
+So, with all four axioms satisfied, we have shown that $\mathbb{S}^1$ is indeed a group! 
+
+\begin{exercise}
+We have just shown a representation of the circle group using the group $U(1)$ -- complex numbers with magnitude 1. To show that this is a \gls{lie group}, come up with a matrix representation that is a subgroup of $GL(2)$ to show that it evolves on a smooth manifold.
+\end{exercise}
 
 \subsubsection{Algebraic Characteristics of $\mathbb{S}^1$}
 Now that we have identified the identity element of $\mathbb{S}^1$, we can construct its algebra. We'll start with a depiction of the group first, which is shown in \autoref{fig:circle group}.
@@ -909,7 +955,7 @@ Now that we have identified the identity element of $\mathbb{S}^1$, we can const
 
 We notice the identity element at $1+0i$ which is denoted $e$. We construct the tangent to the identity to form the \gls{lie algebra}, which is denoted $\mathfrak{s}^1$. This line forms the \gls{lie algebra} of the circle group. Now, we can construct vectors on the \gls{lie algebra}. Since the algebra $\mathfrak{s}^1$ is a vertical line, the vectors we construct will be purely imaginary. So we can write these vectors as $i\theta$, where $\theta \in \mathbb{R}$ is some arbitrary constant which describes the length of the vector.
 
-Our Lie bracket for this case is trivial. Since multiplication over $\mathbb{R}$ is commutative, the only way for $[\theta_1,\theta_2]=-[\theta_1,\theta_2]$ is if the Lie bracket operation is 0.
+Our Lie bracket for this case is trivial. Since multiplication over $\mathbb{R}$ is commutative, the only way for $[\theta_1,\theta_2]=-[\theta_1,\theta_2]$ is if the Lie bracket operation is 0. This tells us that two dimensional rotations are commutative.
 
 \subsubsection{The Exponential Map of the Circle Group}
 The last thing to do is to describe the \gls{lie group} $\mathbb{S}^1$ in terms of the \gls{lie algebra} $\mathfrak{s}^1$. We can write this exponential map as:
@@ -971,14 +1017,14 @@ Since the elements of $\mathfrak{s}^1$ are purely imaginary, the exponential map
 When we think about it, this exponential map is quite amazing! It takes a vector which is along a straight line and `bends' it onto the circle! And from this result, we get a sort of intuition for why $e^{i\theta}$ describes the unit circle. All of this is very exciting, but we can further extend this by considering the matrix representation of this group.
 \subsubsection{The Circle Group with Matrices}
 We can equivalently represent the circle group with matrices. \
-\cite{crawford_complex_2022} has a good overview of how we can construct a $2{\times}2$  matrix that represents the complex numbers. We will explore a version of the derivation here.
+The source \cite{crawford_complex_2022} has a good overview of how we can construct a $2\times2$  matrix that represents the complex numbers. We will explore a version of the derivation here.
 
 The basic problem when converting the circle group to a matrix representation is preserving all of the properties that the original circle group has. We call such a preservation of properties an \textit{isomorphism}. In the circle group, we represented our elements with the complex numbers, which are of form $\sigma+i\omega$. Our goal is to find a set of matrices that are \textit{isomorphic} to these complex numbers.
 
-We have two axes in the complex plane, so we naturally choose $2{\times}2$ matrices as our basis of choice. The real part of the number is easy to describe. We know that any real number $a$ multiplied by 1 is just $a$. We call $1$ the multiplicative identity for this reason. For a matrix $A$, the corresponding action is to multiply by the identity, $\mathbb{I}$. So we can see that $\mathbb{I}$ is analogous to the number 1. So we can represent every real number $\sigma$ as $$\sigma\cdot\mathbb{I}=\begin{bmatrix}
+We have two axes in the complex plane, so we naturally choose $2\times2$ matrices as our basis of choice. The real part of the number is easy to describe. We know that any real number $a$ multiplied by 1 is just $a$. We call $1$ the multiplicative identity for this reason. For a matrix $A$, the corresponding action is to multiply by the identity, $I$. So we can see that $I$ is analogous to the number 1. So we can represent every real number $\sigma$ using $2\times 2$ matrices as: $$\sigma\cdot I=\begin{bmatrix}
     \sigma&0\\0&\sigma
 \end{bmatrix},\ \sigma\in\mathbb{R}$$
-The imaginary part is a bit more complicated, but we can take a systematic approach to find an appropriate matrix representation. Of course, we know that $i^2=-1$. So we should analogously find a matrix $A$ for the complex numbers such that $A^2=-\mathbb{I}$. We can use this equation to shed light on the values of the matrix $A$:
+The imaginary part is a bit more complicated, but we can take a systematic approach to find an appropriate matrix representation. Of course, we know that $i^2=-1$. So we should analogously find a matrix $A$ for the complex numbers such that $A^2=-I$. We can use this equation to shed light on the values of the matrix $A$:
 
 \begin{gather}
     A=\begin{bmatrix}
@@ -992,7 +1038,7 @@ A^2=\begin{bmatrix}
     a^2+bc&ab+bd\\ac+cd&bc+d^2
 \end{bmatrix}
 \end{gather}
-Setting this equal to $-\mathbb{I}$, we have the following four conditions:
+Setting this equal to $-I$, we have the following four conditions:
 \begin{gather}
     a^2+bc=-1\\
     ab+bd=0\\
@@ -1009,7 +1055,7 @@ The first option is circular reasoning (no pun intended) since we need to unders
 That solution is given by $$A=\begin{bmatrix}
     0&-1\\1&0
 \end{bmatrix}$$
-Notice that this $A$ matrix is the exact same as the generator matrix, $\mathcal{J}$, which we created previously. Altogether, we have successfully constructed a real and imaginary number using matrices. To summarize, we can write the matrix equivalent of an imaginary number and then write a matrix of the form:
+Notice that this $A$ matrix is the exact same as the generator matrix, $\mathcal{J}$, which we created previously. Altogether, we have successfully constructed a real and imaginary number using matrices. To summarize, we can write the matrix equivalent of a complex number as:
 $$\Re(z)\begin{bmatrix}
     1&0\\0&1
 \end{bmatrix}+\Im(z)\begin{bmatrix}
@@ -1019,7 +1065,7 @@ $$\Re(z)\begin{bmatrix}
 \end{bmatrix}$$
 Now that we have constructed this matrix representation, we can return to the purpose of finding the \gls{lie group} and \gls{lie algebra}.
 
-Our identity element is easy to identify, it is simply $\mathbb{I}$. Let's remember that our \gls{lie algebra} was identified as the purely complex components, or the matrix:
+Our identity element is easy to identify, it is simply $I$. Let's remember that our \gls{lie algebra} was identified as the purely complex components, or the matrix:
 $$A=\mathcal{J}=\begin{bmatrix}
     0&-1\\1&0
 \end{bmatrix}$$
@@ -1037,15 +1083,71 @@ Before we move on, let's notice something else interesting about this matrix rep
 $$\begin{vmatrix}
     -\lambda&-\theta\\\theta&-\lambda
 \end{vmatrix}=0$$
-Computing this determinant, we find that the eigenvalues of the generator matrix are $\pm i\theta $. It is apparent that these eigenvalues are the same as the \gls{lie algebra} which had found before, when we derived the circle group geometrically. Interestingly, we may directly compute the exponential of these eigenvalues to get the expression of the \gls{lie group}:
+Computing this determinant, we find that the eigenvalues of the generator matrix are $\pm i\theta $. It is apparent that these eigenvalues are the same as the \gls{lie algebra} which had found before when we derived the circle group geometrically. Interestingly, we may directly compute the exponential of these eigenvalues to get the expression of the \gls{lie group}:
 $$e^\lambda=e^{\pm i\theta}$$
 These results show us that the matrix representation can recover the same information as our geometric interpretation. From here, it is useful to spend some more time looking deeply at rotation groups and other useful \glspl{lie group} to determine properties which benefit us in engineering and physics contexts.
+
+
+\section{Relation to Differential Equations}\label{sec:lie theory relation to differential equations}
+We noted in the beginning of this chapter that \gls{lie theory} was originally developed to solve differential equations. We can return to this example to help us tie the theory into math that almost every engineer has studied extensively.
+
+The foundation of differential equations is, quite naturally, the derivative. Thus, we can start our discussion by showing how the derivative is related to the \gls{lie algebra}.
+
+\subsubsection{Relation to derivatives}
+We will start this discussion with the ordinary total derivative that is taught in introductory calculus classes in the context of \gls{lie theory}. Our goal here is to show that the Jacobi identity may arise somewhat naturally by considering the derivative product rule:
+$$[f(x)g(x)]'=f(x)g'(x)+f'(x)g(x)$$
+
+Starting with the Jacobi identity, which we know all \glspl{lie algebra} must satisfy, we have:
+$$[x,[y,z]]=-[y,[z,x]]-[z,[x,y]]$$
+We have also shown that the Lie bracket is alternating, so we can remove the negative signs on the RHS simply by changing the order of the bracket:
+$$[x,[y,z]]=[y,[x,z]]+[[x,y],z]$$
+
+We can rewrite this expression by considering an operation, $D$, which is defined $D(\xi)=[x,\xi]$. Applying this to the equation below, we have:
+$$D([y,z])=[y,D(z)]+[D(y),z]$$
+Since we consider the Lie bracket to be a type of multiplication, we can write the above formula as:
+$$D(yz)=yD(z)+D(y)z$$
+Which matches the result of the product rule exactly! This $D(\xi)$ operator is known as the \textit{Lie derivative}. It is a special type of derivative for curved spaces. 
+
+\subsubsection{Matrix Differential Equations}
+Since we have been studying matrix groups, let us consider the class of first order matrix differential equations. We see these systems frequently in control theory so it is good to study them here.
+    $$\bm{\dot{x}}=A\bm{x}$$
+    Where $A$ is an $n\times n$ matrix with constant coefficients and $\bm{x}$ and $\bm{\dot{x}}$ are $n\times1$ vectors. We can find the solution of this equation through separation and integration. We start by performing the separation of variables:
+    $$\frac{dx}{x}=Adt$$
+
+    \todo{Fix this. You can't do it this way with matrix}
+    We can this integrate this equation to find the solution.
+    $$\int_{x_0}^x{\frac{dx}{x}}=\int_{t_0}^t {Adt}$$
+    So, we have $\ln\left(\frac{x(t)}{x_0}\right)=A(t-t_0)$. We note that $t-t_0$ can be replaced by $\Delta t$. Finally, we exponentiate to arrive at our solution to the differential equation:
+    \begin{gather}
+        \color{boxBlue}\boxed{\color{black}x(t)=e^{A\Delta t}x_0}\\
+        \color{boxBlue}\mathrm{Solution \ of \ } \dot{x}=Ax        
+    \end{gather}
+We can see the presence of the matrix exponential $e^{At}$, which we have seen before when discussing the \gls{lie theory} of matrices! This is an important connection to make, so let us expand on it for clarity.
+
+    Generally, in control theory, we may denote $e^{At}$ (or $e^{A\Delta t}$, they are practically the same) as the \textit{state transition matrix}, which is sometimes denoted $\Phi$. We remember that this state transition matrix was extraordinarily important when we discuss concepts such as discrete time systems and  Kalman filtering. So why does it appear here, and how can we relate that to our discussion of \gls{lie theory}?
+
+    We can think of it in the following way. Our matrix $A$ represents infinitesimal behavior of the system. That's why $\dot{x}$ is described in terms of $A$! It tells us how the parameters vary on an infinitesimal scale. The matrix exponential $e^{At}$, is effectively a map from this infinitesimal solution to a finite time solution; that is, something we can measure. In \gls{lie theory} we have the exact parallel behavior. We have some tangent group on the \gls{lie algebra}, which is mapped onto the group element by the exponential map!
+
+    We can see that these two descriptions are very similar! The key difference is that \gls {lie theory} can describe groups which are nonlinear, which makes it a more powerful tool than solving a linear differential equation. A summary table is included below.
+
+\begin{table}[ht]
+    \centering
+    \caption{Parallels between linear control systems and Lie theory}
+    \label{tab:control_lie_parallel}
+    \begin{tabular}{lll}
+        \toprule
+        \textbf{Conceptual Layer} & \textbf{Linear Controls}& \textbf{Lie Theory}\\ \midrule
+        \textbf{Infinitesimal}& System Matrix $A$& Algebra element $\xi \in \mathfrak{g}$\\
+        \textbf{Map}& Matrix Exponential& Exponential Map\\
+        \textbf{Global State}& STM $\Phi(\Delta t)$& Group element $X \in G$\\ \bottomrule
+    \end{tabular}
+\end{table}
 
 \section{Additional Exercises}
 \begin{exercise}[Circle Group practice]
     A large part of the discussion in this chapter related to the circle group. Let's spend some time exploring this group a bit further!
     \begin{enumerate}
-        \item Prove that the circle group can be represented by the complex numbers of magnitude 1, which we call $U(1)$. We already showed this was a group. In other words, show that $U(1)\cong \mathbb{S}^1$.
+        \item Prove that the circle group can be represented by the complex numbers of magnitude 1, which we call $U(1)$. We already showed this was a group. In other words, show that $U(1)\cong \mathbb{S}^1$. Then prove the isomorphism between $U(1)$ and the $2\times 2$ representation, $SO(2)$.
         \item Find the \gls{lie algebra} of $U(1)$ using the techniques described in \autoref{sec: relating lie groups and algs}.
 \end{enumerate}
 \end{exercise}
@@ -1053,17 +1155,15 @@ These results show us that the matrix representation can recover the same inform
 \newpage
 \printendnotes
 
-\chapter{Rotations with Lie Theory}
-After laying out some fundamentals of \gls{lie theory}, we can start applying it to actual problems we encounter to see how we can use it in aerospace and physics applications. These applications, especially in physics, are very numerous. In this chapter, we will focus on the applications in relation to 2D and 3D rotations. Lie theory turns out to be especially useful for understanding the nature of 3D rotations.
+\chapter{Rotations with Lie Theory}\label{chap:rot with lie}
+After laying out some fundamentals of \gls{lie theory}, we can start applying it to actual problems we encounter to see how we can use it in aerospace and physics applications. These applications, especially in physics, are very numerous. In this chapter, we will focus on the applications in relation to two and three dimensional rotations. Lie theory turns out to be especially useful for understanding the nature of three dimensional rotations. Because three dimensional rotations are non-commutative, \gls{lie theory} becomes especially useful in describing them. Some of the content here will recap ideas from Volume II. However, presenting them in the context of \gls{lie theory} can give us a new perspective and further understanding of the ideas in attitude dynamics.
 
 \section{Rotations}
 We've started to discuss rotations with the circle group, but we will now expand that to include information on more general rotations and some of the other attributes.
 
-Volume II has extensive information on rotations, but it will be helpful to solidify that information with the mathematics of \glspl{lie group}. Additionally, this means that we can gain an understanding of \textit{any possible} implementation of rotation schemes, because this underlying principle dictates all of them.
+Volume II has extensive information on rotations, but it will be helpful to solidify that information with the mathematics of \glspl{lie group}. Additionally, this means that we can gain an understanding of \textit{any possible} implementation of rotation schemes, because this underlying principle dictates all of them. We can start with an example you can try at home to whet our appetite for the math to come.
 
-We can start with an example you can try at home to whet our appetite for the math to come.
-
-\begin{example}[Infinitesimal Rotations]
+\subsection{Small Rotations}
     We can demonstrate the application of \gls{lie theory} to rotations in the real world fairly easily.  We know from Volume I and Volume II that two different rotation sequences -- say 3-2-1 and 3-1-3 -- will yield different results when we rotate through the same angle using each. That is to say, rotations are not generally commutative. The order in which perform these operations will change the final output.
 
     We can show this fairly easily in real life! We can take any object which has 3 distinct axes that are easily distinguishable -- a book or phone, as an example -- and rotate them according to each sequence.
@@ -1088,18 +1188,17 @@ However, something interesting happens if we consider rotations that are small i
     \caption{Example of small rotations being nearly commutative}
     \label{fig:small rot}
 \end{figure}
-We see that these small rotations yield the same final orientation. Go ahead and try the same rotation sequence with your head! If you choose angles that are fairly small, you will see that you do in fact end up looking in the same spot no matter which rotation sequence you choose! Of course, these two rotations are not \textit{exactly} identical, but they are really close! You can notice some small difference by looking at where Suzanne's' ear intersects with the eyebrow. 
+We see that these small rotations yield the same final orientation. Go ahead and try the same rotation sequence with your head! If you choose angles that are fairly small, you will see that you do in fact end up looking in the same spot no matter which rotation sequence you choose!\endnote{So long as you keep the notion of positive and negative rotations the same.} Of course, these two rotations are not \textit{exactly} identical, but they are really close! You can notice some small difference by looking at where Suzanne's' ear intersects with the eyebrow. 
 
-However, these two do seem very similar, which is definitely a different outcome than the large rotations. As we will later prove rigorously, as these rotations get smaller and smaller, these so-called \textit{infinitesimal} rotations will be mathematically identical.
+However, these two do seem very similar, which is definitely a different outcome than the large rotations. As we will later prove rigorously, as these rotations get smaller and smaller, these so-called \textit{infinitesimal} rotations will be mathematically identical, independent of the choice of rotation sequence.
 
-Based on what we've learned from \gls{lie theory} so far, this should give us a few hints as to whats happening. The small rotations are very close to the \gls{lie algebra}, where the elements form a vector space. However, the large rotations exhibit behavior that can only be explained on the manifold. Notice the parallel here with our two dimensional rotations. Even though those two dimensional rotations are commutative and the three dimensional rotations are not, the same principle of infinitesimal rotations holds. The following sections will explain these attributes more mathematically and give special characteristics of rotation groups and algebras.
-\end{example}
+Based on what we've learned from \gls{lie theory} so far, this should give us a few hints as to whats happening. The small rotations are very close to the \gls{lie algebra}, where the elements form a vector space. However, the large rotations exhibit behavior that can only be explained on the manifold. Notice the parallel here with our two dimensional rotations. Even though those two dimensional rotations are commutative and the three dimensional rotations are not, the same principle of infinitesimal rotations holds. The following sections will explain these attributes more mathematically and give special characteristics of rotation groups and algebras. While some of these properties have been studied in the case of two dimensions, we can show they hold for general rotations in any dimension (three being the most important for physical situations).
 
 \subsection{Rotation Groups}
-To describe a rotation mathematically, we first need to understand what rotations do. Aside from the obvious fact that rotations `rotate', some properties are inherit no matter what space we rotate in (although 2D and 3D are the most common for us). These properties will help us define the group structure of rotations:
+To describe a rotation mathematically, we first need to understand what rotations do. Aside from the obvious fact that rotations `rotate', some properties are inherit no matter what space we rotate in (although two and three dimensions are the most common for us). These properties will help us define the group structure of rotations:
 
 \begin{enumerate}
-    \item  Rotations superpose. If we rotate once, and then rotate again, the result is still a rotation, and more importantly, the result is the sum of the first and second rotation.
+    \item  Rotations superpose. If we rotate once, and then rotate again, the result is still a rotation, and more importantly, the result is the product of the first and second rotation.
     \item Secondly, a rotation preserves angles and lengths. By rotating, the length of a vector is never changed. Additionally, the angle between two vectors must also be constant.
     \item Lastly, and likely the most overlooked, rotations preserve the orientations of objects. A pure rotation will never change the order of vectors. This is distinct from a reflection, in which the first two properties hold but the orientation is not preserved.
 
@@ -1115,20 +1214,20 @@ Each of these have direct mathematical implications. We can go through each of t
     \begin{equation}\label{eq:dotty dot prod}
         \vec{v}\cdot \vec{w}=(R\vec{v})\cdot(R\vec{w})
     \end{equation}
-    It is known that for real dot products, we can replace the dot product of $\vec{v}\cdot \vec{w}$ with $\vec{v}^\top \vec{w}$ (you can easily prove this to yourself). So, we can rewrite \eqautoref{eq:dotty dot prod} as:
+    It is known that for real dot products, we can replace the dot product of $\vec{v}\cdot \vec{w}$ with $\vec{v}^T \vec{w}$ (you can easily prove this to yourself). So, we can rewrite \eqautoref{eq:dotty dot prod} as:
  \begin{equation}
-        \vec{v}^\top \vec{w}=(R\vec{v})^\top(R\vec{w})
+        \vec{v}^T \vec{w}=(R\vec{v})^T(R\vec{w})
     \end{equation}
-Which can be simplified using the identity that $(R\vec{v})^\top =\vec{v}^\top R^\top $ to:
+Which can be simplified using the identity that $(R\vec{v})^T =\vec{v}^T R^T $ to:
  \begin{equation}
-        \vec{v}^\top \vec{w}=\vec{v}^\top R^\top R\vec{w}
+        \vec{v}^T \vec{w}=\vec{v}^T R^T R\vec{w}
     \end{equation}
-For this statement to be true, $R^\top R$ must be equal to the identity matrix, $\mathbb{I}$. The only way this can occur is if:
+For this statement to be true, $R^T R$ must be equal to the identity matrix, $I$. The only way this can occur is if:
 \begin{enumerate}
     \item R is invertible.
     \item     The transpose of $R$ is it's inverse.
 \end{enumerate}
-The first statement implies that $R$ must be square (Invertible Matrix Theorem). The second condition that $R^{-1}=R^\top $ is a special condition which implies that the matrix is \textit{orthogonal}. This is a modification of the condition that we saw in \autoref{sec:matrix groups}. In that section, we defined the general linear group $GL(n)$. With the additional constraint that $R^\top =R^{-1}$, we say that rotations exist in the $O(n)$ group. Thus, $O(n) \subset GL(n)$.
+The first statement implies that $R$ must be square (Invertible Matrix Theorem). The second condition that $R^{-1}=R^T $ is a special condition which implies that the matrix is \textit{orthogonal}. This is a modification of the condition that we saw in \autoref{sec:matrix groups}. In that section, we defined the general linear group $GL(n)$. With the additional constraint that $R^T =R^{-1}$, we say that rotations exist in the $O(n)$ group. Thus, $O(n) \subset GL(n)$ and is a \gls{lie group}.
 
     \item The last property is that the orientation and dot products are preserved. Once again, this is the same property that we saw with the special linear group $SL(n)$, and we use the same notation here for the special orthogonal group - denoting it $SO(n)$. As before, the important property with this group is that $\det SO(n) = 1$
 
@@ -1139,18 +1238,18 @@ As mentioned in the introduction to \gls{lie theory}, the \gls{lie algebra} repr
 
 We start by taking a differential rotation, one that is very small, which we denote $\varepsilon$. We then use the defining relationship of $O(n)$:
 \begin{equation}\label{eq:rotationDef}
-    R^\top R=\mathbb{I}
+    R^T R=I
 \end{equation}
 
 We can think of $R$ for an infinitesimal rotation. For a very small rotation, the matrix will be only very slightly different from the identity, shifted by some amount $\varepsilon A$, say. Of course, there are some higher order corrections, but choosing $\varepsilon$ to be small, these are insignificant.\endnote{More strictly, we choose $\varepsilon>0$ but so small that $\varepsilon^2=0$. If our rotation is infinitesimal, this is exactly true.} Thus, we can write\endnote{Notice the similarity in this construction and the one for two dimensional rotations we found earlier. We can, in fact, say that this $\varepsilon A$ is the same as the generator matrix which we found for two dimensional rotations.}:
-$$R=\mathbb{I}+\varepsilon A$$
+$$R=I+\varepsilon A$$
 The matrix $A$ is representative of the \gls{lie algebra}, the form of which we have yet to define. We can use this relationship in \eqautoref{eq:rotationDef} to find properties of A:
-$$(\mathbb{I}+\varepsilon A)^\top (\mathbb{I}+\varepsilon A)=\mathbb{I}$$
+$$(I+\varepsilon A)^T (I+\varepsilon A)=I$$
 We expand the product and ignore any terms with coefficients of $\varepsilon^2$  since these higher order corrections are zero for an infinitesimal transformation. This leads us to:
-$$\mathbb{I}+\varepsilon(A^\top +A)=\mathbb{I}$$
-From here, the $\mathbb{I}$ matrices cancel, and we are left with the relationship that:
+$$I+\varepsilon(A^T +A)=I$$
+From here, the $I$ matrices cancel, and we are left with the relationship that:
 \begin{gather}
-    \color{blue}\boxed{\color{black}A^\top =-A}\\
+    \color{blue}\boxed{\color{black}A^T =-A}\\
     \color{blue}\mathrm{Skew \ Symmetry}
 \end{gather}
 This relationship is called \textit{skew symmetry}, and it is the fundamental property of infinitesimal rotations (or the \glspl{lie algebra} of rotations, put another way). One notable feature of skew symmetric matrices is that the diagonal must be zero for the property to hold\endnote{We may identically say that $\det{A}=0$. Remember that for the \gls{lie group}, our determinant was 1, which we may arrive at through $e^0=1$}. We call the \gls{lie algebra} for which this condition holds $\mathfrak{so}(n)$.
@@ -1161,7 +1260,7 @@ The matrix $A$ is the \gls{lie algebra}, and thus $e^A$ is the exponential map, 
 $$e^{tr(A)}=1$$
 Solving the equation by taking the logarithm of both sides, we have:
 $$tr(A)=0$$
-This condition implies that all of the elements of the diagonal must add to zero! A matrix with such a property is called traceless. Using the other criteria that $A^\top =-A$, each diagonal entry of this matrix must be 0.
+This condition implies that all of the elements of the diagonal must add to zero! A matrix with such a property is called traceless. Using the other criteria that $A^T =-A$, each diagonal entry of this matrix must be 0.
 
 The \gls{lie algebra} of the rotation groups appears quite often in engineering and physics. Anytime an infinitesimal rotation must be described a skew symmetric matrix is often associated with it! One example you may remember is the quaternion integration equation from Volume I:
 $$\dot{\textbf{q}}=\frac{1}{2}\begin{bmatrix}
@@ -1176,9 +1275,7 @@ As we can see, this matrix has the properties of the \gls{lie algebra} of rotati
 
 Having described the form of the rotation group and the rotation algebra in the context of \gls{lie theory}, we can move on to describing these elements in the more familiar context.
 
-
-
-One of the simplest cases in showcasing the relationship between the \gls{lie group} and the \gls{lie algebra} is the rotation.
+One of the simplest cases in showcasing the relationship between the \gls{lie group} and the \gls{lie algebra} is in rotations. We have seen this already for two dimensional rotations. Three dimensional rotations will be slightly more interesting.
 
 Starting with an infinitesimal rotation, which is a group in $\mathfrak{so}(3)$, we have:
 $$A=\begin{bmatrix}
@@ -1197,101 +1294,482 @@ We can use \gls{lie theory} in order to describe the \gls{bke} in another way.
 Explain the \gls{bke} in terms of \gls{lie theory}.
 
 \section{Complex Rotations and Spinors}
-Until now, we have not discussed complex-valued matrices. However, these find use in physics quite often and we can even parameterize the quaternions in terms of complex matrices. We will now explore these complex matrices to gain an understanding of more complex matrix transformations, which are beyond the 3-D rotations we have discussed so far. These ideas will help us relate the quaternions to rotations and understand how $SU(2)$ and $SO(3)$ space are linked!
+In the previous chapter, we saw that we could nicely encode the behaviors of $SO(2)$ with a single complex number in the group $U(1)$. We may hope that something similar may occur in higher dimensional space. This will require the introduction of complex-values matrices and vectors. These are not so different than what we have already studied and fall nicely into \gls{lie theory}. Indeed, these find use in physics quite often and we can even parameterize the quaternions in terms of complex matrices. We will now explore these complex matrices to gain an understanding of more complex matrix transformations. Interestingly, an understanding of these rotations will give a better understanding of three dimensional rotations. These ideas will help us relate the quaternions to rotations and understand how $SU(2)$ and $SO(3)$ space are linked!
 
-This section summarizes some of the ideas that are presented in the \cite{eigenchris_spinors_nodate} playlist of videos.
-
-We may start by considering the 
-
-
-
-
-\chapter{Physics Applications of Lie Theory}
-
-
-The\footnote{This chapter may be skipped without loss of continuity for the rest of the text.} applications of \gls{lie theory} in physics are especially interesting and provide great insight into our current understanding of the world. 
-
-\subsection{Quantum Mechanics}
-\color{red} All quantum mechanical operators are elements of lie algebras! \color{black}
-
-
-\subsection{Spinors}
-
-
-\section{Particle Physics}
-Particle physics is one realm in which \gls{lie theory} becomes indispensible. 
-
-Each generator of a gauge group corresponds to a force mediating particle:
-Electromagnetic: $U(1)\rightarrow$ photon (one generator)
-Weak: $SU(2)\rightarrow$$W^+,W^-,Z$ (three generators)
-Strong: $SU(3)\rightarrow$ gluons of different colors (8 generators)
+\subsection{$SO(3)$ is not simply connected}
+To motivate the study of $SU(2)$, we may consider one of the interesting features of $SO(3)$. As we saw in Volume II, $SO(3)$ can be identified by a ball of radius $\pi$ where antipodal points are connected. This topology has an interested property: we can create closed loops of rotations that are not able to be `contracted'. This is best demonstrated by an image as shown in \autoref{fig:so3 contractible}:
+\begin{figure}[ht]
+    \centering
 
 
 
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
-\section{Relation to Differential Equations}\label{sec:lie theory relation to differential equations}
-We noted in the beginning of this chapter that \gls{lie theory} was originally developed to solve differential equations. We can return back to this example to help us tie the theory into math that almost every engineer has studied extensively.
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
 
-The foundation of differential equations is, quite naturally, the derivative. Thus, we can start our discussion by showing how the derivative is related to the \gls{lie algebra}.
+%Shape: Circle [id:dp7445138221454656] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] (110,80) .. controls (110,52.39) and (132.39,30) .. (160,30) .. controls (187.61,30) and (210,52.39) .. (210,80) .. controls (210,107.61) and (187.61,130) .. (160,130) .. controls (132.39,130) and (110,107.61) .. (110,80) -- cycle ;
+%Curve Lines [id:da250361711260215] 
+\draw    (170,90) .. controls (190,75) and (188.38,60.1) .. (178.81,52.64) .. controls (169.25,45.19) and (153.5,58.12) .. (150,70) .. controls (146.5,81.88) and (139.5,111.88) .. (170,90) -- cycle ;
+\draw [shift={(170,90)}, rotate = 323.13] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Shape: Circle [id:dp5522089142966218] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] (110,200) .. controls (110,172.39) and (132.39,150) .. (160,150) .. controls (187.61,150) and (210,172.39) .. (210,200) .. controls (210,227.61) and (187.61,250) .. (160,250) .. controls (132.39,250) and (110,227.61) .. (110,200) -- cycle ;
+%Curve Lines [id:da8848197753969154] 
+\draw    (170,210) .. controls (174.5,204.88) and (173,192.62) .. (170,190) .. controls (167,187.38) and (163.5,194.12) .. (160,200) .. controls (156.5,205.88) and (157,221.38) .. (170,210) -- cycle ;
+\draw [shift={(170,210)}, rotate = 311.33] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Shape: Circle [id:dp8787080452676241] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] (280,80) .. controls (280,52.39) and (302.39,30) .. (330,30) .. controls (357.61,30) and (380,52.39) .. (380,80) .. controls (380,107.61) and (357.61,130) .. (330,130) .. controls (302.39,130) and (280,107.61) .. (280,80) -- cycle ;
+%Curve Lines [id:da23397127835423026] 
+\draw    (360,40) .. controls (347.5,46.38) and (336.5,60.88) .. (330,80) .. controls (323.5,99.12) and (314.5,113.88) .. (300,120) ;
+\draw [shift={(300,120)}, rotate = 157.13] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(360,40)}, rotate = 152.95] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Shape: Circle [id:dp05978547627949016] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] (280,200) .. controls (280,172.39) and (302.39,150) .. (330,150) .. controls (357.61,150) and (380,172.39) .. (380,200) .. controls (380,227.61) and (357.61,250) .. (330,250) .. controls (302.39,250) and (280,227.61) .. (280,200) -- cycle ;
+%Curve Lines [id:da31749874751791274] 
+\draw    (330,150) .. controls (343,177.38) and (341.5,223.38) .. (300,240) ;
+\draw [shift={(300,240)}, rotate = 158.18] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da2847760990552217] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (330,150) ;
+\draw [shift={(330,150)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-5.59,0) -- (5.59,0)(0,5.59) -- (0,-5.59)   ;
 
-\subsubsection{Relation to derivatives}
-We will start this discussion with the ordinary total derivative that is taught in introductory calculus classes in the context of \gls{lie theory}. Our goal here is to show that the Jacobi identity may arise somewhat naturally by considering the derivative product rule:
-$$[f(x)g(x)]'=f(x)g'(x)+f'(x)g(x)$$
+% Text Node
+\draw (160,27) node [anchor=south] [inner sep=0.75pt]   [align=left] {Contractible};
+% Text Node
+\draw (330,27) node [anchor=south] [inner sep=0.75pt]   [align=left] {Non-contractible};
 
-Starting with the Jacobi identity, which we know all \glspl{lie algebra} must satisfy, we have:
 
-which can otherwise be expressed as:
-$$[x,[y,z]]=-[y,[z,x]]-[z,[x,y]]$$
-We have also shown that the Lie bracket is alternating, so we can remove the negative signs on the RHS simply by changing the order of the bracket:
-$$[x,[y,z]]=[y,[x,z]]+[[x,y],z]$$
+\end{tikzpicture}
 
-We can rewrite this expression by considering an operation, $D$, which is defined $D(\xi)=[x,\xi]$. Applying this to the equation below, we have:
-$$D([y,z])=[y,D(z)]+[D(y),z]$$
-Since we consider the Lie bracket to be a type of multiplication, we can write the above formula as:
-$$D(yz)=yD(z)+D(y)z$$
-Which matches the result of the product rule exactly!
+    \caption{Contractible vs. Non-contractible loops in $SO(3)$}
+    \label{fig:so3 contractible}
+\end{figure}
+In the figure, we show two types of paths in $SO(3)$. The first is a contractible path. Imagine starting at some orientation and doing some pitching, yawing, and rolling about that point. Eventually, you end up back at the starting orientation. We can represent that total path as a loop through some slice in $SO(3)$. This is what is shown in the top left. We can imagine reducing whatever pitching, yawing, and rolling maneuvers we did in order to make the path through $SO(3)$ smaller. Eventually, we can `contract' those points so that our total path is reduced to the single starting point. Such a path is contractible.
 
-\subsubsection{Differential Equations}
-\begin{example}[Matrix Differential Equations]
-    Since we have been studying matrix groups, let us consider the class of first order matrix differential equations. We see these systems frequently in control theory so it is good to study them here.
-    $$\dot{x}=Ax$$
-    Where $A$ is an $n{\times}n$ matrix with constant coefficients and $x$ and $\dot{x}$ are $n{\times}1$ vectors. We can find the solution of this equation through separation and integration. We start by performing the seperation of variables:
-    $$\frac{dx}{x}=Adt$$
-    We can this integrate this equation to find the solution.
-    $$\int_{x_0}^x{\frac{dx}{x}}=\int_{t_0}^t {Adt}$$
-    So, we have $\ln\left(\frac{x(t)}{x_0}\right)=A(t-t_0)$. We note that $t-t_0$ can be replaced by $\Delta t$. Finally, we exponentiate to arrive at our solution to the differential equation:
-    \begin{gather}
-        \color{blue}\boxed{\color{black}x(t)=e^{A\Delta t}x_0}\\
-        \color{blue}\mathrm{Solution \ of \ } \dot{x}=Ax        
-    \end{gather}
-We can see the presence of the matrix exponential $e^{At}$, which we have seen before when discussing the \gls{lie theory} of matrices! This is an important connection to make, so let us expand on it for clarity.
+Now consider the non-contractible path. We start at the lower point and traverse up to the point near the top. These points are antipodal, so they represent the same final orientation. There is no way to start moving these points closer to each other without changing the final orientation. The loop cannot stay closed because the final orientation must change in order to start contracting such a loop. For this reason, the space $SO(3)$ is a non-contractible space.
 
-    Generally, in control theory, we may denote $e^{At}$ (or $e^{A\Delta t}$, they are practically the same) as the \textit{state transition matrix}, which is sometimes denoted $\Phi$. This state transition matrix will extraordinarily important when we discuss concepts such as Kalman filtering.
+Why does this matter? There is a theory in topology (which is beyond the scope of the text to prove) that states \textbf{you cannot have a continuous, globally asymptotically stable vector field on a compact manifold that is not contractible.} Therefore, we cannot develop any continuous time-invariant controller which will perform attitude control! It is simply a fact that this cannot exist due to the topology of $SO(3)$. Nonetheless, the introduction of complex numbers into our representation can help us greatly. We have already seen the great benefits of quaternions in Volume II. We will now see how they naturally arise from the desire to create a simply connected space.
 
-    So why does it appear here, and how can we relate that to our discussion of \gls{lie theory}?
+\subsection{$SU(2)$}
+Something interesting happens when we consider paths that consist of two rotations instead of just one. We see that the full $720\degree$ rotation is indeed contractible! Consider \autoref{fig:Contractable}:
+\begin{figure}[ht]
+    \centering
 
-    We can think of it in the following way. Our matrix $A$ represents infinitesimal behavior of the system. That's why $\dot{x}$ is described in terms of $A$! It tells us how the parameters vary on an infinitesimal scale. The matrix exponential $e^{At}$, is effectively a map from this infinitesimal solution to a finite time solution; that is, something we can measure.
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
-    In \gls{lie theory} we have the exact parallel behavior. We have some tangent group on the \gls{lie algebra}, which is mapped onto the group element by the exponential map!
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
 
-    We can see that these two descriptions are very similar! The key difference is that \gls {lie theory} can describe groups which are non-linear, which makes is a more powerful tool than solving a linear differential equation.
-\end{example}
+%Shape: Circle [id:dp9454156272778647] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] (170,90) .. controls (170,62.39) and (192.39,40) .. (220,40) .. controls (247.61,40) and (270,62.39) .. (270,90) .. controls (270,117.61) and (247.61,140) .. (220,140) .. controls (192.39,140) and (170,117.61) .. (170,90) -- cycle ;
+%Curve Lines [id:da6783066320492496] 
+\draw    (250,50) .. controls (218.92,64.3) and (212.26,77.63) .. (200,100) ;
+\draw [shift={(200,100)}, rotate = 118.72] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(222.75,67.11)}, rotate = 135.06] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(250,50)}, rotate = 155.29] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Curve Lines [id:da47865890319748683] 
+\draw    (250,50) .. controls (237.5,56.38) and (236.5,80.88) .. (230,100) .. controls (223.5,119.12) and (204.5,123.88) .. (190,130) ;
+\draw [shift={(190,130)}, rotate = 157.13] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(237.91,69.67)}, rotate = 104.83] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(217.08,117.21)}, rotate = 147.52] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(250,50)}, rotate = 152.95] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da8005753468414095] 
+\draw    (280,90) -- (307,90) ;
+\draw [shift={(310,90)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Curve Lines [id:da21419767339403883] 
+\draw    (200,100) .. controls (195.59,109.63) and (192.92,118.3) .. (190,130) ;
+\draw [shift={(190,130)}, rotate = 104.02] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(195.57,110.92)}, rotate = 108.35] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(200,100)}, rotate = 114.6] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Shape: Circle [id:dp880736118938397] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] (320,90) .. controls (320,62.39) and (342.39,40) .. (370,40) .. controls (397.61,40) and (420,62.39) .. (420,90) .. controls (420,117.61) and (397.61,140) .. (370,140) .. controls (342.39,140) and (320,117.61) .. (320,90) -- cycle ;
+%Curve Lines [id:da5266049533965427] 
+\draw    (420,90) .. controls (403.59,78.97) and (366.92,79.63) .. (350,100) ;
+\draw [shift={(350,100)}, rotate = 129.72] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(387.19,83.05)}, rotate = 173.44] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(420,90)}, rotate = 213.91] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Curve Lines [id:da15605979232566647] 
+\draw    (400,50) .. controls (387.5,56.38) and (360.94,88.21) .. (350,100) .. controls (339.06,111.79) and (341.12,121.28) .. (340,130) ;
+\draw [shift={(340,130)}, rotate = 97.33] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(376.43,70.84)}, rotate = 133.1] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(343.23,110.03)}, rotate = 107.61] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(400,50)}, rotate = 152.95] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da41342691263724385] 
+\draw    (430,90) -- (457,90) ;
+\draw [shift={(460,90)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Curve Lines [id:da7022878792917372] 
+\draw    (350,100) .. controls (338.92,111.63) and (324.39,101.12) .. (320,90) ;
+\draw [shift={(320,90)}, rotate = 248.47] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(336.44,104.82)}, rotate = 200.9] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(350,100)}, rotate = 133.6] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Shape: Circle [id:dp7779190593258343] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] (470,90) .. controls (470,62.39) and (492.39,40) .. (520,40) .. controls (547.61,40) and (570,62.39) .. (570,90) .. controls (570,117.61) and (547.61,140) .. (520,140) .. controls (492.39,140) and (470,117.61) .. (470,90) -- cycle ;
+%Curve Lines [id:da9607403177020646] 
+\draw    (550,50) .. controls (525.04,70.61) and (516.41,92.13) .. (500,100) ;
+\draw [shift={(500,100)}, rotate = 154.39] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(527.78,72.51)}, rotate = 129.6] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(550,50)}, rotate = 140.45] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Curve Lines [id:da2787225928800855] 
+\draw    (550,130) .. controls (530.83,94.59) and (507.5,97.26) .. (490,130) ;
+\draw [shift={(490,130)}, rotate = 118.12] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(523.76,104.81)}, rotate = 182.41] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(550,130)}, rotate = 241.58] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Curve Lines [id:da5085493941195743] 
+\draw    (500,100) .. controls (481.74,103.47) and (475.64,77.13) .. (490,50) ;
+\draw [shift={(490,50)}, rotate = 297.88] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(482.33,83.81)}, rotate = 267.3] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(500,100)}, rotate = 169.25] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Shape: Circle [id:dp47896909045185576] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] (250,210.19) .. controls (250,182.57) and (272.39,160.19) .. (300,160.19) .. controls (327.61,160.19) and (350,182.57) .. (350,210.19) .. controls (350,237.8) and (327.61,260.19) .. (300,260.19) .. controls (272.39,260.19) and (250,237.8) .. (250,210.19) -- cycle ;
+%Curve Lines [id:da23146027427009497] 
+\draw    (330,170.19) .. controls (305.04,190.8) and (296.41,212.32) .. (280,220.19) ;
+\draw [shift={(280,220.19)}, rotate = 154.39] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(307.78,192.7)}, rotate = 129.6] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(330,170.19)}, rotate = 140.45] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Curve Lines [id:da7651528105170496] 
+\draw    (330,250.19) .. controls (311.67,262.99) and (289,264.33) .. (270,250.19) ;
+\draw [shift={(270,250.19)}, rotate = 216.67] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(303.96,260.09)}, rotate = 178.33] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(330,250.19)}, rotate = 145.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Curve Lines [id:da9284212019436974] 
+\draw    (280,220.19) .. controls (261.74,223.65) and (255.64,197.32) .. (270,170.19) ;
+\draw [shift={(270,170.19)}, rotate = 297.88] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(262.33,204)}, rotate = 267.3] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(280,220.19)}, rotate = 169.25] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Curve Lines [id:da7931210312558097] 
+\draw    (270,170.19) .. controls (287,158.32) and (308.33,154.99) .. (330,170.19) ;
+\draw [shift={(330,170.19)}, rotate = 35.05] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+\draw [shift={(296.12,160.18)}, rotate = 358.63] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(270,170.19)}, rotate = 325.08] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da048436118835157305] 
+\draw    (360,210) -- (387,210) ;
+\draw [shift={(390,210)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Shape: Circle [id:dp49189982716823744] 
+\draw  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] (400,210.38) .. controls (400,182.76) and (422.39,160.38) .. (450,160.38) .. controls (477.61,160.38) and (500,182.76) .. (500,210.38) .. controls (500,237.99) and (477.61,260.38) .. (450,260.38) .. controls (422.39,260.38) and (400,237.99) .. (400,210.38) -- cycle ;
+%Curve Lines [id:da24359805398517476] 
+\draw    (430,170.19) .. controls (454.81,155) and (446.41,212.51) .. (430,220.38) ;
+\draw [shift={(445.46,186.64)}, rotate = 97.25] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+%Curve Lines [id:da2389370281238411] 
+\draw    (430,220.38) .. controls (411.74,223.84) and (403.48,187.67) .. (430,170.19) ;
+\draw [shift={(413.08,201.17)}, rotate = 273.33] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (5.36,-2.57) -- (0,0) -- (5.36,2.57) -- cycle    ;
+\draw [shift={(430,220.38)}, rotate = 169.25] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 2.01, y radius= 2.01]   ;
+%Straight Lines [id:da3117913610777362] 
+\draw    (210,210) -- (237,210) ;
+\draw [shift={(240,210)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
 
-\section{Lagrangian and Hamiltonians on Manifolds}
 
-\section{The Limitations of Lie Theory}
-A fundamental understanding of the mathematics that relate groups and algebras is quite interesting, but ultimately, our goal in engineering is to be able to control a system which is not mathematically ideal. We will have disturbances and random behaviors and noisy sensors in all of our real systems. Do these non-idealities make \gls{lie theory} useless for us? Of course not, but it does impose limitations of the extent to which we can use it.
+\end{tikzpicture}
 
-It is best to think of \gls{lie theory} as a tool that we can use to understand the relationships between infinitesimal elements and the larger system behavior that we see. From \gls{lie theory}, we can derive a large number of theoretical conclusions (and some which are still active research!) which prove useful to us. Understanding where our theoretical results come from can help us to understand new systems and generate methods of tackling difficult problems. That alone makes \gls{lie theory} a topic worth serious exploration.
+    \caption{Contractibility of a $720\degree$ rotation}
+    \label{fig:Contractable}
+\end{figure}
 
-Lie Theory, however, is not a silver bullet which can solve all of our practical problems. Quite notably, the computation of matrix exponentials and general exponential functions can be quite expensive and unintuitive, so it often cannot be used in real time systems. From here, we will use \gls{lie theory} mostly to contextualize some of the background and behind the scenes mathematics. 
+When we do two full rotations in $SO(3)$, we find that the result is contractible. We thus desire a type of mathematical object for which a rotation by $720\degree$ is natural. Such an object would have a symmetry group that is a simply connected space. These objects are called \textit{spinors} and their symmetry group is $SU(2)$.
+
+\subsection{Building $SU(2)$}
+
+We may begin building the $SU(2)$ group in a very similar way to how we constructed the group of real rotations. This group will be a two dimensional matrix, have determinant one, and be unitary. It's components will be complex-valued entries. We can uniquely determine the structure of the matrix from these properties. Let's begin with a generic complex-valued $2\times2$ matrix:
+$$\begin{bmatrix}
+    \alpha&\beta\\\gamma&\delta
+\end{bmatrix}$$
+To be unitary, we have the following property:
+$$\begin{bmatrix}
+    \alpha&\beta\\\gamma&\delta
+\end{bmatrix}\begin{bmatrix}
+    \bar{\alpha}&\bar{\gamma}\\\bar{\beta}&\bar{\delta}
+\end{bmatrix}=\begin{bmatrix}
+    1&0\\0&1
+\end{bmatrix}$$
+This gives us the following matrix equation:
+$$\begin{bmatrix}
+\alpha\bar{\alpha}+\beta\bar{\beta}&\alpha\bar{\gamma}+\beta\bar{\delta}\\\gamma\bar{\alpha}+\delta\bar{\beta}&\gamma\bar{\gamma}+\delta\bar{\delta}
+\end{bmatrix}=\begin{bmatrix}
+    1&0\\0&1
+\end{bmatrix}$$
+We identify that quantities such as $\alpha\bar{\alpha}$ are equivalent to $|\alpha|^2$. Therefore, we have the following:
+\begin{gather}
+|\alpha|^2+ |\beta|^2=|\gamma|^2+|\delta|^2=1\\
+\alpha\bar{\gamma}+\beta\bar{\delta}=\gamma\bar{\alpha}+\delta\bar{\beta}=0
+\end{gather}
+A further restriction is imposed by the fact that the determinant of this matrix must be zero. We have the result that:
+$$\alpha\delta-\beta\gamma=1$$
+With these two conditions we can show that the coefficient $\delta$ is uniquely determined by $\alpha$. We'll start with the determinant equation and multiply by $\bar{\delta}$:
+$$\alpha\delta\bar{\delta}-\beta\gamma\bar{\delta}=\bar{\delta}$$
+Notice that $\beta\bar{\delta}=-\alpha\bar{\gamma}$  via the unitary constraint. We can substitute this into the equation:
+$$\alpha\delta\bar{\delta}+\alpha\gamma\bar{\gamma}=\bar{\delta}$$
+Again, we use the fact that a value multiplied by it's complex conjugate is the norm squared of that value:
+$$\alpha|\delta|^2+\alpha|\gamma|^2=\bar{\delta}$$
+Finally, we use the established relationship that $|\delta|^2+|\gamma|^2=1$ and we find that $\alpha=\bar{\delta}$.
+\begin{exercise}
+Use a similar line of reasoning to that shown above to prove that $\gamma=-\bar{\beta}$.
+\end{exercise}
+
+With these two conditions, we have arrived at the form of the $SU(2)$ matrices:\endnote{Per standard convention, $\beta$ and $\gamma$ have switched places in the matrix. The necessary conditions still hold, this is just a different labeling.}
+$$SU(2)=\left\{\begin{bmatrix}
+    \alpha&-\bar{\beta}\\\beta&\bar{\alpha}
+\end{bmatrix}:|\alpha|^2+|\beta|^2=1\right\}$$
+Note that the $SU(2)$ matrices do indeed form a \gls{lie group}, which can be shown by considering the generalization of the $GL(n)$ matrices over the field of complex numbers. The result is that $SU(2)\subset GL(n)$ and inherits the smoothness, manifold, and group structure of the general linear group.
+
+Remember that $\alpha,\beta\in\mathbb{C}$. If we write out the constraint equation in full with $\alpha=a+bi$ and $\beta=c+di$, we get:
+$$a^2+b^2+c^2+d^2=1$$
+This is exactly the constraint that we place on quaternions that we use to encode rotations. The connection is no coincidence. We will investigate it further.
+
+\subsection{The generators of $SU(2)$}
+The generators of $SU(2)$ can be derived in a very similar way to the generators of $SO(3)$. There, we saw that the generator matrices were traceless and skew symmetric. For complex valued matrices, they will be traceless and \textit{skew-Hermitian}.
+\begin{exercise}
+For $SU(2)$ matrices, which we will denote as $X$ here, we have the property that $X^*X=1$. As with small rotations in $SO(n)$, small rotations in $SU(2)$ look like, to first order:
+$$X=I+\varepsilon \mathcal{J}$$
+From here, show that the generators $\mathcal{J}$ must be skew-Hermitian.
+\end{exercise}
+These two conditions give us enough constraints to construct the appropriate generators for $SU(2)$. For the matrix to be traceless, the diagonal elements must be equal and opposite. Unlike with real numbers, complex numbers allow for the equation $x^*=-x$ to be solved by purely imaginary numbers. For the off-diagonal elements, the consideration is that they are each others conjugate transpose. These two assumptions give us a general form for the generators:
+$$\mathcal{J}=\begin{bmatrix}
+ix&y+zi\\-y+zi&-ix
+\end{bmatrix}$$
+Each of these three independent parameters can be split into their components to give us the three generators for the $SU(2)$ group:
+$$\mathcal{J}=x\begin{bmatrix}
+i&0\\0&-i
+\end{bmatrix}+y\begin{bmatrix}
+0&1\\1&0
+\end{bmatrix}+z\begin{bmatrix}
+0&i\\i&0
+\end{bmatrix}$$
+Notice that the eigenvalues of the first matrix are imaginary. Typically, we would like to have real eigenvalues. That is no problem, we can factor out  $-i$ from the matrices and end up with generators that work just as well. This gives us three matrices:
+$$\sigma_1=\begin{bmatrix}
+    0&1\\1&0
+\end{bmatrix},\quad \sigma_2=\begin{bmatrix}
+    0&-i\\i&0
+\end{bmatrix},\quad\sigma_3=\begin{bmatrix}
+    1&0\\0&-1
+\end{bmatrix}$$
+These matrices are called the \textit{Pauli matrices}. They are the generators for $SU(2)$. We can notice that these matrices behave very similarly to the quaternions. 
+
+The \gls{lie algebra} is normally defined by multiplying these matrices by $i$ and dividing by two (it is simply a convention).
+
+\todo{write normal definition with i and divide by two}
+
+\todo{show the lie algebra is same as SO(3)}
+
+\todo{derive matrix exponential}
+
+
+We end up with a formula very similar to the Rodrigues formula but for complex rotations:
+$$U=\exp\left(\frac{i\theta}{2}(\bm{n}\cdot\bm{\sigma})\right)=I\cos\left(\frac{\theta}{2}\right)+i(\bm{n}\cdot\bm{\sigma)}\sin\left(\frac{\theta}{2}\right)$$
+
+We arrive at an interesting result. The \gls{lie algebra} of $SU(2)$ is indeed exactly the same as the \gls{lie algebra} for $SO(3)$, even though the groups are different. Of course, the difference exists because the generators of the groups are different. When we have different generators, the \gls{lie algebra} may look the same but the exponentiation will yield a different manifold geometry. Remember that $SU(2)$ is a \textit{double cover} of $SO(3)$. This is why there are two different unit quaternions associated with each rotation in three dimensional space. It also tells us that by using quaternions, we cannot remove the ambiguity present in $SO(3)$ rotations. The fact still holds that we cannot develop a continuous time-invariant control law on $SO(3)$, even if we are to use $SU(2)$ as our representation. 
+
+There are of course many other good reasons to use quaternion encoded rotations. Many of these have been explored in Volume II. Quaternions can easily be interpolated between, are easily normalized, and do not have a coordinate singularity like Euler angles do. For these reasons alone, the investigation of $SU(2)$ is a worthy endeavor.
+
+\subsection{Ties to Physics}
+
+The $SU(2)$ matrices arise very naturally in physics. Elementary particles such as electrons (and all other fermions\endnote{A subatomic particle that has a half-integer spin.}) exhibit $SU(2)$ symmetry. The spin of an electron is one of the very famous examples of this counterintuitive behavior. Under a rotation of $360\degree$, the spin of an electron \textit{changes sign} instead of returning to the original configuration. It is only when we rotate through a full $720\degree$ that the spin of the electron reverts to the original state.
+
 
 \newpage
-
 \printendnotes
 
 
-\chapter{Symplectic Integrators}\label{sec: Syplectic Ints}
+\chapter{Geometric Control and Estimation}
+
+\section{Group Affine Systems}
+
+\section{Special Euclidean Spaces}
+
+\section{Control on Lie Groups}
+
+\section{Estimation on Lie Groups}
+
+
+\section{}
+
+
+\chapter{Geometric Numerical Integration}
+
+General numerical integration schemes such as the Runge-Kutta algorithm detailed in Volume I are very practical and work in many situations. However, our further study in this volume has shown us that many of the systems we deal with obey certain geometric conditions. For example, \gls{Hamiltonian} systems have a certain incompressible flow. For aerospace engineering, there are many other systems which have useful geometric properties. One prominent example is inertial navigation data. In this chapter, we will outline the implementation of such geometric numerical integration schemes. While these algorithms are not general purpose like the Runge-Kutta methods we have seen in the past, they can prove far more accurate and efficient for certain systems.
+
+This chapter will mainly cover two main geometric numerical integration methods. The first has to do with the integration of IMU data, which exists on the $SE_2(3)$ manifold. Integration of IMU data using this closed form integrator has proven to be up to 15 times faster than standard implementations of adaptive RK45 integrators like \texttt{ode45} while maintaining the same or higher accuracy levels. The second will focus on the implementation of variational and symplectic integrators for systems with a \gls{Lagrangian} or \gls{Hamiltonian} description.
+
+\section{Inertial Navigation}
+For measuring the flight of rockets, spacecraft, and aircraft, there is perhaps no greater tool than inertial navigation. Inertial navigation requires no external reference. Using only the measurement of the acceleration and rotation of a rigid body, we can determine the evolution of the system through time. However, we inevitably run into issues doing so. Before even considering real world issues like noise, there is a large theoretical issue. Our sensors are rotating with the rigid body, and we need to back out the inertial orientation from that! Doing so is quite a challenge, but it will prove simple enough to solve with the background developed throughout this book. There exist many sources and books which include great detail on sensor characterization, estimation, and dynamics of inertial navigation systems. However, recent developments in geometric control have proven very fruitful in improving the algorithms and methods we may use in inertial navigation. At the time of writing, most of these developments have occurred within the past 5 years and have had little time to enter books on the subject matter. As a result, this chapter will place an emphasis on how we may apply such methods for superior inertial navigation algorithms.
+
+\subsection{Background on Inertial Navigation}
+Before we dive deeply into geometric methods for inertial navigation, we must first cover some basic principles of inertial navigation. Some basic principles of these devices has been outlined in Volume II. In the interest of keeping this chapter self contained, relevant ideas are also discussed here. Additionally, some further ideas are required for our purposes here.
+
+The largest issue with inertial navigation is the noise which corrupts our measurements. Any small errors will quickly compound and lead to drift in where we think we are. If your airplane is 200 meters away from where you think it is, your runway landing will quickly turn into a very bumpy ride. As a result, it is imperative that we utilize methods such as Kalman filtering to aid in our estimation. However, we will soon see that the dynamics are highly non-linear and using standard filters like the EKF will lead to poor results. We will have to develop more advanced techniques to deal with such problems. We can perform the numerical integration of the full state using geometric integration techniques.
+
+For measurement correction in the Kalman filter, it is possible to use geometric techniques \cite{barrau_invariant_2017, potokar_introduction_2024, van_goor_equivariant_2023}. However, these techniques often show little actual improvement compared to relatively simple multiplicative algorithms. Here, I will detail the use of the multiplicative EKF, which preserves most of the nonlinear structure from the $SO(3)$ group.
+
+% Overall, inertial navigation presents an interesting challenge which will require us to combine a variety of the techniques throughout this volume. 
+
+
+\subsubsection{Basic Operation of IMUs}
+
+
+ 
+\subsubsection{IMU Errors}
+General gyroscope error compensation:
+$${\tilde\omega_x}=(1+S_x)\omega_x+M_y\omega_y+M_z\omega_z+B_f+B_{gx}a_x++B_{gz}a_z+B_{axz}a_ya_z+\mathcal{N}(0,\sigma_x)$$
+The term $B$ represents the bias terms with the subscripts denoting the sensitivity of the gyroscope due to accelerations. $S$ is the scale factor and $M$ are general parameters which model effects from orthogonal axes coupling. $\mathcal{N}$ represents a normally distributed variable of zero mean and with a standard deviation of $\sigma$.
+
+It is typical to ignore acceleration sensitivities in simplified models, which gives:
+$${\tilde\omega_x}=(1+S_x)\omega_x+M_y\omega_y+M_z\omega_z+B_f+\mathcal{N}(0,\sigma_x)$$
+Acceleration can be compensated in much the same way, giving:
+$${\tilde a_x}=(1+S_x)a_x+M_ya_y+M_za_z+B_f+\mathcal{N}(0,\sigma_x)$$
+These terms are often applied in the body frame of the accelerometer, and values of their estimate may require conversion from an inertial frame.
+
+\subsubsection{Equations of Motion}
+Integration of IMU data requires that we can take body frame accelerometer and gyroscope data and integrate them in an inertial reference frame. While we would like to know acceleration and angular velocity directly, it is typical for the IMU to actually accumulate these measurements at a very high rate (1-5 kHz is typical) and present the average changes over these intervals. These changes are reported as the $\Delta v$ and $\Delta\theta$ measurements from the IMU. Lower grade IMU systems (MEMS) will sometimes report the raw accelerometer and gyroscope data. Because our equations of motion utilize the specific force and accelerations, we need to first divide by the $\Delta t$ of the measurement to get the equations into the form presented below. Even though we must do this, having the IMU data in terms of $\Delta v$ and $\Delta \theta$ is advantageous for allowing us to integrate the data at a lower rate. Additionally, it helps to remove errors due to \textit{coning} and \textit{sculling} artifacts. The equations of motion are governed by the following nonlinear differential equations:
+\begin{align}
+    \bm{\dot{p}}&=\bm{v}\\
+    \bm{\dot{v}}&=R_b^e\bm{a}_\text{sf}+g\\
+    \dot{R}&=R\bm{\omega}_\times
+\end{align}
+Here, the rotation matrix $R$ is a rotation matrix from body to inertial, which converts the body frame specific force into a world frame quantity. Because the specific force measures the acceleration in a free-falling perspective, we add gravity to the measurement to understand the propagation in the earth based frame of reference. $\omega_\times$ is the cross product matrix with components of angular velocity in the body frame. It is an element of $\mathfrak{so}(3)$. This last line may also be replaced with the equivalent for quaternions:
+$$\dot{q}=\frac{1}{2}q\otimes\bm{\omega}$$
+This may be represented in terms of a $4\times4$ matrix multiplication. The details of this are presented in Volume I. A typical approach would be to integrate these equations directly using a solver like \texttt{ode45}. However, we notice that the rotation state evolves according to the $SO(3)$ group, and the position and velocity are influenced by this rotation. This leads us believe that we may be able to utilize a group structure in order to solve this equation in a better way.
+
+\subsection{The $SE_2(3)$ group}
+Indeed, we do have a better way to solve the inertial navigation equations of motion. To do so, we will introduce a new group called $SE_2(3)$. This group is the `special Euclidean group' in three dimensions. The Euclidean group contains three dimensional rotations and translations. The subscript of 2 indicates that we deal with not only the position in the system, but also the velocity associated with it. We can define the $SE_2(3)$ group in terms of the \textit{semi-direct product} between the rotation matrices and the translation group:
+$$SE_2(3)\cong SO(3)\ltimes T_2$$
+We will be best informed by the matrix representation of this group. We will include the body to inertial rotation matrix as the upper left element, and velocity/position in the world frame included next to it. The canonical representation of the group is:
+$$SE_2(3)=\begin{bmatrix}
+    R&v&p\\\bm{0}&1&0\\\bm{0}&0&1
+\end{bmatrix}$$
+The matrix is $5\times 5$ with the velocity and position as column vectors. The algebra of this group is where the angular velocity and the acceleration inputs reside. The algebra of the group has the form:
+$$\mathfrak{se}_2(3)=\begin{bmatrix}
+    \omega_\times&\bm{u}_1&\bm{u}_2\\
+    0&0&0\\0&0&0
+\end{bmatrix}$$
+
+\subsection{Closed form IMU Integration}
+With the development of the $SE_2(3)$ group, we are ready to develop the closed form IMU integration algorithm. 
+
+\todo{cite gopppert here}
+
+Remember that group-affine systems evolve according to the following equation:
+$$\dot{X}=MX+XN$$
+Here, $X\in SE_2(3)$ and $\dot{X}\in\mathfrak{se}_2(3)$. The $M$ matrix describes world frame quantities. This matrix is `right-invariant'. If we have values which are constant in the world frame, we will describe them in this matrix. Thus, the local gravity vector will be placed in this matrix. We assume that the gravity vector is slowly time varying so that it may be treated as a static vector field at each time step. Otherwise, we may have to include additional terms and would not get a closed form solution.
+
+The $N$ matrix describes quantities in the body frame. This is the matrix which will contain the accelerometer specific force values. In the inertial navigation problem, these matrices have the following form:
+$$M=\begin{bmatrix}
+\bm{0}&\bm{a}_g&\bm{0}\\
+0&0&-1\\0&0&0
+\end{bmatrix},\quad N=\begin{bmatrix}
+\bm{\omega}_\times&\bm{a}&\bm{0}\\0&0&1\\0&0&0
+\end{bmatrix}$$
+The bottom $2\times2$ submatrix of the $N$ matrix will be denoted as $B$:
+$$B=\begin{bmatrix}
+    0&1\\0&0
+\end{bmatrix}$$
+The solution to this matrix differential equation is given by:
+$$X(t)=e^{Mt}X_0e^{Nt}$$
+Since the body frame inputs are often changing, we often want to solve a discrete version of these equation:
+$$X_{n+1}=e^{M\Delta t}X_ne^{N\Delta t}$$
+Note that in solving this system, we assume that $\bm{\omega}$ and $\bm{a}$ are constant over the interval $\Delta t$. Of course this is not true, so there will be some small error in the integration algorithm even though we are integrating on the correct geometry of the space. By reducing the $\Delta t$, this error can be reduced.\endnote{Note that standard integration using RK4 methods also makes this same assumption.}
+
+To make solving this equation numerically efficient, we desire to find closed form solutions to the equation $e^{M\Delta t}X_ne^{N\Delta t}$. That will involve computing the matrix exponential for both parts of this system. Luckily, the lower submatrices of $M$ and $N$ are nilpotent. The paper describes the exact details of this process well. Here, we only desire the result of this. The final solution ends up being:
+$$X(t)=\begin{bmatrix}
+    R_0R_N&R_0P_N+(P_0+P_M)(I+Bt)\\\bm{0}&I_2
+\end{bmatrix}$$
+The definitions of each of the elements are given below:
+\begin{gather}
+    R_N=\exp(\omega_\times t),\quad\theta=\|\omega\|\Delta t ,\quad  C_1=\frac{1-\cos\theta}{\theta^2} \\
+ C_2=\frac{\theta-\sin\theta}{\theta^3},\quad C_3=\frac{\theta^2/2+\cos\theta-1}{\theta^4},\quad B\Delta t = B_t\\
+ A\Delta t=A_{_t},\quad P_M=A_{Mt}-\frac{A_{Mt} B_t}{2},\quad \omega_\times \Delta t=\Omega_t\\
+ P_N=A_{Nt} + \frac{A_{Nt}B_t}{2}+A_{Nt}\Omega_t(C_1I_2+C_2B_t)+A_N \Delta t\Omega_t^2(C_2I_2+C_3B_t)
+\end{gather}
+Note that the $R_N$ matrix can be computed through the use of the Rodrigues formula and does not require explicit computation of the matrix exponential. The form of this matrix exponential is given by:
+$$R_N=I_3+\frac{\sin(\theta)}{\theta}\omega_\times \Delta t + \frac{1-\cos(\theta)}{\theta^2}(\omega_\times\Delta t)^2$$
+Also note that Taylor series expansions should be used for small values of $C_1$, $C_2$, and $C_3$. The Taylor series of these functions to second order are given below:
+\begin{gather}
+C_1=\frac{1}{2}-\frac{\theta^2}{24},\quad C_2=\frac{1}{6}-\frac{\theta^2}{120},\quad C_3=\frac{1}{24}-\frac{\theta^2}{720}
+\end{gather}
+Corrections beyond this order are not necessary and contribute very little. This algorithm showcases how geometric integrators can be especially useful in application. In testing across a variety of different scenarios, the geometric integration scheme is anywhere from $5-15\times$ as performant as the \texttt{ode45} algorithm while maintaining the same degree of accuracy. For trajectories where the body frame specific force or angular velocities are constant, it is even better! In such cases, the $SE_2(3)$ based integration scheme has a closed form for arbitrary time in the future. 
+
+\subsubsection{MATLAB Implementation}
+
+\begin{matlabscript}{$SE_2(3)$ Integrator}
+function state = IMU_Lie_integrator(accel, gyro, grav, state, dt)
+% this function takes the current state and integrates the IMU measurements
+% at the given time to produce the updated state. This is the equivalent of
+% the prediction step of the Kalman filter equations.
+%
+% INPUTS:
+%
+% accel - 3x1 accelometer vector (body frame, specific force)
+% gyro - 3x1 gyro vector (body frame)
+% state - SE2(3) matrix of current state
+% dt - integration duration
+
+R0 = state(1:3,1:3);
+P0 = state(1:3,4:5);
+
+% integrate the state
+omegaX = gyro(1);
+omegaY = gyro(2);
+omegaZ = gyro(3);
+
+Omega = [0 -omegaZ omegaY;
+        omegaZ 0 -omegaX;
+        -omegaY omegaX 0];
+
+theta = norm(gyro)*dt;
+
+if theta > 1e-6
+C1 = (1-cos(theta)) / (theta^2);
+C2 = (theta-sin(theta)) / (theta^3);
+C3 = (theta^2/2 + cos(theta) - 1) / (theta^4);
+else
+C1 = 1/2-theta^2/24; C2=1/6-theta^2/120; C3=1/24-theta^2/720;
+end
+
+AM = zeros(3,2);
+AM(3,1) = grav(3);
+
+AN = [accel,zeros(3,1)];
+B = [0 1;0 0];
+
+if abs(theta) < 1e-6
+    A = Omega*dt;
+
+    sinc_theta = 1 - (theta^2)/6 + (theta^4)/120;
+    omc_theta2 = 1/2 - (theta^2)/24 + (theta^4)/720;
+    RL = eye(3) + sinc_theta * A + omc_theta2 * A*A;
+else
+    A = Omega*dt;
+
+    RL = eye(3) + sin(theta)/theta * A + (1-cos(theta))/theta^2* A*A;
+end
+
+RR = eye(3);
+
+R = RR*R0*RL;
+
+PM = AM*dt + AM*dt*-B*dt/2;
+
+OmegaT = Omega*dt;
+AnT = AN*dt;
+BT = B*dt;
+
+PN = AnT + AnT*BT/2 + OmegaT*AnT*(C1*eye(2)+C2*BT)+ ...
+    OmegaT*OmegaT*AnT*(C2*eye(2)+C3*BT);
+
+P_mat = RR*R0*PN + (RR*P0+PM)*(eye(2)+BT);
+
+state = [R, P_mat;
+    zeros(2,3), eye(2)];
+end
+\end{matlabscript}
+
+\subsection{Kalman Filtering for Inertial Navigation}
+As stated in the introduction to this section, all IMUs have errors and require external reference to achieve their best performance. In the past, this has often been done by referencing landmarks or known features. Even military aircraft with very advanced IMUs often integrate position fix algorithms in order to compensate for errors. In the modern day, GNSS signals are often used as measurements to correct for errors in the inertial navigation solution.
+
+In the current literature and industry, an algorithm known as the error state multiplicative extended Kalman filter has emerged as one of the best solutions for incorporating external updates into the inertial navigation problem. This section will detail the implementation of this algorithm for improving inertial navigation.
+
+
+\section{Symplectic Geometry and Integration}\label{sec: Syplectic Ints}
+
+As hinted to in our earlier study of mechanics, the laws of mechanics have a certain geometric interpretation. When combined with Lie theory, this geometry can be exploited to help us gain a better understanding of classical systems and their dynamics.
+
 In addition to the standard \gls{numerical int} schemes explored in Volume I, there are a variety of integration schemes that use energy conservation as the basis of their integration schemes. These types of integrators are called \glspl{symplectic int} and \glspl{variational int}. These types of integrators directly solve Hamilton's equations for a \gls{Hamiltonian} system. The form of these equations is discussed in \autoref{chap:hamiltonian}.
 
 Because the \gls{Hamiltonian} equations are first order already, they are ready for numerical integration without the need for order reduction.
@@ -1300,22 +1778,27 @@ A similar operation can be done to reduce the \gls{Lagrangian} to two first orde
 
 MATLAB has no built in functions for variational or \glspl{symplectic int}, so to implement them we need to discuss their properties in full. 
 
-\section{The Mathematical Background}
+\subsection{The Mathematical Background}
 Our discussion will build off the mathematical discussion of the \gls{lie group}, so a thorough reading of \autoref{chap:lie theory} is recommended. We will use properties of the $SL(n)$ group as well as some new features.
 
 We will construct a group called the \textit{Symplectic Linear Group} to do this. We define the group as follows:
 \begin{gather}
-    Sp(2n)\equiv\left\{\psi\in GL(2n,\mathbb{R})|\psi^\top \Omega\psi=\Omega\right\}\\
+    Sp(2n)\equiv\left\{\psi\in GL(2n,\mathbb{R})|\psi^T \Omega\psi=\Omega\right\}\\
     \mathrm{where  \ } \Omega=\begin{bmatrix}
         0&I(n)\\-I(n)&0
     \end{bmatrix}
 \end{gather}
-We can deconstruct the meaning of the line to be: The symplectic linear group is a group, such that set $\psi$, which is a subset of the general linear group $GL(2n,\mathbb{R})$, satisfies the property that $\psi^\top \Omega\psi=\Omega$.
+
+\todo{show how omega comes from the form of the autonomous equation.}
+
+https://www.youtube.com/watch?v=1XVD82zUx5g
+
+We can deconstruct the meaning of the line to be: The symplectic linear group is a group, such that set $\psi$, which is a subset of the general linear group $GL(2n,\mathbb{R})$, satisfies the property that $\psi^T \Omega\psi=\Omega$.
 
 Moreover, $Sp(2n)$ is a \gls{lie group}!
 
 
-\section{Implementation}
+\subsection{Implementation}
 
 
 \subsubsection{Use Case of Symplectic Integrators}
@@ -1323,82 +1806,6 @@ Although MATLAB does not have built-in functions for these integrators, scripts 
 
 The best use case for these algorithms is for systems with a \gls{Hamiltonian} or \gls{Lagrangian} description that need to be integrated over a long time span. Because these integrators conserve energy, they will better preserve the characteristics of these systems over long times as compared to RK integrators.
 
-\chapter{The Lebesgue Integral and Measure}
 
-\begin{chapquote}{Andrew Lewis}
-``The Lebesgue theory of integration is to the Riemann theory of integration as the real numbers are to the rational number''
-\end{chapquote}
-
-In the interest of keeping \autoref{part:control theory} free of too much strictly mathematical content, I have devised this chapter which contains much of the math which is foundational in classical control theory.
-
-For the reader interested in the mathematics behind inner product spaces, I have included some supplemental information on the Lebesgue integral, which is the mathematical construction that is used to rigorously define inner product spaces.
-
-
-
-
-\section{Field Theories}
-
-To describe field theories, we should first return to the \gls{Lagrangian} which we have discussed earlier. So far, we have discussed discrete systems. That is, systems which we can describe with a finite number of degrees of freedom.
-
-What happens if we instead try to model something which is continuous? In our applications, we can approximate any fluid as continuous. In physics, gravitational fields and electromagnetic fields are continuous. 
-
-\chapter{A Brief Tour of Complex Analysis}
-\begin{chapquote}{Jacques Hadamard}
-    The shortest path between two truths in the real domain passes through the complex domain.
-\end{chapquote}
-
-
-\chapter{Tensor Operations}
-Before we dive into differential geometry or any of the related topics, we must first have a good understanding of tensors and their operations.
-
-\chapter{Differential Geometry}
-Differential geometry is a field of study that is concerned with the study of smooth manifolds - which essentially means that it is an object which `looks' like a vector space when viewed closely. The subject of differential geometry was lightly touched upon in \autoref{ex:geodesic}, where we considered the shortest path on a spherical surface. In \autoref{ex:geodesic}, we showed this property on the sphere, but differential geometry allows us to study any manifold, so long as it is smooth! 
-
-As we have seen, smooth manifolds are quite important to \gls{lie theory}, and many other applications as well. It is thus sagacious to devote a chapter to a study of differential geometry. We find that many physical systems can be described by the methods of differential geometry.
-
-We can think of a manifold as anything which we can continuously parameterize. So, our 3D rotations that we parameterize with Euler angles or quaternions are also elements of a manifold. We also see that manifolds are also useful in \gls{Lagrangian} and \gls{Hamiltonian} mechanics in the form of \textit{symplectic manifolds}.
-
-So, this is a field of study that touches upon many of the mathematical concepts that we encounter in the study of dynamics and control theory. While not strictly necessarily, a preliminary understanding of manifolds will prove useful for further study. Moreover, those readers interested in physics will find many uses for the topics of discussion here.
-
-This chapter will take an approach closer to physics rather than pure math, as the math requires knowledge of topology and analysis which are well outside the scope of this book and the expected knowledge of the target audience. However, useful information and a working knowledge of the subject can be gained nonetheless from a slightly less -- but still informative -- approach to the subject.
-
-\section{Invariance, Covariance \& Contravariance }
-
-Change of basis and change of component matrices are inverses of each other. Seen with scaling, rotations, etc.
-
-Quantities that act in the opposite direction as the basis vectors are contravariant, those that act the same are covariant. There \textbf{must} be an inverse relationship between covariant and contravariant quantities to maintain the same value. 
-
-Quantities which are unchanged are invariant. Tensors are invariant quantities! Can be described differently, but the properties never change
-
-covariant - row
-contravariant - column
-
-
-\subsection{The Metric Tensor}
-The concept of a metric is of upmost importance to differential geometry. A metric space is a set with a notion of a distance.
-
-The most typical metric space is the Euclidean $\mathbb{R}^2$ space. The distance in this space is perhaps the most famous distance formula to exist:
-$$s=\sqrt{x^2+y^2}$$
-
-\subsection{Distances}
-We can generalize the concept of the Euclidean distance, which we typically define as
-$$s=\sqrt{x^2+y^2}$$
-In a generic metric space, we can define this as
-$$s=\int_a^b\sqrt{g_{ij}\frac{dx^i}{d\lambda}\frac{dx^j}{d\lambda}}d\lambda$$
-\subsubsection{Applying Euler-Lagrange}
-We notice that the form of the equation for the arc-length matches the form of a functional in \gls{Lagrangian} mechanics! We can apply the Euler-Lagrange equation to get a general equation for the geodesic on any surface!
-
-$$\frac{d^2x^i}{d\lambda^2}+\Gamma_{mn}^i\frac{dx^m}{d\lambda}\frac{dx^n}{d\lambda}=0$$
-
-\section{The Lie Derivative}
-
-
-
-
-\section{Special Relativity}
-
-\section{General Relativity}
-
-\chapter{Geometric Control}
-
-
+\newpage
+\printendnotes

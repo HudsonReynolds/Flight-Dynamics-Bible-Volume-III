@@ -1,15 +1,637 @@
+
+\chapter{Beyond the Classical Horizon}\label{chap:lagrange continued}
+
+This final chapter stands slightly apart from the core concepts of control theory discussed in this book. It can be treated as an optional, conceptually rich epilogue designed to show you exactly where the foundational principles of this book come from when the classical world meets the rich ideas of theoretical physics and quantum mechanics. I debated its inclusion as main matter, but I feel that the ideas enclosed are both useful in showing the importance of the previous topic and so poetic it only makes sense to include as a final chapter in this book.
+
+Throughout the book, \gls{Lagrangian} and \gls{Hamiltonian} mechanics has proven useful for studying classical mechanics. Later, we also saw the great use of \gls{lie theory}. However, I have also stated that these topics have great use in physics. In this supplemental chapter, I would like to take an abridged tour through some of these additional uses in physics applications. Seeing this formulation will help us recognize the tremendous use of energy mechanics and group theory in modern physics. 
+
+Before we start, I want to answer a pretty simple question. If we already know laws of physics, why do we care if we can derive them from a \gls{Lagrangian}? The simple answer is that the \gls{Lagrangian} gives a guarantee of conservation laws. These results are theoretical guarantees from Noether's theorem. Deriving the laws in other ways means we have no theoretical backing for those very fundamental ideas. As a result, we are very interested in deriving results this way. 
+
+Since this chapter is supplementary, I will go quickly and make the assumption that the reader has some background to understand the physics discussed. I will not derive everything from first principles, especially in quantum mechanics. Consult with other sources if you do not understand where an assumption or idea comes from. The idea here is a fast high level overview, not a textbook on physics (although I may work on such a book in the future).
+
+\section{Special Relativity}
+
+In special relativity, we consider a \textit{spacetime}, where time and space can become `mingled' with each other. There are many famous examples of this. For example, a muon particle has a lifetime so short (as measured in the lab) that it is highly unlikely we would ever detect one coming from interactions with high energy particles. However, because these muon particles travel so fast, we often detect them on the surface of earth. We can explain this one of two ways. To the muon, there is length contraction, and the physical distance between the vacuum of space and the surface of earth is smaller.  To observers on earth, we see the muon as existing for longer than the lifetime we would measure in the lab. Both of these are examples of how space and time are related, and we must construct a different notion of geometry in order to accommodate objects which travel at significant portions of the speed of light. We can relate these notions of length contraction and time dilation to the so-called \textit{Lorentz transformation}, which tells us quantitatively how these changes occur. 
+
+\todo{Make this background better}
+
+Einstein quite famously showed that the speed of light is the same for any inertial observer in his landmark 1905 paper \cite{einstein_zur_1905}.\endnote{Einstein produced several landmark papers this year. I am of course referring to his paper on special relativity here.} The result is that the notion of distances and simultaneity of events is different for observers who are physically separated or traveling with respect to one another. The fact that the speed of light is constant for any observer does indeed solve the mystery of the muon. While this is not evident at first, it will become apparent upon the development of the appropriate mathematical description of special relativity. This mathematical description will involve a new formulation of distances and times. In slow moving dynamics, we measure the infinitesimal distance using the Euclidean distance:
+$$ds^2=dx^2+dy^2+dz^2$$
+We also take for granted that the notion of time is simple in such a space. It is almost pointless to write out the equation because it is so simple. In this type of space, the time that I read is the same as the time anyone else reads:t
+$$dt=dt$$
+However, such notions of distance and time do not work in spacetime, since we know that one observer may measure a distance as different than another observer. The correct notion of distance uses \textit{Minkowski} space, where a distance looks like:
+$$ds^2=-c^2dt^2+dx^2+dy^2+dz^2$$
+Notice that time and space have \textit{opposite} signs in spacetime. You might expect that time would contribute a positive sign, but this negative sign is what makes the geometry of spacetime somewhat counterintuitive. This length $ds$ is also called an infinitesimal \textit{spacetime interval} in Minkowski space. We often also define a proper time, which is \textit{invariant} to changes like Lorentz transformations (which the standard time is not invariant to). We define this proper time, $\tau$, along a constant velocity trajectory:
+$$\tau^2=t^2-\frac{\bm{x}^2}{c^2}$$
+Notice that this proper time is not so different than the spacetime interval. In units where $c=1$, they have the same numerical value (aside from a sign change). However, do not confuse them! A spacetime interval has to do with the geometry of the space, and the proper time with measuring a trajectory as the observer on that trajectory. For mathematical purposes, we will proceed with using the proper time for now.
+
+From your perspective, you are always at the center of your own frame and $x=0$. Therefore, the proper time would just be the time, $t$. A non accelerating observer will always measure that their own time is the same as the proper time, $t=\tau$. Another way to say this is that your watch will always tick off the proper time in your frame of reference so long as you do not accelerate. This is why we don't often see discrepancies between these two notions of time. You would have to have a friend millions of meters away for the difference between the two notions of time to become apparent. If it were feasible to make such long distance observations, you would measure the proper time of an observer far away as different than yours. As a note, when we work with special relativity, we set $c=1$ for convenience. Our formula for the infinitesimal proper time will then be:
+\begin{equation}\label{eq:dtau}
+d\tau=\sqrt{dt^2-d\bm{x}^2}
+\end{equation}
+At this point, it is prudent to go a bit less abstract and see how we can actually utilize these notions in practice.
+\todo{Include a few examples here}
+
+With new notions of distance and time for relativistic spacetime, we are ready to expand our ordinary 3-vectors in space into 4-vectors of spacetime.
+
+\subsection{4-vectors}
+
+In standard Euclidean space, we typically give vectors 3 components in order to describe three dimensional phenomena in the real world. Physicists like to write such vectors as:
+$$X^i\equiv(x,y,z)=\bm{x}$$
+We use the superscript $i$ to denote that this vector $X$ takes on values from 1 to 3. Each value corresponds to one of the axes of the vector: $X^1$,$X^2$,$X^3$ -- which we call $x,y,z$ directions. In special relativity, we have seen that we \textit{must} include time in order for our notion of distances to be complete. Instead of using a Latin letter, we will use a Greek letter in the index. This indicates to us that the vector $X$ has four elements:
+$$X^\mu\equiv(X^0,X^1,X^2,X^3)$$
+This zeroth element of the vector is the time, $t$. With this new notation, it's much more compact to write things and less prone to error. Notice that we can easily write the invariant for this system:
+$$(X^0)^2-(X^i)^2=\tau^2$$
+We say that the four-vector possesses \textit{Lorentz} invariance since this term is always a constant.
+
+We also like to define a 4-velocity vector, in which we take the derivative with respect to the proper time. We might be eager to call this $\dot{X}$, but remember that we differentiate with respect to $\tau$, not $t$. Therefore, the dot notation is inappropriate here. We will instead use $U$ as our symbol of choice for the 4-velocity. This vector looks like:
+$$U^\mu\equiv\frac{d X^\mu}{d \tau}=\left(\frac{d t}{d\tau},\frac{d x}{d\tau},\frac{d y}{d\tau},\frac{d z}{d\tau}\right)$$
+We can carefully evaluate each of the terms of the 4-velocity to reveal their importance. Let's start with the first term, $\frac{dt}{d \tau}$. We may rewrite the term as follows:
+$$U^0=\frac{dX^0}{d\tau}=\frac{dX^0}{dt}\frac{dt}{d\tau}$$
+Notice that $X^0=t$, so we may eliminate that term and focus on the second. We remember the form of $d\tau$ from \eqautoref{eq:dtau}, which allows us to rewrite this as:
+$$U^0=\frac{dt}{\sqrt{dt^2-d\bm{x}^2}}$$
+As we have done often in the calculus of variations, we can pull out a factor $dt$ from the square root in the denominator:
+$$U^0=\frac{1}{\sqrt{1-\bm{v}^2}}=\gamma$$
+This term is especially important in special relativity. It is $\gamma$, the Lorentz factor. When $v$ is small compared to the speed of light, this factor is very close to 1 and we reproduce standard dynamics. However, as $\bm{v}^2\rightarrow1$ (it can never exceed 1, since our units have $c=1$), this factor can become extremely large. The time component of a 4-vector is the Lorentz factor!
+
+Let's move on to the spatial terms, which will all have the same form. We will proceed with $U^1$:
+$$U^1=\frac{dx}{d\tau}=\frac{dx}{dt}\frac{dt}{d\tau}$$
+We notice that $\frac{dx}{dt}$ is the standard velocity $\bm{v}$. We already know $\frac{dt}{d\tau}$ is the factor $\gamma$. Therefore, we can write;
+$$U^i=\gamma v^i=\frac{v^i}{\sqrt{1-\bm{v}^2}}$$
+Much like the 4-vector, the 4-velocity also possesses Lorentz invariance:
+$$(U^0)^2-(U^i)^2=1$$
+Now that we have the 4-vector and the 4-velocity defined, we actually have enough to apply the techniques of \gls{Lagrangian} mechanics to the system.
+ 
+\subsection{The Lagrangian}
+
+Our goal in writing the \gls{Lagrangian} for the system is simple:
+\begin{enumerate}
+    \item Recover the standard \gls{Lagrangian} / Newtonian dynamics in the regime where $v\ll1$.
+    \item Preserve the Lorentz invariance property.
+\end{enumerate}
+
+We already know that the \gls{Lagrangian} should be invariant to the change of coordinates. We expect no different for different observers in special relativity. In other words, different observers should recover the same laws of physics, regardless of their velocity with respect to one another.
+
+We already have a Lorentz invariant quantity -- $d\tau$. We can take a somewhat naive approach and just replace $dt$ with the proper time in the standard \gls{Lagrangian}. Since $d\tau$ is a Lorentz invariant, the new action we construct must also be. We will also guess that we may require a proportionality constant $\alpha$ in order to satisfy the agreement in the low velocity regime:
+
+$$S=\alpha\int Ld\tau$$
+For simplicity, we'll consider the case of no potential $V$, so that the \gls{Lagrangian} is just the kinetic energy. Using our definition of $d\tau$, we can convert this into an integral that we may compute:
+$$S=\alpha\int\sqrt{1-\bm{v}^2}dt$$
+Comparing this to the standard form of the kinetic energy, we are obviously missing something. Our standard kinetic energy is $\frac{1}{2}m\bm{v}^2$, but our result here gives $-\frac{1}{2}\bm{v^2}+c^2$ upon first order expansion (after restoring $c$ in the units to compare). It is obvious that we need to include a term $\alpha=-m$ in order to reproduce the standard kinetic energy at low velocities. Thus, the \gls{Lagrangian} for special relativity will be:
+$$L=-m\sqrt{1-\bm{v}^2}=\frac{-m}{\gamma}$$
+After adding the mass, we find the \gls{Lagrangian} in special relativity reduces to the following in the low velocity limit (restoring the speed of light):
+$$L=\frac{1}{2}m\bm{v}^2-mc^2$$
+Since the term $mc^2$ is a constant for a particle, it makes no difference when we find \glspl{eom} for our system. However, its presence is not a coincidence! We associate energy with the mass of the particle itself. We will soon see how this energy comes directly from the formulation of the 4-vector.
+
+\subsubsection{The Generalized Momentum}
+Now, we turn our attention to the generalized momentum of the system. Having defined the \gls{Lagrangian}, we can simply use the formula for generalized momentum:
+$$P_i=\frac{\partial L}{\partial {v}^i}$$
+If you carry out this computation and also check the 0th component (which is somewhat complicated), you'll find that the 4-momentum has the following form:
+$$P^\mu=\left(E,mU^i\right)$$
+What is interesting is that the 0th component of the momentum is the energy! With the generalized momentum and the \gls{Lagrangian}, we can construct the Hamiltonian. I leave it as an exercise to apply the transformation of the \gls{Lagrangian} into the Hamiltonian. You should find that the Hamiltonian is exactly the energy of the system:
+$$E=\gamma m$$
+At low velocities, we directly find the energy (we again restore the constant $c$):
+$$E=mc^2+\frac{1}{2}m\bm{v}^2$$
+Using the \gls{Lagrangian} approach, we have directly seen that the term $mc^2$ corresponds to the mass energy of the particle. From the \gls{Lagrangian}, we have derived perhaps the most famous equation of all time: $E=mc^2$.
+
+\todo{Strengthen this section}
+
+\section{Electromagnetism}
+If you are at all familiar with the history of physics, you will know that Maxwell's laws of electromagnetism were foundational in Einstein's special relativity. The fact that Maxwell's equations define an electromagnetic wave which propagates at the speed of light is what led Einstein to the assumption that this must be a constant for all observers. In a satisfying turn of events, we can go backwards, and use the insights of special relativity to derive the laws of electromagnetism using 4-vectors and the \gls{Lagrangian} approach.
+
+We'll start with the standard equations of electrodynamics, which we will reproduce in the \textit{covariant form} using the \gls{Lagrangian}. I will not derive these standard equations, but you may find an excellent derivation and explanation of each in \cite{griffiths_introduction_2024}:
+\begin{align}
+    \nabla\cdot \bm{E}&=\frac{\rho}{\varepsilon_0}\\
+    \nabla\cdot\bm{B}&=0\\
+    \nabla\times\bm{E}&=-\frac{\partial \bm{B}}{\partial t}\\
+    \nabla\times\bm{B}&=\mu_0\left(\bm{J}+\varepsilon_0\frac{\partial\bm{E}}{\partial t}\right)
+\end{align}
+
+We can now proceed in deriving these using the 4-vector notation. To do so, we require an introduction of a bit of new notation.
+
+\subsection{More on 4-vectors}
+The first thing we need is to understand the difference between covariant and contravariant quantities. In our notation for 4-vectors, we can distinguish between these depending on if we place the indices in the upper or lower portion of the vector. 
+\[
+\begin{array}{lcc}
+\textbf{Type} & \textbf{Notation} & \textbf{Interpretation} \\
+\hline
+\text{Contravariant} & X^\mu & \text{column vector} \\
+\text{Covariant} & X_\mu & \text{row vector}
+\end{array}
+\]
+With this new notation, we may write things very compactly. If we want to create something akin to the inner product between two four vectors, we could write $A_\mu B^\mu$. Written out in full, this would be:
+$$A_\mu B^\mu=\begin{bmatrix}
+    A_0&A_1&A_2&A_3
+\end{bmatrix}\begin{bmatrix}
+B^0\\B^1\\B^2\\B^3
+\end{bmatrix}$$
+Notice that by writing $A_\mu B^\mu$, there was an implied summation over the elements of $A$ and $B$. This is the Einstein summation notation, which says that any covariant and contravariant index which are the same symbol should be summed over. \endnote{We can't treat the multiplication exactly as matrix multiplication, as we will soon see. This is because this matrix manipulation does not encode the transposition of the vector (covariant into contravariant and vice versa) when we raise or lower an index.}
+
+We can also create matrices using this same notation. A matrix would have two indices. A matrix may look like $A_{\mu\nu}$ or $A^{\mu\nu}$ or $A^\mu_\nu$ or $A_\mu^\nu$. All four of those combinations are possible matrices which describe different things! The two matrices $A_{\mu\nu}$ and $A^{\mu\nu}$ are inverses, in fact. One matrix that we would like to create is one that describes the fact that we need a negative sign on $t$ for $ds$ segment in Minkowski space. We can encode this fact with a matrix we call the \textit{metric}. We use the symbol $\eta$ for the metric in special relativity. It looks like:
+$$\eta_{\mu\nu}=\begin{bmatrix}
+    -1&0&0&0\\0&1&0&0\\0&0&1&0\\0&0&0&1
+\end{bmatrix}$$
+In this notation, we can write the equation of the line segment in Minkowski space very compactly:
+$$ds^2=\eta_{\mu\nu}dX^\mu dX^\nu$$
+A simple exercise in matrix calculus shows that this is exactly equivalent to:
+$$ds^2=dX_\mu dX^\mu$$
+Notice that by computing the sum we reproduce a minus sign in the time component as a result of the $\eta_{\mu\nu}$ matrix. We also see that:
+$$dX_\mu=\eta_{\mu\nu}dX^\nu$$
+Which tells us that the metric changes a covariant vector into a contravariant vector, with a change of sign in the time component. To keep things straight, I've included a short list of operations for 4-vectors:
+
+\[
+\begin{array}{rl}
+&\textbf{4-vector and tensor rules} \\
+\hline
+X_\mu &= \eta_{\mu\nu}X^\nu  \\
+A^\mu B_\mu&=A_\mu B^\mu\\
+A^\mu B_\mu&=\text{scalar}\\
+X_\mu X_\mu&\rightarrow \text{no sum (both lower)}\\
+X_\mu X^\nu&\rightarrow \text{no sum (different index)}\\
+A^\mu B^\nu &= T^{\mu\nu}\\
+A^\mu B^\nu &\neq A^\nu B^\mu\\
+\eta_{\mu\nu}&=(\eta^{\mu\nu})^{-1}\\
+X\cdot X &= -(X^0)^2+(X^1)^2+(X^2)^2+(X^3)^2\\
+\frac{\partial \phi}{\partial X^\mu}&=\partial_\mu \phi\\
+\partial_\mu\phi &= \left(\frac{\partial \phi}{\partial t},\frac{\partial \phi}{\partial x},\frac{\partial \phi}{\partial y},\frac{\partial \phi}{\partial z}\right)\\
+\partial^\mu\phi &= \left(-\frac{\partial \phi}{\partial t},\frac{\partial \phi}{\partial x},\frac{\partial \phi}{\partial y},\frac{\partial \phi}{\partial z}\right)
+\end{array}
+\]
+While we're here, there are a few other things to note. For the equations to be well formed, we should have the same number of free indices on the left and right hand sides of the equation. We should also have a match between upstairs (contravariant) and downstairs (covariant) components on each side of the equation.
+
+The last important concept that we need to introduce is the antisymmetric tensor. An antisymmetric tensor has the property that $T^{\mu\nu}=-T^{\nu\mu}$. That is, when we perform a transposition, the elements are negated. As we have seen with matrices, the elements along the diagonal are zero. We can create an antisymmetric tensor using $A^\mu B^\nu-A^\nu B^\mu$. This difference will always yield a tensor which is antisymmetric.
+
+\todo{Make discussion of tensors a bit better}
+
+\subsection{Setting Up Electromagnetism}
+As a first step in deriving electromagnetism, we need to define \textit{potential} functions. Potential functions let us describe the complex vector functions like the electric and magnetic fields using a simpler field. Since the magnetic field is divergenceless, we can create such a field as the curl of a scalar field (we employed the same trick in Volume I when we dealt with velocity fields in air). Thus, we have:
+$$\bm{B}=\nabla\times\bm{A}$$
+Using this, we may also write the electric field:
+$$\bm{E}=-\nabla \phi-\frac{\partial \bm{A}}{\partial t}$$
+Which comes directly from Maxwell's equations. The nice thing about these potential fields is that we have some freedom in their selection. For example, we may add any gradient of a scalar field to $\bm{A}$ and the magnetic field that it produces is unchanged:
+$$\bm{A}'=\bm{A}+\nabla\psi$$
+The equations above will still hold for $\bm{A}'$. 
+
+\todo{Show this is true}
+
+This freedom to select a different potential is called \textit{gauge freedom}, and it's a fundamental part of physics. Using this $\bm{A}$ matrix, we can define a tensor for electrodynamics. The standard $\bm{A}$ is a 3-vector, so we'll have to promote it to a 4-vector by including a 0th component. The natural choice would be to include the scalar potential $\phi$ in the 4-vector so that we can define both the electric and magnetic fields from a single 4-vector (if you do not see this, analyze the equations for $\bm{E}$ and $\bm{B}$ again):
+$$A^\mu=(\phi,\bm{A})$$
+From this new 4-vector, we may construct a tensor. This tensor will be a combination of the electric and magnetic fields and is antisymmetric. We define it as:
+$$F^{\mu\nu}=\partial^\mu A^\nu-\partial^\nu A^\mu$$
+The resulting tensor looks like:
+$$F^{\mu\nu}=\begin{bmatrix}
+    0&-E_x&-E_y&-E_z\\
+    E_x&0&-B_z&B_y\\
+    E_y&B_z&0&-B_x\\
+    E_z&-B_y&B_x&0
+\end{bmatrix}$$
+Observant readers may notice that the lower $3\times3$ matrix takes the form of a cross product matrix, which is no coincidence. In the Lorentz force law, we see a cross product between the magnetic field and the velocity:
+$$\bm{F}=q(\bm{E}+\bm{v}\times\bm{B)}$$
+You may notice that this implies that the magnetic components correspond to rotation generators. As a whole, this tensor is an element of the Lorentz algebra. More information on the group theoretic of this group can be found in \cite{zee_group_2016}.
+
+Having constructed the appropriate tensor for electromagnetism, we are only a few short steps from the \gls{Lagrangian} for the system. The last 4-vector to define combines the charge density ($\rho$) with the current density ($\bm{J}$). Both of these densities will form the 4-vector $J^\mu$:
+$$J^\mu=(\rho,\bm{J})$$
+We now have all the ingredients for Maxwell's equations. I'm going to write them in this new form, show that it is the same as the original form, and then we'll ensure that we can derive this covariant form from the \gls{Lagrangian}. This new covariant form looks like:
+\begin{gather}
+    \partial_\mu F^{\mu\nu}=\mu_0J^\nu\\
+    \partial_\lambda F_{\mu\nu}+\partial_\mu F_{\nu\lambda}+\partial_{\nu} F_{\lambda\mu}=0
+\end{gather}
+
+From the first equation, it is easy to verify that we can recover some of Maxwell's equations. Consider only the 0th component of the free index, $\nu$. Expanding out the Einstein sum will give us:
+$$\partial_tF^{^{00}}+\partial_xF^{10}+\partial_yF^{20}+\partial_zF^{30}=\mu_0J^0$$
+The first term on the LHS obviously goes to zero, since the $F$ matrix is anti-symmetric and any term along the diagonal is zero. We recognize the next terms on the left hand side:
+$$\partial_xF^{10}+\partial_yF^{20}+\partial_zF^{30}=\nabla\cdot \bm{E}$$
+The right hand side is simpler. We just have $\mu_0\rho$. In units where $c=1$, $\mu_0\varepsilon_0=1$. Therefore, the full equation is:
+$$\nabla\cdot \bm{E}=\frac{\rho}{\varepsilon_0}$$
+We may similarly proceed with the other 3 values of the free index, which will give us the equation:
+$$\nabla\times\bm{B}=\mu_0\left(\bm{J}+\varepsilon_0\frac{\partial\bm{E}}{\partial t}\right)$$
+That leaves us with the last two equations. Since we established the 4-vector $A^\mu$, the two properties of the other equations hold as a fact. Think about how we defined the potential, $A$. It automatically means that our magnetic field is divergenceless and the electric field abides by the correct equation as well. Of course, these properties are also encoded in the other equation in the covariant form. This equation turns out to have 64 terms, so computing them and showing this to be the case is quite the task. However, we would find the result holds.
+
+\subsubsection{Selecting a gauge:}
+As one final note, we'll have to select a gauge. We have the ability to choose whatever is convenient due to gauge freedom. We'll choose $\partial_\mu A^\mu=0$, which is the Lorenz gauge.
+
+Under the selection of this gauge, our equations simplify a bit further. Let's start with our first equation:
+$$\partial_\mu F^{\mu\nu}=\mu_0J^\nu$$
+We can expand the $F^{\mu\nu}$ into the original form:
+$$\partial_\mu (\partial^\mu A^\nu - \partial ^\nu A^\mu)=\mu_0J^\nu$$
+And finally we can expand:
+$$\partial_\mu \partial^\mu A^\nu - \partial_\mu\partial ^\nu A^\mu=\mu_0J^\nu$$
+Notice that the second term on the LHS has the $\partial_\mu A^\mu$ term present, so it goes to zero. However, the first term remains because the $A$ is using a different index -- $\nu$. To slim down our notation a little bit, we'll consider the term $\partial_\mu \partial^\mu$ as something like the 4-vector form of a Laplacian operator. With the 4-vector, this is called the D'Alembertian, which is represented by the $\Box$ symbol. The equation is then easily written in a single line
+$$\Box^2A^\nu=\mu_0J^\nu$$
+This is the equation that we will try to replicate via our \gls{Lagrangian}.
+
+\subsection{The Action}
+With a verification of the covariant form of Maxwell's equations, we can now attempt to derive them from an action standpoint. As with all previous examples, the action must be a scalar value. Therefore, we must turn all of our tensors and other objects into something that will result in a scalar. We also want our theory to maintain Lorentz invariance. If we remember, Einstein based the constancy of $c$ off Maxwell's equations. As a result, we better have a Lorentz invariant theory of electromagnetism! This gives us a few options to use the previously developed $F$ tensor. The right one will turn out to be quadratic in $F$. It looks like:
+$$F_{\mu\nu}F^{\mu\nu}=-2(E^2-B^2)$$
+An additional criteria is that we want to make this a \textit{field} Lagrangian. We'll use a Lagrange density $\mathcal{L}$ to describe a density field. We then integrate over all space to get a full \gls{Lagrangian} for a field. However, most physicists will call both the Lagrange density and the integration over space just the \gls{Lagrangian}. Confusing, I know, but just remember that when we deal with fields, it's really the Lagrange density that we deal with. From here on I will use the terms interchangeably.
+
+From a study of classical field theory (which we will not cover here for the sake of brevity), we should expect that there will be a component of the \gls{Lagrangian} for the field itself (the electromagnetic field), and also a component for the interaction between the particle and the field, which we call an interaction \gls{Lagrangian}. With this motivation, we find that the following is the correct field \gls{Lagrangian}:\endnote{A large part of theoretical physics is figuring out the \gls{Lagrangian}. Of course, there is some logic we can use to find the correct one. But part of it is also just choosing a \gls{Lagrangian} that gives the right result. Additionally, the factor of $\frac{1}{4}$ is just included to match traditional ways of writing the equation.}
+
+$$\mathcal{L}=\underbrace{-\frac{1}{4\mu_0}F^{\mu\nu}F_{\mu\nu}}_{\text{Field}}-\underbrace{J^\mu A_\mu}_\text{Interaction}$$
+We integrate the \gls{Lagrangian} density over the three spatial dimensions, as well as time, to get the action for the system:
+$$S=-\frac{1}{4\mu_0}\int F^{\mu\nu}F_{\mu\nu}d^4x-\int J^\mu A_\mu d^4x$$
+All that is left to do now is apply the Euler-Lagrange equation for fields in order to find the appropriate equations of motion for the system. There's an equivalent formulation of the Euler-Lagrange equation for fields, which is:
+$$\frac{\partial}{\partial X^\mu}\frac{\partial \mathcal{L}}{\partial \left(\frac{\partial \phi}{\partial X^\mu}\right)}-\frac{\partial \mathcal{L}}{\partial \phi}=0$$
+The reader is free to plug into these equations to generate the equations of motion. Indeed, you will find that you arrive at the correct result with enough computation. However, we can make use of our knowledge of calculus of variations to do things in terms of the Gateaux derivative. We only care about the first variation being zero, so terms of order $\delta^2$ or higher can be discarded. Let's remind ourselves that we can use the form:
+$$\delta S=\int\delta\mathcal{L} d^4x=0$$
+
+We'll start with the first term of the \gls{Lagrangian}, the $F_{\mu\nu}F^{\mu\nu}$ term. Remember that a single term was:
+$$F^{\mu\nu}=\partial^\mu A^\nu-\partial^\nu A^\mu$$
+Let's multiply out both terms to see what we get:
+$$F_{\mu\nu}F^{\mu\nu}=(\partial_\mu A_\nu-\partial_\nu A_\mu)(\partial^\mu A^\nu-\partial^\nu A^\mu)$$
+Which will give us:
+$$2(\partial^\mu A^\nu\partial_\mu A_\nu-\partial^\nu A^\mu\partial_\mu A_\nu)$$
+Remember, we can rename the indices with whatever letter we like, so long as we are consistent. That's what let us combine terms. We can now perform a variation of this equation. We'll do this by letting $A\rightarrow A+\delta A$ and subtracting the original equation. We will also remove any higher order terms that appear. I'll spare the reader the exact details, but we get:
+$$\delta F_{\mu\nu}F^{\mu\nu}=4(\partial^\mu A^\nu\partial_\mu \delta A_\nu-\partial^\nu A^\mu\partial_\mu \delta A_\nu)$$
+The second term is much easier. We can write out the full process for this one:
+$$\delta(J^\mu A_\mu)=J^\mu(A_\mu+\delta A_\mu) - J^\mu A_\mu=J^\mu\delta A_\mu$$
+
+In total, the varied \gls{Lagrangian} is now:
+$$\delta\mathcal{L}=-\frac{1}{\mu_0}(\partial^\mu A^\nu\partial_\mu \delta A_\nu-\partial^\nu A^\mu\partial_\mu \delta A_\nu)-J^\mu\delta A_\mu$$
+We can employ our favorite trick, which is to realize that the first term in parentheses is a product rule. We have the product rule:
+$$\partial_\mu(\partial^\mu A^\nu \delta A_\nu)=(\partial_\mu\partial^\mu A^\nu)\delta A_\nu+\partial^\mu A^\nu\partial_\mu\delta A_\nu$$
+Notice that we have the rightmost expression already. We'll solve for it:
+$$\partial^\nu A^\mu\partial_\mu\delta A_\nu=\partial_\mu(\partial^\mu A^\nu \delta A_\nu) - (\partial_\mu\partial^\mu A^\nu)\delta A_\nu$$
+We can drop the total derivative term in this expression as a result of the divergence theorem and the fact that we fix the endpoints in the calculus of variations. Put briefly, we will find the varied \gls{Lagrangian} afterwards as:
+$$\delta\mathcal{L}=-\frac{1}{\mu_0}(-\Box^2 A^\nu  \delta A_\nu +\partial^\nu \partial_\mu A^\mu \delta A_\nu)-J^\mu\delta A_\mu$$
+Finally, we can remember that we chose the Lorenz gauge, which allows us to drop the last term in parenthesis. This leaves us with
+$$\frac{1}{\mu_0}\Box^2 A^\nu  \delta A_\nu -J^\mu\delta A_\mu$$
+In the full integral, this is:
+$$\delta S = \int\left(\frac{1}{\mu_0}\Box^2 A^\nu -J^\nu\right)\delta A_\nu d^4x$$
+Since the variation $\delta A_\nu$  is arbitrary, we know that the term in parenthesis is the correct system. A simple rearrangement gives:
+$$\Box^2 A^\nu =\mu_0J^\nu$$
+And there we have it. We have derived Maxwell's equations from an action principle. Along the way, we also showed that the Lorentz invariance holds for the equations, and also showed that the total system comprised of the particles and fields will conserve energy. 
+
+\section{Quantum Physics}
+In this final section of Lagrangian dynamics, we'll tie together some fundamental ideas which should make the Lagrangian appear even more elegant.
+
+The core idea is similar to what we've already explored in \autoref{sec: connection to quantum}. I'll make that idea a bit more rigorous here and explain the methods of quantum physics that give us this. As an overview for the readers who have not studied much quantum physics, there are three main ways that we do quantum mechanics:
+\begin{enumerate}
+    \item The Schr\"odinger approach (state evolution)
+    \item The Heisenberg picture (matrix mechanics)
+    \item Path integral formulation (Feynman / Schwinger)
+\end{enumerate}
+
+The first two are probably familiar to most readers. It was proved long ago by Von Neumann that these first two are exactly the same. Both the Schr\"odinger and the Heisenberg approaches are equivalent. However, we're concerned here with the last point. The last formulation, invented by Feynman and Schwinger, is also an equivalent formulation of quantum mechanics. We began exploring it in \autoref{sec: connection to quantum}. The path integral formulation takes the weighted sum of an infinite number of paths a particle could take. The probability distribution is understood from this weighted sum of all the paths.
+
+Even more than the other sections, we must curtail the results here heavily in order to fit it into a single chapter. Therefore, I will use some heuristic arguments for the more complex ideas involving Lorentz invariance and group theory. Luckily, we are doing physics and not mathematics, so some heuristic arguments can be accepted. 
+
+Let's remember our example from the past section, which I've reproduced below for your convenience:
+
+\begin{figure}[ht]
+    \centering
+
+% Pattern Info
+ 
+\tikzset{
+pattern size/.store in=\mcSize, 
+pattern size = 5pt,
+pattern thickness/.store in=\mcThickness, 
+pattern thickness = 0.3pt,
+pattern radius/.store in=\mcRadius, 
+pattern radius = 1pt}
+\makeatletter
+\pgfutil@ifundefined{pgf@pattern@name@_bnexa4sr6}{
+\pgfdeclarepatternformonly[\mcThickness,\mcSize]{_bnexa4sr6}
+{\pgfqpoint{0pt}{0pt}}
+{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+{\pgfpoint{\mcSize}{\mcSize}}
+{
+\pgfsetcolor{\tikz@pattern@color}
+\pgfsetlinewidth{\mcThickness}
+\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+\pgfpathlineto{\pgfpoint{\mcSize+\mcThickness}{\mcSize+\mcThickness}}
+\pgfusepath{stroke}
+}}
+\makeatother
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-0.8,xscale=0.8]
+%uncomment if require: \path (0,415); %set diagram left start at 0, and has height of 415
+
+%Shape: Rectangle [id:dp13216032235189357] 
+\draw  [color={rgb, 255:red, 126; green, 219; blue, 222 }  ,draw opacity=0.51 ][fill={rgb, 255:red, 126; green, 219; blue, 222 }  ,fill opacity=0.51 ] (100,130) -- (560,130) -- (560,170) -- (100,170) -- cycle ;
+%Shape: Rectangle [id:dp7152402004015799] 
+\draw  [pattern=_bnexa4sr6,pattern size=7.5pt,pattern thickness=0.75pt,pattern radius=0pt, pattern color={rgb, 255:red, 0; green, 0; blue, 0}] (320,20) -- (340,20) -- (340,60) -- (320,60) -- cycle ;
+%Straight Lines [id:da14645204907035414] 
+\draw [line width=0.75]    (140,50) -- (330,130) ;
+%Straight Lines [id:da5333244615267384] 
+\draw [line width=0.75]    (520,50) -- (330,130) ;
+%Straight Lines [id:da19778015344004796] 
+\draw [line width=0.75]    (140,50) -- (240,130) ;
+%Straight Lines [id:da47608518269163747] 
+\draw [line width=0.75]    (520,50) -- (240,130) ;
+%Straight Lines [id:da14756293959452693] 
+\draw [line width=0.75]    (520,50) -- (420,130) ;
+%Straight Lines [id:da7018685323723184] 
+\draw [line width=0.75]    (140,50) -- (420,130) ;
+%Straight Lines [id:da7703911392020962] 
+\draw [line width=0.75]    (140,50) -- (180,130) ;
+%Straight Lines [id:da3928605678682944] 
+\draw [line width=0.75]    (520,50) -- (180,130) ;
+%Straight Lines [id:da5605057304874714] 
+\draw [line width=0.75]    (520,50) -- (480,130) ;
+%Straight Lines [id:da19372382419577583] 
+\draw [line width=0.75]    (140,50) -- (480,130) ;
+%Shape: Arc [id:dp8977631415857631] 
+\draw  [draw opacity=0] (499.01,206.52) .. controls (463.55,238.66) and (401.11,260) .. (330,260) .. controls (258.89,260) and (196.45,238.66) .. (160.99,206.52) -- (330,145) -- cycle ; \draw   (499.01,206.52) .. controls (463.55,238.66) and (401.11,260) .. (330,260) .. controls (258.89,260) and (196.45,238.66) .. (160.99,206.52) ;  
+%Straight Lines [id:da5752570776084447] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (180,221) ;
+\draw [shift={(180,221)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(180,221)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da1280857343863272] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (240,248) ;
+\draw [shift={(240,248)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(240,248)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da08965219408030722] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (330,260) ;
+\draw [shift={(330,260)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(330,260)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da37818780636602134] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (480,221) ;
+\draw [shift={(480,221)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(480,221)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da47667957118212323] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (420,248) ;
+\draw [shift={(420,248)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(420,248)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da007076057060994345] 
+\draw    (130,190) -- (130,270) ;
+%Straight Lines [id:da14315018255479806] 
+\draw    (530,270) -- (130,270) ;
+%Straight Lines [id:da15061696183681172] 
+\draw [line width=0.75]    (140,50) -- (310,130) ;
+%Straight Lines [id:da2002580638128295] 
+\draw [line width=0.75]    (520,50) -- (310,130) ;
+%Straight Lines [id:da32478234854039456] 
+\draw [line width=0.75]    (140,50) -- (350,130) ;
+%Straight Lines [id:da23492277853880672] 
+\draw [line width=0.75]    (520,50) -- (350,130) ;
+%Straight Lines [id:da4384311212275247] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (310,259) ;
+\draw [shift={(310,259)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(310,259)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da09345020430918904] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ]   (350,260) ;
+\draw [shift={(350,260)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+\draw [shift={(350,260)}, rotate = 45] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (-6.15,0) -- (6.15,0)(0,6.15) -- (0,-6.15)   ;
+%Straight Lines [id:da5924170533496909] 
+\draw    (170,290) -- (188,290) ;
+\draw [shift={(190,290)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da5827611285701653] 
+\draw    (470,290) -- (488,290) ;
+\draw [shift={(490,290)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da6566762407882489] 
+\draw    (246,298) -- (232.46,285.36) ;
+\draw [shift={(231,284)}, rotate = 43.03] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da5408338245488791] 
+\draw    (427,298) -- (413.46,285.36) ;
+\draw [shift={(412,284)}, rotate = 43.03] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da4955723577989215] 
+\draw    (302,295) -- (313.64,282.47) ;
+\draw [shift={(315,281)}, rotate = 132.88] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da5611205109573854] 
+\draw    (323,295) -- (337.45,283.26) ;
+\draw [shift={(339,282)}, rotate = 140.91] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da876842810834746] 
+\draw    (344,294) -- (361.27,284) ;
+\draw [shift={(363,283)}, rotate = 149.93] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da1460915799548117] 
+\draw    (302,380) -- (320,380) ;
+\draw [shift={(322,380)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da0417350409731837] 
+\draw    (340,314) -- (358,314) ;
+\draw [shift={(360,314)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da9009267203358027] 
+\draw    (322,380) -- (308.46,367.36) ;
+\draw [shift={(307,366)}, rotate = 43.03] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da6327757626913345] 
+\draw    (355,328) -- (341.46,315.36) ;
+\draw [shift={(340,314)}, rotate = 43.03] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da8821395763135093] 
+\draw    (307,366) -- (318.64,353.47) ;
+\draw [shift={(320,352)}, rotate = 132.88] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da20662846712873373] 
+\draw    (320,352) -- (334.45,340.26) ;
+\draw [shift={(336,339)}, rotate = 140.91] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da35979068209407283] 
+\draw    (336,339) -- (353.27,329) ;
+\draw [shift={(355,328)}, rotate = 149.93] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (7.65,-2.3) .. controls (4.86,-0.97) and (2.31,-0.21) .. (0,0) .. controls (2.31,0.21) and (4.86,0.98) .. (7.65,2.3)   ;
+%Straight Lines [id:da4924995281799577] 
+\draw [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=1.5]    (302,380) -- (358.02,316.25) ;
+\draw [shift={(360,314)}, rotate = 131.31] [color={rgb, 255:red, 218; green, 44; blue, 0 }  ,draw opacity=1 ][line width=1.5]    (9.95,-2.99) .. controls (6.32,-1.27) and (3.01,-0.27) .. (0,0) .. controls (3.01,0.27) and (6.32,1.27) .. (9.95,2.99)   ;
+
+% Text Node
+\draw (121,32.4) node [anchor=north west][inner sep=0.75pt]    {$A$};
+% Text Node
+\draw (527,32.4) node [anchor=north west][inner sep=0.75pt]    {$B$};
+% Text Node
+\draw (95,212) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {Time};
+
+
+\end{tikzpicture}
+
+    \caption{Phase of light for different paths}
+    \label{fig:polarization paths2}
+\end{figure}
+
+With some more \gls{Lagrangian} mechanics in our toolkit at this point, we'll explain this a bit more rigorously. The classical light trajectory is the one of least time, because that is the one where the action associated with the trajectory has no change to first order. Therefore, small variations to the path (up to first order) have no change discernible in path time. In other regions, the changes to the first order are not negligible, and destructively interfere with each other. The result is that we associate a high probability amplitude with the classical path.
+
+With that idea formalized, let's move on to explaining the idea more generally for any physical system. Of course, the big idea is that we will be changing our mindset from `least time' to `least action'. As far as intuition goes, that's the real shift that we need. That being said, let's proceed with a bit of the actual theory. Here, we're specifically going to be talking about quantum electrodynamics (\gls{qed}), which is the simplest real quantum field theory.
+
+\subsection{The QED Action}
+
+For completeness, I will show the action that governs this theory. The rest of this section will not be concerned with solving this system, though; that's a bit too complicated for our purposes. The action for this theory is given by integrating the Lagrange density, like we did for electromagnetism:\endnote{Here, we use natural units where $\hbar=1,c=1$ to make the equation easier to read.}
+$$S=\int\mathcal{L}d^4x=\int d^4x\left[-\frac{1}{4\mu_0}F^{\mu\nu}F_{\mu\nu}+\bar{\psi}(i\gamma^\mu D_\mu-m)\psi\right]$$
+We notice some familiar terms from the \gls{Lagrangian} for electromagnetism. There are additional terms which are very similar to the \textit{Dirac} equation. This equation is the relativistic equivalent of the Schr\"odinger equation for spin-1/2 particles (like electrons and positrons). The specifics of this part of the equation are not too important; we won't deal with it in depth. $\psi$ is the Dirac spinor field. Put simply, it describes the evolution of spin-1/2 particles much like the wavefunction does in standard quantum mechanics. I'll note here how group theory might enter our discussion and be useful to us. For electromagnetic fields, we mostly encounter $U(1)$ symmetries. This symmetry group dictates the conservation of electric charge and some basic behaviors for our particles. The Dirac spinor fields use the $SU(2)$ symmetries at a fundamental level to describe spacetime symmetries. The presence of this symmetry explains some of the counterintuitive effects of spin. If you remember from our discussion of Lie theory, this group is a double cover of the $SO(3)$ rotation space we use in geometric control.
+
+The other terms are more mathematically involved. The $\gamma$ matrices are used in the Dirac equation and are a set of $4\times 4$ matrices which are used in order to ensure the Dirac equation is a first order equation. The $D_\mu$ term is a covariant derivative, which encodes how the field varies from place to place. This term also tells us how fields couple together (the famous fine-structure constant is used here). Finally, $m$ is the mass of the field, which tells us how much mass/energy each quantum of the field will have. Now that we have seen the mathematical form of a relativistic field action, we can look at the path integral machinery that actually allows us to calculate how these fields evolve simultaneously across space and time.
+
+\subsection{The Quantum Action}
+To conclude our journey with mechanics, we'll perhaps go full circle and prove why the principle of least action exists in the classical limit. Just like we did with light, we will think about things as being very democratic. We can use light as our prototypical example. Since light is an electromagnetic wave, it fits in very naturally to the \gls{qed} framework. Stated a bit imprecisely, if we can show a principle for light, it will hold in the more general framework.
+
+What we want to do is work up from our `straight lines' example into a framework that allows for any arbitrary path. We'll start by considering the double slit experiment in the path integral framework. Very simply, we can imagine that light may take paths through the left and right slit. We show this in \autoref{fig:double slit path}.
+
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da06948300594936097] 
+\draw [line width=1.5]    (287,150) -- (333,150) ;
+%Straight Lines [id:da18815465714745783] 
+\draw [line width=1.5]    (220,110) -- (400,110) ;
+%Straight Lines [id:da6796977501414805] 
+\draw [line width=1.5]    (220,150) -- (283,150) ;
+%Straight Lines [id:da5475495935429796] 
+\draw [line width=1.5]    (337,150) -- (400,150) ;
+%Straight Lines [id:da9722724066670969] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (285,150) -- (310,210) ;
+%Straight Lines [id:da4319665554205355] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (310,210) -- (335,150) ;
+%Straight Lines [id:da6889484698583539] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (285,150) -- (310,110) ;
+%Straight Lines [id:da661950530174437] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (310,110) -- (335,150) ;
+%Straight Lines [id:da6117056267411726] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (310,210) ;
+\draw [shift={(310,210)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.34, y radius= 2.34]   ;
+%Straight Lines [id:da20001399911698203] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (310,110) ;
+\draw [shift={(310,110)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.34, y radius= 2.34]   ;
+
+
+\end{tikzpicture}
+
+    \caption{Double Slit Paths}
+    \label{fig:double slit path}
+\end{figure}
+
+
+Now imagine that we add more layers, and increase the number of paths. To account for all combinations, we need to add more and more straight lines. In the limit, we have a space that is \textit{only} slits (that is, empty space) and light which may take any arbitrary curved path, even moving backwards or looping on itself. 
+
+\begin{figure}[ht]
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Straight Lines [id:da20278445546239354] 
+\draw [line width=1.5]    (227,180) -- (273,180) ;
+%Straight Lines [id:da1940966725562202] 
+\draw [line width=1.5]    (160,130) -- (340,130) ;
+%Straight Lines [id:da8020776946851151] 
+\draw [line width=1.5]    (160,180) -- (223,180) ;
+%Straight Lines [id:da7021888281535911] 
+\draw [line width=1.5]    (277,180) -- (340,180) ;
+%Straight Lines [id:da5215356834210236] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (225,180) -- (250,237) ;
+%Straight Lines [id:da12317036687228267] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (250,237) -- (275,180) ;
+%Straight Lines [id:da7505643316571802] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (250,237) ;
+\draw [shift={(250,237)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.34, y radius= 2.34]   ;
+%Straight Lines [id:da21275960643383107] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (250,130) ;
+\draw [shift={(250,130)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.34, y radius= 2.34]   ;
+%Straight Lines [id:da32129483336686815] 
+\draw [line width=1.5]    (227,170) -- (273,170) ;
+%Straight Lines [id:da5217773106446991] 
+\draw [line width=1.5]    (160,170) -- (223,170) ;
+%Straight Lines [id:da8772716892389706] 
+\draw [line width=1.5]    (277,170) -- (340,170) ;
+%Straight Lines [id:da9495244703971474] 
+\draw [line width=1.5]    (227,160) -- (273,160) ;
+%Straight Lines [id:da6818918510727348] 
+\draw [line width=1.5]    (160,160) -- (223,160) ;
+%Straight Lines [id:da27829314399489036] 
+\draw [line width=1.5]    (277,160) -- (340,160) ;
+%Straight Lines [id:da5696056924200998] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (225,180) -- (275,170) ;
+%Straight Lines [id:da9495213603730362] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (275,160) -- (275,170) ;
+%Straight Lines [id:da9783161187569084] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (275,160) -- (250,130) ;
+%Straight Lines [id:da3052293349662619] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (275,180) -- (275,170) ;
+%Straight Lines [id:da7827253880753714] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (225,170) -- (275,180) ;
+%Straight Lines [id:da9606595562649053] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (225,170) -- (275,160) ;
+%Straight Lines [id:da9437981271851335] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (225,180) -- (225,170) ;
+%Straight Lines [id:da6460605633873221] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (225,160) -- (225,170) ;
+%Straight Lines [id:da4239355559461958] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (250,130) -- (225,160) ;
+%Straight Lines [id:da919367341706299] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (225,160) -- (275,170) ;
+%Straight Lines [id:da41212609396230326] 
+\draw    (360,170) -- (427,170) ;
+\draw [shift={(430,170)}, rotate = 180] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (8.93,-4.29) -- (0,0) -- (8.93,4.29) -- cycle    ;
+%Straight Lines [id:da5378327957148794] 
+\draw [line width=1.5]    (440,130) -- (530,130) ;
+%Straight Lines [id:da3825995573880473] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (480,237) ;
+\draw [shift={(480,237)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.34, y radius= 2.34]   ;
+%Straight Lines [id:da042168182422014144] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (480,130) ;
+\draw [shift={(480,130)}, rotate = 0] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 2.34, y radius= 2.34]   ;
+%Curve Lines [id:da35465798007114147] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (480,237) .. controls (520,207) and (440,160) .. (480,130) ;
+%Curve Lines [id:da8812963088732813] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (480,237) .. controls (520,207) and (482,163.88) .. (480,130) ;
+%Curve Lines [id:da35503875832294374] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (480,237) .. controls (473,201.88) and (513,167.88) .. (480,130) ;
+%Curve Lines [id:da4719750747716357] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (480,237) .. controls (428,198.88) and (513,167.88) .. (480,130) ;
+
+
+\end{tikzpicture}
+
+    \caption{Process of increasing slits to the infinite limit}
+    \label{fig:infinite slits}
+\end{figure}
+We can apply this concept to massive particles when we consider the de Broglie relation. This relation states that even matter particles will have an associated wavelength, which is related to their momentum:
+$$\lambda=\frac{h}{p}$$
+In a quantum field theoretic view, we would say that matter particles are excitations in a quantum field. In a field, the natural form of an excitation is a wave. Therefore, the particle we observe is fundamentally a wave. With this in mind, we're ready to formulate the notion of a quantum action. With light, we `attached' a spinning vector that changed depending on how long light takes to traverse a certain trajectory. We'll want to do something similar, and associate a complex vector with paths of different action. Very helpfully, the reduced Planck constant $\hbar$ has the same units as action. Therefore, we could imagine a useful dimensionless quantity that relates the classical action to the quantum: $$\frac{S}{\hbar}$$ To make this a complex value, we can take the exponential of this quantity multiplied by $i$, which will give us a rotating vector with unit length:
+$$\exp\left({\frac{iS}{\hbar}}\right)$$
+More mathematically, quantum states evolve according to the \gls{Hamiltonian} operator. This evolves as a unitary transformation and the time evolution can be understood in terms of an exponential mapping:
+$$U(\delta t)=\exp(-\frac{i}{\hbar}\hat{H}\delta t)$$
+Or in more standard quantum mechanics notation:
+$$\ket{\psi(t)}=U(t)\ket{\psi(0)}=e^{-i\hat{H}t/\hbar}\ket{\psi(0)}$$
+We can consider the evolution along each of these little steps and multiply all of them together:
+$$U(t)=\lim_{n\rightarrow\infty}\left[\exp\left(-\frac{i}{\hbar}\hat{H}\delta t\right)\right]^n$$
+The parallels to our previous discussion of Lie theory cannot be avoided. Here, we see something very similar to our infinitesimal transforms of Lie algebra elements. Perhaps it is becoming clear why group theory is such an essential tool in particle physics and quantum field theory.\endnote{As an example from particle physics: Each generator of a gauge group corresponds to a force mediating particle:
+
+\begin{itemize}
+    \item Electromagnetic: $U(1)\rightarrow$ photon (one generator)
+    \item Weak: $SU(2)\rightarrow$$W^+,W^-,Z$ bosons (three generators)
+    \item Strong: $SU(3)\rightarrow$ gluons of different colors (8 generators)
+\end{itemize}
+
+The standard model of particle physics included all of these in a $SU(3)\times SU(2)\times U(1)$ group.
+}
+
+Next, we do something analogous to the Legendre transformation for quantum operators. That will turn our previous equation into:\endnote{We transition from operators on a Hilbert space to scalars integrated over a field. The jump between the two is a bit too technical for this section.}
+$$U(t)=\prod_{n}\left[\exp\left(\frac{i}{\hbar}L_n\delta t\right)\right]$$
+As a final step, we convert all of these sums into a continuous integral:
+$$U(t)=\exp\left(\frac{i}{\hbar}\int Ld t\right)$$
+We remember that the integral of the \gls{Lagrangian} is the action, so our final result is:
+$$U(t)=\exp\left(\frac{i}{\hbar}S \right)$$
+Of course, many steps and formalities have been skipped here, but the point is to convey some sense of where this comes from.
+
+Finally, the point of this path integral formulation is that we can take many different paths. We want to associate a complex phase vector with each path. The sum of these will build up the wavefunction. The famous equation is:
+$$\psi(x,t)=\int\mathcal{D}[x]\exp(iS/\hbar)$$
+The notation $\mathcal{D}[x]$ is a method of telling us that we will integrate over all of these possible paths.
+
+\subsubsection{The Classical Limit}
+We derive the principle of least action quite simply when we look at the equation we have just constructed. The argument is very similar to the one we made earlier for paths of light in the case of a mirror. Let's think about the magnitudes of $S$ and $\hbar$. The quantity $\hbar$ is extraordinarily small, of order $10^{-34} \mathrm{ J\cdot s}$. For a typical trajectory in classical physics, $S$ is enormously greater. So much so that any random trajectory will have a variation 30-40 orders of magnitude greater than the value of $\hbar$. The result is that this complex exponential vector will point in an essentially random direction. 
+
+However, when we are on a physical trajectory (the classical trajectory), the variation between one path and another infinitesimally separated path is zero! In this specific region, we get a huge probability that drowns out everything else. The result is that we are, for all intents and purposes, guaranteed to follow such a trajectory. And thus, Hamilton's principle which we took as a maxim at the beginning of this book, has been proven.
+$$\delta S=0$$
+
+\newpage
+\printendnotes
+
+
 \chapter*{The End!}
-And so, you have finished all three volumes of the Flight Dynamics Bible! This is quite the accomplishment. In this volume, you have read over 60,000 words and 2000 equations. Throughout the series, that is more than 100,000 words spanning many semesters of content.
+And so, you have finished all three volumes of the Flight Dynamics Bible! This is quite the accomplishment. In this volume alone, you have read over 100,000 words and 3,500 equations. Throughout the series, that is more than 200,000 words spanning many semesters of content. Take a moment to congratulate yourself for these accomplishments.
 
 Preston and I hope that this series has been beneficial to you and furthered your knowledge of flight dynamics and all other subject enclosed. Of course, this reading is only the beginning of your journey. From here, there are many avenues that you can explore - be that \gls{gnc}, avionics, robotics, physics, or otherwise.
 
-My hope is that the reader have derived from these books some useful intuition for these complex topics and are inspired to study further. There is a vast amount of knowledge to be gained, and so much fundamental beauty in studying the math and physics of the natural world. I will leave you with one final quote as you continue your journey. 
+My hope is that the readers have derived from these books some useful intuition for these complex topics and are inspired to study further. There is a vast amount of knowledge to be gained, and so much fundamental beauty in studying the math and physics of the natural world. I will leave you with one final quote as you continue your journey. 
 
 \begin{chapquote}{Yo-Yo Ma}
 ``The worst thing you can do is say to yourself, `I want to be just like somebody else.' You have to absorb knowledge from someone else, but ultimately you have to find your own voice.''
 \end{chapquote}
 
-If you have any suggestions for improvements to these books, please message me on slack @HudsonReynolds or reach out by email at HudsonJ.Reynolds@gmail.com. Thank you for reading.
+If you have any suggestions for improvements, questions, or other notes related to these books, feel free to reach out to me by email at HudsonJ.Reynolds@gmail.com. Thank you for reading.
 
 \appendix
 \addappheadtotoc
@@ -17,12 +639,12 @@ If you have any suggestions for improvements to these books, please message me o
 \renewcommand{\chaptername}{Appendix}
 \renewcommand{\chapterautorefname}{Appendix}
 
-\chapter{Methods of Matrix Exponentiation}\label{sec: computation of matrix exp}
+\chapter{Matrix Exponential Methods}\label{sec: computation of matrix exp}
 
-The exponentiation of matrices prove to be extremely useful in many of the applications here. There are several ways to approach the matrix exponential, with each having their own advantages in approach. We will start with the simplest to construct and move to more complex (although sometimes better!) approaches.
+The exponentiation of matrices prove to be extremely useful in many of the applications in this book. There are several ways to approach the matrix exponential, with each having their own advantages. We will start with the simplest to construct and move to more complex (though not always better!) approaches.
 
-\section{Matrix Exponential as Taylor Series}
-Expressing the Matrix Exponential as a Taylor series is the simplest definition we can use, although a closed form only exists in limited cases. Such as an example is:
+\section{Using Taylor Series}
+Expressing the Matrix Exponential as a Taylor series is the simplest definition we can use, although a closed form only exists in limited cases. Such an example is:
 $$A=\begin{bmatrix}
     0&1&1\\0&0&1\\
     0&0&0
@@ -48,11 +670,11 @@ $$e^A=\begin{bmatrix}
     1&1&\frac{3}{2}\\0&1&1\\
     0&0&1
 \end{bmatrix}$$
-This closed form only exists for simple matrices. We can extend this \textit{slightly} for some some matrices, as we can separate $e^A$ into $e^{(A+B)}=e^Ae^B$ in the case that $AB=BA$ (otherwise known as $A$ and $B$ \textit{commuting}). This is generally not the case so we will not dive further.
+This type of closed form only exists for so-called \textit{nilpotent} matrices. These are matrices which will eventually turn into the zero matrix when we raise them to an integer power $k$ enough times. We can recognize such matrices because their eigenvalues are all zero. They are also traceless and have a determinant of 0. We can extend this \textit{slightly} for some some matrices, as we can separate $e^A$ into $e^{(A+B)}=e^Ae^B$ in the case that $AB=BA$ (otherwise known as $A$ and $B$ \textit{commuting}). If one of the terms is nilpotent, we might have hope at a closed form solution. Sometimes we also get lucky, and although the Taylor series is infinite, each of the terms turn into something recognizable, like sin and cos. Generally, however, the Taylor series will not give a closed form solution.
 
 The reason to present this method is that sometimes the other methods I will present to perform matrix exponentiation will not always work. In that case, when computing the matrix exponential, it is often okay for our purposes to find a `close enough' value by taking some finite sum of the Taylor series expansion. This method will always work; we all remember from introductory calculus that $\sum_{n=0}^\infty{\frac{A^n}{n!}}$ is an absolutely convergent series.
 
-\section{Matrix Exponential as Eigenvalue Decomposition}
+\section{Using Eigenvalue Decomposition}
 The next method will likely be familiar to students of linear algebra. This method involves taking the eigenvalue decomposition of the matrix $A$ to find its exponential. Diagonalization Theorem (presented in \autoref{thm:diagonalization thm}) tells us that we can only perform this diagonalization if $A$ has $n$ linearly independent eigenvectors. We can easily check this in MATLAB with the command "[P,D]=eig(A)", which returns the eigenvector matrix "P" and diagonalized matrix "D". We will not cover how to derive these matrices here. If you want a derivation, a good high-level overview is presented in \cite{michael_penn_matrix_2022}.
 
 \begin{theorem}[Diagonalization Theorem]\label{thm:diagonalization thm}
@@ -68,7 +690,7 @@ We start by squaring both sides of the equality $$A^2=\left(PDP^{-1}\right)^2$$ 
 We notice that the middle term, $P^{-1}P$, reduces to $I$, so the sum is simply $$A^2=P(DID)P^{-1}$$which we can express plainly as $$A^2=PD^2P^{-1}$$
 \end{example}
 
-We can notice that for any integer $n$, the middle terms $P$ and $P^{-1}$ will cancel each other, given us the general formula:
+We can notice that for any positive integer $n$, the middle terms $P$ and $P^{-1}$ will cancel each other, given us the general formula:
 \begin{gather}
     A^n=PD^nP^{-1}
 \end{gather}
@@ -94,13 +716,15 @@ $$e^A=Pe^DP^{-1}$$
     To ensure that you understand this method of computing the matrix exponential, show that $e^{tr(A)}=\det\left(e^A\right)$ for the matrix: $$A=\begin{bmatrix}
         4&1\\2&5
     \end{bmatrix}$$
-    Bonus points are awarded if you can prove this property holds for a general diagonalizable matrix $A$! You will want to use the properties of the trace and determinant on eigenvalues. This property will prove useful when we study rotation groups, so keep it in your back pocket!
+    Bonus points are awarded if you can prove this property holds for a general diagonalizable matrix $A$! You will want to use the properties of the trace and determinant on eigenvalues. This property proves useful in our study of rotation groups in \autoref{chap:lie theory}.
 \end{exercise}
 
-\section{Matrix Exponential with Jordan Forms}
+\section{Using Jordan Forms}
 Eigenvalue decomposition is a very promising method for computing the matrix exponential, but it is not always feasible, since our matrices are not always diagonalizable. In such a case, we may use what is called the \textit{Jordan Normal form} (sometimes called \textit{Jordan Canonical Form}) to compose a pseudo-diagonal matrix and compute the matrix exponential.
 
-\section{Matrix Exponential with Laplace Transform}
+\todo{Finish}
+
+\section{Using Laplace Transform}
 
 There is one more method that we will employ to compute the matrix exponential, which comes from the \gls{laplace transform} which we explored in \autoref{part:control theory}. We may recall that we have:
 $$e^{at} = \mathscr{L}^{-1}\left(\frac{1}{s-a}\right)$$
@@ -139,10 +763,14 @@ Which matches our expectation for the result.
 Next, compute the eigenvalues of $\theta\mathcal{J}$ and the eigenvalues of $e^{\theta\mathcal{J}}$. How are the two related? 
 \end{exercise}
 
-\section{Computational Methods of Matrix Exponentiation}
+\section{Using Cayley-Hamilton}
+
+\todo{Finish}
+
+\section{Matrix Exponentiation in MATLAB}
 Often, we would like to use computers to aid us in the computation of matrix exponentials. In MATLAB, there are several commands which we may use to aid us in computation.
 
-If our computation is purely numeric, we may perform a numerical version of the matrix exponential using "expm(A)", where "A" is our square matrix of interest. Note that "exp" in MATLAB will compute the exponential of each element of the matrix, \textit{not} the exponential for the matrix as a whole.
+If our computation is purely numeric, we may perform a numerical version of the matrix exponential using "expm(A)", where "A" is our square matrix of interest. Note that "exp" in MATLAB will compute the exponential of each element of the matrix, \textit{not} the exponential for the matrix as a whole. The two are only equivalent for diagonal matrices.
 
 If we desire a symbolic solution, "expm" may be used on a symbolic matrix. To declare a symbolic variable, we use "syms" followed by each variable we want to declare (e.g. "syms theta x y z").
 
@@ -151,11 +779,15 @@ In addition to these commands, there are several which are useful when performin
     \item "[V,J] = jordan(A)" - convert matrix "A" into the Jordan form, "V" returns the generalized eigenvectors and "J" the matrix in Jordan form
     \item "F = laplace(f)" - perform the \gls{laplace transform} of "f".
     \item "f = ilaplace(F)" - perform the inverse \gls{laplace transform} of "F".
-    \item "[V,D] = eig(A)" - compute the diagonal matrix ("D") and the eigenvector matrix ("V") for "A". 
+    \item "[V,D] = eig(A)" - compute the diagonal matrix ("D") and the eigenvector matrix ("V") for matrix "A". 
 \end{itemize}
 
-\chapter{Inner Product Space Examples}\label{sec:inner prod ex}
-To solidify the idea of the inner product space, we should consider several inner product spaces that we see quite frequently. These are supplemental inner product spaces that may aid in our understanding of the \gls{laplace transform}.
+\chapter{Inner Product Space Examples and Theorems}\label{sec:inner prod ex}
+To solidify the idea of the inner product space, we should consider several inner product spaces that we see quite frequently. These are supplemental inner product spaces that may aid in our understanding of the \gls{laplace transform}. I will additionally show some useful properties of inner products which come up quite often.
+
+\section{Important Theorems}
+
+
 
 \section{Fourier Series}
 First, lets consider one of the most prominent and simple cases of an inner product space. This inner product space will serve as a basic example which we can use to understand the other inner product spaces.
@@ -184,7 +816,32 @@ $$a(t)\cdot b(t)=\frac{1}{\tau}\int_0^\tau{a(t)\overline{b(t)}}dt$$
 
 \subsubsection{Legendre Polynomials}
 
-\subsubsection{Hilbert Spaces}
+
+\chapter{Useful MATLAB Commands for Controls}
+MATLAB has many features which are great for control systems. I have compiled several of the most useful commands for the subjects discussed here. For more information about specifics of each command, refer to the Mathworks documentation at \cite{mathworks_control_2026}.
+
+\begin{itemize}
+    \item "tf(num,den)" - create a transfer function with a numerator and denominator defined by row vectors of coefficients in descending order.
+\begin{matlabscript}
+% create transfer function for 1/(s^2+2s+1)
+G = tf(1,[1 2 1])
+\end{matlabscript}
+    \item "step(sys)" - view the step response of the system. Can use a state space or transfer function model.
+    \item 
+\end{itemize}
+
+
+% \chapter{The Lebesgue Integral and Measure}
+
+% \begin{chapquote}{Andrew Lewis}
+% ``The Lebesgue theory of integration is to the Riemann theory of integration as the real numbers are to the rational number''
+% \end{chapquote}
+
+% In the interest of keeping \autoref{part:control theory} free of too much strictly mathematical content, I have devised this chapter in the appendix which contains much of the math which is foundational in classical control theory.
+
+% For the reader interested in the mathematics behind inner product spaces, I have included some supplemental information on the Lebesgue integral, which is the mathematical construction that is used to rigorously define inner product spaces.
+
+
 
 \chapter{Code}\label{app:code}
 All longer segments of code have been placed in a GitHub for ease of access. Scan the QR code or go to \cite{reynolds_hudsonreynoldsflight-dynamics-bible-volume-iii_2026} to access the code.
@@ -196,7 +853,7 @@ All longer segments of code have been placed in a GitHub for ease of access. Sca
     \label{fig:github}
 \end{figure}
 
-\chapter{Proofs}
+\chapter{Proofs and Derivations}
 \section{Newtonian and Lagrangian Equivalence}\label{equiv newt and lang}
 
 \begin{proof}
@@ -222,6 +879,27 @@ So, we have $F=m\ddot{x}_i$.
 
     It can further be shown that the Newtonian derivation must be performed in an inertial frame to be valid.
 \end{corollary}
+
+\section{Lagrangian with Constraints}\label{lagran constraint}
+
+\todo{Pg. 251 Taylor}
+
+
+\section{Hamilton's Equations from a Variational Perspective}\label{proof:hamilton}
+
+We can prove that Hamilton's equations can be derived directly from a variational standpoint. We'll start by using the inverse Legendre transformation in order to find what the \gls{Lagrangian} is in terms of the \gls{Hamiltonian}:
+$$L=\sum_j p_j\dot{q}_j-\mathcal{H}(q,p)$$
+Now that our formulation is in terms of a \gls{Lagrangian}, we can apply standard tools to find the equations of motion. We consider finding the stationary points of this \gls{Lagrangian}:
+$$\delta\int Ldt=\delta\int\underbrace{\sum_j p_j\dot{q}_j-\mathcal{H}(q,p)}_{F(q,\dot{q},p,\dot{p})}dt=0$$
+As is typical, we can employ the Euler-Lagrange equations since our system is now described in terms of a Lagrangian. We have two `generalized coordinates' in our system, $q$ and $p$. We will find equations of motion for both. Let's start with the $q$ coordinate:
+$$\frac{d}{dt}\frac{\partial L}{\partial \dot{q}}=\frac{\partial L}{\partial q}$$
+The \gls{Hamiltonian} component has no dependence on $\dot{q}$, so we find the LHS of the Euler-Lagrange equation to be $\sum \dot{p}_j$. The first hand side is simply the partial derivative of the \gls{Hamiltonian} with respect to $q$. Our final result is:
+$$\dot{p}_j=-\frac{\partial \mathcal{H}}{\partial q_j}$$
+We can do the exact same for the momentum coordinate, $p$.
+$$\frac{d}{dt}\frac{\partial L}{\partial \dot{p}}=\frac{\partial L}{\partial p}$$
+No term depends on $\dot{p}$ and the LHS simply reduces to zero. However, both terms of the \gls{Lagrangian} are dependent on $p$, so we end up with:
+$$\dot{q}_j=\frac{\partial \mathcal{H}}{\partial p_j}$$
+Thus we are able to see that Hamilton's equations can be derived from a variational perspective.
 
 \section{Cayley-Hamilton Theorem}\label{cayley hamilton}
 \begin{theorem}[Cayley-Hamilton Theorem]
@@ -263,6 +941,8 @@ The characteristic equation $\Delta(A)$ will be a polynomial equation of order $
 We define a linear system of the standard form:
 $$\mathbf{\dot{x}}=A\textbf{x}+B\textbf{u}, \ \textbf{x}\in\mathbb{R}^n,\ \textbf{u}\in\mathbb{R}^m$$
 If the state $\textbf{x}$ can go from any $\mathbf{x_0}$ to $\mathbf{x_f}$ in a finite time, the system is controllable. We use the Cayley-Hamilton theorem to prove this (shown in \autoref{cayley hamilton}).
+
+\todo{finish this proof}
 \end{proof}
 
 \section{Derivation of the Exponential Eigenfunction}\label{sec:derivation of exp}
@@ -319,11 +999,239 @@ and we have shown that $f(s)$ has a root $a$ with multiplicity of at least 2 and
 \end{proof}
 
 
+\section{Solution of the DARE}\label{sec:derivation of dare}
+The solution of the \gls{dare} can be found by understanding the evolution of the state equations for our system. We will utilize our understanding of symplectic geometry and the Hamiltonian to do so. We will consider the generic \gls{dare}.
+$$A^*XA-E^*XE-(A^*XB+S)(B^*XB+R)^{-1}(A^*XB+S)^*+Q=0$$
+For problems in optimal control and Kalman filtering, we often have the case where $E=I$ and $S=0$. When this is not the case, we can use a modification of the solution which is discussed here (and is how the algorithm is implemented in MATLAB). Under this assumption, we get a simplification of the \gls{dare} as:
+$$A^*XA-X-(A^*XB)(B^*XB+R)^{-1}(A^*XB)^*+Q=0$$
+
+\todo{Finish this derivation.}
+
+\begin{align}
+x_{k+1} &= \Phi x_k + Q \lambda_{k+1} \
+\lambda_k &= C^* R^{-1} C x_k + \Phi^* \lambda_{k+1}
+\end{align}
+
+
 \chapter{Answers to Selected Questions}
 
+\section{Chapter 2 Solutions}
+
+
+
+\section{Chapter 3 Solutions}
+
+\todo{Fix these texorpdfstrings}
+\subsection*{\texorpdfstring{\autoref{ex:lagrangiancode}}{Lagrangian In Code}}
+
+We choose to use MATLAB to solve this particular problem. We can construct a function with symbolic variables.
+\begin{matlabscript}{Lagrangian Function}
+function eom = createEOM(L, q)
+% createEOM  Generate Euler–Lagrange equations
+%
+% L: symbolic Lagrangian
+% q: vector of generalized coordinates (symbolic functions of t)
+
+% create a time variable
+syms t
+
+% for each generalized coordinate, create an EOM
+
+for idx = 1:length(q)
+
+    % Generalized velocity
+    qd = diff(q{idx}, t);
+
+    % Euler–Lagrange equations
+    eom(idx) = diff(diff(L, qd), t) - diff(L, q{idx}) == 0;
+
+end
+
+% transpose to get cleaner outputs
+eom = eom.';
+end
+\end{matlabscript}
+
+We can test this on any of our functions. Notice that functions of time are represented as $\texttt{x(t)}$ such that we can define the derivative in MATLAB. Also note the use of curly brackets for cell array operations here. This is done as symbolic variables of time will evaluate as $x(1)=x(t)\vert_{t=1}$. We use cell array indexing to circumvent this.
+\begin{matlabscript}{}
+% mass spring
+syms x(t) k
+
+L = 1/2*diff(x,t)^2 - 1/2*k*x^2
+
+q = {x};
+
+eom = createEOM(L, q)
+\end{matlabscript}
+
+
+We can even do a system with multiple \glspl{generalized coordinate}, such as the system in \autoref{ex:inverted_pend}:
+\begin{matlabscript}{}
+% inverted pendulum
+syms M m x(t) I theta(t) l g
+
+L = 1/2*((M+m)*diff(x)^2+I*diff(theta)^2) + m*l*cos(theta)*diff(theta)*diff(x) - m*g*l*cos(theta)
+
+q = {x, theta}
+
+eom = createEOM(L,q)
+\end{matlabscript}
+
+When put into a MATLAB livescript, this will output the result with LaTeX formatting:
+$$\begin{array}{l}
+\left(\begin{array}{c}
+{\left(M+m\right)}\,\sigma_1 -l\,m\,\sin \left(\theta \left(t\right)\right)\,{{\left(\frac{\partial }{\partial t}\;\theta \left(t\right)\right)}}^2 +l\,m\,\cos \left(\theta \left(t\right)\right)\,\sigma_2 =0\\
+\textrm{I}\,\sigma_2 +l\,m\,\cos \left(\theta \left(t\right)\right)\,\sigma_1 -g\,l\,m\,\sin \left(\theta \left(t\right)\right)=0
+\end{array}\right)\\
+\mathrm{}\\
+\textrm{where}\\
+\;\;\sigma_1 =\frac{\partial^2 }{\partial t^2 }\;x\left(t\right)\\
+\mathrm{}\\
+\;\;\sigma_2 =\frac{\partial^2 }{\partial t^2 }\;\theta \left(t\right)
+\end{array}$$
+
+\subsection*{3-2}
+Our setup is nearly identical, but in this case we have a generalized force. We still consider the $\psi$ Euler angle.
+$$\frac{d}{dt}\frac{\partial L}{\partial \dot{\psi}}-\frac{\partial L}{\partial \psi}=Q$$
+We can follow the same approach as \autoref{sec: euler rot eq}
+ to obtain the generalized force $Q=\vec{M}$. We can then see that:
+ \begin{gather}
+\frac{d}{dt}\frac{\partial L}{\partial \dot{\psi}}-\frac{\partial L}{\partial \psi}=\vec{M}
+\end{gather}
+We consider the $\hat{Z}$-direction to obtain just one of the components:
+$$I_3\dot{\omega}_3-(I_1-I_2)\omega_1\omega_2=M_3
+$$
+Which is the correct form of the equation. We can similarly compute the other components, which gives us the full equation.
+\subsection*{3-3}
+We can express a sphere quite naturally using spherical coordinates, $q_1=r,q_2=\theta,q_3=\phi$. We have a single holonomic constraint:
+$$q_1-R=0$$
+We thus have $\mathcal{M}=2$ and can represent the bug position using just $\theta$ and $\phi$ -- like a latitude and longitude.
+\subsection*{3-4}
+\subsubsection{Part A}
+We start with the energy relations to find the velocity:
+$$mgx=\frac{1}{2}mv^2$$
+We assume no initial velocity, so we have:
+$$v=\sqrt{2gx}$$
+\subsubsection{Part B}
+We can parameterize $ds$ as $\sqrt{dx^2+dy^2}$. We can pull out the $dx^2$ term from the integral:
+$$ds=\sqrt{1+\left(\frac{dy}{dx}\right)^2}dx$$
+We can now use the hint to write the functional:
+$$\int_{t_1}^{t_2}\frac{\sqrt{1+\left(\frac{dy}{dx}\right)^2}}{\sqrt{2gx}}dx$$
+Notice now that the equation is in a form which can be solved by the \gls{Euler Equation}, where the integrand is:
+$$f=\frac{\sqrt{1+y'(x)}}{\sqrt{2gx}}$$
+\subsubsection{Part C}
+With an equation in terms of $y(x)$ and $y'(x)$, we can use the Euler Lagrange equations to solve for the curve $y(x)$:
+    $$\frac{\partial f}{\partial x}=\frac{d}{dx}\frac{\partial f}{\partial y'}$$
+    We may notice immediately that the system has no $y(x)$, so the LHS is 0. Equivalently, the derivative of the RHS must be constant. This leaves us with:$$c=\frac{\partial}{\partial y'}\left(\frac{\sqrt{1+y'(x)^2}}{\sqrt{x}}\right)$$
+    After going through the calculations, we find:$$y'(x)=\sqrt{\frac{x}{2c-x}}$$
+    We can perform a final integration to get our curve $y(x)$. This integral takes the form $$y(x)=\int\sqrt{\frac{x}{2c-x}}dx$$
+We use a substitution with $x=c(1-\cos\theta)$, which gives us the integral as:
+    $$y(x)=c\int(1-\cos\theta)d\theta=c(\theta-sin\theta)+c_1$$ This gives us the final parametric curve:
+    \begin{gather}
+        y=c(\theta-\sin\theta)\\
+        x=c(1-\cos\theta)
+    \end{gather}
+\subsection*{\texorpdfstring{\autoref{ex:inverted_pend}}{Inverted Pendulum}}
+We start by noticing our two \glspl{generalized coordinate}, $\theta$ and $\dot{x}$. We can set a potential of zero at the base of the cart. The \gls{Lagrangian} can be derived quite easily from here. Starting with the cart:
+$$T_{cart}=\frac{1}{2}M\dot{x}^2$$
+The cart has no potential. For the pendulum arm, both translational and rotational motion is permitted, so the total kinetic energy is more complicated. One `trick' we can do in the computation that is sometimes simpler is to unexpand the chain rule and express the kinetic energy as:
+$$T_{arm}=\frac{1}{2}m|\dot{r}_2|^2$$
+Computing the value of $\dot{r}_2$ (remembering the implicit chain rule, now that we are not explicitly writing it), we have:
+$$\dot{r}_2=(\dot{x}+l\cos\theta\dot{\theta})\hat{\imath}+(-l\sin\theta\dot{\theta})\hat{\jmath}$$
+Performing the norm-square of $\dot{r}_2$ is the same as the dot product, so we square each element:
+$$T_{arm}=\frac{1}{2}m\left[(\dot{x}+l\cos\theta\dot{\theta})^2+(-l\sin\theta\dot{\theta})^2\right]$$
+Importantly, the computation of this gives a cross term from the expansion of the first term, which we may have missed otherwise. Altogether, $T_{arm}$ is:
+$$T_{arm}=\frac{1}{2}m\dot{x}^2+\frac{1}{2}ml^2\dot{\theta}^2+ml\cos\theta\dot\theta\dot{x}$$
+At this point, we can identify that the term $\frac{1}{2}ml^2\dot{\theta}^2$ is exactly the rotational kinetic energy of the rod. As a result, we can replace this term with $\frac{1}{2}I\dot{\theta}^2$. Finally, summing the two values of $i$ gives us the following kinetic energy for the system:
+$$T_{cart}+T_{arm}=\frac{1}{2}\left[\left(M+m\right)\dot{x}^2+I\dot{\theta}^2\right]+ml\cos\theta\dot{\theta}\dot{x}$$
+
+The potential is quite easy. For the cart, no potential exists because we have defined the potential at the center of mass to be $0$. For the arm, the potential is dependent on the angle, with the relationship given by:
+$$V_{pend}=mgl\cos{\theta}$$
+Altogether, this gives a \gls{Lagrangian} of the system as:
+$$L=\frac{1}{2}\left[\left(M+m\right)\dot{x}^2+I\dot{\theta}^2\right]+ml\cos\theta\dot{\theta}\dot{x}-mgl\cos{\theta}$$
+From here, we simply apply the Euler-Lagrange equations in both the $x$ and $\theta$ component directions. This is simply a matter of calculation. You may compute this by hand or use a script like is shown in the \autoref{ex:lagrangiancode} solution.
+
+
+\subsection*{\texorpdfstring{\autoref{exer_doublepend}}{Double Pend Sol}}
+
+\subsubsection{Part A}
+We can solve the double pendulum in much the same way to the other problems. Here, we will use rectilinear coordinates in deriving the kinetic energy to ensure we don't miss any cross terms, much like we did with the inverted pendulum. We choose $\hat{x}$ to right and $\hat{y}$ to point upward on the page.
+
+For the first arm, we have:
+$$\vec{r}_1=l\sin\theta\hat{x}-l\cos\theta\hat{y}$$
+And for the second:
+$$\vec{r}_2=[l\sin\theta+l\sin(phi]\hat{x}-[l\cos\theta+l\cos\phi]\hat{y}$$
+We can take the time derivative of these two terms:
+\begin{gather}
+\dot{r}_1=l\cos\theta\dot{\theta}\hat{x}+l\sin\theta\dot{\theta}\hat{y}\\
+\dot{{r}}_2=[l\cos\theta\dot{\theta}+l\cos\phi\dot{\phi}]\hat{x}+[l\sin\theta\dot{\theta}+l\sin\phi\dot{\phi}]\hat{y}
+\end{gather}
+
+We take the kinetic energy to be:
+$$\frac{1}{2}m|\dot{r}|^2$$
+Which corresponds to squaring each element of the $\dot{r}$ vector. For the first arm:
+$$T_1=\frac{1}{2}ml^2\dot{\theta}^2$$
+The second arm is a bit more involved, since each term involves a cross term. This algebra simplifies quite a bit after application of  $\sin A\sin B+\cos A\cos B = \cos(A-B)$):
+$$T_2=\frac{1}{2}ml^2\left[\dot{\theta}^2+\dot{\phi}^2+2\dot{\theta}\dot{\phi}\cos(\theta-\phi)\right]$$
+The total kinetic energy is thus:
+$$T=\frac{1}{2}ml^2\left[2\dot{\theta}^2+\dot{\phi}^2+2\dot{\theta}\dot{\phi}\cos(\theta-\phi)\right]$$
+Note that some significant simplification has resulted from assuming that $m$ and $l$ are equal for both arms.
+
+The potential is quite simple:
+$$V=-mgl\cos\theta-mgl(cos\theta+\cos\phi)$$
+$$V=-mgl(2\cos\theta+\cos\phi)$$
+
+From which we get the Lagrangian:
+$$L=\frac{1}{2}ml^2\left[2\dot{\theta}^2+\dot{\phi}^2+2\dot{\theta}\dot{\phi}\cos(\theta-\phi)\right]+mgl(2\cos\theta+\cos\phi)$$
+
+Now, we may apply the Euler-Lagrange equations on the two \glspl{generalized coordinate} to get \glspl{eom}. We will take $\dot{\theta}\equiv\omega$ and $\dot{\phi}=\alpha$ to make our solution more compact. A computational tool is of great help to simplify this expression. The coupled equations are shown below. Notice that the mass is irrelevant in this case:
+$$\begin{array}{c}
+2\,l\,\ddot{\theta} +2\,g\,\sin \left(\theta \right)=l\,{\dot{\phi} }^2 \,\sin \left(\phi -\theta \right)-l\,\ddot{\phi} \,\cos \left(\phi -\theta \right)\\
+l\,\sin \left(\phi -\theta \right)\,{\dot{\theta} }^2 +l\,\ddot{\phi} +g\,\sin \left(\phi \right)=l\,\ddot{\theta} \,{\left(2\,{\sin \left(\frac{\phi }{2}-\frac{\theta }{2}\right)}^2 -1\right)}
+\end{array}$$
+We can decouple and simplify the equations to get:
+\begin{align}
+    \ddot{\theta}&=-\frac{l\sin(\phi-\theta)\dot{\phi}^2+\cos(\phi-\theta)(l\sin(\phi-\theta)\dot{\theta}^2+g\sin\phi)-2g\sin\theta}{l(\cos(\phi-\theta)^2-2)}\\\\
+    \ddot{\phi}&=\frac{2l\sin(\phi-\theta)\dot{\theta}^2-\cos(\phi-\theta)(2g\sin\theta-l\dot{\phi}^2\sin(\phi-\theta)+2g\sin\phi}{l(\cos(\phi-\theta)^2-2)}
+\end{align}
+
+If you think such a result is complicated, try the Newtonian approach and you will change your mind quickly!
+\subsubsection{Part B}
+Once we have the \glspl{eom} of the system, we can simulate with $\texttt{ode45}$ easily. Only the integrator function is shown for brevity:
+\begin{matlabscript}{Pendulum Integrator}
+% integrator
+function out = integrator(t,x,l,g)
+
+theta = x(1);
+phi = x(2);
+theta_dot = x(3);
+phi_dot = x(4);
+
+theta_ddot = -(l*sin(phi - theta)*phi_dot^2 + cos(phi - theta)*(l*sin(phi - theta)* ...
+    theta_dot^2 + g*sin(phi)) - 2*g*sin(theta))/(l*(cos(phi - theta)^2 - 2));
+phi_ddot = (2*l*sin(phi - theta)*theta_dot^2 - cos(phi - theta)*(2*g*sin(theta) - l* ...
+    phi_dot^2*sin(phi - theta)) + 2*g*sin(phi))/(l*(cos(phi - theta)^2 - 2));
+
+out = [theta_dot; phi_dot; theta_ddot; phi_ddot];
+end
+\end{matlabscript}
+This script is also present in the linked GitHub in \autoref{Appendix:code} in the script \texttt{Scripts\textbackslash Example Problems\textbackslash DoublePend.m}.
+\subsubsection{Part C}
+This part is left to the reader. Try modifying the provided script as a place to start!
+
+\section{Chapter 6 Solutions}
+
+\subsection*{\texorpdfstring{\autoref{exer_laplace_practice}}{Laplace Practice}}
+
+\begin{enumerate}
+    \item $$X(s)=\frac{-2}{s^2+2s}$$
+    \item $$X(s)=\frac{1}{(s^3+3)(s^2)+1}$$
+    \item $$\frac{X(s)}{U(s)}=\frac{1}{ms^2+cs+k}$$
+    \item $$\frac{a}{s^2-2as}$$
+\end{enumerate}
 
 \section{Chapter 8}
-\subsubsection{8.2: Mass Spring Damper Transfer Function}
+\subsection*{\texorpdfstring{\autoref{exer_mass_spring_tf}}{Mass Spring Damper Transfer Function}}
 \begin{enumerate}
     \item Given all the variables, it is simple to construct the \gls{eom} as $\ddot{x}+3\dot{x}+2x=u$
     \item $\frac{Y(s)}{U(s)}=\frac{1}{s^2+3s+2}$
@@ -345,6 +1253,35 @@ and we have shown that $f(s)$ has a root $a$ with multiplicity of at least 2 and
     \end{bmatrix}=\frac{1}{s^2+3s+2}$$
 \end{enumerate}
 
-\setglossarystyle{altlist}
-\printglossary[title=Special Terms, toctitle = Terms \& Index]
+
+\section{Chapter 10}
+
+
+\subsection*{\texorpdfstring{\autoref{exer:matrix_linearization}}{Matrix Linearization}}
+We consider the following equation:
+$$\bm{\dot{x}}=\begin{bmatrix}
+x_2\\
+-\sin(x_1)
+\end{bmatrix}$$
+The Jacobian of the system is given by the following:
+$$\frac{\partial f}{\partial \bm{x}}=\begin{bmatrix}
+\frac{\partial f_1}{\partial x_1}&\frac{\partial f_1}{\partial x_2}\\\frac{\partial f_2}{\partial x_1}&\frac{\partial f_2}{\partial x_2}
+\end{bmatrix}$$
+We of course have $f(\bm{x^*})$ as $\begin{bmatrix}
+    0&0
+\end{bmatrix}^T$. The Jacobian is computed as:
+$$\frac{\partial f}{\partial \bm{x}}=\begin{bmatrix}
+    0&1\\-\cos(x_1)&0
+\end{bmatrix}$$
+And the final expression is $f(\bm{x^*})+\frac{\partial f}{\partial \bm{x}}\big\vert_{\bm{x^*}=0}(\bm{x}-\bm{x^*})$. The result is:
+$$\bm{\dot{x}}\approx\begin{bmatrix}
+    0&1\\-\cos(x_1)&0
+\end{bmatrix}\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix}$$
+
+
+\setglossarystyle{index}
+\printglossary[title=Special Terms, toctitle = Special Terms]
+%\printindex
 \printbibliography[heading=bibintoc, title={References}]
