@@ -1,0 +1,45 @@
+# --- LaTeX Generated Files ---
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fls
+*.fdb_latexmk
+*.glo
+*.gls
+*.glsdefs
+*.idx
+*.ilg
+*.ind
+*.ist
+*.lof
+*.log
+*.lol
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.acn
+*.acr
+*.alg
+*.glg
+
+# --- Output Files ---
+*.pdf
+*.dvi
+*.ps
+
+# --- IDE/Environment Specific ---
+# TeXstudio
+.texstudio/
+*.autosave
+
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# VS Code (if you ever use it for side-editing)
+.vscode/
