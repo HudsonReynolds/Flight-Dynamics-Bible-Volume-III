@@ -34,6 +34,9 @@
 # TeXstudio
 .texstudio/
 *.autosave
+*.minted
+*.listing
+*.tdo
 
 # macOS
 .DS_Store
